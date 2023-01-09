@@ -1,0 +1,37 @@
+import { motion } from 'framer-motion';
+import React from 'react';
+const animate = {
+	hidden: {
+		opacity: 0,
+		x: 200,
+	},
+
+	visible: {
+		opacity: 1,
+		x: 0,
+		transition: {
+			x: { type: 'spring', stiffness: 500, damping: 30 },
+			opacity: { duration: 0.5 },
+		},
+	},
+	exit: {
+		opacity: 0,
+		x: -200,
+	},
+};
+const AnimateSlide = ({ children }) => {
+	return (
+		<motion.div
+			layout
+			variants={animate}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
+			className="h-full w-full"
+		>
+			{children}
+		</motion.div>
+	);
+};
+
+export default AnimateSlide;
