@@ -29,7 +29,7 @@ const GroupChatCreateForm = ({ onSubmit }) => {
 			}
 		>
 			<div className="flex w-96 flex-col gap-4 p-4">
-				<div className="rounded-lg px-4 py-2 dark:bg-dark-light">
+				<div className="rounded-xl px-4 py-2 dark:bg-dark-light">
 					<input
 						type="text"
 						placeholder="Group name"

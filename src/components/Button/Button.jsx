@@ -14,7 +14,7 @@ export const variantsColors = {
 		primary:
 			'bg-primary-700 enabled:hover:bg-primary-800 text-white dark:bg-primary-500 dark:enabled:hover:bg-primary-600 dark:text-white',
 		secondary:
-			'bg-slate-200 text-slate-800 enabled:hover:bg-slate-300 text-white dark:bg-dark-600 dark:enabled:hover:bg-dark-700 dark:text-white',
+			'bg-slate-200 text-slate-800 enabled:hover:bg-slate-300 dark:bg-dark-600 dark:enabled:hover:bg-dark-700 dark:text-white',
 		danger: 'bg-red-500 enabled:hover:bg-red-700 text-white',
 		success: 'bg-green-500 enabled:hover:bg-green-700 text-white',
 		warning: 'bg-yellow-500 enabled:hover:bg-yellow-700 text-white',
@@ -38,7 +38,7 @@ export const variantsColors = {
 	},
 	text: {
 		primary:
-			'bg-transparent text-blue-500 dark:bg-transparent dark:text-blue-600',
+			'bg-transparent text-primary-700 dark:bg-transparent dark:text-primary-500 hover:text-primary-800 dark:hover:text-primary-600',
 		secondary:
 			'bg-transparent text-gray-500 dark:bg-transparent dark:text-gray-600',
 		danger: 'bg-transparent text-red-500 dark:bg-transparent dark:text-red-600',
@@ -56,6 +56,7 @@ const Button = ({
 	as,
 	variant,
 	loading,
+	disabled,
 	size,
 	color,
 	children,
@@ -70,12 +71,16 @@ const Button = ({
 	return (
 		<Component
 			ref={ref}
+			disabled={disabled || loading}
 			className={clsx(
-				'flex shrink-0 cursor-pointer items-center justify-center no-underline transition-all active:scale-95 disabled:scale-100 disabled:cursor-not-allowed disabled:opacity-40',
+				'flex shrink-0 cursor-pointer items-center justify-center no-underline transition-all active:scale-95',
 				sizes[size],
-				rounded ? 'rounded-full' : 'rounded-lg',
+				rounded ? 'rounded-full' : 'rounded-xl',
 				variantsColors[variant][color],
-				className
+				className,
+				disabled
+					? 'disabled:scale-100 disabled:cursor-not-allowed disabled:opacity-40'
+					: ''
 			)}
 			{...props}
 		>

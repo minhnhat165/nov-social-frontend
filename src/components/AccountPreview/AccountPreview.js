@@ -1,8 +1,7 @@
+import Button from 'components/Button';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '../Avatar';
-import Button from '../ButtonOld/Button';
-import FollowButtonV2 from '../ButtonOld/FollowButtonV2';
 import Follow from '../Follow';
 import LoadingOverlay from '../LoadingOverlay';
 const AccountPreview = ({ user, loading }) => {
@@ -50,10 +49,7 @@ const AccountPreview = ({ user, loading }) => {
 							</>
 						) : (
 							<>
-								<Follow
-									followId={user._id}
-									Button={FollowButtonV2}
-								/>
+								<Follow followId={user._id} />
 
 								<Button
 									className="primary medium rounded-md rounded-l-sm"

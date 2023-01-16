@@ -55,7 +55,7 @@ export const IconList = ({ color }) => {
 
 const ItemsWrapper = ({ children }) => {
 	return (
-		<div className=" flex aspect-square w-14 items-center justify-center rounded-lg bg-white">
+		<div className=" flex aspect-square w-14 items-center justify-center rounded-xl bg-white">
 			{children}
 		</div>
 	);

@@ -11,7 +11,9 @@ const SelectUser = ({ userListIgnore = [], setResult }) => {
 		if (userListIgnore.some((member) => member._id === user._id)) {
 			return;
 		}
-		if (usersSelected.some((userSelected) => userSelected._id === user._id)) {
+		if (
+			usersSelected.some((userSelected) => userSelected._id === user._id)
+		) {
 			return;
 		}
 		setUsersSelected((prev) => [...prev, user]);
@@ -22,23 +24,25 @@ const SelectUser = ({ userListIgnore = [], setResult }) => {
 	}, [usersSelected]);
 
 	return (
-		<div className="rounded-lg p-2 dark:bg-dark-light">
+		<div className="rounded-xl p-2 dark:bg-dark-light">
 			<div>
 				<div className="flex">
-					<span className="dark:text-dark-text-bold">Users selected:</span>
+					<span className="dark:text-dark-text-bold">
+						Users selected:
+					</span>
 				</div>
 				{usersSelected.length > 0 && (
 					<div className="mb-3 mt-1 flex flex-wrap gap-2">
 						{usersSelected.map((member) => (
 							<div
 								key={member._id}
-								className="items-center rounded-full bg-primary-bold/20 px-2 py-1"
+								className="bg-primary-bold/20 items-center rounded-full px-2 py-1"
 							>
-								<span className="text-sm font-bold text-primary">
+								<span className="text-primary text-sm font-bold">
 									{member.name}
 								</span>
 								<i
-									className="fa-duotone fa-circle-x ml-1 cursor-pointer text-primary"
+									className="fa-duotone fa-circle-x text-primary ml-1 cursor-pointer"
 									onClick={() => handleRemoveUser(member._id)}
 								></i>
 							</div>
@@ -48,7 +52,7 @@ const SelectUser = ({ userListIgnore = [], setResult }) => {
 			</div>
 			<Search
 				placeholder="Add members"
-				className="mt-2 rounded-lg"
+				className="mt-2 rounded-xl"
 				onClickSearchResult={handleSelectUser}
 			/>
 		</div>

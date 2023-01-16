@@ -1,4 +1,3 @@
-import { register } from 'api/authApi';
 import Button from 'components/Button';
 import Form from 'components/FormElement/Form';
 import {
@@ -10,8 +9,8 @@ import {
 	UserIcon,
 } from 'components/Icon';
 import Stepper from 'components/Stepper';
+import { useRegister } from 'features/auth/hooks/useRegister';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
 import { Link } from 'react-router-dom';
 import { routePaths } from 'routes/routeConfig';
 import * as yup from 'yup';
@@ -66,12 +65,11 @@ const steps = [
 		id: 0,
 		title: 'Account',
 		icon: <LockIcon />,
-		description: 'This is the first step',
 	},
 	{
 		id: 1,
 		title: 'Information',
-		description: 'This is the second step',
+
 		icon: <UserIcon />,
 	},
 
@@ -79,28 +77,23 @@ const steps = [
 		id: 2,
 		title: 'Avatar',
 		icon: <ImageIcon />,
-		description: 'This is the third step',
 	},
 	{
 		id: 3,
 		title: 'Finish',
 		icon: <FlagIcon />,
-		description: 'This is the third step',
 	},
 ];
 
-const RegisterForm = ({ onLogin }) => {
+const RegisterForm = () => {
 	const [currentStepId, setCurrentStepId] = useState(0);
 	const [isCreated, setIsCreated] = useState(false);
 	const [completedStepIds, setCompletedStepIds] = useState([]);
 
-	const registerMutation = useMutation(register, {
+	const registerMutation = useRegister({
 		onSuccess: () => {
 			setCompletedStepIds([...completedStepIds, currentStepId]);
 			setIsCreated(true);
-		},
-		onError: (error) => {
-			console.log(error);
 		},
 	});
 
@@ -122,8 +115,6 @@ const RegisterForm = ({ onLogin }) => {
 
 	const handleSubmit = (data) => {
 		if (currentStepId === steps.length - 1) {
-			data.avatar =
-				'https://i.pinimg.com/564x/42/cf/6e/42cf6ea7dae7548244a7d5a546bf37aa.jpg';
 			registerMutation.mutate(data);
 		} else {
 			handleNextStep();
@@ -151,7 +142,6 @@ const RegisterForm = ({ onLogin }) => {
 					getValues,
 					setValue,
 					watch,
-					setFocus,
 					getFieldState,
 					setError,
 					clearErrors,

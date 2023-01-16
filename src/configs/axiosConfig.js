@@ -1,9 +1,9 @@
-import { logout, refreshToken } from 'api/authApi';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
+
 import store from 'store';
-import { setAccessToken } from 'store/slices/authSlice';
+import { logout, setAccessToken } from 'store/slices/authSlice';
 const baseURL = process.env.REACT_APP_API_URL;
 export const axiosClient = axios.create({
 	baseURL,
@@ -15,32 +15,45 @@ export const axiosClient = axios.create({
 });
 // add a response interceptor
 axiosClient.interceptors.response.use(
-	function (response) {
+	(response) => {
 		return response.data;
 	},
-	function (error) {
-		return Promise.reject(error.response.data.error);
+	(error) => {
+		if (error.message === 'Invalid token specified') {
+			store.dispatch(logout());
+			toast.error('expire login');
+			return Promise.reject(error);
+		}
+		return Promise.reject(error.response.data);
 	}
 );
 
 axiosClient.interceptors.request.use(
 	async (config) => {
-		// let accessToken = store.getState().auth.accessToken;
-		// if (accessToken) {
-		// 	const decodeToken = jwtDecode(accessToken);
-		// 	const today = new Date();
-		// 	if (decodeToken.exp < today.getTime() / 1000) {
-		// 		try {
-		// 			const res = await refreshToken();
-		// 			store.dispatch(setAccessToken(res.data.access_token));
-		// 			accessToken = res.data.access_token;
-		// 		} catch (error) {
-		// 			store.dispatch(logout());
-		// 			toast.error('expire login');
-		// 		}
-		// 	}
-		// 	config.headers['Authorization'] = `Bearer ${accessToken}`;
-		// }
+		console.log(1);
+		let accessToken = store.getState().auth.accessToken;
+		if (accessToken) {
+			const decodeToken = jwtDecode(accessToken);
+			const today = new Date();
+			if (decodeToken.exp < today.getTime() / 1000) {
+				try {
+					const res = await axios.get(
+						`${baseURL}/auth/refresh_token`,
+						{
+							credentials: 'include',
+							withCredentials: true,
+						}
+					);
+					accessToken = res.data.access_token;
+					store.dispatch(setAccessToken(accessToken));
+				} catch (error) {
+					store.dispatch(logout());
+					toast.error('expire login');
+					return Promise.reject(error.response.data);
+				}
+			}
+			config.headers['Authorization'] = `Bearer ${accessToken}`;
+		}
 		return config;
 	},
 	(error) => {

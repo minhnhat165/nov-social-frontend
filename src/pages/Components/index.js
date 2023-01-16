@@ -1,18 +1,11 @@
-import { forwardRef } from 'react';
-
-const A = forwardRef((props, ref) => (
-	<input ref={ref} {...props} className="FancyButton">
-		{props.children}
-	</input>
-));
-
+import Popover from 'components/Popover/Popover';
 const Components = () => {
 	return (
-		// <div className="h-screen">
-		<div className="flex h-full w-full items-start justify-evenly">
-			<A title={'a'} onChange={(e) => console.log(e.target.value)} autoFocus />
+		<div className="flex h-screen w-full items-center justify-center">
+			<Popover content={<div className="h-96 w-96 bg-white"></div>}>
+				<div className="h-10 w-10 animate-drop bg-black"></div>
+			</Popover>
 		</div>
-		// </div>
 	);
 };
 

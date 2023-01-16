@@ -76,7 +76,7 @@ const CommentForm = ({ initial, onSubmit, loading }) => {
 			<Avatar url={user.avatar} size="w-8 h-8" />
 			<div className="relative flex-1">
 				<div
-					className="relative flex w-full overflow-hidden rounded-lg px-2 py-2 dark:bg-dark-light"
+					className="relative flex w-full overflow-hidden rounded-xl px-2 py-2 dark:bg-dark-light"
 					ref={(ref) => {
 						setDragLayer(ref);
 						setDropLayer(ref);
@@ -85,7 +85,7 @@ const CommentForm = ({ initial, onSubmit, loading }) => {
 					{tagUser && (
 						<Link
 							to={`/profile/${tagUser._id}`}
-							className="mr-1 dark:text-dark-text-bold dark:hover:text-primary"
+							className="dark:hover:text-primary mr-1 dark:text-dark-text-bold"
 						>
 							@{tagUser.name}
 						</Link>
@@ -133,7 +133,7 @@ const CommentForm = ({ initial, onSubmit, loading }) => {
 				)}
 				{previewImg && (
 					<div className="relative max-w-[120px]">
-						<div className="mt-3 max-w-[120px] overflow-hidden rounded-md bg-primary/20">
+						<div className="bg-primary/20 mt-3 max-w-[120px] overflow-hidden rounded-md">
 							<Img
 								src={previewImg}
 								className="max-w-[120px] object-cover"

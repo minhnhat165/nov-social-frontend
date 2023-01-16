@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getSuggestionsUser } from '../../../api/userApi';
-import AccountFollowButton from '../../../components/AccountFollowButton';
+import AccountFollowButton from '../../../components/OldVer/AccountFollowButton';
 import FadeInZoom from '../../../components/Animate/FadeInZoom';
 import Box from '../../../components/Box';
 import AccountQuickViewLoading from '../../../components/SkeletonLoading/AccountQuickViewLoading';
@@ -64,7 +64,7 @@ const SuggestionsUser = () => {
 						to={routes.people}
 						className="mt-auto shrink-0 px-2 pb-2"
 					>
-						<div className="text-primary cursor-pointer rounded-lg py-3 text-center transition-all dark:border-dark-border dark:hover:bg-dark-light">
+						<div className="text-primary cursor-pointer rounded-xl py-3 text-center transition-all dark:border-dark-border dark:hover:bg-dark-light">
 							Show more
 						</div>
 					</Link>

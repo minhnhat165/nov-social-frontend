@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import FormDescription from './FormDescription';
 const Max_Digital = 6;
 
-const OtpForm = ({ isLoading, onSubmit }) => {
+const OtpForm = ({ isLoading, onSubmit, onResend }) => {
 	const { t } = useTranslation();
 	const [isValid, setIsValid] = useState(false);
 	const [value, setValue] = useState([]);
@@ -31,6 +31,15 @@ const OtpForm = ({ isLoading, onSubmit }) => {
 				onSubmit={() => onSubmit(value.join(''))}
 				max={Max_Digital}
 			/>
+			<span className="text-slate-800 dark:text-dark-100">
+				Didn’t receive your code?{' '}
+				<span
+					onClick={onResend}
+					className="cursor-pointer text-primary-700 dark:text-primary-500"
+				>
+					Resend.
+				</span>
+			</span>
 			<Button
 				type="submit"
 				size="lg"

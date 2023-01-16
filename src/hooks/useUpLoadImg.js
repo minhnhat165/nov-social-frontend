@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import getImageFileCompression from 'utils/getImageFileCompression';
 
 function useUploadImg(initialValue, handleUpLoadCallback = () => {}) {
@@ -15,14 +16,15 @@ function useUploadImg(initialValue, handleUpLoadCallback = () => {}) {
 		}
 	}, [initialValue]);
 
-	const handleUpload = async (e) => {
+	const handleUpload = async (rawFile) => {
+		if (!rawFile) return;
 		try {
-			const file = await getImageFileCompression(e.target.files[0]);
+			const file = await getImageFileCompression(rawFile);
 			const image = URL.createObjectURL(file);
 			handleUpLoadCallback(file);
 			setImagePreview(image);
 		} catch (error) {
-			console.log(error);
+			toast.error(error.message);
 		}
 	};
 

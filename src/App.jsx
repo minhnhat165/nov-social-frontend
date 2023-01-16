@@ -3,7 +3,7 @@ import AppSetting from 'app/AppSetting';
 import AppRoute from './routes/AppRoute';
 function App() {
 	return (
-		<div className="bg-slate-200 dark:bg-dark-900">
+		<div className="min-h-screen bg-slate-200 dark:bg-dark-900">
 			<AppProvider>
 				<AppSetting />
 				<AppRoute />

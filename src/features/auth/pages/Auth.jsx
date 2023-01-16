@@ -24,7 +24,7 @@ const Auth = () => {
 
 	return (
 		<Layout title={isLogin ? 'Login' : 'Register'}>
-			<div className="relative flex aspect-auto h-full w-full overflow-hidden bg-light-50 shadow-md dark:bg-dark-800 dark:shadow-none sm:mx-4 sm:h-[620px] sm:max-w-[870px] sm:rounded-lg">
+			<div className="relative flex aspect-auto h-full w-full overflow-hidden bg-light-50 shadow-md dark:bg-dark-800 dark:shadow-none sm:mx-4 sm:h-[620px] sm:max-w-[870px] sm:rounded-xl">
 				<PanelContainer
 					placement={isLogin ? 'right' : 'left'}
 					responsive="w-full sm:w-1/2 md:p-8"
@@ -89,6 +89,7 @@ const Auth = () => {
 			<Modal
 				title={'Reset Password'}
 				isOpen={isResetPassword}
+				show={isResetPassword}
 				onClose={() => setIsResetPassword(false)}
 			>
 				<ResetPassword

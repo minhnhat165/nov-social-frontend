@@ -14,10 +14,8 @@ const DropdownDatePicker = ({ initialDate, onChange }) => {
 		return getMaxDayOfMonth(month, year);
 	}, [month, year]);
 	useEffect(() => {
-		console.log(month, day, year);
 		if (month && day && year) {
 			const date = new Date(year, month, day);
-			console.log(date);
 			if (date === initialDate) return;
 			onChange(date);
 		}

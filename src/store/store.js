@@ -22,7 +22,7 @@ const persistConfig = {
 	version: 1,
 	timeout: 500, //Set the timeout function to 2 seconds
 	storage,
-	whitelist: ['auth'],
+	whitelist: ['auth', 'setting'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

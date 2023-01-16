@@ -1,6 +1,6 @@
 const FinishForm = ({ isCreated }) => {
 	return (
-		<div className="border-1 flex h-[264px] w-full flex-col items-center justify-center rounded-lg bg-slate-100 dark:bg-dark-700">
+		<div className="border-1 flex h-[264px] w-full flex-col items-center justify-center rounded-xl bg-slate-100 dark:bg-dark-700">
 			<div className="p-4 text-center">
 				{isCreated ? (
 					<Content

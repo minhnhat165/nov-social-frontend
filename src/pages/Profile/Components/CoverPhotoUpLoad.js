@@ -45,7 +45,7 @@ const CoverPhotoUpLoad = ({ img, onChange = () => {} }) => {
 			/>
 			<label
 				htmlFor={id}
-				className="absolute top-4 left-4 cursor-pointer rounded-lg bg-white/50 px-2 py-2 text-sm font-bold opacity-0 transition-all hover:bg-white group-hover:opacity-100"
+				className="absolute top-4 left-4 cursor-pointer rounded-xl bg-white/50 px-2 py-2 text-sm font-bold opacity-0 transition-all hover:bg-white group-hover:opacity-100"
 			>
 				<i className="fa-duotone fa-photo-film text-md mr-2"></i>
 				Update cover photo

@@ -1,16 +1,16 @@
 import { login } from 'api/authApi';
+import { toast } from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { setAccessToken } from 'store/slices/authSlice';
+import { login as loginAction } from 'store/slices/authSlice';
 
 export const useLogin = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	return useMutation(login, {
 		onSuccess: (data) => {
-			dispatch(setAccessToken(data.access_token));
+			dispatch(loginAction({ accessToken: data.access_token }));
 			navigate('/');
 		},
 		onError: (error) => {

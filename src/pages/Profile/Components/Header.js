@@ -21,10 +21,10 @@ const Header = ({ isUser }) => {
 			</div>
 			<div className="relative flex h-14 w-full justify-between pt-2">
 				<div className="flex items-end justify-between gap-2">
-					<div className="flex min-w-[140px] items-center justify-center rounded-lg px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
+					<div className="flex min-w-[140px] items-center justify-center rounded-xl px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
 						Timeline
 					</div>
-					<div className="flex min-w-[140px] items-center justify-center rounded-lg px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
+					<div className="flex min-w-[140px] items-center justify-center rounded-xl px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
 						About
 					</div>
 				</div>
@@ -40,10 +40,10 @@ const Header = ({ isUser }) => {
 					</div>
 				</div>
 				<div className="flex items-end justify-between gap-2">
-					<div className="flex min-w-[140px] items-center justify-center rounded-lg px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
+					<div className="flex min-w-[140px] items-center justify-center rounded-xl px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
 						Photos
 					</div>
-					<div className="flex min-w-[140px] items-center justify-center rounded-lg px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
+					<div className="flex min-w-[140px] items-center justify-center rounded-xl px-4 py-2 text-base font-bold dark:bg-dark-semiBold dark:text-dark-text-bold">
 						Following
 					</div>
 				</div>
@@ -54,7 +54,7 @@ const Header = ({ isUser }) => {
 						<Button
 							onClick={() => setShowProfileEditForm(true)}
 							medium
-							className="font-bold text-primary dark:bg-dark-semiBold"
+							className="text-primary font-bold dark:bg-dark-semiBold"
 						>
 							<i className="fa-duotone fa-pen-to-square mr-2"></i>{' '}
 							Edit
@@ -64,7 +64,7 @@ const Header = ({ isUser }) => {
 					<div className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center justify-center gap-2 dark:text-dark-text-bold">
 						<Link
 							to={`/chat/${user._id}`}
-							className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold dark:bg-dark-semiBold dark:text-dark-text-bold"
+							className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold dark:bg-dark-semiBold dark:text-dark-text-bold"
 							onClick={() => setShowProfileEditForm(true)}
 						>
 							<i className="fa-duotone fa-message"></i>
@@ -72,7 +72,7 @@ const Header = ({ isUser }) => {
 						</Link>
 						<Link
 							to={`/chat/${user._id}`}
-							className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold dark:bg-primary-bold dark:text-dark-text-bold"
+							className="dark:bg-primary-bold flex h-9 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold dark:text-dark-text-bold"
 							onClick={() => setShowProfileEditForm(true)}
 						>
 							<i className="fa-duotone fa-user-plus"></i>

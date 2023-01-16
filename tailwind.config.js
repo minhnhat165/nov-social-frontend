@@ -3,8 +3,14 @@ module.exports = {
 	content: ['./src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
+			screens: {
+				tablet: '898px',
+				laptop: '1099px',
+				desktop: '1280px',
+			},
 			animation: {
 				'spin-fast': 'spin 0.75s linear infinite',
+				drop: 'drop 0.5s ease-in-out',
 			},
 			width: {
 				lg: '64rem',
@@ -73,6 +79,15 @@ module.exports = {
 					'text-regular': '#787d93',
 					'text-light': '#888da8',
 				},
+			},
+			keyframes: {
+				drop: {
+					'0%, 100%': { width: '40px' },
+					'50%': { width: '20px' },
+				},
+			},
+			boxShadow: {
+				'3xl': '0 12px 28px 0 rgb(0,0,0,0.2), 0 2px 4px 0 rgb(0,0,0,0.1)',
 			},
 		},
 	},

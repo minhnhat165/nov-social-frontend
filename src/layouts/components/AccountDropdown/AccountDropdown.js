@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../api/authApi';
 import { logout as logoutLocal } from '../../../redux/slices/authSlice';
 import AccountQuickView from '../../../components/AccountQuickView';
-import ToggleButton from '../../../components/SwitchDarkMode';
+import ToggleButton from '../../../components/SwitchDarkMode/SwitchDarkMode';
 import { useAsyncFn } from '../../../hooks/useAsync';
 
 const AccountDropdown = () => {

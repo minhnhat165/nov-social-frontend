@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 export function useAsync(func, dependencies = []) {
 	const { execute, ...state } = useAsyncInternal(func, dependencies, true);
@@ -29,7 +29,9 @@ function useAsyncInternal(func, dependencies, initialLoading = false) {
 				return data.data;
 			})
 			.catch((error) => {
-				toast.error(error?.response?.data?.msg || 'something went wrong');
+				toast.error(
+					error?.response?.data?.msg || 'something went wrong'
+				);
 				setError(error);
 				setValue(undefined);
 				return Promise.reject(error);

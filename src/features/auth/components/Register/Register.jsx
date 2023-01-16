@@ -1,4 +1,4 @@
-import { APP_NAME } from 'constant';
+import { APP_NAME } from 'configs';
 import { Link } from 'react-router-dom';
 import { routePaths } from 'routes/routeConfig';
 import RegisterForm from './Form/RegisterForm';

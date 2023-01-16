@@ -4,7 +4,7 @@ import Button from '../../../components/Button/ButtonV2';
 const DialogBoxContent = ({ content, onClose }) => {
 	const [currentSpeech, setCurrentSpeech] = useState(0);
 	return (
-		<div className="w-[80vw] rounded-lg bg-white p-2 text-blue-900 shadow">
+		<div className="w-[80vw] rounded-xl bg-white p-2 text-blue-900 shadow">
 			<span>{content[currentSpeech]}</span>
 			<div className="mt-2 flex justify-end gap-1">
 				{currentSpeech === content.length - 1 ? (

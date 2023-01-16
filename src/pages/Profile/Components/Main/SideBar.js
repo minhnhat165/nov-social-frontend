@@ -23,8 +23,8 @@ const SideBar = () => {
 		<div className="flex w-full flex-col gap-4 pb-4">
 			<div>
 				<div className="relative flex w-full items-center justify-center rounded-xl ">
-					<div className="absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2 bg-primary/50"></div>
-					<span className="button circle relative  border border-primary/50 bg-dark-very-light p-2 px-2 text-center text-xl dark:text-dark-text-regular">
+					<div className="bg-primary/50 absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2"></div>
+					<span className="button circle border-primary/50  relative border bg-dark-very-light p-2 px-2 text-center text-xl dark:text-dark-text-regular">
 						<i className="fa-duotone fa-circle-info"></i>
 					</span>
 				</div>
@@ -32,8 +32,8 @@ const SideBar = () => {
 			</div>
 			<div>
 				<div className="dark:bg-dark-regulars relative flex w-full items-center justify-center rounded-xl">
-					<div className="absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2 bg-primary/50"></div>
-					<span className="button circle relative border border-primary/50 bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
+					<div className="bg-primary/50 absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2"></div>
+					<span className="button circle border-primary/50 relative border bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
 						<i className="fa-duotone fa-image"></i>
 					</span>
 				</div>
@@ -41,15 +41,15 @@ const SideBar = () => {
 			</div>
 			<div>
 				<div className="dark:bg-dark-regulars relative flex w-full items-center justify-center rounded-xl">
-					<div className="absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2 bg-primary/50"></div>
-					<span className="button circle relative border border-primary/50 bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
+					<div className="bg-primary/50 absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2"></div>
+					<span className="button circle border-primary/50 relative border bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
 						<i className="fa-duotone fa-user-group"></i>
 					</span>
 				</div>
 				<div className="mt-4 w-full rounded-xl px-2 pt-4 dark:bg-dark-regular">
 					{followings?.length > 0 && <UserList users={followings} />}
 					<div className="py-2">
-						<div className="cursor-pointer rounded-lg py-3 text-center text-primary transition-all dark:border-dark-border dark:hover:bg-dark-light">
+						<div className="text-primary cursor-pointer rounded-xl py-3 text-center transition-all dark:border-dark-border dark:hover:bg-dark-light">
 							See all followings
 						</div>
 					</div>

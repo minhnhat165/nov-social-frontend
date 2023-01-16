@@ -1,25 +1,24 @@
-// import { useGoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { FacebookIcon, GoogleIcon, TwitterIcon } from 'components/Icon';
 import IconButton from 'components/IconButton';
 import { FACEBOOK_APP_ID } from 'configs';
-import { useFacebookLogin } from 'features/auth/hooks/useFacebookLogin';
-import { useGoogleLogin as useGoogleLoginMutation } from 'features/auth/hooks/useGoogleLogin';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-const SocialLogin = () => {
-	const googleLoginMutation = useGoogleLoginMutation();
-
-	const googleLogin = useGoogleLogin({
+const SocialLogin = ({ onLogin }) => {
+	const responseGoogle = useGoogleLogin({
 		onSuccess: (tokenResponse) => {
-			googleLoginMutation.mutate(tokenResponse.access_token);
+			onLogin({
+				provider: 'google',
+				token: tokenResponse.access_token,
+			});
 		},
 	});
 
-	const facebookLogin = useFacebookLogin();
 	const responseFacebook = (response) => {
-		console.log(response.accessToken);
-		// facebookLogin.mutate(response.accessToken);
+		onLogin({
+			provider: 'facebook',
+			token: response.accessToken,
+		});
 	};
 
 	return (
@@ -33,7 +32,7 @@ const SocialLogin = () => {
 						color="light"
 						size="md"
 						className="border border-gray-200 dark:border-none"
-						onClick={() => googleLogin()}
+						onClick={responseGoogle}
 					>
 						<GoogleIcon />
 					</IconButton>
@@ -61,7 +60,6 @@ const SocialLogin = () => {
 						color="light"
 						size="md"
 						className="border border-gray-200 dark:border-none"
-						onClick={() => googleLogin()}
 					>
 						<TwitterIcon />
 					</IconButton>

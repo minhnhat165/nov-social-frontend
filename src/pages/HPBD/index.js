@@ -148,7 +148,7 @@ const HPBD = () => {
 										)
 									}
 									color="bg-gradient-to-r from-blue-300 to-pink-300 text-white"
-									className="rounded-lg"
+									className="rounded-xl"
 								>
 									{name}
 								</Button>

@@ -29,7 +29,7 @@ const IconButton = ({
 			className={clsx(
 				'flex shrink-0 cursor-pointer items-center justify-center transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-80',
 				variantsColors[variant][color],
-				rounded ? 'rounded-full' : 'rounded-lg',
+				rounded ? 'rounded-full' : 'rounded-xl',
 				sizes[size],
 				className
 			)}

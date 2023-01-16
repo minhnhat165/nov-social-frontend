@@ -5,9 +5,9 @@ const PostMenu = ({ menuItems }) => {
 				<div
 					key={item.title}
 					onClick={item.action}
-					className="group flex cursor-pointer items-center rounded-lg py-3 transition-all hover:dark:bg-dark-very-light"
+					className="group flex cursor-pointer items-center rounded-xl py-3 transition-all hover:dark:bg-dark-very-light"
 				>
-					<div className="flex h-4 w-10 items-center justify-center text-base dark:text-dark-text-regular dark:group-hover:text-primary">
+					<div className="dark:group-hover:text-primary flex h-4 w-10 items-center justify-center text-base dark:text-dark-text-regular">
 						{item.icon}
 					</div>
 					<div className="flex flex-col">

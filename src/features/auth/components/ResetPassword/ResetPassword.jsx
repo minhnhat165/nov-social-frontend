@@ -1,10 +1,11 @@
-import { confirmOtp, resetPassword, sendOtp } from 'api/authApi';
+import { changePassword, forgotPassword, verifyOTP } from 'api/authApi';
 import AnimateSlide from 'components/Animate/AnimateSlide';
 import Button from 'components/Button';
 import { CheckIcon } from 'components/Icon';
 import { AnimatePresence } from 'framer-motion';
-import { useAsyncFn } from 'hooks/useAsync';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useMutation } from 'react-query';
 import ChangePasswordForm from './Form/ChangePasswordForm';
 import EmailForm from './Form/EmailForm';
 import FormDescription from './Form/FormDescription';
@@ -13,9 +14,34 @@ import OtpForm from './Form/OtpForm';
 const ResetPassword = ({ onLogin }) => {
 	const [stepper, setStepper] = useState(0);
 	const [email, setEmail] = useState('');
-	const sendOtpFn = useAsyncFn(sendOtp);
-	const confirmOtpFn = useAsyncFn(confirmOtp);
-	const resetPasswordFn = useAsyncFn(resetPassword);
+	const [verifyToken, setVerifyToken] = useState('');
+	const forgotPasswordMutation = useMutation(forgotPassword, {
+		onSuccess: () => {
+			if (stepper === 0) handleNextStep();
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+
+	const verifyOTPMutation = useMutation(verifyOTP, {
+		onSuccess: (data) => {
+			setVerifyToken(data.verify_token);
+			handleNextStep();
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+
+	const changePasswordMutation = useMutation(changePassword, {
+		onSuccess: () => {
+			handleNextStep();
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
 
 	const handleNextStep = () => {
 		setStepper((prev) => ++prev);
@@ -23,27 +49,18 @@ const ResetPassword = ({ onLogin }) => {
 
 	const handleSendOtp = (data) => {
 		setEmail(data.email);
-		handleNextStep();
-		// sendOtpFn.execute({ email: data.email }).then(() => {
-		// 	handleNextStep();
-		// });
+		forgotPasswordMutation.mutate(data.email);
 	};
 
 	const handleConfirmOtp = (data) => {
-		handleNextStep();
-		// confirmOtpFn.execute({ email: email, otp: data }).then(() => {
-		// 	handleNextStep();
-		// });
+		verifyOTPMutation.mutate({ email: email, otp: data });
 	};
 
 	const handleResetPassword = (data) => {
-		handleNextStep();
-
-		resetPasswordFn
-			.execute({ email: email, password: data.password })
-			.then(() => {
-				// handleNextStep();
-			});
+		changePasswordMutation.mutate({
+			password: data.password,
+			verifyToken: verifyToken,
+		});
 	};
 
 	return (
@@ -56,7 +73,7 @@ const ResetPassword = ({ onLogin }) => {
 					{stepper === 0 && (
 						<AnimateSlide disabled>
 							<EmailForm
-								isLoading={sendOtpFn.loading}
+								isLoading={forgotPasswordMutation.isLoading}
 								onSubmit={handleSendOtp}
 							/>
 						</AnimateSlide>
@@ -64,7 +81,10 @@ const ResetPassword = ({ onLogin }) => {
 					{stepper === 1 && (
 						<AnimateSlide>
 							<OtpForm
-								isLoading={confirmOtpFn.loading}
+								isLoading={verifyOTPMutation.isLoading}
+								onResend={() =>
+									forgotPasswordMutation.mutate(email)
+								}
 								onSubmit={handleConfirmOtp}
 							/>
 						</AnimateSlide>
@@ -72,7 +92,7 @@ const ResetPassword = ({ onLogin }) => {
 					{stepper === 2 && (
 						<AnimateSlide>
 							<ChangePasswordForm
-								isLoading={resetPasswordFn.loading}
+								isLoading={changePasswordMutation.isLoading}
 								onSubmit={handleResetPassword}
 							/>
 						</AnimateSlide>

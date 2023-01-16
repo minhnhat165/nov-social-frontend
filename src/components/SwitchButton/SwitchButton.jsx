@@ -26,9 +26,16 @@ const SwitchButton = ({
 				checked ? 'justify-end' : '',
 				className
 			)}
-			onClick={() => onChange(!checked)}
+			onClick={(e) => {
+				e.stopPropagation();
+				onChange(!checked);
+			}}
 		>
 			<motion.div
+				onClick={(e) => {
+					e.stopPropagation();
+					onChange(!checked);
+				}}
 				layout
 				variants={variants}
 				animate={checked ? 'left' : 'right'}

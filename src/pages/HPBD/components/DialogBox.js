@@ -67,7 +67,7 @@ const DialogBox = ({ step = 0, setEnd }) => {
 				hideOnClickParent
 				placement="top"
 				render={
-					<div className="w-[80vw] rounded-lg bg-white p-2 text-blue-900 shadow md:max-w-[300px]">
+					<div className="w-[80vw] rounded-xl bg-white p-2 text-blue-900 shadow md:max-w-[300px]">
 						<span>{scenes[currentSceneId]}</span>
 						<div className="mt-2 flex justify-end gap-1">
 							{currentSceneId === scenes.length - 1 ? (
