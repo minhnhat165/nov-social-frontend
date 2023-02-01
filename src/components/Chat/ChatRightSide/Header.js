@@ -1,4 +1,4 @@
-import Avatar from '../../Avatar';
+import Avatar from '../../DataDisplay/Avatar';
 
 const Header = ({ conversation }) => {
 	return (

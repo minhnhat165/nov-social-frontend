@@ -1,6 +1,6 @@
 import { changePassword, forgotPassword, verifyOTP } from 'api/authApi';
 import AnimateSlide from 'components/Animate/AnimateSlide';
-import Button from 'components/Button';
+import Button from 'components/Action/Button';
 import { CheckIcon } from 'components/Icon';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';

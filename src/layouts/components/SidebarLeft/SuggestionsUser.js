@@ -5,7 +5,7 @@ import { getSuggestionsUser } from '../../../api/userApi';
 import AccountFollowButton from '../../../components/OldVer/AccountFollowButton';
 import FadeInZoom from '../../../components/Animate/FadeInZoom';
 import Box from '../../../components/Box';
-import AccountQuickViewLoading from '../../../components/SkeletonLoading/AccountQuickViewLoading';
+import AccountQuickViewLoading from '../../../components/Loading/SkeletonLoading/AccountQuickViewLoading';
 import routes from '../../../configs/routes';
 import { useAsync } from '../../../hooks/useAsync';
 

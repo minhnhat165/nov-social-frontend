@@ -1,19 +1,18 @@
+import { removeAccount } from 'api/authApi';
+import { setLinkedAccounts } from 'store/slices/authSlice';
 import { toast } from 'react-hot-toast';
-const { removeAccount } = require('api/authApi');
-const { useMutation } = require('react-query');
-const { useDispatch } = require('react-redux');
-const { updateUser } = require('store/slices/authSlice');
+import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 
 const useRemoveAccount = () => {
 	const dispatch = useDispatch();
 
 	return useMutation(removeAccount, {
-		onSuccess: ({ user }) => {
-			dispatch(updateUser(user));
+		onSuccess: ({ linkedAccounts }) => {
+			dispatch(setLinkedAccounts(linkedAccounts));
 			toast.success('Account removed successfully');
 		},
 		onError: (error) => {
-			console.log(error);
 			toast.error(error.message);
 		},
 	});

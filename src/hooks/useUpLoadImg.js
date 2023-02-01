@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import getImageFileCompression from 'utils/getImageFileCompression';
 
+export const initialValueUploadImgType = {
+	FILE: 'file',
+	STRING: 'string',
+};
+
 function useUploadImg(initialValue, handleUpLoadCallback = () => {}) {
 	const [imagePreview, setImagePreview] = useState();
 	useEffect(() => {
@@ -11,7 +16,14 @@ function useUploadImg(initialValue, handleUpLoadCallback = () => {}) {
 	}, [imagePreview]);
 
 	useEffect(() => {
-		if (initialValue?.length > 0) {
+		if (initialValue?.type === initialValueUploadImgType.STRING) {
+			setImagePreview(initialValue.value);
+			return;
+		}
+		if (
+			initialValue?.type === initialValueUploadImgType.FILE &&
+			initialValue?.length > 0
+		) {
 			setImagePreview(URL.createObjectURL(initialValue[0]));
 		}
 	}, [initialValue]);

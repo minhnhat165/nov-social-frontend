@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { getPostsByUserId } from '../../../../api/postApi';
 import PostList from '../../../../components/Post/PostList';
-import PostCardLoading from '../../../../components/SkeletonLoading/PostCardLoading';
+import PostCardLoading from '../../../../components/Loading/SkeletonLoading/PostCardLoading';
 import { usePostListContext } from '../../../../contexts/PostListContext';
 import { useAsyncFn } from '../../../../hooks/useAsync';
 

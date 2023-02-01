@@ -1,19 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { followUser } from '../../api/userApi';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	user: null,
 	accessToken: null,
 	isLogin: false,
 };
-
-export const toggleFollow = createAsyncThunk(
-	'auth/toggleFollow',
-	async (userId, thunkAPI) => {
-		const response = await followUser(userId);
-		return response.data;
-	}
-);
 
 const authSlice = createSlice({
 	name: 'auth',
@@ -25,7 +16,21 @@ const authSlice = createSlice({
 			state.isLogin = true;
 		},
 		setUser: (state, action) => {
-			state.user = action.payload;
+			const user = action.payload;
+			const hasLinkedAccountsNotify = user?.linkedAccounts?.some(
+				(account) => account.notificationsCount > 0
+			);
+			user.hasLinkedAccountsNotify = hasLinkedAccountsNotify;
+			state.user = user;
+		},
+
+		setLinkedAccounts: (state, action) => {
+			const linkedAccounts = action.payload;
+			const hasLinkedAccountsNotify = linkedAccounts?.some(
+				(account) => account.notificationsCount > 0
+			);
+			state.user.hasLinkedAccountsNotify = hasLinkedAccountsNotify;
+			state.user.linkedAccounts = linkedAccounts;
 		},
 
 		updateUser: (state, action) => {
@@ -46,11 +51,6 @@ const authSlice = createSlice({
 			state.isLogin = false;
 		},
 	},
-	extraReducers: (builder) => {
-		builder.addCase(toggleFollow.fulfilled, (state, action) => {
-			state.user.following = action.payload.user.following;
-		});
-	},
 });
 
 export const {
@@ -58,6 +58,7 @@ export const {
 	setCredentials,
 	setAccessToken,
 	setUser,
+	setLinkedAccounts,
 	login,
 	updateUser,
 } = authSlice.actions;

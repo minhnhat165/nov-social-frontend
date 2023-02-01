@@ -1,5 +1,5 @@
 import { checkEmailExists } from 'api/authApi';
-import InputField from 'components/FormElement/InputField';
+import InputField from 'components/DataEntry/InputField';
 import { useEffect } from 'react';
 
 export const AccountForm = ({

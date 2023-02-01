@@ -1,8 +1,9 @@
-import ModalTrigger from 'components/ModalTrigger';
 import { APP_NAME } from 'configs';
 import LoginForm from './Login/Form/LoginForm';
-import SocialLogin from './Login/SocialLogin';
+import Modal from 'components/OverLay/Modal';
 import ResetPassword from './ResetPassword';
+import SocialLogin from './Login/SocialLogin';
+
 const EnterAccount = ({ title, footer, onSubmit, loading, onSocialLogin }) => {
 	return (
 		<div className="prose flex h-full flex-col bg-light-50 dark:bg-dark-800 lg:prose-lg">
@@ -15,22 +16,13 @@ const EnterAccount = ({ title, footer, onSubmit, loading, onSocialLogin }) => {
 				</span>
 			</div>
 			<LoginForm onSubmit={onSubmit} loading={loading} />
-
-			<ModalTrigger
-				trigger={
-					<div className="mb-3 text-center text-base">
-						<span className="cursor-pointer text-base text-primary-700 hover:text-primary-800 dark:text-primary-600 dark:hover:text-primary-700">
-							Forgot password?
-						</span>
-					</div>
-				}
-			>
-				{(setShow) => <ResetPassword onLogin={() => setShow(false)} />}
-			</ModalTrigger>
+			<ForgotPassword />
 			{footer}
 		</div>
 	);
 };
+
+export default EnterAccount;
 
 const Header = ({ content }) => {
 	return (
@@ -40,4 +32,29 @@ const Header = ({ content }) => {
 	);
 };
 
-export default EnterAccount;
+function ForgotPassword() {
+	return (
+		<Modal.Control>
+			<Modal.Trigger>
+				<div className="mb-3 text-center text-base">
+					<span className="cursor-pointer text-base text-primary-700 hover:text-primary-800 dark:text-primary-600 dark:hover:text-primary-700">
+						Forgot password?
+					</span>
+				</div>
+			</Modal.Trigger>
+			<Modal>
+				<Modal.Close />
+				<Modal.Props>
+					{({ onClose }) => (
+						<Modal.Panel>
+							<Modal.Panel.Header></Modal.Panel.Header>
+							<div className="px-4 pb-4">
+								<ResetPassword onSuccess={onClose} />
+							</div>
+						</Modal.Panel>
+					)}
+				</Modal.Props>
+			</Modal>
+		</Modal.Control>
+	);
+}

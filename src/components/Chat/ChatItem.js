@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useConversation } from '../../contexts/ConversationContext';
-import Avatar from '../Avatar';
+import Avatar from '../DataDisplay/Avatar';
 import Button from '../ButtonOld';
 import DiffTime from '../DiffTime';
 import TagText from '../TagText';

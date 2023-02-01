@@ -1,4 +1,4 @@
-import Avatar from '../../Avatar';
+import Avatar from '../../DataDisplay/Avatar';
 import Button from '../../ButtonOld';
 
 const Header = ({ conversation, onShowSideBar }) => {

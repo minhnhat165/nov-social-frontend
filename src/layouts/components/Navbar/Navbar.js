@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Tooltip from '../../../components/Tooltip';
+import Tooltip from '../../../components/OverLay/Tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const menuItem = [

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import Button from '../../../components/ButtonOld/ButtonV2';
-import Popover from '../../../components/Popover';
+import Popover from '../../../components/OverLay/Popover';
 
 const speeches = {
 	0: [

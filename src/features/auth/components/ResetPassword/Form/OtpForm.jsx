@@ -1,5 +1,5 @@
-import Button from 'components/Button';
-import NumberField from 'components/FormElement/NumberField';
+import Button from 'components/Action/Button';
+import NumberField from 'components/DataEntry/NumberField';
 import { ShieldCheckIcon } from 'components/Icon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

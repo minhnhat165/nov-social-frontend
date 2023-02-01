@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Avatar from '../../../components/Avatar';
+import Avatar from '../../../components/DataDisplay/Avatar';
 import ChatSide from '../../../components/Chat/ChatSide';
-import Popover from '../../../components/Popover';
-import Tooltip from '../../../components/Tooltip';
+import Popover from '../../../components/OverLay/Popover';
+import Tooltip from '../../../components/OverLay/Tooltip';
 import ChatProvider from '../../../contexts/ChatContext';
 import AccountDropdown from '../AccountDropdown';
 import WidgetNotification from '../../../components/WidgetNotification';

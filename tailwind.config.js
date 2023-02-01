@@ -88,6 +88,7 @@ module.exports = {
 			},
 			boxShadow: {
 				'3xl': '0 12px 28px 0 rgb(0,0,0,0.2), 0 2px 4px 0 rgb(0,0,0,0.1)',
+				'4xl': '0 12px 28px 0 rgb(0,0,0,0.2), 0 2px 4px 0 rgb(0,0,0,0.1)',
 			},
 		},
 	},

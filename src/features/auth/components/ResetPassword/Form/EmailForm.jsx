@@ -1,6 +1,6 @@
-import Button from 'components/Button';
-import Form from 'components/FormElement/Form';
-import InputField from 'components/FormElement/InputField';
+import Button from 'components/Action/Button';
+import Form from 'components/DataEntry/Form';
+import InputField from 'components/DataEntry/InputField';
 import { MailIcon } from 'components/Icon';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -18,7 +18,7 @@ const EmailForm = (props) => {
 	return (
 		<>
 			<FormDescription
-				icon={<MailIcon className="text-2xl text-red-400" />}
+				icon={<MailIcon className="text-red-400" />}
 				description="Enter the email address associated with your account, we will
 				send a verification code to your email"
 			/>

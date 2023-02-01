@@ -1,6 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { FacebookIcon, GoogleIcon, TwitterIcon } from 'components/Icon';
-import IconButton from 'components/IconButton';
+import IconButton from 'components/Action/IconButton';
 import { FACEBOOK_APP_ID } from 'configs';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
@@ -50,7 +50,7 @@ const SocialLogin = ({ onLogin }) => {
 								size="md"
 								className="border border-gray-200 dark:border-none"
 							>
-								<FacebookIcon />
+								<FacebookIcon className="h-8 w-8" />
 							</IconButton>
 						)}
 					/>

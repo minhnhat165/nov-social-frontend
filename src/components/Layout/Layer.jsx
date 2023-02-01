@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 
 const levels = {
 	0: 'bg-white dark:bg-dark-900',
@@ -8,12 +9,18 @@ const levels = {
 	4: 'bg-slate-300 dark:bg-dark-500',
 };
 
-const Layer = ({ level = 1, className, children }) => {
-	return (
-		<div className={clsx('rounded-xl', levels[level], className)}>
-			{children}
-		</div>
-	);
-};
+const Layer = forwardRef(
+	({ level = 1, className, children, ...props }, ref) => {
+		return (
+			<div
+				ref={ref}
+				{...props}
+				className={clsx('rounded-xl', levels[level], className)}
+			>
+				{children}
+			</div>
+		);
+	}
+);
 
 export default Layer;

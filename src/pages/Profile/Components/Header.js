@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import Modal from 'components/OverLay/Modal';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from '../../../components/ButtonOld';
-import Img from '../../../components/Img';
-import Modal from '../../../components/Modal';
-import CoverPhotoUpLoad from './CoverPhotoUpLoad';
-import ProfileEditForm from './Main/ProfileEditForm';
+import { Button } from 'stories/Button';
 
 const Header = ({ isUser }) => {
-	const user = useSelector((state) => state.profile.user);
+	const user = useSelector((state) => state.auth.user);
 	const [showProfileEditForm, setShowProfileEditForm] = useState(false);
 	return (
 		<div className="pb-0s p-2s dark:bg-dark-regulars w-full rounded-xl">
 			<div className="h-[328px] w-full overflow-hidden rounded-xl bg-blue-500">
 				{isUser ? (
-					<CoverPhotoUpLoad img={user?.cover} />
+					<></>
 				) : (
-					<Img src={user?.cover} className="w-full object-cover" />
+					// <Img src={user?.cover} className="w-full object-cover" />
+					<div></div>
 				)}
 			</div>
 			<div className="relative flex h-14 w-full justify-between pt-2">
@@ -31,11 +29,11 @@ const Header = ({ isUser }) => {
 				<div className="flex justify-evenly">
 					<div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-dark-very-light">
 						<div className="relative h-28 w-28 overflow-hidden rounded-full">
-							<Img
+							{/* <Img
 								clickAble
 								src={user?.avatar}
 								className="w-full object-cover"
-							/>
+							/> */}
 						</div>
 					</div>
 				</div>
@@ -95,7 +93,7 @@ const Header = ({ isUser }) => {
 					</div>
 					<div className="flex flex-col items-center">
 						<span className="text-lg font-bold dark:text-dark-text-bold">
-							{user?.followers.length}
+							{user?.followers?.length}
 						</span>{' '}
 						<span className="text-sm leading-3 dark:text-dark-text-regular">
 							{' '}
@@ -105,7 +103,7 @@ const Header = ({ isUser }) => {
 				</div>
 			</div>
 			<Modal show={showProfileEditForm} setShow={setShowProfileEditForm}>
-				<ProfileEditForm user={user} />
+				{/* <ProfileEditForm user={user} /> */}
 			</Modal>
 		</div>
 	);

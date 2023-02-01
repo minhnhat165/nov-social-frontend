@@ -1,25 +1,52 @@
-import Button from 'components/Button';
-import ModalTrigger from 'components/ModalTrigger';
-import Text from 'components/Text';
+import {
+	ArrowLeftIcon,
+	BellIcon,
+	CircleCheckIcon,
+	XCircleIcon,
+} from 'components/Icon';
+
 import AddExistingAccount from 'features/auth/components/AddExistingAccount';
+import Button from 'components/Action/Button';
+import Modal from 'components/OverLay/Modal';
+import Text from 'components/Typography/Text';
+import UserItem from './UserItem';
+import clsx from 'clsx';
+import useGoToProfile from '../hooks/useGoToProfile';
 import useRemoveAccount from 'features/auth/hooks/useRemoveAccount';
 import { useSelector } from 'react-redux';
-import AccountItems from './AccountItems';
+import { useState } from 'react';
+import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
 
 const ManageAccounts = () => {
-	const user = useSelector((state) => state.auth.user);
+	const { linkedAccounts, ...user } = useSelector((state) => {
+		return {
+			_id: state.auth.user._id,
+			name: state.auth.user.name,
+			avatar: state.auth.user.avatar,
+			email: state.auth.user.email,
+			linkedAccounts: state.auth.user.linkedAccounts,
+		};
+	});
 	const removeAccount = useRemoveAccount();
+	const goToProfile = useGoToProfile();
+	const switchAccount = useSwitchAccount();
+
 	return (
-		<div className="w-[500px] max-w-full">
-			<h2 className="mb-4 text-xl font-medium leading-6 text-gray-900 dark:text-dark-100">
-				Manage Linked Account
-			</h2>
-			<AccountItems user={user} isActive size="xl" />
-			{user.linkedAccounts?.length > 0 &&
-				user.linkedAccounts.map((account) => (
-					<AccountItems
+		<div className="w-[500px] max-w-full px-4">
+			<UserItem
+				user={user}
+				size="xl"
+				end={
+					<CircleCheckIcon className="ml-auto text-lg text-primary-700 dark:text-primary-500" />
+				}
+				onClick={() => goToProfile(user._id)}
+			/>
+			{linkedAccounts?.length > 0 &&
+				linkedAccounts.map((account) => (
+					<AccountItem
 						key={account._id}
 						user={account}
+						onClick={() => switchAccount.mutate(account._id)}
 						onRemove={(id) => {
 							removeAccount.mutate(id);
 						}}
@@ -28,17 +55,26 @@ const ManageAccounts = () => {
 				))}
 
 			<div className="mt-4 -ml-4">
-				<ModalTrigger
-					trigger={
+				<Modal.Control>
+					<Modal.Trigger>
 						<Button variant="text" size="md">
 							Add an existing Account
 						</Button>
-					}
-				>
-					{(setShow) => (
-						<AddExistingAccount onSuccess={() => setShow(false)} />
-					)}
-				</ModalTrigger>
+					</Modal.Trigger>
+					<Modal>
+						<Modal.Close>
+							<ArrowLeftIcon />
+						</Modal.Close>
+						<Modal.Props>
+							{({ onClose }) => (
+								<Modal.Panel>
+									<Modal.Panel.Header />
+									<AddExistingAccount onSuccess={onClose} />
+								</Modal.Panel>
+							)}
+						</Modal.Props>
+					</Modal>
+				</Modal.Control>
 			</div>
 			<div className="mt-2 p-2">
 				<Text as="p" className="text-[15px]">
@@ -46,6 +82,51 @@ const ManageAccounts = () => {
 					easily switch between. You can add up to 5 accounts.
 				</Text>
 			</div>
+		</div>
+	);
+};
+
+const AccountItem = ({ user, onRemove, onClick, size }) => {
+	const [showX, setShowX] = useState(false);
+
+	return (
+		<div
+			onMouseEnter={() => setShowX(true)}
+			onMouseLeave={() => setShowX(false)}
+		>
+			<UserItem
+				user={user}
+				size={size}
+				onClick={onClick}
+				end={
+					<div
+						className={clsx(
+							'ml-auto flex items-center transition-all duration-500 ease-in-out',
+							showX ? 'mr-0' : '-mr-9'
+						)}
+					>
+						{user?.notificationsCount > 0 && (
+							<div className="relative flex h-10 items-center justify-center">
+								<BellIcon className="h-7 w-7 text-primary-700 dark:text-primary-500" />
+								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
+									<span className="text-sm font-bold text-dark-50">
+										{user?.notificationsCount}
+									</span>
+								</div>
+							</div>
+						)}
+						<div className="ml-4">
+							<XCircleIcon
+								onClick={(e) => {
+									e.stopPropagation();
+									onRemove(user._id);
+								}}
+								className="h-6 w-6 text-slate-600 hover:text-slate-900 active:scale-95 active:text-slate-700 dark:text-dark-300 dark:hover:text-dark-100 dark:active:text-dark-200"
+							/>
+						</div>
+					</div>
+				}
+			/>
 		</div>
 	);
 };

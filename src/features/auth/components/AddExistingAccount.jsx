@@ -1,17 +1,18 @@
-import { useAddAccount } from '../hooks/useAddAccount';
-import { useSocialAddAccount } from '../hooks/useSocialAddAccount';
+import { addAccount, socialAddAccount } from 'api/authApi';
+
 import EnterAccount from './EnterAccount';
+import { useAddAccount } from '../hooks/useAddAccount';
 
 const AddExistingAccount = ({ onSuccess }) => {
-	const addAccount = useAddAccount({ onSuccess });
-	const socialAddAccount = useSocialAddAccount({ onSuccess });
+	const { mutate, isLoading } = useAddAccount({ onSuccess });
+
 	return (
-		<div className=" h-[80vh] w-[500px] px-16">
+		<div className="w-[500px] px-16 pb-4">
 			<EnterAccount
 				title={'Add Existing Account'}
-				onSubmit={addAccount.mutate}
-				loading={addAccount.isLoading}
-				onSocialLogin={socialAddAccount.mutate}
+				onSubmit={(data) => mutate(addAccount(data))}
+				loading={isLoading}
+				onSocialLogin={(data) => mutate(socialAddAccount(data))}
 			/>
 		</div>
 	);

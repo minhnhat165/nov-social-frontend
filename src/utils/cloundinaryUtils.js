@@ -2,6 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 export const uploadImage = async (file, folder = 'nov-social') => {
+	if (!file) return;
 	const data = new FormData();
 	data.append('file', file);
 	data.append(

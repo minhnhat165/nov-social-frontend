@@ -1,14 +1,14 @@
-import Button from 'components/Button';
-import Form from 'components/FormElement/Form';
+import Button from 'components/Action/Button';
+import Form from 'components/DataEntry/Form';
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	FlagIcon,
 	ImageIcon,
-	LockIcon,
+	LockClosedIcon,
 	UserIcon,
 } from 'components/Icon';
-import Stepper from 'components/Stepper';
+import Stepper from 'components/Navigation/Stepper';
 import { useRegister } from 'features/auth/hooks/useRegister';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -64,7 +64,7 @@ const steps = [
 	{
 		id: 0,
 		title: 'Account',
-		icon: <LockIcon />,
+		icon: <LockClosedIcon />,
 	},
 	{
 		id: 1,

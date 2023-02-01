@@ -1,14 +1,19 @@
 import { ChevronRightIcon, LanguageIcon, MoonIcon } from 'components/Icon';
-import MenuItem from 'components/MenuItem';
-import SwitchDarkMode from 'components/SwitchDarkMode/SwitchDarkMode';
+import IconWrapper from 'components/Icon/IconWrapper';
+import MenuItem from 'components/Navigation/MenuItem';
+import SwitchDarkMode from 'components/Action/SwitchDarkMode/SwitchDarkMode';
 
 const SettingActionMenu = () => {
 	return (
 		<>
 			<MenuItem
-				icon={<LanguageIcon className="text-xl" />}
+				icon={<LanguageIcon />}
 				title={'English'}
-				end={<ChevronRightIcon />}
+				end={
+					<IconWrapper>
+						<ChevronRightIcon />
+					</IconWrapper>
+				}
 			/>
 			<MenuItem
 				icon={<MoonIcon className="text-xl" />}

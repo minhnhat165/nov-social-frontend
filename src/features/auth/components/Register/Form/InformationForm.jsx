@@ -1,6 +1,6 @@
-import InputDateField from 'components/FormElement/InputDateField';
-import InputField from 'components/FormElement/InputField';
-import RadioGroup from 'components/FormElement/RadioGroup';
+import InputDateField from 'components/DataEntry/InputDateField';
+import InputField from 'components/DataEntry/InputField';
+import RadioGroup from 'components/DataEntry/RadioGroup';
 
 const InformationForm = ({ register, setValue, errors, getValues }) => {
 	return (

@@ -1,11 +1,15 @@
-import MainLayout from 'components/Layout/MainLayout';
-import Home from 'features/home/pages/Home';
-import Components from 'pages/Components';
-import NotFound from 'pages/NotFound';
-import { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+
+import Components from 'pages/Lab';
+import Game from 'pages/Game/Game';
+import Home from 'features/home/pages/Home';
+import MainLayout from 'components/Layout/MainLayout';
+import NotFound from 'pages/NotFound';
 import PrivateRoute from './PrivateRoute';
+import ProfileRoute from 'pages/Profile/route';
+import { useSelector } from 'react-redux';
+
 const AuthRoutes = lazy(() => import('features/auth/routes'));
 
 const AppRoute = () => {
@@ -13,7 +17,7 @@ const AppRoute = () => {
 	return (
 		<Suspense>
 			<Routes>
-				<Route path="/auth/*" element={<AuthRoutes />}></Route>
+				<Route path="/auth/*" element={<AuthRoutes />} />
 				<Route path="/" element={<MainLayout />}>
 					<Route element={<PrivateRoute isLogin={isLogin} />}>
 						<Route path="/" element={<Home />} />
@@ -21,9 +25,9 @@ const AppRoute = () => {
 						<Route path="/chat" element={<h1>Home</h1>} />
 						<Route path="/videos" element={<h1>Home</h1>} />
 						<Route path="/friends" element={<h1>Home</h1>} />
-						<Route path="/profile" element={<h1>Home</h1>} />
-						<Route path="/games" element={<h1>Home</h1>} />
+						<Route path="/games" element={<Game />} />
 					</Route>
+					<Route path="/profile/*" element={<ProfileRoute />} />
 					<Route path="/lab" element={<Components />} />
 				</Route>
 				<Route path="*" element={<NotFound />} />

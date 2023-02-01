@@ -2,7 +2,7 @@ import { formatRelative } from 'date-fns';
 import { AnimatePresence } from 'framer-motion';
 import { memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Avatar from '../../Avatar';
+import Avatar from '../../DataDisplay/Avatar';
 import TagText from '../../TagText';
 import MessageCard from './MessageCard';
 
@@ -29,50 +29,65 @@ const GroupMessage = ({ groupedMessages }) => {
 					)}
 				</div>
 			) : (
-				<div className={`mt-2 flex items-start gap-2 ${isUser ? '' : ''}`}>
+				<div
+					className={`mt-2 flex items-start gap-2 ${
+						isUser ? '' : ''
+					}`}
+				>
 					{!isUser && <Avatar url={groupedMessages.sender.avatar} />}
 					<div
 						className={`flex w-full flex-col ${
 							isUser ? 'items-end' : 'items-start'
 						}`}
 					>
-						<span className="text-[13px] text-dark-text-light">{time}</span>
+						<span className="text-[13px] text-dark-text-light">
+							{time}
+						</span>
 						<div
 							className={`flex w-full flex-col gap-[0.0938rem] ${
 								isUser ? 'items-end' : 'items-start'
 							}`}
 						>
 							<AnimatePresence>
-								{groupedMessages.messages.map((message, index) => {
-									const borderRadius = () => {
-										const isStart = index === 0;
-										if (isStart && isUser) {
-											return 'rounded-br-[3px]';
-										}
-										const isEnd = index === groupedMessages.messages.length - 1;
-										if (isEnd && isUser) {
-											return 'rounded-tr-[3px]';
-										}
-										if (isEnd && !isUser) {
-											return 'rounded-tl-[3px]';
-										}
-										if (!isEnd && !isUser) {
-											return 'rounded-l-[3px]';
-										}
-										if (!isEnd && isUser) {
-											return 'rounded-r-[3px]';
-										}
-									};
-									const borderRadiusStyle = borderRadius();
-									return (
-										<MessageCard
-											key={message._id}
-											message={message}
-											borderRadiusStyle={borderRadiusStyle}
-											isUser={isUser}
-										/>
-									);
-								})}
+								{groupedMessages.messages.map(
+									(message, index) => {
+										const borderRadius = () => {
+											const isStart = index === 0;
+											if (isStart && isUser) {
+												return 'rounded-br-[3px]';
+											}
+											const isEnd =
+												index ===
+												groupedMessages.messages
+													.length -
+													1;
+											if (isEnd && isUser) {
+												return 'rounded-tr-[3px]';
+											}
+											if (isEnd && !isUser) {
+												return 'rounded-tl-[3px]';
+											}
+											if (!isEnd && !isUser) {
+												return 'rounded-l-[3px]';
+											}
+											if (!isEnd && isUser) {
+												return 'rounded-r-[3px]';
+											}
+										};
+										const borderRadiusStyle =
+											borderRadius();
+										return (
+											<MessageCard
+												key={message._id}
+												message={message}
+												borderRadiusStyle={
+													borderRadiusStyle
+												}
+												isUser={isUser}
+											/>
+										);
+									}
+								)}
 							</AnimatePresence>
 						</div>
 					</div>

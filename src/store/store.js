@@ -7,6 +7,7 @@ import profileReducer from './slices/profileSlice';
 import socketReducer from './slices/socketSlice';
 import notificationReducer from './slices/notificationSlice';
 import settingReducer from './slices/settingSlice';
+import searchHistoryReducer from './slices/searchHistorySlice';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	profile: profileReducer,
 	notification: notificationReducer,
 	setting: settingReducer,
+	searchHistory: searchHistoryReducer,
 });
 
 const persistConfig = {

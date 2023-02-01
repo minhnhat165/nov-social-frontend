@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Avatar from '../Avatar';
+import Avatar from '../DataDisplay/Avatar';
 import TypingIcon from '../Icon/TypingIcon';
 
 const ChatTyping = ({ conversationId }) => {

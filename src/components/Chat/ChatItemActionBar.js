@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useConversation } from '../../contexts/ConversationContext';
 import AnimationWrapper from '../Animate/AnimationWrapper';
 import { verticalResize } from '../Animate/variants';
-import Tooltip from '../Tooltip';
+import Tooltip from '../OverLay/Tooltip';
 
 const ChatItemActionBar = ({ conversation }) => {
 	const userId = useSelector((state) => state.auth.user._id);
@@ -55,9 +55,14 @@ const ChatItemActionBar = ({ conversation }) => {
 
 	return (
 		<AnimationWrapper animation={verticalResize}>
-			<div className="flex justify-between p-4 text-primary">
+			<div className="text-primary flex justify-between p-4">
 				{items.map((item) => (
-					<Tooltip content={item.title} placement="top" arrow key={item.title}>
+					<Tooltip
+						content={item.title}
+						placement="top"
+						arrow
+						key={item.title}
+					>
 						<div
 							key={items.title}
 							onClick={(e) => {

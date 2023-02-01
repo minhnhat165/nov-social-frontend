@@ -1,6 +1,6 @@
-import Button from 'components/Button';
-import Form from 'components/FormElement/Form';
-import InputField from 'components/FormElement/InputField';
+import Button from 'components/Action/Button';
+import Form from 'components/DataEntry/Form';
+import InputField from 'components/DataEntry/InputField';
 import React from 'react';
 import { useId } from 'react';
 import * as yup from 'yup';

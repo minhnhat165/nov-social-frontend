@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import Button from 'components/Button';
+import Button from 'components/Action/Button';
 import TextGradient from 'components/Effect/TextGradient';
-import Modal from 'components/Modal';
+import Modal from 'components/OverLay/Modal';
 import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { routePaths } from 'routes/routeConfig';

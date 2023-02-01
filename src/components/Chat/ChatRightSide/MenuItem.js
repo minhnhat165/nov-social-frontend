@@ -18,7 +18,7 @@ const MenuItem = ({ item }) => {
 				onClick={() => setShowSubMenu((prev) => !prev)}
 			>
 				<div className="flex w-8 items-center justify-center text-xl leading-[0] dark:text-dark-text-bold">
-					{item.icon}
+					<div className="h-6 w-6">{item.icon}</div>
 				</div>
 				<span className="dark:text-dark-text-regular dark:group-hover:text-dark-text-bold">
 					{item.title}

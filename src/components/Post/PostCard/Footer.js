@@ -18,9 +18,9 @@ import { useComment } from '../../Comment/CommentContext';
 import CommentCreate from '../../Comment/CommentCreate';
 import CommentList from '../../Comment/CommentList';
 import ShowModalUserList from '../../ShowModalUserList';
-import { SpinnerV2 } from '../../Spinner';
+import { SpinnerV2 } from '../../Loading/Spinner';
 
-import Tooltip from '../../Tooltip';
+import Tooltip from '../../OverLay/Tooltip';
 
 const Footer = ({ post }) => {
 	const socket = useSelector((state) => state.socket.socket);
@@ -123,12 +123,12 @@ const Footer = ({ post }) => {
 					list={usersComment}
 					onClick={handleShowUsersComment}
 				>
-					<span className="cursor-pointer rounded p-1 hover:bg-primary/20">
+					<span className="hover:bg-primary/20 cursor-pointer rounded p-1">
 						<span>{totalComment}</span>{' '}
 						<i className="fa-solid fa-comment text-green-500"></i>
 					</span>{' '}
 				</ShowModalUserList>
-				<span className="cursor-pointer rounded p-1 hover:bg-primary/20">
+				<span className="hover:bg-primary/20 cursor-pointer rounded p-1">
 					<span className="hover:text-primary"> 2</span>{' '}
 					<i className="fa-solid fa-share text-primary"></i>
 				</span>{' '}
@@ -137,7 +137,7 @@ const Footer = ({ post }) => {
 					list={usersLike}
 					onClick={handleShowUsersLike}
 				>
-					<span className="cursor-pointer rounded p-1 hover:bg-primary/20">
+					<span className="hover:bg-primary/20 cursor-pointer rounded p-1">
 						<span>{post.likes.length}</span>{' '}
 						<i className="fa-solid fa-heart heart relative z-10 text-red-500"></i>
 					</span>

@@ -6,8 +6,8 @@ import { useAsyncFn } from '../../../hooks/useAsync';
 import AccountQuickView from '../../AccountQuickView';
 import ConfirmBox from '../../ConfirmBox';
 import DiffTime from '../../DiffTime';
-import Modal from '../../Modal';
-import Popover from '../../Popover/Popover';
+import Modal from '../../OverLay/Modal';
+import Popover from '../../OverLay/Popover/Popover';
 import PostForm, { formTypes } from '../PostForm';
 import PostMenu from '../PostMenu';
 

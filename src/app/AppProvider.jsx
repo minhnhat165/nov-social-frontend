@@ -1,17 +1,17 @@
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import Button from 'components/Button';
-import { GOOGLE_CLIENT_ID } from 'configs';
-import { queryClient } from 'configs/reactQueryConfig';
-import ToasterClient from 'configs/toasterConfig';
-import { ErrorBoundary } from 'react-error-boundary';
-import { HelmetProvider } from 'react-helmet-async';
-import { QueryClientProvider } from 'react-query';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { persistStore } from 'redux-persist';
+import Button from 'components/Action/Button';
+import { ErrorBoundary } from 'react-error-boundary';
+import { GOOGLE_CLIENT_ID } from 'configs';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { HelmetProvider } from 'react-helmet-async';
 import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { QueryClientProvider } from 'react-query';
+import ToasterClient from 'configs/toasterConfig';
+import { persistStore } from 'redux-persist';
+import { queryClient } from 'configs/reactQueryConfig';
 import store from 'store';
-import 'react-tooltip/dist/react-tooltip.css';
+
 const AppProvider = ({ children }) => {
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { getMessages } from '../../../api/chatApi';
 import { useAsyncFn } from '../../../hooks/useAsync';
-import { Spinner } from '../../Spinner';
+import { Spinner } from '../../Loading/Spinner';
 import ChatTyping from '../ChatTyping';
 import GroupMessage from '../Message/GroupMessage';
 import { useMessage } from '../Message/MessageContext';

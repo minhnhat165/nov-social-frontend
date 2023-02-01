@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Button from '../../../components/ButtonOld/ButtonV2';
-import Modal from '../../../components/Modal';
+import Modal from '../../../components/OverLay/Modal';
 
 const PickWish = ({ setStep, setShow }) => {
 	const [showModal, setShowModal] = useState(false);

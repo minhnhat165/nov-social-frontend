@@ -1,7 +1,7 @@
-import Button from 'components/Button';
+import Button from 'components/Action/Button';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Avatar from '../Avatar';
+import Avatar from '../DataDisplay/Avatar';
 import Follow from '../Follow';
 import LoadingOverlay from '../LoadingOverlay';
 const AccountPreview = ({ user, loading }) => {

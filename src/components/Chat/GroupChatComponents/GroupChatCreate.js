@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createGroupChat } from '../../../api/chatApi';
 import { useChat } from '../../../contexts/ChatContext';
 import { useAsyncFn } from '../../../hooks/useAsync';
-import Modal from '../../Modal';
+import Modal from '../../OverLay/Modal';
 import GroupChatCreateForm from './GroupChatCreateFrom';
 
 const GroupChatCreate = ({ children: Button }) => {

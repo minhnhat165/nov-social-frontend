@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Button from '../../../components/ButtonOld/ButtonV2';
-import Modal from '../../../components/Modal';
+import Modal from '../../../components/OverLay/Modal';
 import TextArea from '../../../components/TextArea';
 import FallingStar from './FallingStar';
 const WishContainer = ({ onSubmitWish }) => {

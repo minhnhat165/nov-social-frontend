@@ -1,10 +1,6 @@
 export const FacebookIcon = (props) => {
 	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 48 48"
-			className="h-8 w-8"
-		>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" {...props}>
 			<path
 				fill="#039be5"
 				d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"

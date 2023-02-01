@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../../../components/Button/ButtonV2';
+import Button from '../../../components/Action/Button/ButtonV2';
 
 const DialogBoxContent = ({ content, onClose }) => {
 	const [currentSpeech, setCurrentSpeech] = useState(0);

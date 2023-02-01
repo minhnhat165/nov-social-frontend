@@ -1,11 +1,8 @@
-// import { axiosClientPrivate, setHeader } from 'configs/axiosConfig';
+import { axiosClient } from 'configs/axiosConfig';
 
-// const URL = 'user/';
+const URL = '/users';
 
-// const searchUsers = (data) =>
-// 	axiosClientPrivate.get(URL + `search/${data}`, {
-// 		headers: setHeader(),
-// 	});
+const getProfile = (id) => axiosClient.get(URL + `/profile/${id}`);
 
 // const getSuggestionsUser = () =>
 // 	axiosClientPrivate.get(URL + 'suggestionsUser', {
@@ -29,10 +26,12 @@
 // 		headers: setHeader(),
 // 	});
 
-// const updateUser = (data) =>
-// 	axiosClientPrivate.patch(URL + `update`, data, {
-// 		headers: setHeader(),
-// 	});
+const updateProfile = (data) =>
+	axiosClient.patch(URL + `/profile`, data, {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 
 // const getFollowings = (userId, limit = 0) =>
 // 	axiosClientPrivate.get(URL + `${userId}/following?&limit=${limit}`, {
@@ -47,14 +46,15 @@
 // 		headers: setHeader(),
 // 	});
 
-// export {
-// 	getUser,
-// 	searchUsers,
-// 	updateUser,
-// 	getUserInfo,
-// 	followUser,
-// 	getSuggestionsUser,
-// 	getFollowings,
-// 	getUserPhotos,
-// 	getFollowers,
-// };
+export {
+	getProfile,
+	updateProfile,
+	// getUser,
+	// updateUser,
+	// getUserInfo,
+	// followUser,
+	// getSuggestionsUser,
+	// getFollowings,
+	// getUserPhotos,
+	// getFollowers,
+};

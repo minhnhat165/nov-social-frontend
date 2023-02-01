@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getUserInfo } from '../../api/userApi';
 import { useAsyncFn } from '../../hooks/useAsync';
-import Popover from '../Popover';
+import Popover from '../OverLay/Popover';
 import AccountPreview from './AccountPreview';
 
 const AccountPreviewContainer = ({ children, userId }) => {
@@ -21,7 +21,9 @@ const AccountPreviewContainer = ({ children, userId }) => {
 			<Popover
 				hover
 				hideOnClickParent={true}
-				render={<AccountPreview user={user} loading={getUserFn.loading} />}
+				render={
+					<AccountPreview user={user} loading={getUserFn.loading} />
+				}
 				className={'mt-2 overflow-hidden rounded-xl'}
 			>
 				{children}

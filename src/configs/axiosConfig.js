@@ -30,7 +30,6 @@ axiosClient.interceptors.response.use(
 
 axiosClient.interceptors.request.use(
 	async (config) => {
-		console.log(1);
 		let accessToken = store.getState().auth.accessToken;
 		if (accessToken) {
 			const decodeToken = jwtDecode(accessToken);

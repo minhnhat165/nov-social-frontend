@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import postApi from '../../api/postApi';
 import { addNewPost } from '../../redux/slices/postSlice';
-import Modal from '../Modal';
+import Modal from '../OverLay/Modal';
 import PostForm from './PostForm';
 
 const PostModal = () => {

@@ -8,7 +8,7 @@ import {
 } from '../../api/commentApi';
 import { useAsyncFn } from '../../hooks/useAsync';
 
-import Avatar from '../Avatar';
+import Avatar from '../DataDisplay/Avatar';
 import CloseButton from '../ButtonOld/CloseButton';
 import ConfirmBox from '../ConfirmBox';
 import CommentActionBar from './CommentActionBar';

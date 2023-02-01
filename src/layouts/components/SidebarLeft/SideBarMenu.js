@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Avatar from '../../../components/Avatar';
+import Avatar from '../../../components/DataDisplay/Avatar';
 import Button from '../../../components/ButtonOld';
 
 const SideBarMenu = () => {
@@ -8,7 +8,7 @@ const SideBarMenu = () => {
 	return (
 		<div className="h-full px-3 pb-4">
 			<div className="flex h-full w-16 flex-col items-center rounded-xl bg-dark-semiBold">
-				<div className="border-b border-primary py-2">
+				<div className="border-primary border-b py-2">
 					<div className="rounded-xl p-2 dark:bg-dark-very-light">
 						<Avatar url={user.avatar} />
 					</div>

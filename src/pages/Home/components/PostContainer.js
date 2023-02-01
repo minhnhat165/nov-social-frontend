@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getPosts } from '../../../api/postApi';
 import PostCreate from '../../../components/Post/PostCreate';
 import PostList from '../../../components/Post/PostList';
-import PostCardLoading from '../../../components/SkeletonLoading/PostCardLoading';
+import PostCardLoading from '../../../components/Loading/SkeletonLoading/PostCardLoading';
 import { LIMIT_POST_LOAD } from '../../../constants';
 import { usePostListContext } from '../../../contexts/PostListContext';
 
@@ -73,7 +73,10 @@ const PostContainer = () => {
 			</div>
 			<PostList postList={postList} />
 			<div className="relative flex w-full items-center justify-center">
-				<div ref={triggerRef} className="absolute -top-20 h-10 w-10"></div>
+				<div
+					ref={triggerRef}
+					className="absolute -top-20 h-10 w-10"
+				></div>
 			</div>
 			{!stopLoad && (
 				<div className="flex w-full flex-col gap-4 pb-4">

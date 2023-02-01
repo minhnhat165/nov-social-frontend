@@ -6,7 +6,7 @@ import ConversationProvider from '../../../contexts/ConversationContext';
 import { useAsync } from '../../../hooks/useAsync';
 import { setConversations } from '../../../redux/slices/chatSlice';
 import FadeInZoom from '../../Animate/FadeInZoom';
-import ChatItemLoading from '../../SkeletonLoading/ChatItemLoading';
+import ChatItemLoading from '../../Loading/SkeletonLoading/ChatItemLoading';
 import ChatItem from '../ChatItem';
 import Header from './Header';
 
@@ -38,7 +38,9 @@ const ChatSide = () => {
 											key={conversation._id}
 											initialConversation={{
 												...conversation,
-												isActive: currentConversationId === conversation._id,
+												isActive:
+													currentConversationId ===
+													conversation._id,
 											}}
 										>
 											<ChatItem />

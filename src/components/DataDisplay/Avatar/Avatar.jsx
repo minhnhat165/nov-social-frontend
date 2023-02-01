@@ -1,0 +1,105 @@
+import { Children, useMemo } from 'react';
+
+import PropTypes from 'prop-types';
+import { cloneElement } from 'react';
+import clsx from 'clsx';
+
+const sizes = {
+	sm: 'w-6 h-6',
+	md: 'w-9 h-9',
+	lg: 'w-10 h-10',
+	xl: 'w-12 h-12',
+	max: 'w-28 h-28 text-2xl',
+};
+
+const Avatar = ({ src, size, rounded, alt, className, children }) => {
+	return (
+		<div
+			className={clsx(
+				'flex shrink-0 items-center justify-center bg-slate-300 dark:bg-dark-500',
+				sizes[size],
+				rounded ? 'rounded-full' : 'rounded-xl',
+				className
+			)}
+		>
+			{src ? (
+				<img
+					src={src}
+					alt={'avatar'}
+					className="block h-full w-full rounded-full object-cover"
+					onError={(e) => {
+						e.target.onerror = null;
+						e.target.src = 'https://via.placeholder.com/300';
+					}}
+				/>
+			) : (
+				<>
+					<AltName name={alt} />
+				</>
+			)}
+			{children}
+		</div>
+	);
+};
+
+const AltName = ({ name }) => {
+	const altName = useMemo(() => {
+		if (!name) return 'NS';
+		const names = name.split(' ');
+		return (
+			names[0].charAt(0) +
+			(names.length - 1 > 0 ? names[names.length - 1].charAt(0) : '')
+		);
+	}, [name]);
+	return <span>{altName}</span>;
+};
+
+const Group = ({
+	children,
+	ring = 'ring-2 ring-slate-50 dark:ring-dark-800',
+}) => {
+	return (
+		<ul className="flex -space-x-3">
+			{Children.map(children, (child, index) => {
+				return (
+					<li key={index}>
+						{cloneElement(child, {
+							className: clsx(child.props.className, ring),
+						})}
+					</li>
+				);
+			})}
+		</ul>
+	);
+};
+
+const Status = ({ className, ...props }) => {
+	return (
+		<div
+			className={clsx(
+				'absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-primary-700 ring-1 dark:bg-primary-500',
+				className
+			)}
+		></div>
+	);
+};
+
+Avatar.Status = Status;
+
+Avatar.Group = Group;
+
+Avatar.propTypes = {
+	src: PropTypes.string,
+	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'max']),
+	rounded: PropTypes.bool,
+	alt: PropTypes.string,
+};
+
+Avatar.defaultProps = {
+	src: '',
+	size: 'lg',
+	rounded: true,
+	alt: 'A',
+};
+
+export default Avatar;

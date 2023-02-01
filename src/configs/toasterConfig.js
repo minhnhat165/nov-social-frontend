@@ -1,4 +1,4 @@
-import { XmarkIcon } from 'components/Icon';
+import { XMarkIcon } from 'components/Icon';
 import { createPortal } from 'react-dom';
 import { toast, ToastBar, Toaster } from 'react-hot-toast';
 
@@ -6,7 +6,7 @@ const ToasterClient = () => {
 	return createPortal(
 		<Toaster
 			containerStyle={{
-				zIndex: 9999,
+				zIndex: 99999999,
 			}}
 		>
 			{(t) => (
@@ -18,11 +18,10 @@ const ToasterClient = () => {
 							{t.type !== 'loading' && (
 								<button
 									onClick={(e) => {
-										e.stopPropagation();
 										toast.dismiss(t.id);
 									}}
 								>
-									<XmarkIcon />
+									<XMarkIcon />
 								</button>
 							)}
 						</>

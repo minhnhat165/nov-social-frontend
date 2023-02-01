@@ -1,16 +1,13 @@
 import {
 	CirclePlayIcon,
-	CirclePlayIconRegular,
 	GamePadIcon,
-	GamePadIconRegular,
 	HomeIcon,
-	HomeIconRegular,
 	UsersIcon,
-	UsersIconRegular,
 } from 'components/Icon';
-import Tooltip from 'components/Tooltip';
+import { NavLink, matchPath, useLocation } from 'react-router-dom';
 import { useMemo, useRef } from 'react';
-import { matchPath, NavLink, useLocation } from 'react-router-dom';
+
+import Tooltip from 'components/OverLay/Tooltip';
 
 const TRANSITION_TIME = 500;
 
@@ -31,27 +28,22 @@ const Navbar = () => {
 		return [
 			{
 				name: 'Home',
-				icon: <HomeIconRegular className="text-xl" />,
-				iconActive: <HomeIcon />,
+				icon: <HomeIcon />,
 				path: '/',
 			},
 			{
 				name: 'About',
-				icon: <CirclePlayIconRegular className="text-xl" />,
-				iconActive: <CirclePlayIcon />,
-
+				icon: <CirclePlayIcon />,
 				path: '/videos',
 			},
 			{
 				name: 'Friends',
-				icon: <UsersIconRegular className="text-xl" />,
-				iconActive: <UsersIcon />,
+				icon: <UsersIcon />,
 				path: '/friends',
 			},
 			{
 				name: 'Games',
-				icon: <GamePadIconRegular className="text-xl" />,
-				iconActive: <GamePadIcon />,
+				icon: <GamePadIcon />,
 				path: '/games',
 			},
 		];
@@ -66,20 +58,22 @@ const Navbar = () => {
 
 	return (
 		<div className="relative flex w-fit flex-col rounded-xl px-2">
-			<div
-				className="absolute top-0 left-1/2"
-				style={{
-					transform: `translateX(-50%) translateY(${
-						indexActive * 40 + indexActive * 16
-					}px)`,
-					transition: `transform ${TRANSITION_TIME}ms  ease-in-out`,
-				}}
-			>
+			{indexActive >= 0 && (
 				<div
-					ref={bubbleRef}
-					className="h-10 w-10 rounded-full bg-gradient-to-b from-cyan-500 to-primary-800 text-white dark:from-cyan-300 dark:to-primary-700"
-				></div>
-			</div>
+					className="absolute top-0 left-1/2"
+					style={{
+						transform: `translateX(-50%) translateY(${
+							indexActive * 40 + indexActive * 16
+						}px)`,
+						transition: `transform ${TRANSITION_TIME}ms  ease-in-out`,
+					}}
+				>
+					<div
+						ref={bubbleRef}
+						className="h-10 w-10 rounded-full bg-gradient-to-b from-cyan-500 to-primary-800 text-white dark:from-cyan-300 dark:to-primary-700"
+					></div>
+				</div>
+			)}
 			{items.map((item, index) => {
 				return (
 					<Tooltip
@@ -90,10 +84,6 @@ const Navbar = () => {
 						<NavLink
 							key={item.name}
 							to={item.path}
-							onClick={() => {
-								addAnimation();
-								removeAnimation();
-							}}
 							className={({ isActive }) =>
 								`relative mb-4 flex h-10 w-10 items-center justify-center rounded-full transition-all last:mb-0 ${
 									isActive
@@ -102,9 +92,16 @@ const Navbar = () => {
 								}`
 							}
 						>
-							{indexActive === index
-								? item.iconActive
-								: item.icon}
+							<div
+								onClick={() => {
+									addAnimation();
+									removeAnimation();
+								}}
+							>
+								<div className="flex h-6 w-6 items-center justify-center">
+									{item.icon}
+								</div>
+							</div>
 						</NavLink>
 					</Tooltip>
 				);

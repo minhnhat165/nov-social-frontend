@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../ButtonOld';
-import Popover from '../Popover';
+import Popover from '../OverLay/Popover';
 
 const CommentMenu = ({ onEdit, onDelete, comment }) => {
 	const userId = useSelector((state) => state.auth.user._id);

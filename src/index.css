@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('./assets/icons/css/all.min.css');
 @layer base {
 	:root {
 		--font-primary: 'SF Font';
@@ -103,11 +102,78 @@
 	::-webkit-scrollbar-thumb:hover {
 		background-color: rgba(107, 164, 233, 0.7);
 	}
+
+	.text-normal {
+		@apply text-slate-800 dark:text-dark-100;
+	}
+	.clickable {
+		@apply cursor-pointer opacity-90 transition-transform active:scale-90;
+	}
 }
 .max-height {
-	max-height: min((100vh - 96px) - 60px, 734px);
+	max-height: min((100vh - 6px) - 60px, 734px);
 }
 
 .overflow-y-overlay {
 	overflow-y: overlay;
+}
+
+#tooltip {
+	position: relative;
+}
+
+#arrow,
+#arrow::before {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: inherit;
+}
+
+#arrow {
+	visibility: hidden;
+}
+
+#arrow::before {
+	visibility: visible;
+	content: '';
+	transform: rotate(45deg);
+}
+
+#tooltip[data-placement^='top'] > #arrow {
+	bottom: -4px;
+}
+
+#tooltip[data-placement^='bottom'] > #arrow {
+	top: -4px;
+}
+
+#tooltip[data-placement^='left'] > #arrow {
+	right: -4px;
+}
+
+#tooltip[data-placement^='right'] > #arrow {
+	left: -4px;
+}
+
+.border-dashed {
+	height: 100px;
+	width: 200px;
+	background: linear-gradient(90deg, blue 50%, transparent 50%),
+		linear-gradient(90deg, blue 50%, transparent 50%),
+		linear-gradient(0deg, blue 50%, transparent 50%),
+		linear-gradient(0deg, blue 50%, transparent 50%);
+	background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+	background-size: 15px 4px, 15px 4px, 4px 15px, 4px 15px;
+	background-position: 0px 0px, 200px 100px, 0px 100px, 200px 0px;
+	padding: 10px;
+	animation: border-dance 4s infinite linear;
+}
+@keyframes border-dance {
+	0% {
+		background-position: 0px 0px, 300px 116px, 0px 150px, 216px 0px;
+	}
+	100% {
+		background-position: 300px 0px, 0px 116px, 0px 0px, 216px 150px;
+	}
 }

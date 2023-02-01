@@ -1,10 +1,11 @@
 import { APP_NAME } from 'configs';
-import { useLogin } from 'features/auth/hooks/useLogin';
-import { useSocialLogin } from 'features/auth/hooks/useSocialLogin';
+import EnterAccount from '../EnterAccount';
 import { Link } from 'react-router-dom';
 import { routePaths } from 'routes/routeConfig';
-import EnterAccount from '../EnterAccount';
-const Login = ({ onForgotPassword }) => {
+import { useLogin } from 'features/auth/hooks/useLogin';
+import { useSocialLogin } from 'features/auth/hooks/useSocialLogin';
+
+const Login = () => {
 	const login = useLogin();
 	const handleSubmit = (values) => {
 		login.mutate(values);
@@ -14,7 +15,7 @@ const Login = ({ onForgotPassword }) => {
 		<EnterAccount
 			title={
 				<>
-					Login to
+					Login to{' '}
 					<span className="text-primary-700 dark:text-primary-500">
 						{APP_NAME}
 					</span>

@@ -1,9 +1,9 @@
 import { SlideFrom } from 'components/Effect/Transition';
-import SelectField from 'components/FormElement/SelectField';
-import IconButton from 'components/IconButton';
-import SwitchDarkMode from 'components/SwitchDarkMode/SwitchDarkMode';
+import IconButton from 'components/Action/IconButton';
+import SwitchDarkMode from 'components/Action/SwitchDarkMode/SwitchDarkMode';
 import { useLogout } from 'features/auth/hooks/useLogout';
 import { useState } from 'react';
+import SelectField from 'components/DataEntry/SelectField';
 
 const SettingBar = () => {
 	const [show, setShow] = useState(true);

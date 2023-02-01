@@ -13,7 +13,7 @@ import GroupChatAddMember from '../components/Chat/GroupChatComponents/GroupChat
 import GroupChatRename from '../components/Chat/GroupChatComponents/GroupChatRename';
 import GroupChatUpLoadAvatar from '../components/Chat/GroupChatComponents/GroupChatUpLoadAvatar';
 import ConfirmBox from '../components/ConfirmBox';
-import Modal from '../components/Modal';
+import Modal from '../components/OverLay/Modal';
 import { useAsyncFn } from '../hooks/useAsync';
 import {
 	removeConversation,
@@ -63,7 +63,9 @@ const ConversationProvider = ({ children, initialConversation }) => {
 	const conversationConverted = useMemo(() => {
 		if (!conversation) return;
 		if (conversation.name === 'default') {
-			let guest = conversation.users.find((user) => user._id !== currentUserId);
+			let guest = conversation.users.find(
+				(user) => user._id !== currentUserId
+			);
 			if (!guest) guest = conversation.users[0];
 			return { ...conversation, name: guest.name, avatar: guest.avatar };
 		}

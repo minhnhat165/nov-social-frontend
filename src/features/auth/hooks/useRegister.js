@@ -11,9 +11,10 @@ export const useRegister = (options) => {
 					data.avatar[0],
 					'avatar'
 				);
+
 				return register({
 					...data,
-					avatar: res.secure_url,
+					avatar: res,
 				});
 			} catch (error) {
 				return Promise.reject(error);

@@ -1,6 +1,6 @@
 import { activeAccount } from 'api/authApi';
-import Button from 'components/Button';
-import { CheckIcon, XmarkIcon } from 'components/Icon';
+import Button from 'components/Action/Button';
+import { CheckIcon, XMarkIcon } from 'components/Icon';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ const activationTypes = {
 	},
 	failed: {
 		name: 'failed',
-		icon: <XmarkIcon />,
+		icon: <XMarkIcon />,
 		title: 'Account Activation Failed',
 		description:
 			'Your account activation has failed. Please try again later.',

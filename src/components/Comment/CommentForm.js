@@ -2,14 +2,14 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useDragAndDrop from '../../hooks/useDragAndDrop';
-import Avatar from '../Avatar';
+import Avatar from '../DataDisplay/Avatar';
 import CloseButton from '../ButtonOld/CloseButton';
 import Img from '../Img';
 import TextArea from '../TextArea';
 import useUploadImg from '../../hooks/useUpLoadImg';
 import Button from '../ButtonOld';
 import createImgUrl from '../../utils/createImgUrl';
-import { SpinnerV2 } from '../Spinner';
+import { SpinnerV2 } from '../Loading/Spinner';
 
 const CommentForm = ({ initial, onSubmit, loading }) => {
 	const { previewImg, setPreviewImg, file, setFile, handleUpLoad } =

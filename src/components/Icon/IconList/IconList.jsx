@@ -8,7 +8,7 @@ import { LockIcon } from '../LockIcon';
 import { ArrowLeftIcon } from '../MailIcon';
 import { TwitterIcon } from '../TwitterIcon';
 import { UserIcon } from '../UserIcon';
-import { XmarkIcon } from '../XmarkIcon';
+import { XMarkIcon } from '../XMarkIcon';
 
 export const IconList = ({ color }) => {
 	return (
@@ -17,7 +17,7 @@ export const IconList = ({ color }) => {
 			style={color && { color }}
 		>
 			<ItemsWrapper>
-				<XmarkIcon className="text-inherit" />
+				<XMarkIcon className="text-inherit" />
 			</ItemsWrapper>
 			<ItemsWrapper>
 				<UserIcon className="text-inherit" />

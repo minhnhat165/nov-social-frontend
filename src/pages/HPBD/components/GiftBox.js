@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../../../components/ButtonOld';
-import Modal from '../../../components/Modal';
+import Modal from '../../../components/OverLay/Modal';
 import LottieGiftBoxIcon from '../../../components/Icon/LottieGiftBox';
 import WishContainer from './WishContainer';
 

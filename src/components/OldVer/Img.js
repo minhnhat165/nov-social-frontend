@@ -27,7 +27,11 @@ const Img = ({ src, className, clickAble }) => {
 					<Modal show={showModal} setShow={setShowModal}>
 						<div className="h-screen w-screen bg-black p-4">
 							<div className="h-full w-full">
-								<img src={src} alt="" className={`h-full w-full p-10`}></img>
+								<img
+									src={src}
+									alt=""
+									className={`h-full w-full p-10`}
+								></img>
 							</div>
 						</div>
 					</Modal>

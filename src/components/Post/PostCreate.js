@@ -4,8 +4,8 @@ import { createPost } from '../../api/postApi';
 import { usePostListContext } from '../../contexts/PostListContext';
 import { useAsyncFn } from '../../hooks/useAsync';
 import { createNotification } from '../../redux/slices/notificationSlice';
-import Avatar from '../Avatar';
-import Modal from '../Modal';
+import Avatar from '../DataDisplay/Avatar';
+import Modal from '../OverLay/Modal';
 import PostForm, { formTypes } from './PostForm';
 
 const PostCreate = () => {
@@ -48,7 +48,7 @@ const PostCreate = () => {
 				<Avatar url={user.avatar} />
 				<div
 					onClick={() => handleOpenForm('')}
-					className="flex-1 cursor-pointer rounded-xl py-2 px-4 transition-all dark:bg-dark-light dark:text-dark-text-regular hover:dark:bg-primary/20 hover:dark:text-dark-text-bold"
+					className="hover:dark:bg-primary/20 flex-1 cursor-pointer rounded-xl py-2 px-4 transition-all dark:bg-dark-light dark:text-dark-text-regular hover:dark:text-dark-text-bold"
 				>
 					{' '}
 					what's on your mind?
