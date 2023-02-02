@@ -118,41 +118,41 @@
 	overflow-y: overlay;
 }
 
-#tooltip {
+.tooltip {
 	position: relative;
 }
 
-#arrow,
-#arrow::before {
+.arrow,
+.arrow::before {
 	position: absolute;
 	width: 8px;
 	height: 8px;
 	background: inherit;
 }
 
-#arrow {
+.arrow {
 	visibility: hidden;
 }
 
-#arrow::before {
+.arrow::before {
 	visibility: visible;
 	content: '';
 	transform: rotate(45deg);
 }
 
-#tooltip[data-placement^='top'] > #arrow {
+.tooltip[data-placement^='top'] > .arrow {
 	bottom: -4px;
 }
 
-#tooltip[data-placement^='bottom'] > #arrow {
+.tooltip[data-placement^='bottom'] > .arrow {
 	top: -4px;
 }
 
-#tooltip[data-placement^='left'] > #arrow {
+.tooltip[data-placement^='left'] > .arrow {
 	right: -4px;
 }
 
-#tooltip[data-placement^='right'] > #arrow {
+.tooltip[data-placement^='right'] > .arrow {
 	left: -4px;
 }
 

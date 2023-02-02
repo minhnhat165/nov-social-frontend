@@ -1,15 +1,16 @@
-import clsx from 'clsx';
-import Button from 'components/Action/Button';
-import TextGradient from 'components/Effect/TextGradient';
-import Modal from 'components/OverLay/Modal';
-import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { routePaths } from 'routes/routeConfig';
+import { useMemo, useState } from 'react';
+
+import Button from 'components/Action/Button';
 import Layout from '../components/Layout';
 import Login from '../components/Login';
-import TextPanel from '../components/TextPanel';
+import Modal from 'components/OverLay/Modal';
 import Register from '../components/Register';
 import ResetPassword from '../components/ResetPassword';
+import TextGradient from 'components/Effect/TextGradient';
+import TextPanel from '../components/TextPanel';
+import clsx from 'clsx';
+import { routePaths } from 'routes/routeConfig';
 
 const Auth = () => {
 	const { pathname } = useLocation();
@@ -47,9 +48,9 @@ const Auth = () => {
 						>
 							<Button
 								size="lg"
-								color="light"
+								color="secondary"
 								rounded
-								className="w-36"
+								className="w-36 !bg-slate-50"
 								as={Link}
 								to={routePaths.REGISTER}
 							>
@@ -71,9 +72,9 @@ const Auth = () => {
 								as={Link}
 								to={routePaths.LOGIN}
 								size="lg"
-								color="light"
+								color="secondary"
 								rounded
-								className="w-36"
+								className="w-36 !bg-slate-50 dark:!bg-dark-700"
 							>
 								<TextGradient
 									className="font-bold uppercase"

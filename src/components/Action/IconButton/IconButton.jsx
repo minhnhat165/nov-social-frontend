@@ -1,8 +1,9 @@
-import clsx from 'clsx';
-import { variantsColors } from 'components/Action/Button/Button';
+import 'style/button.css';
+
 import IconWrapper from 'components/Icon/IconWrapper';
-import { Spinner } from 'components/Loading/Spinner';
 import PropTypes from 'prop-types';
+import { Spinner } from 'components/Loading/Spinner';
+import clsx from 'clsx';
 
 const sizes = {
 	sm: 'h-9 w-9 text-sm',
@@ -29,7 +30,8 @@ const IconButton = ({
 			type={type}
 			className={clsx(
 				'clickable flex shrink-0 items-center justify-center transition-all  disabled:cursor-not-allowed disabled:opacity-80',
-				variantsColors[variant][color],
+				variant,
+				color,
 				rounded ? 'rounded-full' : 'rounded-xl',
 				sizes[size],
 				className
@@ -48,18 +50,8 @@ const IconButton = ({
 IconButton.propTypes = {
 	loading: PropTypes.bool,
 	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
-	variant: PropTypes.oneOf(['contained', 'outlined', 'text']),
-	color: PropTypes.oneOf([
-		'primary',
-		'secondary',
-		'danger',
-		'success',
-		'warning',
-		'info',
-		'light',
-		'dark',
-		'transparent',
-	]),
+	variant: PropTypes.oneOf(['filled', 'outlined', 'text']),
+	color: PropTypes.oneOf(['primary', 'secondary']),
 	children: PropTypes.node,
 	className: PropTypes.string,
 	type: PropTypes.oneOf(['button', 'submit', 'reset']),
@@ -70,7 +62,7 @@ IconButton.defaultProps = {
 	loading: false,
 	size: 'md',
 	color: 'primary',
-	variant: 'contained',
+	variant: 'filled',
 	type: 'button',
 	rounded: false,
 };

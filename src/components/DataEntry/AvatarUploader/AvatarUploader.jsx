@@ -44,7 +44,11 @@ const AvatarUploader = ({ onChange, defaultImage, defaultFile }) => {
 				{({ id }) => (
 					<div
 						{...getRootProps()}
-						className="relative flex h-[264px] w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-dark-700"
+						className={clsx(
+							'relative flex h-[264px] w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-dark-700',
+							isDragActive &&
+								'animate-pulse border-2 border-primary-700 dark:border-primary-500'
+						)}
 					>
 						<AvatarPreview
 							inputId={id}
@@ -56,14 +60,6 @@ const AvatarUploader = ({ onChange, defaultImage, defaultFile }) => {
 								Add a profile photo or drag and drop one here
 							</span>
 						</div>
-						{isDragActive && (
-							<div className="absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center rounded-xl backdrop-blur-sm transition-all">
-								<ArrowUpOnSquareIcon className="text-normal h-20 w-20" />
-								<span className="text-slate-800 dark:text-dark-100">
-									Drop the files here ...
-								</span>
-							</div>
-						)}
 					</div>
 				)}
 			</UploadField>

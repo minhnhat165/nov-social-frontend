@@ -1,8 +1,9 @@
-import { useGoogleLogin } from '@react-oauth/google';
 import { FacebookIcon, GoogleIcon, TwitterIcon } from 'components/Icon';
-import IconButton from 'components/Action/IconButton';
+
 import { FACEBOOK_APP_ID } from 'configs';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import IconButton from 'components/Action/IconButton';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const SocialLogin = ({ onLogin }) => {
 	const responseGoogle = useGoogleLogin({
@@ -23,48 +24,38 @@ const SocialLogin = ({ onLogin }) => {
 
 	return (
 		<div className="w-full">
-			<ul
+			<div
 				className="flex list-none justify-evenly"
 				style={{ paddingLeft: 0, marginTop: 4, marginBottom: 4 }}
 			>
-				<li>
-					<IconButton
-						color="light"
-						size="md"
-						className="border border-gray-200 dark:border-none"
-						onClick={responseGoogle}
-					>
-						<GoogleIcon />
-					</IconButton>
-				</li>
-				<li>
-					<FacebookLogin
-						appId={FACEBOOK_APP_ID}
-						autoLoad={false}
-						fields="name,email,picture"
-						callback={responseFacebook}
-						render={(renderProps) => (
-							<IconButton
-								onClick={renderProps.onClick}
-								color="light"
-								size="md"
-								className="border border-gray-200 dark:border-none"
-							>
-								<FacebookIcon className="h-8 w-8" />
-							</IconButton>
-						)}
-					/>
-				</li>
-				<li>
-					<IconButton
-						color="light"
-						size="md"
-						className="border border-gray-200 dark:border-none"
-					>
-						<TwitterIcon />
-					</IconButton>
-				</li>
-			</ul>
+				<IconButton
+					color="secondary"
+					size="md"
+					onClick={responseGoogle}
+				>
+					<GoogleIcon />
+				</IconButton>
+
+				<FacebookLogin
+					appId={FACEBOOK_APP_ID}
+					autoLoad={false}
+					fields="name,email,picture"
+					callback={responseFacebook}
+					render={(renderProps) => (
+						<IconButton
+							onClick={renderProps.onClick}
+							color="secondary"
+							size="md"
+						>
+							<FacebookIcon className="h-8 w-8" />
+						</IconButton>
+					)}
+				/>
+
+				<IconButton color="secondary">
+					<TwitterIcon />
+				</IconButton>
+			</div>
 		</div>
 	);
 };

@@ -1,13 +1,13 @@
-import Button from 'components/Action/Button';
+import * as yup from 'yup';
+
 import AvatarUploader from 'components/DataEntry/AvatarUploader';
+import Button from 'components/Action/Button';
 import CoverPhotoUploader from 'components/DataEntry/CoverPhotoUploader/CoverPhotoUploader';
 import Form from 'components/DataEntry/Form';
-
 import InputField from 'components/DataEntry/InputField';
-import TextareaField from 'components/DataEntry/TextareaField';
-import Text from 'components/Typography/Text';
 import { Link } from 'react-router-dom';
-import * as yup from 'yup';
+import Text from 'components/Typography/Text';
+import TextareaField from 'components/DataEntry/TextareaField';
 import useUpdateProfile from '../hooks/useUpdateProfile';
 
 const schema = yup.object().shape({
@@ -105,7 +105,6 @@ const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 									variant="text"
 									color="secondary"
 									onClick={onCancel}
-									className="hover:bg-gray-100 dark:hover:bg-dark-700"
 								>
 									Cancel
 								</Button>

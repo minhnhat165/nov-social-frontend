@@ -1,10 +1,11 @@
 import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
 
-import AccountActionMenu from 'components/Layout/AccountActionMenu';
+import AccountMenu from './AccountMenu';
 import Avatar from 'components/DataDisplay/Avatar';
-import PopoverContentWrapper from 'components/OverLay/Popover/PopoverContentWrapper';
-import SettingActionMenu from 'components/Layout/SettingActionMenu';
-import Tippy from '@tippyjs/react/headless';
+import Badge from 'components/DataDisplay/Badge';
+import Popover from 'components/OverLay/Popover';
+import SettingMenu from './SettingMenu';
+import Tooltip from 'components/OverLay/Tooltip';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
@@ -33,7 +34,7 @@ const Account = () => {
 		};
 	});
 	return (
-		<Tippy
+		<Popover
 			interactive
 			appendTo={document.body}
 			visible={showMenu}
@@ -43,37 +44,42 @@ const Account = () => {
 			placement="right-end"
 			offset={[8, 16]}
 			render={(attrs) => (
-				<PopoverContentWrapper
+				<Popover.Content
 					{...attrs}
-					arrow
+					onClick={() => {
+						setShowMenu(false);
+					}}
 					className="h-fit w-80 p-2 shadow-3xl transition-all"
 				>
-					<AccountActionMenu />
-				</PopoverContentWrapper>
+					<Popover.Arrow />
+					<AccountMenu />
+				</Popover.Content>
 			)}
 		>
-			<div
-				className="cursor-pointer"
-				onClick={() => {
-					setShowMenu(!showMenu);
-				}}
-			>
-				<Avatar
-					src={user?.avatar}
-					alt={user?.name}
-					className="relative"
+			<Tooltip content={'Account'} placement="right">
+				<div
+					className="clickable hover:opacity-70"
+					onClick={() => {
+						setShowMenu(!showMenu);
+					}}
 				>
-					{user?.hasLinkedAccountsNotify && <Avatar.Status />}
-				</Avatar>
-			</div>
-		</Tippy>
+					<Avatar
+						src={user?.avatar}
+						alt={user?.name}
+						className="relative"
+					>
+						{user?.hasLinkedAccountsNotify && <Avatar.Status />}
+					</Avatar>
+				</div>
+			</Tooltip>
+		</Popover>
 	);
 };
 
 const Setting = () => {
 	const [showMenu, setShowMenu] = useState(false);
 	return (
-		<Tippy
+		<Popover
 			interactive
 			appendTo={'parent'}
 			visible={showMenu}
@@ -83,13 +89,13 @@ const Setting = () => {
 			placement="right-end"
 			offset={[64, 16]}
 			render={(attrs) => (
-				<PopoverContentWrapper
+				<Popover.Content
 					{...attrs}
-					arrow
 					className="h-fit w-80 p-2 shadow-3xl transition-all"
 				>
-					<SettingActionMenu />
-				</PopoverContentWrapper>
+					<Popover.Arrow />
+					<SettingMenu />
+				</Popover.Content>
 			)}
 		>
 			<div
@@ -100,7 +106,7 @@ const Setting = () => {
 			>
 				<Cog6ToothIcon className="h-6 w-6 text-slate-800 dark:text-dark-100" />
 			</div>
-		</Tippy>
+		</Popover>
 	);
 };
 

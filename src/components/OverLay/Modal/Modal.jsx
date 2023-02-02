@@ -1,8 +1,9 @@
-import clsx from 'clsx';
-import IconButton from 'components/Action/IconButton';
-import { XMarkIcon } from 'components/Icon';
-import IconWrapper from 'components/Icon/IconWrapper';
 import { Children, cloneElement, useState } from 'react';
+
+import IconButton from 'components/Action/IconButton';
+import IconWrapper from 'components/Icon/IconWrapper';
+import { XMarkIcon } from 'components/Icon';
+import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 
 const Modal = ({ show, onClose, onClickBackDrop = onClose, children }) => {
@@ -107,7 +108,11 @@ const Close = ({ children, onClick, className, ...props }) => {
 				rounded
 				size="sm"
 				variant="text"
-				color="light"
+				color="secondary"
+				// className={clsx(
+				// 	'hover:!bg-slate-300/50 dark:hover:!bg-dark-700/50',
+				// 	className
+				// )}
 				onClick={onClick}
 				{...props}
 			>

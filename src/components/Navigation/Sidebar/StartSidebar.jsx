@@ -1,4 +1,4 @@
-import Navbar from 'components/Layout/Navbar';
+import Navbar from 'components/Navigation/Sidebar/Navbar';
 
 const StartSidebar = (props) => {
 	return (

@@ -8,8 +8,8 @@ const CloseButton = ({ icon = <XMarkIcon />, ...props }) => {
 			type="button"
 			rounded
 			size="sm"
-			variant="text"
-			color="light"
+			// variant="text"
+			color="secondary"
 			{...props}
 		>
 			<IconWrapper>{icon}</IconWrapper>

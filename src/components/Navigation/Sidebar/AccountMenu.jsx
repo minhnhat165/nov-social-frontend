@@ -16,7 +16,7 @@ import { useLogout } from 'features/auth/hooks/useLogout';
 import { useSelector } from 'react-redux';
 import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
 
-const AccountActionMenu = () => {
+const AccountMenu = () => {
 	return (
 		<>
 			<div className="mb-2">
@@ -152,4 +152,4 @@ const LogoutTrigger = () => {
 		></MenuItem>
 	);
 };
-export default AccountActionMenu;
+export default AccountMenu;

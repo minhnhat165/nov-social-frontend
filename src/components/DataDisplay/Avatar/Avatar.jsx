@@ -1,5 +1,6 @@
 import { Children, useMemo } from 'react';
 
+import Img from '../Img';
 import PropTypes from 'prop-types';
 import { cloneElement } from 'react';
 import clsx from 'clsx';
@@ -12,25 +13,22 @@ const sizes = {
 	max: 'w-28 h-28 text-2xl',
 };
 
-const Avatar = ({ src, size, rounded, alt, className, children }) => {
+const Avatar = ({ src, size, rounded, alt, className, children, ...props }) => {
 	return (
 		<div
 			className={clsx(
 				'flex shrink-0 items-center justify-center bg-slate-300 dark:bg-dark-500',
 				sizes[size],
 				rounded ? 'rounded-full' : 'rounded-xl',
-				className
+				className,
 			)}
+			{...props}
 		>
 			{src ? (
-				<img
+				<Img
 					src={src}
 					alt={'avatar'}
 					className="block h-full w-full rounded-full object-cover"
-					onError={(e) => {
-						e.target.onerror = null;
-						e.target.src = 'https://via.placeholder.com/300';
-					}}
 				/>
 			) : (
 				<>
@@ -77,8 +75,8 @@ const Status = ({ className, ...props }) => {
 	return (
 		<div
 			className={clsx(
-				'absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-primary-700 ring-1 dark:bg-primary-500',
-				className
+				'absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-primary-700 ring-1 ring-slate-50 dark:bg-primary-500 dark:ring-dark-800',
+				className,
 			)}
 		></div>
 	);

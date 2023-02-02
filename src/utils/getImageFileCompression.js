@@ -2,7 +2,9 @@ import compression from 'browser-image-compression';
 
 const getImageFileCompression = async (file) => {
 	try {
-		if (file.size / (1024 * 1024) < 1) return file;
+		if (file.size / 1024 / 1024 < 1) {
+			return file;
+		}
 		const options = {
 			maxSizeMB: 1,
 			maxWidthOrHeight: 1920,

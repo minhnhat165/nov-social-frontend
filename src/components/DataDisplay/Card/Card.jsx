@@ -1,3 +1,4 @@
+import Img from '../Img';
 import PropTypes from 'prop-types';
 import Text from 'components/Typography/Text';
 import clsx from 'clsx';
@@ -26,7 +27,7 @@ const Card = forwardRef(({ level = 1, className, children, ...props }, ref) => {
 const Image = ({ src, alt, className, ...props }) => (
 	<>
 		{src && (
-			<img
+			<Img
 				src={src}
 				alt={alt}
 				className={clsx('h-full w-full object-cover', className)}

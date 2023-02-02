@@ -1,9 +1,10 @@
 import { ChevronRightIcon, LanguageIcon, MoonIcon } from 'components/Icon';
+
 import IconWrapper from 'components/Icon/IconWrapper';
 import MenuItem from 'components/Navigation/MenuItem';
 import SwitchDarkMode from 'components/Action/SwitchDarkMode/SwitchDarkMode';
 
-const SettingActionMenu = () => {
+const SettingMenu = () => {
 	return (
 		<>
 			<MenuItem
@@ -24,4 +25,4 @@ const SettingActionMenu = () => {
 	);
 };
 
-export default SettingActionMenu;
+export default SettingMenu;

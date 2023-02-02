@@ -1,11 +1,13 @@
-import Tippy from '@tippyjs/react';
-import clsx from 'clsx';
-import Badge from 'components/DataDisplay/Badge';
 import { BellIcon, BookmarkIcon, MessagesIcon } from 'components/Icon';
-import PopoverContentWrapper from 'components/OverLay/Popover/PopoverContentWrapper';
-import Tooltip from 'components/OverLay/Tooltip';
 import { forwardRef, useState } from 'react';
+
+import Badge from 'components/DataDisplay/Badge';
+import Popover from 'components/OverLay/Popover';
+import Tippy from '@tippyjs/react';
+import Tooltip from 'components/OverLay/Tooltip';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
+
 const types = {
 	CHAT: 'CHAT',
 	NOTIFICATIONS: 'NOTIFICATIONS',
@@ -77,9 +79,7 @@ const Notifications = ({ onClick, isActive }) => {
 			}}
 			placement="right-start"
 			offset={[0, 8]}
-			render={(attrs) => (
-				<PopoverContentWrapper {...attrs}></PopoverContentWrapper>
-			)}
+			render={(attrs) => <Popover.Content {...attrs}></Popover.Content>}
 		>
 			<Item
 				isActive={isActive}

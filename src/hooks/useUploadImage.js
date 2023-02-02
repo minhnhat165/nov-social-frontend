@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+
 import getImageFileCompression from 'utils/getImageFileCompression';
+import { toast } from 'react-hot-toast';
 
 function useUploadImage(defaultImage, defaultFile, onFinished) {
 	const [imagePreview, setImagePreview] = useState(defaultImage);

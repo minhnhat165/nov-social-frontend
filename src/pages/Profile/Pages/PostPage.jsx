@@ -1,5 +1,6 @@
 import Avatar from 'components/DataDisplay/Avatar';
 import Card from 'components/DataDisplay/Card';
+import Img from 'components/DataDisplay/Img';
 import Intro from 'features/user/components/Intro';
 import Layer from 'components/Layout/Layer';
 import ReactStickyBox from 'react-sticky-box';
@@ -18,9 +19,9 @@ const PostPage = () => {
 						<Card.Title>Following</Card.Title>
 						<Card.Body>
 							<Avatar.Group>
-								<Avatar src="https://res-console.cloudinary.com/devemail/thumbnails/v1/image/upload/v1674925164/YXZhdGFyL2NzdG0xdW1xcmZobmRpbXhmOHhi" />
-								<Avatar src="https://res.cloudinary.com/devemail/image/upload/v1674929626/avatar/t6pqhg8ue4jsrbv0efq1.jpg" />
 								<Avatar src="https://i.pravatar.cc/300" />
+								<Avatar src="https://i.pravatar.cc/320" />
+								<Avatar src="https://i.pravatar.cc/400" />
 								<Avatar src="https://i.pravatar.cc/500" />
 							</Avatar.Group>
 						</Card.Body>
@@ -30,29 +31,29 @@ const PostPage = () => {
 						<Card.Body>
 							<div className="grid grid-cols-3 gap-1 overflow-hidden rounded-xl">
 								<div className="aspect-square w-full shadow">
-									<img
+									<Img
 										src="https://picsum.photos/200"
 										alt=""
 										className="h-full w-full object-cover"
 									/>
 								</div>
 								<div className="aspect-square w-full  shadow">
-									<img
-										src="https://picsum.photos/200"
+									<Img
+										src="https://picsum.photos/320"
 										alt=""
 										className="h-full w-full object-cover"
 									/>
 								</div>
 								<div className="aspect-square w-full shadow">
-									<img
-										src="https://picsum.photos/200"
+									<Img
+										src="https://picsum.photos/300"
 										alt=""
 										className="h-full w-full  object-cover"
 									/>
 								</div>
 								<div className="aspect-square w-full shadow">
-									<img
-										src="https://picsum.photos/200"
+									<Img
+										src="https://picsum.photos/400"
 										alt=""
 										className="h-full w-full object-cover"
 									/>

@@ -12,6 +12,7 @@ import {
 import Avatar from 'components/DataDisplay/Avatar';
 import Button from 'components/Action/Button';
 import Card from 'components/DataDisplay/Card';
+import FullViewImage from 'components/DataDisplay/FullViewImage';
 import IconButton from 'components/Action/IconButton';
 import Modal from 'components/OverLay/Modal';
 import Navbar from './Navbar';
@@ -159,26 +160,30 @@ function Statistical({ followers, following, posts }) {
 
 function Cover({ cover }) {
 	return (
-		<Card
-			level={4}
-			className="aspect-[3/1] w-full shrink-0 overflow-hidden rounded-b-none"
-		>
-			<Card.Image src={cover} />
-		</Card>
+		<FullViewImage src={cover}>
+			<Card
+				level={4}
+				className="aspect-[3/1] w-full shrink-0 overflow-hidden rounded-b-none"
+			>
+				<Card.Image src={cover} />
+			</Card>
+		</FullViewImage>
 	);
 }
 
 function ProfileAvatar({ avatar, name }) {
 	if (!avatar && !name) return null;
 	return (
-		<div className="h-12 px-2">
-			<div className="relative flex -translate-y-1/2 justify-center">
-				<Avatar
-					size="max"
-					src={avatar}
-					alt={name}
-					className="ring-4 ring-slate-50 dark:ring-dark-800"
-				/>
+		<div className="relative h-12 px-2">
+			<div className="absolute left-1/2 flex -translate-y-1/2 -translate-x-1/2 justify-center rounded-full">
+				<FullViewImage src={avatar}>
+					<Avatar
+						size="max"
+						src={avatar}
+						alt={name}
+						className="ring-4 ring-slate-50 dark:ring-dark-800"
+					/>
+				</FullViewImage>
 			</div>
 		</div>
 	);

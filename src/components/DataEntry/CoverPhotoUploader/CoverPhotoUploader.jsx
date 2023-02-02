@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import IconButton from 'components/Action/IconButton';
 import IconWrapper from 'components/Icon/IconWrapper';
 import ImageCropper from '../ImageCropper';
+import Img from 'components/DataDisplay/Img';
 import Layer from 'components/Layout/Layer';
 import Modal from 'components/OverLay/Modal';
 import clsx from 'clsx';
@@ -17,7 +18,7 @@ const CoverPhotoUploader = ({ defaultImage = null, onChange, onRemove }) => {
 		(file) => {
 			onChange(file);
 			handleCloseCropper();
-		}
+		},
 	);
 	const [openCropper, setOpenCropper] = useState(false);
 	const [rawImagePreview, setRawImagePreview] = useState(null);
@@ -46,17 +47,15 @@ const CoverPhotoUploader = ({ defaultImage = null, onChange, onRemove }) => {
 				level={3}
 				className={clsx(
 					'relative aspect-[3/1] w-full overflow-hidden ',
-					isDragActive && 'animate-pulse ring-2 ring-primary-500'
+					isDragActive && 'animate-pulse ring-2 ring-primary-500',
 				)}
 			>
 				{imagePreview && (
-					<>
-						<img
-							src={imagePreview}
-							alt="upload img"
-							className="block h-full w-full object-cover"
-						/>
-					</>
+					<Img
+						src={imagePreview}
+						alt="upload img"
+						className="block h-full w-full object-cover"
+					/>
 				)}
 			</Layer>
 			<div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3">
@@ -81,7 +80,9 @@ const CoverPhotoUploader = ({ defaultImage = null, onChange, onRemove }) => {
 						</IconButton>
 					)}
 				</div>
-				<ChipDragAndDrop isDragging={isDragActive} />
+				<ChipDragAndDrop isDragging={isDragActive}>
+					Drag and drop to upload
+				</ChipDragAndDrop>
 			</div>
 			<Modal show={openCropper} onClose={handleCloseCropper}>
 				<Modal.Close>
@@ -105,15 +106,17 @@ const CoverPhotoUploader = ({ defaultImage = null, onChange, onRemove }) => {
 
 export default CoverPhotoUploader;
 
-const ChipDragAndDrop = ({ isDragging }) => {
+export const ChipDragAndDrop = ({ isDragging, children }) => {
 	return (
 		<div
 			className={clsx(
-				'min-w-[200px]  rounded-full bg-slate-900/50 p-2 text-center text-slate-50 dark:bg-slate-50/50 dark:text-dark-900',
-				isDragging && 'bg-slate-900/100 dark:bg-slate-50/100'
+				'flex h-8 min-w-[200px] items-center justify-center rounded-full bg-slate-900/50 p-2 text-center text-slate-50 dark:bg-slate-50/50 dark:text-dark-900',
+				isDragging && 'bg-slate-900/100 dark:bg-slate-50/100',
 			)}
 		>
-			<span>{isDragging ? 'Drop here' : 'Drag and drop to upload'}</span>
+			<span className="text-sm">
+				{isDragging ? 'Drop here' : children}
+			</span>
 		</div>
 	);
 };

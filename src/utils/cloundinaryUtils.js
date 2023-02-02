@@ -7,19 +7,26 @@ export const uploadImage = async (file, folder = 'nov-social') => {
 	data.append('file', file);
 	data.append(
 		'upload_preset',
-		process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+		process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
 	);
 	data.append('cloud_name', process.env.REACT_APP_CLOUDINARY_NAME);
 	data.append('folder', folder);
 	try {
 		const res = await axios.post(
 			`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload`,
-			data
+			data,
 		);
 		return res.data.secure_url;
 	} catch (err) {
 		toast.error(err.message);
 	}
+};
+
+export const getOriginalImageFromURL = (url) => {
+	if (!url) return null;
+	if (!url.startsWith('https://res.cloudinary.com')) return url;
+	const publicId = url.split('/').slice(7).join('/').split('.')[0];
+	return `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/${publicId}`;
 };
 
 const cloudinaryUtils = {
