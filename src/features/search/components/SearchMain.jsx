@@ -1,31 +1,31 @@
-import SearchBar from 'components/DataEntry/SearchBar';
+import Search from 'components/DataEntry/Search';
+import SearchItem from './SearchItem';
+import SearchItemList from './SearchItemList';
 import Text from 'components/Typography/Text';
+import createSearchHistory from 'utils/createSearchHistory';
+import { searchType } from 'features/search/utils/createSearch';
 import useAddSearchHistory from 'features/search/hooks/useAddSearchHistory';
 import useGetSearchLog from 'features/search/hooks/useGetSearchLog';
-import useRemoveSearchHistory from 'features/search/hooks/useRemoveSearchHistory';
-import useSearch from 'features/search/hooks/useSearch';
-import { searchType } from 'features/search/utils/createSearch';
-
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import createSearchHistory from 'utils/createSearchHistory';
-import SearchItemList from './SearchItemList';
+import useRemoveSearchHistory from 'features/search/hooks/useRemoveSearchHistory';
+import useSearchMain from '../hooks/useSearchMain';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const SearchMain = () => {
 	const [showResult, setShowResult] = useState(false);
 	const addSearchHistory = useAddSearchHistory();
-	const { searchFn, data, isLoading, reset } = useSearch();
+	const { data, isFetching, isLoading, setSearch } = useSearchMain();
+
 	const navigate = useNavigate();
 
 	const handleOnChange = (value) => {
 		if (value === '') {
 			setShowResult(false);
-			reset();
 			return;
 		}
+		setSearch(value);
 		setShowResult(true);
-		searchFn({ query: value });
 	};
 
 	const handleClickSearchItem = (search) => {
@@ -45,16 +45,16 @@ const SearchMain = () => {
 
 	const handleSearch = (value) => {
 		addSearchHistory(
-			createSearchHistory(searchType.KEYWORD, value, { keyword: value })
+			createSearchHistory(searchType.KEYWORD, value, { keyword: value }),
 		);
 		navigate(`/search?q=${value}`);
 	};
 
 	return (
-		<SearchBar
+		<Search
 			onChange={handleOnChange}
 			onSearch={handleSearch}
-			loading={isLoading}
+			loading={isLoading || isFetching}
 		>
 			<div className="flex flex-col gap-2 p-2">
 				{showResult ? (
@@ -66,7 +66,7 @@ const SearchMain = () => {
 					<HistoryPanel onClickItem={handleClickSearchItem} />
 				)}
 			</div>
-		</SearchBar>
+		</Search>
 	);
 };
 
@@ -82,11 +82,16 @@ const HistoryPanel = ({ onClickItem }) => {
 					No search history
 				</Text>
 			) : (
-				<SearchItemList
-					list={searchHistory}
-					onClick={onClickItem}
-					onRemove={removeSearchHistory}
-				/>
+				<SearchItem.List>
+					{searchHistory.map((item) => (
+						<SearchItem
+							key={item._id}
+							search={item}
+							onClick={onClickItem}
+							onRemove={removeSearchHistory}
+						/>
+					))}
+				</SearchItem.List>
 			)}
 		</Panel>
 	);

@@ -34,7 +34,7 @@ const Header = ({ content }) => {
 
 function ForgotPassword() {
 	return (
-		<Modal.Control>
+		<Modal.Root>
 			<Modal.Trigger>
 				<div className="mb-3 text-center text-base">
 					<span className="cursor-pointer text-base text-primary-700 hover:text-primary-800 dark:text-primary-600 dark:hover:text-primary-700">
@@ -43,18 +43,17 @@ function ForgotPassword() {
 				</div>
 			</Modal.Trigger>
 			<Modal>
-				<Modal.Close />
-				<Modal.Props>
-					{({ onClose }) => (
-						<Modal.Panel>
-							<Modal.Panel.Header></Modal.Panel.Header>
+				<Modal.Panel>
+					<Modal.Header />
+					<Modal.Props>
+						{({ onClose }) => (
 							<div className="px-4 pb-4">
 								<ResetPassword onSuccess={onClose} />
 							</div>
-						</Modal.Panel>
-					)}
-				</Modal.Props>
+						)}
+					</Modal.Props>
+				</Modal.Panel>
 			</Modal>
-		</Modal.Control>
+		</Modal.Root>
 	);
 }

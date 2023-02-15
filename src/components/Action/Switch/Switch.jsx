@@ -1,33 +1,71 @@
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const Switch = ({ checked, className, onChange, iconLeft, iconRight }) => {
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { useState } from 'react';
+
+const sizes = {
+	sm: 'h-4 w-8',
+	md: 'h-6 w-12',
+	lg: 'h-6 w-12',
+	xl: 'h-6 w-12',
+};
+
+const Switch = ({
+	checked: defaultChecked,
+	className,
+	onChange,
+	iconLeft,
+	iconRight,
+	size,
+	primary,
+}) => {
+	const [checked, setChecked] = useState(true);
+
+	const handleChecked = () => {
+		setChecked(!checked);
+		onChange(!checked);
+	};
+
 	return (
-		<div
+		<motion.div
 			className={clsx(
-				'flex h-6 w-12 cursor-pointer items-center rounded-full border bg-slate-100 p-1 dark:border-none dark:bg-dark-600',
-				checked ? 'justify-end' : '',
-				className
+				'flex cursor-pointer items-center rounded-full border dark:border-none ',
+				checked && 'place-content-end',
+				className,
+				primary && checked
+					? 'bg-primary-700 dark:bg-primary-500'
+					: 'bg-gray-200 dark:bg-gray-600',
+				sizes[size],
 			)}
 			onClick={(e) => {
 				e.stopPropagation();
-				onChange(!checked);
+				handleChecked();
 			}}
 		>
-			<motion.div
-				onClick={(e) => {
-					e.stopPropagation();
-					onChange(!checked);
-				}}
-				layout
-				variants={variants}
-				animate={checked ? 'left' : 'right'}
-				transition={spring}
-				className={`dark:bg-indigo-950 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-md`}
-			>
-				{checked ? iconLeft : iconRight}
-			</motion.div>
-		</div>
+			<AnimatePresence>
+				<motion.div
+					exit={{ opacity: 0 }}
+					onClick={(e) => {
+						e.stopPropagation();
+						handleChecked();
+					}}
+					layout
+					variants={variants}
+					animate={checked ? 'left' : 'right'}
+					transition={spring}
+					className={clsx(
+						'dark:bg-indigo-950 flex aspect-square h-full items-center justify-center rounded-full border-2 bg-white',
+
+						primary && checked
+							? 'border-primary-700 dark:border-primary-500'
+							: 'border-slate-200 dark:border-dark-600',
+					)}
+				>
+					{checked ? iconLeft : iconRight}
+				</motion.div>
+			</AnimatePresence>
+		</motion.div>
 	);
 };
 
@@ -42,6 +80,22 @@ const variants = {
 	right: { rotate: -180 },
 };
 
-Switch.propTypes = {};
+Switch.propTypes = {
+	checked: PropTypes.bool,
+	className: PropTypes.string,
+	onChange: PropTypes.func,
+	iconLeft: PropTypes.node,
+	iconRight: PropTypes.node,
+	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+};
+
+Switch.defaultProps = {
+	checked: false,
+	className: '',
+	onChange: () => {},
+	iconLeft: null,
+	iconRight: null,
+	size: 'md',
+};
 
 export default Switch;

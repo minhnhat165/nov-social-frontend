@@ -20,7 +20,7 @@ const Layer = forwardRef(
 				{children}
 			</div>
 		);
-	}
+	},
 );
 
 export default Layer;

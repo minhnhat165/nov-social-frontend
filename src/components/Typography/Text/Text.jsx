@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 
 const levels = {
 	1: 'text-slate-700 dark:text-dark-100',
@@ -9,10 +9,25 @@ const levels = {
 	5: 'text-slate-300 dark:text-dark-500',
 	6: 'text-slate-200 dark:text-dark-600',
 };
-const Text = ({ children, as = 'span', level = 1, className, ...props }) => {
+const Text = ({
+	children,
+	as = 'span',
+	primary,
+	level = 1,
+	className,
+	...props
+}) => {
 	const Tag = as;
 	return (
-		<Tag className={clsx(levels[level], className)} {...props}>
+		<Tag
+			className={clsx(
+				primary
+					? 'text-primary-700 dark:text-primary-500'
+					: levels[level],
+				className,
+			)}
+			{...props}
+		>
 			{children}
 		</Tag>
 	);

@@ -1,11 +1,21 @@
-import Avatar from 'components/DataDisplay/Avatar';
+import { PencilIcon, PlusIcon } from 'components/Icon';
+
+import Button from 'components/Action/Button';
 import Card from 'components/DataDisplay/Card';
+import Chip from 'components/DataDisplay/Chip';
+import Details from 'features/user/components/Details/Details';
+import FullViewImage from 'components/DataDisplay/FullViewImage';
 import Img from 'components/DataDisplay/Img';
-import Intro from 'features/user/components/Intro';
+import InterestEditor from 'features/Interest/Components/InterestEditor';
 import Layer from 'components/Layout/Layer';
+import Modal from 'components/OverLay/Modal';
 import ReactStickyBox from 'react-sticky-box';
+import { useOutletContext } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const PostPage = () => {
+	const { isOwner } = useOutletContext();
+
 	return (
 		<div className="flex h-full items-start pt-2">
 			<ReactStickyBox
@@ -14,53 +24,9 @@ const PostPage = () => {
 				className="max-w-96 mx-2 w-1/3"
 			>
 				<div className="flex h-full w-full flex-col gap-y-4 pt-2">
-					<Intro />
-					<Card className="w-full">
-						<Card.Title>Following</Card.Title>
-						<Card.Body>
-							<Avatar.Group>
-								<Avatar src="https://i.pravatar.cc/300" />
-								<Avatar src="https://i.pravatar.cc/320" />
-								<Avatar src="https://i.pravatar.cc/400" />
-								<Avatar src="https://i.pravatar.cc/500" />
-							</Avatar.Group>
-						</Card.Body>
-					</Card>
-					<Card className="w-full">
-						<Card.Title>Photos</Card.Title>
-						<Card.Body>
-							<div className="grid grid-cols-3 gap-1 overflow-hidden rounded-xl">
-								<div className="aspect-square w-full shadow">
-									<Img
-										src="https://picsum.photos/200"
-										alt=""
-										className="h-full w-full object-cover"
-									/>
-								</div>
-								<div className="aspect-square w-full  shadow">
-									<Img
-										src="https://picsum.photos/320"
-										alt=""
-										className="h-full w-full object-cover"
-									/>
-								</div>
-								<div className="aspect-square w-full shadow">
-									<Img
-										src="https://picsum.photos/300"
-										alt=""
-										className="h-full w-full  object-cover"
-									/>
-								</div>
-								<div className="aspect-square w-full shadow">
-									<Img
-										src="https://picsum.photos/400"
-										alt=""
-										className="h-full w-full object-cover"
-									/>
-								</div>
-							</div>
-						</Card.Body>
-					</Card>
+					<Details isOwner={isOwner} />
+					<Interests isOwner={isOwner} />
+					<Photos />
 				</div>
 			</ReactStickyBox>
 			<div className="flex max-w-[600px] flex-1 flex-col px-2">
@@ -78,3 +44,91 @@ const PostPage = () => {
 };
 
 export default PostPage;
+
+function Interests({ isOwner }) {
+	const interests = useSelector((state) => state.profile.data.interests);
+	const renderAction = (interests) => {
+		const isEmpty = !interests?.length;
+		return (
+			<Modal.Root>
+				<Modal.Trigger>
+					<Button
+						rounded
+						color="secondary"
+						startIcon={isEmpty ? <PlusIcon /> : <PencilIcon />}
+						size="sm"
+					>
+						{isEmpty ? 'Add' : 'Edit'}
+					</Button>
+				</Modal.Trigger>
+				<Modal>
+					<Modal.Props>
+						{({ closeModal }) => {
+							return (
+								<InterestEditor
+									defaultSelected={interests}
+									onCancel={closeModal}
+								/>
+							);
+						}}
+					</Modal.Props>
+				</Modal>
+			</Modal.Root>
+		);
+	};
+
+	return (
+		<Card className="w-full ">
+			<Card.Header className="flex items-center justify-between">
+				<Card.Title>Interest</Card.Title>
+				{isOwner && renderAction(interests)}
+			</Card.Header>
+			{interests?.length > 0 && (
+				<Card.Body className="pt-2 pb-4 ">
+					<div className="-m-1">
+						{interests.map((interest) => (
+							<Chip
+								icon={interest.icon}
+								key={interest._id}
+								className="m-1"
+							>
+								{interest.name}
+							</Chip>
+						))}
+					</div>
+				</Card.Body>
+			)}
+		</Card>
+	);
+}
+
+function Photos() {
+	const photos = useSelector((state) => state.profile.data.photos) || [];
+	return (
+		photos.length > 0 && (
+			<Card className="w-full">
+				<Card.Header>
+					<Card.Title>Photos</Card.Title>
+				</Card.Header>
+				<Card.Body className="pb-4">
+					<div className="grid grid-cols-3 gap-1 overflow-hidden">
+						{photos.map((photo, index) => (
+							<div
+								key={index}
+								className="aspect-square w-full overflow-hidden rounded-xl shadow"
+							>
+								<FullViewImage src={photo}>
+									<Img
+										src={photo}
+										alt=""
+										className="h-full w-full object-cover"
+									/>
+								</FullViewImage>
+							</div>
+						))}
+					</div>
+				</Card.Body>
+			</Card>
+		)
+	);
+}

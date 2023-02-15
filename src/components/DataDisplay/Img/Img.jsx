@@ -8,7 +8,7 @@ const Img = ({ src, alt, className, onLoad, ...props }) => {
 			{...props}
 			alt={alt}
 			className={clsx(
-				'opacity-0 transition-opacity duration-300 ease-in-out',
+				'opacity-0 transition-opacity duration-300 ease-in-out ',
 				className,
 			)}
 			onLoad={(e) => {

@@ -2,7 +2,6 @@ import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
 
 import AccountMenu from './AccountMenu';
 import Avatar from 'components/DataDisplay/Avatar';
-import Badge from 'components/DataDisplay/Badge';
 import Popover from 'components/OverLay/Popover';
 import SettingMenu from './SettingMenu';
 import Tooltip from 'components/OverLay/Tooltip';
@@ -58,7 +57,7 @@ const Account = () => {
 		>
 			<Tooltip content={'Account'} placement="right">
 				<div
-					className="clickable hover:opacity-70"
+					className="cursor-pointer transition-all hover:opacity-70 active:translate-y-0.5 active:opacity-50"
 					onClick={() => {
 						setShowMenu(!showMenu);
 					}}

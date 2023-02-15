@@ -1,9 +1,11 @@
-import Button from 'components/Action/Button';
 import { useCallback, useState } from 'react';
+
+import Button from 'components/Action/Button';
 import Cropper from 'react-easy-crop';
-import { toast } from 'react-hot-toast';
-import getCroppedImg from 'utils/cropImage';
+import LoadingOverlay from 'components/OverLay/LoadingOverlay';
 import Slider from '../Slider';
+import getCroppedImg from 'utils/cropImage';
+import { toast } from 'react-hot-toast';
 
 const ImageCropper = ({
 	initialValue,
@@ -25,7 +27,7 @@ const ImageCropper = ({
 			const { file, url } = await getCroppedImg(
 				initialValue,
 				croppedAreaPixels,
-				0
+				0,
 			);
 			await onApply({
 				file,
@@ -33,12 +35,13 @@ const ImageCropper = ({
 			});
 		} catch (error) {
 			toast.error(error.message);
+		} finally {
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 	return (
-		<div className="flex h-full w-full flex-col justify-center">
-			<>
+		<LoadingOverlay loading={loading}>
+			<div className="flex h-full w-full flex-col justify-center">
 				<div className="relative aspect-square w-full">
 					<Cropper
 						cropShape={cropShape}
@@ -63,12 +66,10 @@ const ImageCropper = ({
 							setZoom(value);
 						}}
 					/>
-					<Button loading={loading} onClick={handleApply}>
-						Apply
-					</Button>
+					<Button onClick={handleApply}>Apply</Button>
 				</div>
-			</>
-		</div>
+			</div>
+		</LoadingOverlay>
 	);
 };
 

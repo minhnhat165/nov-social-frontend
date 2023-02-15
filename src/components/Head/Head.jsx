@@ -3,18 +3,13 @@ import { useSelector } from 'react-redux';
 
 const Head = ({ title = '', description = '' }) => {
 	const notificationsCount = useSelector(
-		(state) => state.auth.user?.notificationsCount
+		(state) => state.auth.user?.notificationsCount,
 	);
 	return (
 		<Helmet
 			title={
-				title
-					? `${
-							notificationsCount > 0
-								? `(${notificationsCount})`
-								: ''
-					  } ${title} | Nov Social`
-					: 'Nov Social'
+				`${notificationsCount > 0 ? `(${notificationsCount}) ` : ''}` +
+				(title ? `${title} | Nov Social` : 'Nov Social')
 			}
 			defaultTitle="Nov Social"
 		>

@@ -15,6 +15,7 @@ const Navbar = () => {
 	const location = useLocation();
 	const bubbleRef = useRef(null);
 	const addAnimation = () => {
+		if (!bubbleRef.current) return;
 		bubbleRef.current.classList.add('animate-drop');
 	};
 

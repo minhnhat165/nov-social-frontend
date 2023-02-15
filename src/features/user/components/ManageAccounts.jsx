@@ -55,26 +55,23 @@ const ManageAccounts = () => {
 				))}
 
 			<div className="mt-4 -ml-4">
-				<Modal.Control>
+				<Modal.Root>
 					<Modal.Trigger>
 						<Button variant="text" size="md">
 							Add an existing Account
 						</Button>
 					</Modal.Trigger>
-					<Modal>
-						<Modal.Close>
-							<ArrowLeftIcon />
-						</Modal.Close>
-						<Modal.Props>
-							{({ onClose }) => (
-								<Modal.Panel>
-									<Modal.Panel.Header />
+					<Modal closeIcon={<ArrowLeftIcon />}>
+						<Modal.Panel>
+							<Modal.Header />
+							<Modal.Props>
+								{({ onClose }) => (
 									<AddExistingAccount onSuccess={onClose} />
-								</Modal.Panel>
-							)}
-						</Modal.Props>
+								)}
+							</Modal.Props>
+						</Modal.Panel>
 					</Modal>
-				</Modal.Control>
+				</Modal.Root>
 			</div>
 			<div className="mt-2 p-2">
 				<Text as="p" className="text-[15px]">
@@ -102,7 +99,7 @@ const AccountItem = ({ user, onRemove, onClick, size }) => {
 					<div
 						className={clsx(
 							'ml-auto flex items-center transition-all duration-500 ease-in-out',
-							showX ? 'mr-0' : '-mr-9'
+							showX ? 'mr-0' : '-mr-9',
 						)}
 					>
 						{user?.notificationsCount > 0 && (

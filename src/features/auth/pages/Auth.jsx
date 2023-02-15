@@ -50,7 +50,7 @@ const Auth = () => {
 								size="lg"
 								color="secondary"
 								rounded
-								className="w-36 !bg-slate-50"
+								className="w-36 !bg-slate-50 dark:!bg-dark-700"
 								as={Link}
 								to={routePaths.REGISTER}
 							>
@@ -109,13 +109,13 @@ const OverlayContainer = ({ children, responsive, isLeft }) => {
 			className={clsx(
 				'absolute left-0 top-0 z-20 hidden h-full w-1/2 transform overflow-hidden transition-transform duration-700 ease-in-out sm:block ',
 				responsive,
-				isLeft ? 'translate-x-0' : 'translate-x-full'
+				isLeft ? 'translate-x-0' : 'translate-x-full',
 			)}
 		>
 			<div
 				className={clsx(
 					'relative -left-full h-full w-[200%] translate-x-0 transform bg-gradient-to-r from-cyan-500 to-blue-500 transition-transform duration-700 ease-in-out dark:to-primary-700',
-					isLeft ? 'translate-x-1/2' : ''
+					isLeft ? 'translate-x-1/2' : '',
 				)}
 			>
 				{children}
@@ -145,7 +145,7 @@ const OverlayPanel = ({ children, placement, show }) => {
 		<div
 			className={clsx(
 				'absolute top-0 h-full w-1/2 translate-x-0 transform transition-transform duration-700 ease-in-out',
-				showStyle
+				showStyle,
 			)}
 		>
 			{children}
@@ -169,7 +169,7 @@ const PanelContainer = ({
 					? 'sm:translate-x-full'
 					: 'sm:translate-x-0',
 				responsive,
-				active ? 'z-10 opacity-100' : 'z-0 opacity-0'
+				active ? 'z-10 opacity-100' : 'z-0 opacity-0',
 			)}
 		>
 			{children}

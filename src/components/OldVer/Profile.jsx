@@ -14,7 +14,7 @@ import Button from 'components/Action/Button';
 import Card from 'components/DataDisplay/Card';
 import IconButton from 'components/Action/IconButton';
 import IconWrapper from 'components/Icon/IconWrapper';
-import Intro from 'features/user/components/Intro';
+import Intro from 'features/user/components/Details/Details';
 import Modal from 'components/OverLay/Modal';
 import Navbar from './Navbar';
 import ProfileEdit from 'features/user/components/ProfileEdit';

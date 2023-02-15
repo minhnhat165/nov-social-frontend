@@ -1,14 +1,26 @@
-import { t } from 'i18next';
-import PropTypes from 'prop-types';
+import PropTypes, { oneOfType } from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
-import getMaxDayOfMonth from 'utils/getMaxDayOfMonth';
-import SelectField from '../SelectField';
 
-const DropdownDatePicker = ({ initialDate, onChange }) => {
-	const currentDate = new Date();
-	const [month, setMonth] = useState(initialDate.getMonth());
-	const [year, setYear] = useState(initialDate.getFullYear());
-	const [day, setDay] = useState(initialDate.getDate());
+import { Select } from '..';
+import clsx from 'clsx';
+import getMaxDayOfMonth from 'utils/getMaxDayOfMonth';
+import getMonthString from 'utils/getMonthString';
+
+const currentDate = new Date();
+const sizes = {
+	sm: 'h-9 px-3 text-sm !rounded-lg',
+	md: 'h-10 px-4 text-base !rounded-lg',
+	lg: 'h-12 px-4 text-base !rounded-xl',
+	xl: 'h-14 px-4 text-base !rounded-xl',
+};
+const DropdownDatePicker = ({ initialDate, onChange, size }) => {
+	const [defaultMonth] = useState(initialDate?.getMonth());
+	const [defaultYear] = useState(initialDate?.getFullYear());
+	const [defaultDay] = useState(initialDate?.getDate());
+
+	const [month, setMonth] = useState(defaultMonth);
+	const [year, setYear] = useState(defaultYear);
+	const [day, setDay] = useState(defaultDay);
 
 	const maxDayOfMonth = useMemo(() => {
 		return getMaxDayOfMonth(month, year);
@@ -16,77 +28,134 @@ const DropdownDatePicker = ({ initialDate, onChange }) => {
 	useEffect(() => {
 		if (month && day && year) {
 			const date = new Date(year, month, day);
-			if (date === initialDate) return;
 			onChange(date);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [month, day, year]);
 
+	const monthOptions = useMemo(() => {
+		const options = Array.from({ length: 12 }, (_, i) => {
+			return {
+				value: i,
+				label: getMonthString(i),
+			};
+		});
+
+		return options.map((option) => {
+			return (
+				<Select.Option
+					defaultSelected={option.value === defaultMonth}
+					key={option.value}
+					value={option.value}
+				>
+					{option.label}
+				</Select.Option>
+			);
+		});
+	}, [defaultMonth]);
+
+	const dayOptions = useMemo(() => {
+		const options = Array.from({ length: maxDayOfMonth }, (_, i) => {
+			return {
+				value: i + 1,
+				label: i + 1,
+			};
+		});
+
+		return options.map((option) => {
+			return (
+				<Select.Option
+					defaultSelected={option.value === defaultDay}
+					key={option.value}
+					value={option.value}
+				>
+					{option.label}
+				</Select.Option>
+			);
+		});
+	}, [defaultDay, maxDayOfMonth]);
+
+	const yearOptions = useMemo(() => {
+		const options = Array.from({ length: 100 }, (_, i) => {
+			return {
+				value: currentDate.getFullYear() - i,
+				label: currentDate.getFullYear() - i,
+			};
+		});
+
+		return options.map((option) => {
+			return (
+				<Select.Option
+					defaultSelected={option.value === defaultYear}
+					key={option.value}
+					value={option.value}
+				>
+					{option.label}
+				</Select.Option>
+			);
+		});
+	}, [defaultYear]);
+
 	return (
 		<div className="flex w-full flex-col gap-1">
-			<div className="flex gap-2">
-				<SelectField
-					options={[
-						{ value: 0, label: 'January' },
-						{ value: 1, label: 'February' },
-						{ value: 2, label: 'March' },
-						{ value: 3, label: 'April' },
-						{ value: 4, label: 'May' },
-						{ value: 5, label: 'June' },
-						{ value: 6, label: 'July' },
-						{ value: 7, label: 'August' },
-						{ value: 8, label: 'September' },
-						{ value: 9, label: 'October' },
-						{ value: 10, label: 'November' },
-						{ value: 11, label: 'December' },
-					]}
-					label="month"
-					defaultValue={month}
-					onChange={(e) => {
-						setMonth(e.target.value);
-					}}
-				/>
+			<div className="flex justify-between gap-2">
+				<Select onChange={(value) => setMonth(value)}>
+					<Select.Trigger
+						className={clsx(
+							'!bg-slate-100 dark:!bg-dark-700',
+							sizes[size],
+						)}
+					>
+						Month
+					</Select.Trigger>
+					<Select.Options>{monthOptions}</Select.Options>
+				</Select>
 
-				<SelectField
-					label={t('Day')}
-					options={Array.from({ length: maxDayOfMonth }, (_, i) => ({
-						value: i + 1,
-						label: i + 1,
-					}))}
-					defaultValue={day}
-					onChange={(e) => {
-						setDay(e.target.value);
+				<Select
+					onChange={(value) => {
+						setDay(value);
 					}}
-				/>
+				>
+					<Select.Trigger
+						className={clsx(
+							'!bg-slate-100 dark:!bg-dark-700',
+							sizes[size],
+						)}
+					>
+						Day
+					</Select.Trigger>
+					<Select.Options>{dayOptions}</Select.Options>
+				</Select>
 
-				<SelectField
-					label={t('Year')}
-					options={Array.from(
-						{ length: currentDate.getFullYear() - 1900 },
-						(_, i) => {
-							return {
-								value: 1900 + i + 1,
-								label: 1900 + i + 1,
-							};
-						}
-					).reverse()}
-					defaultValue={year}
-					onChange={(e) => {
-						setYear(e.target.value);
+				<Select
+					onChange={(value) => {
+						setYear(value);
 					}}
-				/>
+				>
+					<Select.Trigger
+						className={clsx(
+							'!bg-slate-100 dark:!bg-dark-700',
+							sizes[size],
+						)}
+					>
+						Year
+					</Select.Trigger>
+					<Select.Options>{yearOptions}</Select.Options>
+				</Select>
 			</div>
 		</div>
 	);
 };
 
 DropdownDatePicker.propTypes = {
-	initialDate: PropTypes.instanceOf(Date),
+	initialDate: oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
 	onChange: PropTypes.func,
+	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
 };
 DropdownDatePicker.defaultProps = {
-	initialDate: new Date(),
+	// initialDate: new Date(),
 	onChange: () => {},
+	size: 'md',
 };
 
 export default DropdownDatePicker;

@@ -6,12 +6,12 @@ import {
 	GoogleIcon,
 	PencilSquareIcon,
 	TwitterIcon,
-	UserPlusIcon,
 } from 'components/Icon';
 
 import Avatar from 'components/DataDisplay/Avatar';
 import Button from 'components/Action/Button';
 import Card from 'components/DataDisplay/Card';
+import Follow from 'features/user/components/Follow';
 import FullViewImage from 'components/DataDisplay/FullViewImage';
 import IconButton from 'components/Action/IconButton';
 import Modal from 'components/OverLay/Modal';
@@ -38,7 +38,9 @@ const ProfilePanel = ({ profile }) => {
 				<ProfileAvatar avatar={profile.avatar} name={profile.name} />
 				<DisplayName name={profile.name} />
 				<ProfileBio bio={profile.bio} />
-				<ProfileJoinDate date={profile.createdAt} />
+				{profile.createdAt && (
+					<ProfileJoinDate date={profile.createdAt} />
+				)}
 				<ProfileProvider provider={profile.provider} />
 				<Statistical
 					followers={profile?.followers?.length}
@@ -47,7 +49,7 @@ const ProfilePanel = ({ profile }) => {
 				/>
 				<Action isUser={isUser} profile={profile} />
 			</Card>
-			<Card className="mt-auto p-2">
+			<Card className="mt-auto">
 				<Navbar />
 			</Card>
 		</Card>
@@ -89,7 +91,7 @@ const Provider = ({ type }) => {
 };
 
 const Edit = ({ profile }) => (
-	<Modal.Control>
+	<Modal.Root>
 		<Modal.Trigger>
 			<Button
 				size="lg"
@@ -101,32 +103,29 @@ const Edit = ({ profile }) => (
 			</Button>
 		</Modal.Trigger>
 		<Modal>
-			<Modal.Close />
-			<Modal.Props>
-				{({ onClose }) => {
-					return (
-						<Modal.Panel>
-							<Modal.Panel.Header>
-								Edit Profile
-							</Modal.Panel.Header>
+			<Modal.Panel>
+				<Modal.Header>Edit Profile</Modal.Header>
+				<Modal.Props>
+					{({ closeModal }) => {
+						return (
 							<ProfileEdit
 								profile={profile}
-								onCancel={onClose}
-								onSuccess={onClose}
+								onCancel={closeModal}
+								onSuccess={closeModal}
 							/>
-						</Modal.Panel>
-					);
-				}}
-			</Modal.Props>
+						);
+					}}
+				</Modal.Props>
+			</Modal.Panel>
 		</Modal>
-	</Modal.Control>
+	</Modal.Root>
 );
 
 export default ProfilePanel;
 
 function Action({ isUser, profile }) {
 	return (
-		<div className="flex flex-1 items-center justify-center gap-4 px-2">
+		<div className="flex h-[72px] items-center justify-center gap-4 px-2">
 			{isUser ? (
 				<Edit profile={profile} />
 			) : (
@@ -134,14 +133,20 @@ function Action({ isUser, profile }) {
 					<IconButton size="lg" rounded color="secondary">
 						<ChatBubbleBottomCenterTextIcon />
 					</IconButton>
-					<Button
-						size="lg"
-						rounded
-						color="secondary"
-						startIcon={<UserPlusIcon />}
-					>
-						Follow
-					</Button>
+					<Follow followId={profile._id}>
+						{({ isLoading, isFollowing, onClick }) => (
+							<Button
+								size="lg"
+								rounded
+								color={isFollowing ? 'primary' : 'secondary'}
+								onClick={onClick}
+								loading={isLoading}
+								className="w-28"
+							>
+								{isFollowing ? 'Followed' : 'Follow'}
+							</Button>
+						)}
+					</Follow>
 				</>
 			)}
 		</div>
@@ -192,7 +197,7 @@ function ProfileAvatar({ avatar, name }) {
 function DisplayName({ name }) {
 	if (!name) return null;
 	return (
-		<div className="relative px-2 text-center">
+		<div className="relative mt-2 px-2 text-center">
 			<Text as="h2" className={clsx('text-xl font-bold')}>
 				{name}
 			</Text>
@@ -203,8 +208,15 @@ function DisplayName({ name }) {
 function ProfileBio({ bio }) {
 	if (!bio) return null;
 	return (
-		<Text as="p" className="px-2 text-center" level={1}>
+		<Text as="p" className="px-2 text-center italic" level={2}>
+			<Text primary as="span">
+				"
+			</Text>{' '}
 			{bio}
+			<Text primary as="span">
+				{' '}
+				"
+			</Text>
 		</Text>
 	);
 }
@@ -213,7 +225,7 @@ function ProfileJoinDate({ date }) {
 	return (
 		<Text
 			as="div"
-			level={1}
+			level={2}
 			className="flex items-center justify-center gap-1 px-2"
 		>
 			<CalendarDaysIcon className="inline-block h-4 w-4" />

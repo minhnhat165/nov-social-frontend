@@ -1,8 +1,12 @@
 import AvatarUploader from 'components/DataEntry/AvatarUploader';
-const AvatarForm = ({ register, initialValue, setValue }) => {
+import getImageFromFile from 'utils/getImageFromFile';
+
+const AvatarForm = ({ initialValue, setValue }) => {
 	return (
 		<AvatarUploader
-			defaultFile={initialValue?.length > 0 ? initialValue[0] : null}
+			defaultImage={getImageFromFile(
+				initialValue?.length > 0 ? initialValue[0] : null,
+			)}
 			onChange={(file) => {
 				setValue('avatar', { 0: file, length: 1 });
 			}}

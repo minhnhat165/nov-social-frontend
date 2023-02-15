@@ -11,8 +11,17 @@ const saveSearchLog = ({ type, text, data }) =>
 		text,
 		data,
 	});
+const searchInterest = ({ query, limit = 10, category }) =>
+	axiosClient.get(
+		URL +
+			'/interest?q=' +
+			query +
+			'&limit=' +
+			limit +
+			(category ? '&category=' + category : ''),
+	);
 
 const deleteSearchLog = (searchId) =>
 	axiosClient.delete(URL + '/log/' + searchId);
 
-export { search, getSearchLog, saveSearchLog, deleteSearchLog };
+export { search, getSearchLog, saveSearchLog, deleteSearchLog, searchInterest };

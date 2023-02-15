@@ -1,44 +1,54 @@
+import IconButton from 'components/Action/IconButton';
 import Img from '../Img';
 import Modal from 'components/OverLay/Modal';
 import { Spinner } from 'components/Loading/Spinner';
+import { XMarkIcon } from 'components/Icon';
 import { getOriginalImageFromURL } from 'utils/cloundinaryUtils';
 import { useState } from 'react';
 
 const FullViewImage = ({ src, children }) => {
-	const [loading, setLoading] = useState(true);
 	return (
-		<Modal.Control>
+		<Modal.Root>
 			<Modal.Trigger>{children}</Modal.Trigger>
-			<Modal>
-				<Modal.Close />
+			<Modal closeIcon={null}>
 				<Modal.Props>
-					{({ onClose }) => (
-						<div
-							className="flex h-screen w-screen items-center justify-center overflow-hidden bg-black "
-							onClick={onClose}
-						>
-							{loading && (
-								<Spinner
-									className="fixed m-auto"
-									size="xl"
-									color="primary"
-								/>
-							)}
-							<Img
-								onClick={(e) => {
-									e.stopPropagation();
-								}}
-								src={getOriginalImageFromURL(src)}
-								alt="full view"
-								className="block max-h-full max-w-full "
-								onLoad={() => setLoading(false)}
-							/>
-						</div>
+					{({ closeModal }) => (
+						<ImageScreen onClose={closeModal} src={src} />
 					)}
 				</Modal.Props>
 			</Modal>
-		</Modal.Control>
+		</Modal.Root>
 	);
 };
 
 export default FullViewImage;
+
+function ImageScreen({ onClose, src }) {
+	const [loading, setLoading] = useState(true);
+	return (
+		<div
+			className="flex h-screen w-screen items-center justify-center overflow-hidden bg-dark-900"
+			onClick={onClose}
+		>
+			<IconButton
+				variant="text"
+				className="absolute right-2 top-2 !text-dark-100 hover:!bg-dark-700/50"
+				rounded
+			>
+				<XMarkIcon />
+			</IconButton>
+			{loading && (
+				<Spinner className="fixed m-auto" size="xl" color="primary" />
+			)}
+			<Img
+				onClick={(e) => {
+					e.stopPropagation();
+				}}
+				src={getOriginalImageFromURL(src)}
+				alt="full view"
+				className="block max-h-full max-w-full"
+				onLoad={() => setLoading(false)}
+			/>
+		</div>
+	);
+}

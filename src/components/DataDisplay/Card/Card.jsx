@@ -39,27 +39,49 @@ const Image = ({ src, alt, className, ...props }) => (
 
 const Title = ({ children, className, ...props }) => {
 	return (
-		<Text
-			as="h3"
-			className={clsx('p-4 text-xl capitalize', className)}
-			{...props}
-		>
-			{children}
-		</Text>
+		<div className="inline-flex h-full items-center">
+			<Text
+				as="h3"
+				className={clsx('text-xl capitalize', className)}
+				{...props}
+			>
+				{children}
+			</Text>
+		</div>
 	);
 };
 
-const Body = ({ children, className, ...props }) => {
+const Header = ({ children, className, ...props }) => {
 	return (
-		<div className={clsx('px-4 pb-4', className)} {...props}>
+		<div className={clsx('h-14 px-4', className)} {...props}>
 			{children}
 		</div>
 	);
 };
 
+const Body = ({ children, className, ...props }) => {
+	return (
+		<div className={clsx('px-4', className)} {...props}>
+			{children}
+		</div>
+	);
+};
+
+const Footer = ({ children, className, ...props }) => {
+	return (
+		<div className={clsx('h-14 px-4', className)} {...props}>
+			{children}
+		</div>
+	);
+};
+
+Card.Header = Header;
+
 Card.Title = Title;
 
 Card.Body = Body;
+
+Card.Footer = Footer;
 
 Card.Image = Image;
 
@@ -70,3 +92,5 @@ Card.propTypes = {
 };
 
 export default Card;
+
+export { Header, Title, Body, Footer, Image };

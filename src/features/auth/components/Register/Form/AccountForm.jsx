@@ -1,5 +1,5 @@
+import Input from 'components/DataEntry/InputField/Input';
 import { checkEmailExists } from 'api/authApi';
-import InputField from 'components/DataEntry/InputField';
 import { useEffect } from 'react';
 
 export const AccountForm = ({
@@ -43,21 +43,21 @@ export const AccountForm = ({
 
 	return (
 		<>
-			<InputField
+			<Input
 				autoFocus
 				label="email"
 				error={errors.email?.message}
 				placeholder="Enter your email"
 				registration={register('email')}
 			/>
-			<InputField
+			<Input
 				label="password"
 				type="password"
 				error={errors.password?.message}
 				placeholder="Enter password"
 				registration={register('password')}
 			/>
-			<InputField
+			<Input
 				label="confirm password"
 				placeholder="Confirm password"
 				type="password"

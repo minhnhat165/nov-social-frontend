@@ -31,9 +31,9 @@ const Navbar = () => {
 		},
 	]);
 	return (
-		<div className="w-full max-w-md px-2 sm:px-0 ">
+		<div className="w-full">
 			<TabLib.Group>
-				<TabLib.List className="flex space-x-1 rounded-xl bg-slate-200 p-1 dark:bg-dark-700">
+				<TabLib.List className="m-2 flex rounded-xl bg-white p-2 shadow dark:bg-dark-900">
 					{items.map((item) => (
 						<TabLib
 							as={Link}
@@ -41,10 +41,10 @@ const Navbar = () => {
 							to={`/profile/${id}${item.endPoint}`}
 							className={({ selected }) =>
 								clsx(
-									'w-full rounded-lg py-2.5 text-center text-sm font-medium leading-5 outline-none',
+									'w-full rounded-lg py-2 text-center text-sm leading-5 outline-none',
 									selected
-										? 'bg-primary-700 text-slate-50 shadow'
-										: 'text-slate-600 hover:bg-slate-50/70 hover:text-slate-800 dark:text-dark-400 dark:hover:bg-dark-600 dark:hover:text-dark-200'
+										? 'bg-primary-50 font-bold text-primary-700 dark:bg-primary-900/20 dark:text-primary-500'
+										: 'text-slate-600 hover:text-primary-700 dark:text-dark-400 dark:hover:text-primary-500',
 								)
 							}
 						>

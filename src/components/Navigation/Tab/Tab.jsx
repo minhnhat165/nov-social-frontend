@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Tab as TabLib } from '@headlessui/react';
+import { useState } from 'react';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -29,16 +29,16 @@ export default function Tab() {
 	return (
 		<div className="w-full max-w-md px-2 sm:px-0">
 			<TabLib.Group>
-				<TabLib.List className="flex space-x-1 rounded-xl bg-slate-500/20 p-1">
+				<TabLib.List className="flex space-x-1 rounded-full bg-slate-500/20 p-1">
 					{items.map((item) => (
 						<TabLib
 							key={item.id}
 							className={({ selected }) =>
 								classNames(
-									'w-full rounded-lg py-2.5 text-sm font-medium leading-5 outline-none',
+									'w-full rounded-full  py-2.5 text-sm font-medium leading-5 outline-none',
 									selected
 										? 'bg-primary-700 text-slate-50 shadow'
-										: 'text-slate-600 hover:bg-slate-50/70 hover:text-slate-800 dark:text-dark-400 dark:hover:bg-dark-600 dark:hover:text-dark-200'
+										: 'text-slate-600 hover:bg-slate-50/70 hover:text-slate-800 dark:text-dark-400 dark:hover:bg-dark-600 dark:hover:text-dark-200',
 								)
 							}
 						>

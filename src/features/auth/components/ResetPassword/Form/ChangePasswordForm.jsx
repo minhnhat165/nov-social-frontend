@@ -1,10 +1,11 @@
+import * as yup from 'yup';
+
 import Button from 'components/Action/Button';
 import Form from 'components/DataEntry/Form';
-import InputField from 'components/DataEntry/InputField';
+import FormDescription from './FormDescription';
+import { Input } from 'postcss';
 import { KeyIcon } from 'components/Icon';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
-import FormDescription from './FormDescription';
 
 const schema = yup.object().shape({
 	password: yup
@@ -15,7 +16,7 @@ const schema = yup.object().shape({
 		.string()
 		.oneOf(
 			[yup.ref('password'), null],
-			'Password and confirm password does not match'
+			'Password and confirm password does not match',
 		),
 });
 
@@ -37,7 +38,7 @@ const ChangePasswordForm = ({ onSubmit, isLoading }) => {
 			>
 				{({ register, formState: { errors, isDirty, isValid } }) => (
 					<>
-						<InputField
+						<Input
 							autoFocus
 							label={t('New password')}
 							placeholder={t('Password')}
@@ -46,7 +47,7 @@ const ChangePasswordForm = ({ onSubmit, isLoading }) => {
 							error={errors.password?.message}
 						/>
 
-						<InputField
+						<Input
 							label={t('Confirm new password')}
 							placeholder={t('Confirm password')}
 							type="password"

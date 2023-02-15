@@ -11,19 +11,19 @@ import { useQuery } from 'react-query';
 const Layout = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const userId = useSelector((state) => state.auth.user._id);
+	const userId = useSelector((state) => state.auth.user?._id);
 	const queryId = id ? id : userId;
+	const isOwner = userId === queryId;
 	const { isSuccess } = useQuery(
 		['profile', queryId],
-		() => getProfile(queryId),
+		() => (isOwner ? getProfile() : getProfile(queryId)),
 		{
-			onSuccess: ({ user }) => {
-				dispatch(setProfile(user));
+			onSuccess: ({ profile }) => {
+				dispatch(setProfile(profile));
 			},
-		}
+		},
 	);
 	const profile = useSelector((state) => state.profile.data);
-
 	return (
 		<>
 			{isSuccess && (
@@ -38,7 +38,11 @@ const Layout = () => {
 							</aside>
 						</StickyBox>
 						<div className="flex-1">
-							<Outlet />
+							<Outlet
+								context={{
+									isOwner,
+								}}
+							/>
 						</div>
 					</div>
 				</>

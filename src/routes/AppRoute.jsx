@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react';
 
 import Components from 'pages/Lab';
 import Game from 'pages/Game/Game';
-import Home from 'features/home/pages/Home';
+import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
 import NotFound from 'pages/NotFound';
 import PrivateRoute from './PrivateRoute';

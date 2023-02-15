@@ -1,6 +1,6 @@
-import Sidebar from 'components/Navigation/Sidebar';
-import { Outlet } from 'react-router-dom';
 import HeaderLeft from './HeaderLeft';
+import { Outlet } from 'react-router-dom';
+import Sidebar from 'components/Navigation/Sidebar';
 
 const MainLayout = () => {
 	return (

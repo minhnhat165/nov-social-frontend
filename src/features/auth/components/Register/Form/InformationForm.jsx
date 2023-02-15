@@ -1,24 +1,25 @@
+import Input from 'components/DataEntry/InputField/Input';
 import InputDateField from 'components/DataEntry/InputDateField';
-import InputField from 'components/DataEntry/InputField';
 import RadioGroup from 'components/DataEntry/RadioGroup';
 
 const InformationForm = ({ register, setValue, errors, getValues }) => {
 	return (
 		<>
 			<div className="flex gap-x-2">
-				<InputField
+				<Input
 					label="first name"
 					autoFocus
 					error={errors.firstName?.message}
 					registration={register('firstName')}
 				/>
-				<InputField
+				<Input
 					label="last name"
 					error={errors.lastName?.message}
 					registration={register('lastName')}
 				/>
 			</div>
 			<RadioGroup
+				size="lg"
 				options={[
 					{
 						name: 'male',
@@ -39,6 +40,7 @@ const InformationForm = ({ register, setValue, errors, getValues }) => {
 			/>
 			<InputDateField
 				label="Date of birth"
+				size="lg"
 				type="date"
 				onChange={(value) =>
 					setValue('dateOfBirth', value, {
@@ -47,7 +49,7 @@ const InformationForm = ({ register, setValue, errors, getValues }) => {
 					})
 				}
 				error={errors.dateOfBirth?.message}
-				initialValue={getValues('dateOfBirth')}
+				initialValue={new Date(getValues('dateOfBirth')) || null}
 			/>
 		</>
 	);

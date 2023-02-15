@@ -1,9 +1,11 @@
+import * as yup from 'yup';
+
 import Button from 'components/Action/Button';
 import Form from 'components/DataEntry/Form';
-import InputField from 'components/DataEntry/InputField';
+import Input from 'components/DataEntry/InputField/Input';
 import React from 'react';
 import { useId } from 'react';
-import * as yup from 'yup';
+
 const schema = yup.object().shape({
 	email: yup
 		.string()
@@ -28,14 +30,14 @@ const LoginForm = ({ onSubmit, loading }) => {
 		>
 			{({ register, formState: { errors, isDirty, isValid } }) => (
 				<>
-					<InputField
+					<Input
 						autoFocus
 						label="email"
 						placeholder="Enter your email"
 						error={errors.email?.message}
 						registration={register('email')}
 					/>
-					<InputField
+					<Input
 						placeholder="Enter your password"
 						label="password"
 						type="password"

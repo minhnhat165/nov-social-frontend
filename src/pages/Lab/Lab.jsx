@@ -1,14 +1,11 @@
-import Button from 'components/Action/Button';
-import Tippy from '@tippyjs/react';
+import 'react-phone-input-2/lib/style.css';
+import './lab.css';
 
 const Components = () => {
+	// set title to the page
+	document.title = 'ChatGPT Fake v1.0';
 	return (
-		<div className="flex h-screen w-full items-center justify-center">
-			<img
-				src="https://res.cloudinary.com/devemail/image/upload/63c1326146e40d65231854fb/ytbgjkiytujrkbmwqkjf"
-				alt=""
-			/>
-		</div>
+		<div className="flex h-screen w-screen flex-col items-center justify-center"></div>
 	);
 };
 

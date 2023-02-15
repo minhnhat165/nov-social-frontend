@@ -29,6 +29,15 @@ export const getOriginalImageFromURL = (url) => {
 	return `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/${publicId}`;
 };
 
+export const getImageWithDimension = ({ publicId, width, height }) => {
+	if (!publicId) return null;
+	return `https://res.cloudinary.com/${
+		process.env.REACT_APP_CLOUDINARY_NAME
+	}/image/upload/${width ? `w_${width},` : ''}${
+		height ? `h_${height},` : ''
+	}c_fill/${publicId}`;
+};
+
 const cloudinaryUtils = {
 	uploadImage,
 };

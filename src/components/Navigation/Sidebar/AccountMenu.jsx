@@ -44,7 +44,7 @@ const AccountList = () => {
 	const goToProfile = useGoToProfile();
 
 	const linkedAccounts = useSelector(
-		(state) => state.auth.user?.linkedAccounts
+		(state) => state.auth.user?.linkedAccounts,
 	);
 	const renderAccounts = () => {
 		if (!user || !linkedAccounts) return null;
@@ -96,7 +96,7 @@ const BellCount = ({ count }) => {
 
 const AddExistingAccountTrigger = () => {
 	return (
-		<Modal.Control>
+		<Modal.Root>
 			<Modal.Trigger>
 				<MenuItem
 					icon={<UserPlusIcon />}
@@ -104,23 +104,22 @@ const AddExistingAccountTrigger = () => {
 				></MenuItem>
 			</Modal.Trigger>
 			<Modal>
-				<Modal.Close />
-				<Modal.Props>
-					{({ onClose }) => (
-						<Modal.Panel>
-							<Modal.Panel.Header />
+				<Modal.Panel>
+					<Modal.Header />
+					<Modal.Props>
+						{({ onClose }) => (
 							<AddExistingAccount onSuccess={onClose} />
-						</Modal.Panel>
-					)}
-				</Modal.Props>
+						)}
+					</Modal.Props>
+				</Modal.Panel>
 			</Modal>
-		</Modal.Control>
+		</Modal.Root>
 	);
 };
 
 const ManageAccountsTrigger = () => {
 	return (
-		<Modal.Control>
+		<Modal.Root>
 			<Modal.Trigger>
 				<MenuItem
 					icon={<ListCheckIcon />}
@@ -128,17 +127,14 @@ const ManageAccountsTrigger = () => {
 				/>
 			</Modal.Trigger>
 			<Modal>
-				<Modal.Close />
 				<Modal.Panel>
-					<Modal.Panel.Header>
-						Manage linked accounts
-					</Modal.Panel.Header>
+					<Modal.Header>Manage linked accounts</Modal.Header>
 					<div className="pb-4">
 						<ManageAccounts />
 					</div>
 				</Modal.Panel>
 			</Modal>
-		</Modal.Control>
+		</Modal.Root>
 	);
 };
 

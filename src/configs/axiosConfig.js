@@ -1,9 +1,10 @@
+import { logout, setAccessToken } from 'store/slices/authSlice';
+
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import store from 'store';
 import { toast } from 'react-hot-toast';
 
-import store from 'store';
-import { logout, setAccessToken } from 'store/slices/authSlice';
 const baseURL = process.env.REACT_APP_API_URL;
 export const axiosClient = axios.create({
 	baseURL,
@@ -25,7 +26,7 @@ axiosClient.interceptors.response.use(
 			return Promise.reject(error);
 		}
 		return Promise.reject(error.response.data);
-	}
+	},
 );
 
 axiosClient.interceptors.request.use(
@@ -41,13 +42,15 @@ axiosClient.interceptors.request.use(
 						{
 							credentials: 'include',
 							withCredentials: true,
-						}
+						},
 					);
 					accessToken = res.data.access_token;
 					store.dispatch(setAccessToken(accessToken));
 				} catch (error) {
-					store.dispatch(logout());
-					toast.error('expire login');
+					if (error.status === 401) {
+						store.dispatch(logout());
+						toast.error('expire login');
+					}
 					return Promise.reject(error.response.data);
 				}
 			}
@@ -57,5 +60,5 @@ axiosClient.interceptors.request.use(
 	},
 	(error) => {
 		return Promise.reject(error.response.data);
-	}
+	},
 );

@@ -1,10 +1,11 @@
+import * as yup from 'yup';
+
 import Button from 'components/Action/Button';
 import Form from 'components/DataEntry/Form';
-import InputField from 'components/DataEntry/InputField';
+import FormDescription from './FormDescription';
+import Input from 'components/DataEntry/InputField/Input';
 import { MailIcon } from 'components/Icon';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
-import FormDescription from './FormDescription';
 
 const schema = yup.object().shape({
 	email: yup
@@ -32,7 +33,7 @@ const EmailForm = (props) => {
 			>
 				{({ register, formState: { errors, isDirty, isValid } }) => (
 					<>
-						<InputField
+						<Input
 							placeholder="November@email.com"
 							type="email"
 							name="email"

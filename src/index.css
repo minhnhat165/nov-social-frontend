@@ -1,16 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
 	:root {
 		--font-primary: 'SF Font';
-
 		--color-primary: 107 164 233;
 		--color-primary-bold: 61 112 178;
 		--text-color-bold: 57 58 79;
 		--text-color: 117 122 145;
 		--dark-color-placeholder: rgb(78, 97, 131);
+		--scrollbarBG: #cfd8dc;
+		--thumbBG: #90a4ae;
 	}
 	@font-face {
 		font-family: 'SF Font';
@@ -76,38 +76,48 @@
 		-webkit-appearance: none;
 		margin: 0;
 	}
-
-	::-ms-reveal {
-		color: var(--color-primary);
-		background-color: var(--color-primary);
+	::-webkit-scrollbar {
+		@apply w-[0.7rem];
 	}
 
-	html *::-webkit-scrollbar {
-		transition: all 1s linear;
-		border-radius: 0;
-		width: 8px;
+	::-webkit-scrollbar-thumb {
+		border: 3px solid transparent;
 	}
 
-	html *::-webkit-scrollbar-thumb {
-		transition: all 1s linear;
-		border-radius: 4px;
-		/* background-color: rgba(107, 164, 233, 0.2); */
-		background-color: rgba(107, 164, 233, 0.7);
+	::-webkit-scrollbar-thumb {
+		@apply rounded-full border-gray-300 bg-gray-500/50 transition-all hover:bg-gray-500 dark:border-gray-700 dark:bg-gray-500 hover:dark:bg-gray-400;
 	}
 
-	html *::-webkit-scrollbar-track {
-		background-color: rgba(0, 0, 0, 0);
+	::-webkit-scrollbar-track {
+		@apply bg-gray-300 dark:bg-gray-700;
+	}
+	.scrollbar-hover::-webkit-scrollbar {
+		@apply hidden;
+	}
+	.scrollbar-hover:hover::-webkit-scrollbar {
+		@apply block;
 	}
 
-	::-webkit-scrollbar-thumb:hover {
-		background-color: rgba(107, 164, 233, 0.7);
+	.scrollbar-track-transparent::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
+
+	.scrollbar-track-transparent::-webkit-scrollbar-thumb {
+		@apply border-none;
+	}
+	.scrollbar-track-transparent::-webkit-scrollbar {
+		@apply w-[0.5rem];
 	}
 
 	.text-normal {
-		@apply text-slate-800 dark:text-dark-100;
+		@apply text-slate-600 dark:text-dark-100;
 	}
 	.clickable {
 		@apply cursor-pointer opacity-90 transition-transform active:scale-90;
+	}
+
+	.absolute-center {
+		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform;
 	}
 }
 .max-height {
@@ -154,26 +164,4 @@
 
 .tooltip[data-placement^='right'] > .arrow {
 	left: -4px;
-}
-
-.border-dashed {
-	height: 100px;
-	width: 200px;
-	background: linear-gradient(90deg, blue 50%, transparent 50%),
-		linear-gradient(90deg, blue 50%, transparent 50%),
-		linear-gradient(0deg, blue 50%, transparent 50%),
-		linear-gradient(0deg, blue 50%, transparent 50%);
-	background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-	background-size: 15px 4px, 15px 4px, 4px 15px, 4px 15px;
-	background-position: 0px 0px, 200px 100px, 0px 100px, 200px 0px;
-	padding: 10px;
-	animation: border-dance 4s infinite linear;
-}
-@keyframes border-dance {
-	0% {
-		background-position: 0px 0px, 300px 116px, 0px 150px, 216px 0px;
-	}
-	100% {
-		background-position: 300px 0px, 0px 116px, 0px 0px, 216px 150px;
-	}
 }

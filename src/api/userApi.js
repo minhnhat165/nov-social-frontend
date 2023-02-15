@@ -2,19 +2,16 @@ import { axiosClient } from 'configs/axiosConfig';
 
 const URL = '/users';
 
-const getProfile = (id) => axiosClient.get(URL + `/profile/${id}`);
-
-// const getSuggestionsUser = () =>
-// 	axiosClientPrivate.get(URL + 'suggestionsUser', {
-// 		headers: setHeader(),
-// 	});
-
-// const followUser = (id) =>
-// 	axiosClientPrivate.patch(
-// 		URL + `follow/${id}`,
-// 		{},
-// 		{ headers: setHeader() }
-// 	);
+const getProfile = (id = 'me') => axiosClient.get(URL + `/profile/${id}`);
+const followUser = (id) => axiosClient.patch(URL + `/follow/${id}`);
+const unFollowUser = (id) => axiosClient.patch(URL + `/unFollow/${id}`);
+const getPhotos = ({ userId, limit, page }) =>
+	axiosClient.get(
+		URL +
+			`/${userId}/photos` +
+			(limit ? `?limit=${limit}` : '') +
+			(page ? `&page=${page}` : ''),
+	);
 
 // const getUser = () =>
 // 	axiosClientPrivate.get(URL, {
@@ -49,6 +46,9 @@ const updateProfile = (data) =>
 export {
 	getProfile,
 	updateProfile,
+	followUser,
+	unFollowUser,
+	getPhotos,
 	// getUser,
 	// updateUser,
 	// getUserInfo,

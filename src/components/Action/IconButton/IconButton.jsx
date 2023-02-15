@@ -12,6 +12,13 @@ const sizes = {
 	xl: 'h-14 w-14 text-lg',
 };
 
+const iconSizes = {
+	sm: 5,
+	md: 5,
+	lg: 6,
+	xl: 7,
+};
+
 const IconButton = ({
 	loading,
 	size,
@@ -34,14 +41,14 @@ const IconButton = ({
 				color,
 				rounded ? 'rounded-full' : 'rounded-xl',
 				sizes[size],
-				className
+				className,
 			)}
 			{...props}
 		>
 			{loading ? (
 				<Spinner size={size} variant="light" />
 			) : (
-				<IconWrapper> {children}</IconWrapper>
+				<IconWrapper size={iconSizes[size]}> {children}</IconWrapper>
 			)}
 		</button>
 	);

@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import { useId } from 'react';
-import getDateStringFormat from 'utils/getDateStringFormat';
 import DropdownDatePicker from '../DropdownDatePicker';
+import PropTypes from 'prop-types';
 import WrapperField from '../WrapperField';
+import { useId } from 'react';
+
 const InputDateField = ({
 	size,
 	label,
@@ -12,7 +12,6 @@ const InputDateField = ({
 	onChange,
 }) => {
 	const id = useId();
-
 	return (
 		<WrapperField
 			label={label}
@@ -23,8 +22,9 @@ const InputDateField = ({
 			className="w-full"
 		>
 			<DropdownDatePicker
-				initialDate={new Date(initialValue)}
-				onChange={onChange}
+				size={size}
+				initialDate={initialValue}
+				onChange={(value) => onChange(value)}
 			/>
 		</WrapperField>
 	);
@@ -48,7 +48,7 @@ InputDateField.propTypes = {
 InputDateField.defaultProps = {
 	size: 'md',
 	type: 'date',
-	initialValue: getDateStringFormat(new Date()),
+	initialValue: null,
 };
 
 export default InputDateField;

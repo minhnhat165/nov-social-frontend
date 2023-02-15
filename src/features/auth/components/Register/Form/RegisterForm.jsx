@@ -1,5 +1,5 @@
-import Button from 'components/Action/Button';
-import Form from 'components/DataEntry/Form';
+import * as yup from 'yup';
+
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -8,16 +8,18 @@ import {
 	LockClosedIcon,
 	UserIcon,
 } from 'components/Icon';
-import Stepper from 'components/Navigation/Stepper';
-import { useRegister } from 'features/auth/hooks/useRegister';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { routePaths } from 'routes/routeConfig';
-import * as yup from 'yup';
+
 import AccountForm from './AccountForm';
 import AvatarForm from './AvatarForm';
+import Button from 'components/Action/Button';
 import FinishForm from './FinishForm';
+import Form from 'components/DataEntry/Form';
 import InformationForm from './InformationForm';
+import { Link } from 'react-router-dom';
+import Stepper from 'components/Navigation/Stepper';
+import { routePaths } from 'routes/routeConfig';
+import { useRegister } from 'features/auth/hooks/useRegister';
+import { useState } from 'react';
 
 const schemas = [
 	yup.object().shape({
@@ -33,7 +35,7 @@ const schemas = [
 			.string()
 			.oneOf(
 				[yup.ref('password'), null],
-				'Password and confirm password does not match'
+				'Password and confirm password does not match',
 			),
 	}), // Account
 	yup.object().shape({
@@ -44,7 +46,7 @@ const schemas = [
 			.date()
 			.max(
 				new Date(),
-				'Are you a time traveler? Please enter valid birth date'
+				'Are you a time traveler? Please enter valid birth date',
 			)
 			.required('Birth date is a required field'),
 	}), // Information
@@ -108,7 +110,7 @@ const RegisterForm = () => {
 		if (currentStepId >= 0) {
 			setCurrentStepId((prev) => prev - 1);
 			setCompletedStepIds((prev) =>
-				prev.filter((stepId) => stepId !== currentStepId - 1)
+				prev.filter((stepId) => stepId !== currentStepId - 1),
 			);
 		}
 	};
@@ -203,7 +205,9 @@ const RegisterForm = () => {
 									)}
 									<Button
 										loading={registerMutation.isLoading}
-										disabled={!isDirty || !isValid}
+										disabled={
+											!isDirty || !isValid || errors.email
+										}
 										type="submit"
 										size="lg"
 										className="flex-1"

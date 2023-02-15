@@ -1,12 +1,12 @@
 import { CubeTransparentIcon } from 'components/Icon';
 import IconWrapper from 'components/Icon/IconWrapper';
-import SearchMain from 'features/search/components/SearchMain';
 import { Link } from 'react-router-dom';
+import SearchMain from 'features/search/components/SearchMain';
 import { routePaths } from 'routes/routeConfig';
 
 const HeaderLeft = () => {
 	return (
-		<div className="flex h-14 w-80 items-center rounded-xl bg-slate-50 shadow dark:bg-dark-800 desktop:w-96">
+		<div className="flex h-14 w-80 items-center rounded-xl bg-slate-50 shadow dark:bg-dark-800 desktop:w-[390px]">
 			<div className="flex h-14 w-14 items-center justify-center">
 				<Link
 					to={routePaths.HOME}
@@ -17,8 +17,10 @@ const HeaderLeft = () => {
 					</IconWrapper>
 				</Link>
 			</div>
-			<div className="flex-1 pl-2">
-				<SearchMain />
+			<div className="relative h-10 flex-1 pl-2">
+				<div className="absolute top-0 right-2 w-full pl-2 transition-all focus-within:right-0">
+					<SearchMain />
+				</div>
 			</div>
 		</div>
 	);
