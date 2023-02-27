@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const Form = ({
+export const Form = ({
 	id,
 	defaultValues,
 	className,
@@ -26,5 +26,3 @@ const Form = ({
 		</form>
 	);
 };
-
-export default Form;

@@ -1,12 +1,12 @@
 import 'style/button.css';
 
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
-import { Spinner } from '../../Loading/Spinner';
+import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
 
 const sizes = {
-	sm: 'h-9 px-4 text-sm ',
+	sm: 'h-9 px-4 text-sm',
 	md: 'h-10 px-6 text-base',
 	lg: 'h-12 px-6 text-lg',
 	xl: 'h-14 px-8 text-lg`',
@@ -40,9 +40,10 @@ const iconRightStyle = {
 	xl: 'ml-3',
 };
 
-const Button = ({
+export const Button = ({
 	as,
 	variant,
+	fullWidth,
 	loading,
 	disabled,
 	size,
@@ -65,6 +66,7 @@ const Button = ({
 				'relative flex shrink-0 cursor-pointer items-center justify-center no-underline transition-all active:scale-95',
 				sizes[size],
 				rounded ? 'rounded-full' : borderRadius[size],
+				fullWidth ? 'w-full' : '',
 				variant,
 				color,
 				className,
@@ -103,6 +105,7 @@ Button.propTypes = {
 	variant: PropTypes.oneOf(['filled', 'outlined', 'text']),
 	loading: PropTypes.bool,
 	disabled: PropTypes.bool,
+	fullWidth: PropTypes.bool,
 	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
 	color: PropTypes.oneOf(['primary', 'secondary']),
 	children: PropTypes.node,
@@ -127,6 +130,5 @@ Button.defaultProps = {
 	rounded: false,
 	as: 'button',
 	elevated: false,
+	fullWidth: false,
 };
-
-export default Button;

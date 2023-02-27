@@ -1,8 +1,9 @@
-import useDarkMode from '../../../hooks/useDarkMode';
 import { MoonIcon, SunIcon } from '../../Icon';
-import Switch from '../Switch/Switch';
 
-const ToggleButton = () => {
+import Switch from '../Switch/Switch';
+import useDarkMode from '../../../hooks/useDarkMode';
+
+export const SwitchDarkMode = () => {
 	const [isDarkMode, toggleDarkMode] = useDarkMode();
 	return (
 		<Switch
@@ -15,5 +16,3 @@ const ToggleButton = () => {
 		/>
 	);
 };
-
-export default ToggleButton;

@@ -29,7 +29,7 @@ export function SwitchButton({ isOn: defaultValue, onChange, size }) {
 					sizes[size],
 					isOn
 						? '  bg-primary-700 dark:bg-primary-500'
-						: 'bg-gray-300 dark:bg-dark-900',
+						: 'bg-gray-300 dark:bg-gray-800',
 				)}
 				exit={{ opacity: 0 }}
 			>
@@ -66,9 +66,11 @@ export function SwitchButton({ isOn: defaultValue, onChange, size }) {
 SwitchButton.propTypes = {
 	isOn: PropTypes.bool,
 	onChange: PropTypes.func,
+	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
 };
 
 SwitchButton.defaultProps = {
 	isOn: false,
 	onChange: () => {},
+	size: 'md',
 };

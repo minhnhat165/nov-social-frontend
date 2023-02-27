@@ -2,12 +2,12 @@ import { SearchIcon, XCircleIcon } from 'components/Icon';
 import { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
-import { Spinner } from 'components/Loading/Spinner';
+import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
 import useDebounce from 'hooks/useDebounce';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 
-const Search = ({
+export const Search = ({
 	className,
 	children,
 	onClear,
@@ -146,5 +146,3 @@ Search.propTypes = {
 	debounce: PropTypes.bool,
 	onChange: PropTypes.func,
 };
-
-export default Search;

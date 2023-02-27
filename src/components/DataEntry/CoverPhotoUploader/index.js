@@ -1,1 +1,1 @@
-export { default } from './CoverPhotoUploader';
+export * from './CoverPhotoUploader';

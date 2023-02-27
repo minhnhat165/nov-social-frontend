@@ -1,9 +1,9 @@
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from '../IconWrapper';
 import React from 'react';
 import { XMarkIcon } from 'components/Icon';
 import clsx from 'clsx';
 
-const Chip = ({
+export const Chip = ({
 	children,
 	icon,
 	onClick,
@@ -36,5 +36,3 @@ const Chip = ({
 		</span>
 	);
 };
-
-export default Chip;

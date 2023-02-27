@@ -20,7 +20,7 @@ const Switch = ({
 	size,
 	primary,
 }) => {
-	const [checked, setChecked] = useState(true);
+	const [checked, setChecked] = useState(defaultChecked);
 
 	const handleChecked = () => {
 		setChecked(!checked);

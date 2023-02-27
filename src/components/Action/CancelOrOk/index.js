@@ -1,1 +1,1 @@
-export { default } from './CancelOrOk';
+export * from './CancelOrOk';

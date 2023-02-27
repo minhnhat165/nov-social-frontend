@@ -1,4 +1,4 @@
-import DropdownDatePicker from './DropdownDatePicker';
+import { DropdownDatePicker } from '.';
 
 export default {
 	title: 'Components/FormElement/DropdownDatePicker',

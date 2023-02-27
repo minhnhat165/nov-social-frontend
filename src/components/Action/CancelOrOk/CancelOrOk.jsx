@@ -1,8 +1,8 @@
-import Button from '../Button';
+import { Button } from '../Button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const CancelOrOk = ({ onCancel, onOk, okDisabled, okLoading }) => {
+export const CancelOrOk = ({ onCancel, onOk, okDisabled, okLoading }) => {
 	return (
 		<div className="flex gap-2">
 			<Button
@@ -38,5 +38,3 @@ CancelOrOk.defaultProps = {
 	okDisable: false,
 	okLoading: false,
 };
-
-export default CancelOrOk;

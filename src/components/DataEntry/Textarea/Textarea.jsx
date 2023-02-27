@@ -8,7 +8,7 @@ const sizes = {
 	lg: 'h-14 px-4 text-base',
 };
 
-const Textarea = ({
+export const Textarea = ({
 	size,
 	maxLength,
 	label,
@@ -54,5 +54,3 @@ const Textarea = ({
 };
 
 Textarea.propTypes = {};
-
-export default Textarea;

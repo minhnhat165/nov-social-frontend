@@ -1,7 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
+
 import PropTypes from 'prop-types';
+
 let currentOtpIndex = 0;
-const NumberField = ({
+const exceptThisSymbols = ['e', 'E', '+', '-', '.'];
+
+export const NumberField = ({
 	title,
 	disabled,
 	setValue,
@@ -108,8 +112,6 @@ const NumberField = ({
 	);
 };
 
-const exceptThisSymbols = ['e', 'E', '+', '-', '.'];
-
 NumberField.propTypes = {
 	title: PropTypes.string,
 	disabled: PropTypes.bool,
@@ -125,5 +127,3 @@ NumberField.defaultProps = {
 	onSubmit: () => {},
 	max: 6,
 };
-
-export default NumberField;

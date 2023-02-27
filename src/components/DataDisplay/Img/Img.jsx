@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-const Img = ({ src, alt, className, onLoad, ...props }) => {
+export const Img = ({ src, alt, className, onLoad, ...props }) => {
 	return (
 		<img
 			src={src}
@@ -18,5 +18,3 @@ const Img = ({ src, alt, className, onLoad, ...props }) => {
 		/>
 	);
 };
-
-export default Img;

@@ -8,7 +8,7 @@ import {
 	Viewport,
 } from '@radix-ui/react-scroll-area';
 
-const ScrollArea = ({
+export const ScrollArea = ({
 	children,
 	thumbStyle = 'dark:bg-gray-500 bg-gray-700 opacity-50',
 	className,
@@ -30,5 +30,3 @@ const ScrollArea = ({
 		</Root>
 	);
 };
-
-export default ScrollArea;

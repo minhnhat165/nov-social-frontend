@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
 
-import Button from 'components/Action/Button';
+import { Button } from 'components/Action';
 import Cropper from 'react-easy-crop';
-import LoadingOverlay from 'components/OverLay/LoadingOverlay';
-import Slider from '../Slider';
+import { LoadingOverlay } from 'components/OverLay';
+import PropTypes from 'prop-types';
+import { Slider } from '../Slider';
 import getCroppedImg from 'utils/cropImage';
 import { toast } from 'react-hot-toast';
 
-const ImageCropper = ({
+export const ImageCropper = ({
 	initialValue,
 	aspect,
 	onApply,
@@ -73,20 +74,9 @@ const ImageCropper = ({
 	);
 };
 
-// const Loading = () => {
-// 	return (
-// 		<div className="flex h-full w-full flex-col justify-center">
-// 			<div className="relative aspect-square w-full">
-// 				<div className="absolute top-0 left-0 h-full w-full animate-pulse bg-slate-300 dark:bg-dark-500" />
-// 			</div>
-// 			<div className="flex h-14 items-center justify-between gap-4 px-4">
-// 				<div className="h-4 w-full animate-pulse rounded-xl bg-slate-200 dark:bg-dark-500" />
-// 				<div className="h-10 w-20 animate-pulse rounded-lg bg-slate-200 dark:bg-dark-500" />
-// 			</div>
-// 		</div>
-// 	);
-// };
-
-ImageCropper.propTypes = {};
-
-export default ImageCropper;
+ImageCropper.propTypes = {
+	initialValue: PropTypes.string,
+	aspect: PropTypes.number,
+	onApply: PropTypes.func,
+	cropShape: PropTypes.string,
+};

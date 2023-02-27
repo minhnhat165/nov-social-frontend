@@ -1,25 +1,32 @@
 import 'style/button.css';
 
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
-import { Spinner } from 'components/Loading/Spinner';
+import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
 
 const sizes = {
 	sm: 'h-9 w-9 text-sm',
-	md: 'h-10 w-10 text-base',
+	md: 'h-10 w-10 text-base ',
 	lg: 'h-12 w-12 text-base',
 	xl: 'h-14 w-14 text-lg',
 };
 
+const borderRadius = {
+	sm: 'rounded-md',
+	md: 'rounded-lg',
+	lg: 'rounded-xl',
+	xl: 'rounded-xl',
+};
+
 const iconSizes = {
 	sm: 5,
-	md: 5,
+	md: 6,
 	lg: 6,
 	xl: 7,
 };
 
-const IconButton = ({
+export const IconButton = ({
 	loading,
 	size,
 	color,
@@ -36,10 +43,10 @@ const IconButton = ({
 			ref={ref}
 			type={type}
 			className={clsx(
-				'clickable flex shrink-0 items-center justify-center transition-all  disabled:cursor-not-allowed disabled:opacity-80',
+				' enabled:clickable flex shrink-0 items-center justify-center transition-all disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:!bg-transparent',
 				variant,
 				color,
-				rounded ? 'rounded-full' : 'rounded-xl',
+				rounded ? 'rounded-full' : borderRadius[size],
 				sizes[size],
 				className,
 			)}
@@ -73,5 +80,3 @@ IconButton.defaultProps = {
 	type: 'button',
 	rounded: false,
 };
-
-export default IconButton;

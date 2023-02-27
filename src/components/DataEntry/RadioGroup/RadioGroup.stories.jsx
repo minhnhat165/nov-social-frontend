@@ -1,4 +1,4 @@
-import RadioGroup from './RadioGroup';
+import { RadioGroup } from '.';
 
 export default {
 	title: 'Components/FormElement/RadioGroup',

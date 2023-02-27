@@ -1,12 +1,12 @@
-import IconButton from 'components/Action/IconButton';
-import Img from '../Img';
-import Modal from 'components/OverLay/Modal';
-import { Spinner } from 'components/Loading/Spinner';
+import { IconButton } from 'components/Action';
+import { Img } from '../Img';
+import { Modal } from 'components/OverLay';
+import { Spinner } from 'components/Loading';
 import { XMarkIcon } from 'components/Icon';
 import { getOriginalImageFromURL } from 'utils/cloundinaryUtils';
 import { useState } from 'react';
 
-const FullViewImage = ({ src, children }) => {
+export const FullViewImage = ({ src, children }) => {
 	return (
 		<Modal.Root>
 			<Modal.Trigger>{children}</Modal.Trigger>
@@ -20,8 +20,6 @@ const FullViewImage = ({ src, children }) => {
 		</Modal.Root>
 	);
 };
-
-export default FullViewImage;
 
 function ImageScreen({ onClose, src }) {
 	const [loading, setLoading] = useState(true);

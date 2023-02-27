@@ -1,8 +1,8 @@
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 
-const IconWrapper = forwardRef(
+export const IconWrapper = forwardRef(
 	({ children, size, className, ...props }, ref) => {
 		return (
 			<div
@@ -10,13 +10,13 @@ const IconWrapper = forwardRef(
 				{...props}
 				className={clsx(
 					className,
-					`w-${size} h-${size} flex items-center justify-center text-inherit`
+					`w-${size} h-${size} flex items-center justify-center text-inherit`,
 				)}
 			>
 				{children}
 			</div>
 		);
-	}
+	},
 );
 
 IconWrapper.propTypes = {
@@ -28,5 +28,3 @@ IconWrapper.propTypes = {
 IconWrapper.defaultProps = {
 	size: 6,
 };
-
-export default IconWrapper;

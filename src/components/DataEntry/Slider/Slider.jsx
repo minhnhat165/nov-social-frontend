@@ -2,11 +2,12 @@ import {
 	MagnifyingGlassMinusIcon,
 	MagnifyingGlassPlusIcon,
 } from 'components/Icon';
-import IconWrapper from 'components/Icon/IconWrapper';
-import useLongPress from 'hooks/useLongPress';
-import { useEffect } from 'react';
 
-const Slider = ({
+import { IconWrapper } from 'components/DataDisplay';
+import { useEffect } from 'react';
+import useLongPress from 'hooks/useLongPress';
+
+export const Slider = ({
 	defaultValue = 0,
 	min = 0,
 	max = 100,
@@ -37,13 +38,13 @@ const Slider = ({
 	const longPressDecrease = useLongPress(
 		handleDecrease,
 		handleDecrease,
-		defaultOptions
+		defaultOptions,
 	);
 
 	const longPressIncrease = useLongPress(
 		handleIncrease,
 		handleIncrease,
-		defaultOptions
+		defaultOptions,
 	);
 
 	return (
@@ -73,5 +74,3 @@ const Slider = ({
 		</div>
 	);
 };
-
-export default Slider;

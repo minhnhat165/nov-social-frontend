@@ -10,7 +10,7 @@ const sizes = {
 	xl: 'h-14 px-4 text-base rounded-xl',
 };
 
-const Input = ({
+export const Input = ({
 	size,
 	label,
 	placeholder,
@@ -78,5 +78,3 @@ Input.defaultProps = {
 	helper: '',
 	placeholder: '',
 };
-
-export default Input;

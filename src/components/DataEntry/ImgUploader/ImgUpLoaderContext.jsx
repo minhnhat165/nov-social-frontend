@@ -1,125 +1,91 @@
-import {
-	Children,
-	createContext,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import { createContext, useContext, useState } from 'react';
 
-import clearObjectUrl from 'utils/clearObjectUrl';
 import { useDropzone } from 'react-dropzone';
 
 const ImgUploaderContext = createContext({
-	imagePreview: null,
-	setImagePreview: () => {},
-	handleSetImagePreview: () => {},
-	rawImagePreview: null,
-	setRawImagePreview: () => {},
-	file: null,
-	setFile: () => {},
-	handleSetFile: () => {},
-	handleUpload: () => {},
-	isDragActive: false,
 	open: () => {},
-	getRootProps: () => {},
-	handleRemove: () => {},
+	isDragActive: false,
+
+	removeUpload: () => {},
+	multiple: false,
+	files: [],
+	setFiles: () => {},
 });
 
 const useImgUploader = () => useContext(ImgUploaderContext);
 
-const ImgUploaderProvider = ({
-	defaultImg,
-	onChange,
-	onRemove,
-	onPreview,
-	onDragStateChange,
-	children,
-}) => {
-	const [imagePreview, setImagePreview] = useState(defaultImg || null);
+const ImgUploaderProvider = ({ children, multiple, onChange }) => {
+	const [files, setFiles] = useState([]);
 
-	const hasCrop = useMemo(() => {
-		return Children.toArray(children).some(
-			(child) => child.type.name === 'Cropper',
-		);
-	}, [children]);
+	const getNewFilesList = (uploadFiles) => {
+		if (multiple) {
+			return [
+				...files,
+				...uploadFiles.map((file) =>
+					Object.assign(file, {
+						preview: URL.createObjectURL(file),
+					}),
+				),
+			];
+		}
 
-	const [rawImagePreview, setRawImagePreview] = useState(null);
-	const [file, setFile] = useState(null);
+		return [
+			Object.assign(uploadFiles[0], {
+				preview: URL.createObjectURL(uploadFiles[0]),
+			}),
+		];
+	};
+
 	const { open, getRootProps, isDragActive } = useDropzone({
-		multiple: false,
+		multiple: multiple,
 		accept: {
-			'image/*': ['.jpeg', '.png'],
+			'image/*': [],
 		},
 		onDrop: (acceptedFiles) => {
-			const url = URL.createObjectURL(acceptedFiles[0]);
-			if (hasCrop) {
-				setRawImagePreview(url);
-			} else {
-				handleSetImagePreview(url);
-				handleSetFile(acceptedFiles[0]);
-			}
+			const newFilesList = getNewFilesList(acceptedFiles);
+			setFiles(newFilesList);
+			onChange && onChange(newFilesList);
 		},
 
 		noClick: true,
 	});
 
-	useEffect(() => {
-		onDragStateChange && onDragStateChange(isDragActive);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isDragActive]);
-
-	const handleSetFile = (file) => {
-		setFile(file);
-		onChange && onChange(file);
+	const handlePaste = (e) => {
+		const items = e.clipboardData.items;
+		const files = [];
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].type.indexOf('image') !== -1) {
+				files.push(items[i].getAsFile());
+			}
+		}
+		const newFilesList = getNewFilesList(files);
+		setFiles(newFilesList);
+		onChange && onChange(newFilesList);
 	};
 
-	const handleSetImagePreview = (imagePreview) => {
-		setImagePreview(imagePreview);
-		onPreview && onPreview(imagePreview);
+	const removeUpload = (url) => {
+		const newList = files.filter((file) => file.preview !== url);
+		setFiles(newList);
+		onChange && onChange(newList);
 	};
-
-	const handleRemove = () => {
-		setRawImagePreview(null);
-		handleSetFile(null);
-		handleSetImagePreview(null);
-		onRemove && onRemove();
-	};
-
-	// clear object url image preview for performance
-	useEffect(() => {
-		return () => {
-			if (defaultImg !== imagePreview) clearObjectUrl(imagePreview);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [imagePreview]);
-	// clear object url raw image preview for performance
-	useEffect(() => {
-		return () => {
-			clearObjectUrl(rawImagePreview);
-		};
-	}, [rawImagePreview]);
 
 	return (
 		<ImgUploaderContext.Provider
 			value={{
-				imagePreview,
-				setImagePreview,
-				rawImagePreview,
-				setRawImagePreview,
-				file,
-				setFile,
+				multiple,
+				isDragActive,
+				files,
+				setFiles,
 				open,
 				getRootProps,
-				isDragActive,
-				handleSetFile,
-				handleSetImagePreview,
-				handleRemove,
+				removeUpload,
 			}}
 		>
-			<div {...getRootProps()}>{children}</div>
+			<div {...getRootProps()} onPaste={handlePaste}>
+				{children}
+			</div>
 		</ImgUploaderContext.Provider>
 	);
 };
 
-export { ImgUploaderProvider, useImgUploader };
+export { ImgUploaderProvider, useImgUploader, ImgUploaderContext };

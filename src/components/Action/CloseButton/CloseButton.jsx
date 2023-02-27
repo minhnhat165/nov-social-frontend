@@ -1,14 +1,13 @@
-import IconButton from 'components/Action/IconButton';
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconButton } from '../IconButton';
+import { IconWrapper } from 'components/DataDisplay';
 import { XMarkIcon } from 'components/Icon';
 
-const CloseButton = ({ icon = <XMarkIcon />, ...props }) => {
+export const CloseButton = ({ icon = <XMarkIcon />, ...props }) => {
 	return (
 		<IconButton
 			type="button"
 			rounded
 			size="sm"
-			// variant="text"
 			color="secondary"
 			{...props}
 		>
@@ -16,5 +15,3 @@ const CloseButton = ({ icon = <XMarkIcon />, ...props }) => {
 		</IconButton>
 	);
 };
-
-export default CloseButton;

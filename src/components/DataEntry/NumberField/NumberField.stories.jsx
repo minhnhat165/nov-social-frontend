@@ -1,4 +1,4 @@
-import NumberField from './NumberField';
+import { NumberField } from '.';
 
 export default {
 	title: 'Components/FormElement/NumberField',

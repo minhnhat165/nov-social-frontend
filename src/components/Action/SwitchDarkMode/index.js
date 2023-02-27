@@ -1,1 +1,1 @@
-export { default } from './SwitchDarkMode';
+export * from './SwitchDarkMode';

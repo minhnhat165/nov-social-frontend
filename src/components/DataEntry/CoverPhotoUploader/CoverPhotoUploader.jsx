@@ -1,60 +1,63 @@
 import { ArrowUpOnSquareIcon, XMarkIcon } from 'components/Icon';
+import { Card, Img } from 'components/DataDisplay';
 
-import Card from 'components/DataDisplay/Card';
-import IconButton from 'components/Action/IconButton';
-import Img from 'components/DataDisplay/Img';
-import ImgUploader from '../ImgUploader';
+import { IconButton } from 'components/Action';
+import { ImgUploader } from '../ImgUploader';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const CoverPhotoUploader = ({ defaultImage = null, onChange, onRemove }) => {
-	const [isDragActive, setIsDragActive] = useState(false);
+export const CoverPhotoUploader = ({
+	defaultImage = null,
+	onChange,
+	onRemove,
+}) => {
+	const [file, setFile] = useState(
+		defaultImage
+			? {
+					preview: defaultImage,
+			  }
+			: null,
+	);
 	return (
-		<ImgUploader
-			defaultImage={defaultImage}
-			onChange={onChange}
-			onRemove={onRemove}
-			onDragStateChange={(state) => setIsDragActive(state)}
+		<Card
+			level={3}
+			className="relative aspect-[3/1] w-full overflow-hidden"
 		>
-			<ImgUploader.Cropper aspect={3 / 1} />
-			<div className="relative">
-				<Card
-					level={3}
-					className={clsx(
-						'relative aspect-[3/1] w-full overflow-hidden ',
-						isDragActive && 'animate-pulse ring-2 ring-primary-500',
-					)}
-				>
-					<ImgUploader.Preview hideIfNull>
+			<ImgUploader.Cropper
+				aspect={3 / 1}
+				onSubmit={(file) => {
+					setFile(file);
+					onChange(file);
+				}}
+			>
+				<ImgUploader>
+					{file && (
 						<Img
+							src={file.preview}
 							alt="upload img"
 							className="block h-full w-full object-cover"
 						/>
-					</ImgUploader.Preview>
-				</Card>
-				<div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3">
-					<div className="flex gap-2">
-						<ImgUploader.Trigger>
-							<IconButton rounded>
-								<ArrowUpOnSquareIcon />
-							</IconButton>
-						</ImgUploader.Trigger>
-						<ImgUploader.Remove>
-							<IconButton color="secondary" rounded>
-								<XMarkIcon />
-							</IconButton>
-						</ImgUploader.Remove>
-					</div>
-					<ChipDragAndDrop isDragging={isDragActive}>
-						Drag and drop to upload
-					</ChipDragAndDrop>
-				</div>
-			</div>
-		</ImgUploader>
+					)}
+
+					<UploadControl
+						file={file}
+						onRemove={() => {
+							setFile(null);
+							onRemove();
+						}}
+					/>
+					<ImgUploader.DropZone>
+						{({ isDragActive }) =>
+							isDragActive && (
+								<div className="border-dash absolute inset-0 animate-pulse rounded-xl border-2 border-primary-500 bg-black/50"></div>
+							)
+						}
+					</ImgUploader.DropZone>
+				</ImgUploader>
+			</ImgUploader.Cropper>
+		</Card>
 	);
 };
-
-export default CoverPhotoUploader;
 
 export const ChipDragAndDrop = ({ isDragging, children }) => {
 	return (
@@ -70,3 +73,23 @@ export const ChipDragAndDrop = ({ isDragging, children }) => {
 		</div>
 	);
 };
+
+function UploadControl({ file, onRemove }) {
+	return (
+		<div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3">
+			<div className="flex gap-2">
+				<ImgUploader.Trigger>
+					<IconButton rounded>
+						<ArrowUpOnSquareIcon />
+					</IconButton>
+				</ImgUploader.Trigger>
+				{file && (
+					<IconButton onClick={onRemove} color="secondary" rounded>
+						<XMarkIcon />
+					</IconButton>
+				)}
+			</div>
+			<ChipDragAndDrop>Drag and drop to upload</ChipDragAndDrop>
+		</div>
+	);
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Badge = ({ children, count, dot }) => {
+export const Badge = ({ children, count, dot }) => {
 	return (
 		<div className="relative">
 			{children}
@@ -15,5 +15,3 @@ const Badge = ({ children, count, dot }) => {
 		</div>
 	);
 };
-
-export default Badge;

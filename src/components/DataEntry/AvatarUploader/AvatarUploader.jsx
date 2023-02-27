@@ -1,40 +1,33 @@
 import { ArrowUpOnSquareIcon, PlusIcon, UserIcon } from 'components/Icon';
 
-import IconWrapper from 'components/Icon/IconWrapper';
-import ImgUploader from '../ImgUploader';
+import { IconWrapper } from 'components/DataDisplay';
+import { ImgUploader } from '../ImgUploader';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const AvatarUploader = ({ onChange, defaultImage }) => {
-	const [isDragActive, setIsDragActive] = useState(false);
+export const AvatarUploader = ({ onChange, defaultImage }) => {
+	const [file, setFile] = useState(
+		defaultImage ? { preview: defaultImage } : null,
+	);
 
 	return (
-		<>
-			<ImgUploader
-				onChange={onChange}
-				defaultImage={defaultImage}
-				onDragStateChange={(state) => setIsDragActive(state)}
-			>
-				<ImgUploader.Cropper cropShape={'round'} />
-				<div
-					className={clsx(
-						'relative flex h-[264px] w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-dark-700',
-						isDragActive &&
-							'animate-pulse border-2 border-primary-700 dark:border-primary-500',
-					)}
-				>
+		<ImgUploader.Cropper
+			aspect={1 / 1}
+			cropShape="rounded"
+			onSubmit={(file) => {
+				setFile(file);
+				onChange(file);
+			}}
+		>
+			<ImgUploader>
+				<div className="relative flex h-[264px] w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-dark-700">
 					<div className="relative">
-						<ImgUploader.Preview>
-							<AvatarPreview uploading={isDragActive} />
-						</ImgUploader.Preview>
+						<AvatarPreview src={file ? file.preview : null} />
 						<ImgUploader.Trigger>
-							{({ isUploaded, open }) => (
-								<UploadButton
-									isUploaded={isUploaded}
-									onClick={open}
-								/>
-							)}
+							<UploadButton
+								isUploaded={file && file.preview ? true : false}
+							/>
 						</ImgUploader.Trigger>
 					</div>
 					<div className="mt-4 text-slate-800 dark:text-dark-200">
@@ -42,9 +35,16 @@ const AvatarUploader = ({ onChange, defaultImage }) => {
 							Add a profile photo or drag and drop one here
 						</span>
 					</div>
+					<ImgUploader.DropZone>
+						{({ isDragActive }) =>
+							isDragActive && (
+								<div className="border-dash absolute inset-0 animate-pulse rounded-xl border-2 border-primary-500 bg-black/50"></div>
+							)
+						}
+					</ImgUploader.DropZone>
 				</div>
 			</ImgUploader>
-		</>
+		</ImgUploader.Cropper>
 	);
 };
 
@@ -113,5 +113,3 @@ AvatarUploader.defaultProps = {
 	onChange: () => {},
 	props: {},
 };
-
-export default AvatarUploader;

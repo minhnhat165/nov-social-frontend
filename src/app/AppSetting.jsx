@@ -1,9 +1,10 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { getUser } from 'api/authApi';
+import { setTheme } from 'store/slices/settingSlice';
+import { setUser } from 'store/slices/authSlice';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from 'store/slices/authSlice';
-import { setTheme } from 'store/slices/settingSlice';
 
 const AppSetting = (props) => {
 	const dispatch = useDispatch();
@@ -12,8 +13,8 @@ const AppSetting = (props) => {
 
 	useQuery('user', getUser, {
 		enabled: isLogin,
-		onSuccess: (data) => {
-			dispatch(setUser(data?.user));
+		onSuccess: ({ user }) => {
+			dispatch(setUser(user));
 		},
 		onError: (error) => {
 			console.log(error);
@@ -23,7 +24,7 @@ const AppSetting = (props) => {
 		if (!theme) {
 			// get system theme
 			const systemTheme = window.matchMedia(
-				'(prefers-color-scheme: dark)'
+				'(prefers-color-scheme: dark)',
 			).matches
 				? 'dark'
 				: 'light';
@@ -41,7 +42,7 @@ const AppSetting = (props) => {
 		body.style.backgroundColor = isDarkMode ? '#19212e' : '#e2e8f0';
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [theme]);
-	return <div></div>;
+	return <></>;
 };
 
 AppSetting.propTypes = {};

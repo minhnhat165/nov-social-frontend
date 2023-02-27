@@ -1,6 +1,6 @@
 import { Children, useMemo } from 'react';
 
-import Img from '../Img';
+import { Img } from '../Img';
 import PropTypes from 'prop-types';
 import { cloneElement } from 'react';
 import clsx from 'clsx';
@@ -13,7 +13,15 @@ const sizes = {
 	max: 'w-28 h-28 text-2xl',
 };
 
-const Avatar = ({ src, size, rounded, alt, className, children, ...props }) => {
+export const Avatar = ({
+	src,
+	size,
+	rounded,
+	alt,
+	className,
+	children,
+	...props
+}) => {
 	return (
 		<div
 			className={clsx(
@@ -99,5 +107,3 @@ Avatar.defaultProps = {
 	rounded: true,
 	alt: 'A',
 };
-
-export default Avatar;

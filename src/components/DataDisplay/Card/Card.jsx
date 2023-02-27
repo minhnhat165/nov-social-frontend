@@ -1,6 +1,6 @@
-import Img from '../Img';
+import { Img } from '../Img';
 import PropTypes from 'prop-types';
-import Text from 'components/Typography/Text';
+import { Text } from 'components/Typography';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
@@ -12,17 +12,19 @@ const levels = {
 	4: 'bg-slate-300 dark:bg-dark-500',
 };
 
-const Card = forwardRef(({ level = 1, className, children, ...props }, ref) => {
-	return (
-		<div
-			ref={ref}
-			{...props}
-			className={clsx('rounded-xl', levels[level], className)}
-		>
-			{children}
-		</div>
-	);
-});
+export const Card = forwardRef(
+	({ level = 1, className, children, ...props }, ref) => {
+		return (
+			<div
+				ref={ref}
+				{...props}
+				className={clsx('rounded-xl', levels[level], className)}
+			>
+				{children}
+			</div>
+		);
+	},
+);
 
 const Image = ({ src, alt, className, ...props }) => (
 	<>
@@ -90,7 +92,4 @@ Card.propTypes = {
 	className: PropTypes.string,
 	children: PropTypes.node,
 };
-
-export default Card;
-
 export { Header, Title, Body, Footer, Image };

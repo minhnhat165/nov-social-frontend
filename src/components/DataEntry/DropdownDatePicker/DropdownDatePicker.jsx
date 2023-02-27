@@ -1,7 +1,7 @@
 import PropTypes, { oneOfType } from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 
-import { Select } from '..';
+import { Select } from '../Select';
 import clsx from 'clsx';
 import getMaxDayOfMonth from 'utils/getMaxDayOfMonth';
 import getMonthString from 'utils/getMonthString';
@@ -13,7 +13,7 @@ const sizes = {
 	lg: 'h-12 px-4 text-base !rounded-xl',
 	xl: 'h-14 px-4 text-base !rounded-xl',
 };
-const DropdownDatePicker = ({ initialDate, onChange, size }) => {
+export const DropdownDatePicker = ({ initialDate, onChange, size }) => {
 	const [defaultMonth] = useState(initialDate?.getMonth());
 	const [defaultYear] = useState(initialDate?.getFullYear());
 	const [defaultDay] = useState(initialDate?.getDate());
@@ -157,5 +157,3 @@ DropdownDatePicker.defaultProps = {
 	onChange: () => {},
 	size: 'md',
 };
-
-export default DropdownDatePicker;
