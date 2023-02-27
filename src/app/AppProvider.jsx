@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import Button from 'components/Action/Button';
+import { Button } from 'components/Action';
 import { ErrorBoundary } from 'react-error-boundary';
 import { GOOGLE_CLIENT_ID } from 'configs';
 import { GoogleOAuthProvider } from '@react-oauth/google';
