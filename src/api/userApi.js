@@ -2,6 +2,17 @@ import { axiosClient } from 'configs/axiosConfig';
 
 const URL = '/users';
 
+const searchUser = ({ query, limit, page }) =>
+	axiosClient.get(
+		URL +
+			`/search?q=${query}` +
+			(limit ? `&limit=${limit}` : '') +
+			(page ? `&page=${page}` : ''),
+	);
+
+const getMentions = ({ query }) =>
+	axiosClient.get(URL + `/mentions?q=${query}`);
+
 const getProfile = (id = 'me') => axiosClient.get(URL + `/profile/${id}`);
 const followUser = (id) => axiosClient.patch(URL + `/follow/${id}`);
 const unFollowUser = (id) => axiosClient.patch(URL + `/unFollow/${id}`);
@@ -49,6 +60,8 @@ export {
 	followUser,
 	unFollowUser,
 	getPhotos,
+	searchUser,
+	getMentions,
 	// getUser,
 	// updateUser,
 	// getUserInfo,
