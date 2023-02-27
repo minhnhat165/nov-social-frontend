@@ -1,0 +1,13 @@
+.DraftEditor-root {
+	@apply text-normal relative break-all text-lg;
+}
+.public-DraftEditorPlaceholder-root {
+	@apply absolute z-0;
+}
+
+.public-DraftEditorPlaceholder-hasFocus {
+	@apply opacity-60;
+}
+.DraftEditor-editorContainer {
+	@apply relative z-10 h-full;
+}

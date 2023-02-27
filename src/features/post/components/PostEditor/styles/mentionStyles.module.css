@@ -1,0 +1,28 @@
+.mentionSuggestionsPopup {
+	@apply z-10 min-w-[320px] rounded-xl bg-white p-2 shadow-3xl;
+}
+
+:global(.dark) .mentionSuggestionsPopup {
+	@apply bg-gray-800;
+}
+
+.mention {
+	@apply rounded bg-primary-700 py-0.5 px-1 text-white;
+}
+
+:global(.dark) .mention {
+	@apply bg-primary-500;
+}
+
+/* .mentionSuggestions */
+/* .mentionSuggestionsPopupVisible */
+/* .mentionSuggestionsEntry */
+.mentionSuggestionsEntryFocused {
+	@apply cursor-pointer rounded-xl bg-slate-100;
+}
+
+:global(.dark) .mentionSuggestionsEntryFocused {
+	@apply bg-dark-800;
+}
+/* .mentionSuggestionsEntryText */
+/* .mentionSuggestionsEntryAvatar; */

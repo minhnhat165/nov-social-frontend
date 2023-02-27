@@ -1,166 +1,281 @@
-import './style.css';
+import { ContentEditor, EditAudience, PollEditor, ToolBar } from './components';
+import { getImageWithDimension, uploadImage } from 'utils/cloundinaryUtils';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import {
-	ChevronUpDownIcon,
-	ClockIcon,
-	FaceSmileIcon,
-	ImageIcon,
-	LockClosedIcon,
-	MapPinIcon,
-	PollIcon,
-} from 'components/Icon';
-import {
-	ContentState,
-	EditorState,
-	convertFromRaw,
-	convertToRaw,
-} from 'draft-js';
-import { useMemo, useRef, useState } from 'react';
-
-import Avatar from 'components/DataDisplay/Avatar';
-import Button from 'components/Action/Button';
-import ColorPaletteIcon from 'components/Icon/ColorPaletteIcon';
-import Editor from '@draft-js-plugins/editor';
-import IconButton from 'components/Action/IconButton';
-import IconWrapper from 'components/Icon/IconWrapper';
-import { Image } from 'components/DataDisplay/Card';
-import ImgUploader from 'components/DataEntry/ImgUploader';
+import { Avatar } from 'components/DataDisplay';
+import { CloseButton } from 'components/Action';
 import Layer from 'components/Layout/Layer';
-import createHashtagPlugin from '@draft-js-plugins/hashtag';
+import PreviewBox from './components/PreviewBox';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { convertToRaw } from 'draft-js';
 import { extractHashtags } from './utils/editorUtils';
-import hashtagStyles from './hashtagStyles.module.css';
 import { useSelector } from 'react-redux';
+import useUploadImage from 'hooks/useUploadImage';
 
-const PostEditor = ({ initial }) => {
-	const content = useMemo(() => {
-		if (initial) {
-			return convertFromRaw(initial);
-		}
-		return ContentState.createFromText('');
-	}, [initial]);
+const PostEditor = ({ initial, onSubmit, autoFocus }) => {
+	const avatar = useSelector((state) => state.auth.user?.avatar);
+	const lastName = useSelector((state) => state.auth.user?.lastName);
 
-	const avatar = useSelector((state) => state.auth.user.avatar);
-	const [isFocused, setIsFocused] = useState(false);
-	const [isValid, setIsValid] = useState(false);
-	const lastName = useSelector((state) => state.auth.user.lastName);
-	const hashtagPlugin = createHashtagPlugin({
-		theme: hashtagStyles,
-	});
-
-	const plugins = [hashtagPlugin];
-
-	const [editorState, setEditorState] = useState(() =>
-		EditorState.createWithContent(content),
+	const userId = useSelector((state) => state.auth.user?._id);
+	const [placeholder, setPlaceholder] = useState(
+		`What's new, ${lastName ? lastName : 'friend'}?`,
 	);
 
-	// Event handler to handle editor changes
-	function onChange(newEditorState) {
-		// Check if the editor content has changed and if the editor is not empty
-		const currentContentState = newEditorState.getCurrentContent();
-		if (currentContentState.getPlainText().length === 0) {
-			setIsValid(false);
-		} else {
-			setIsValid(true);
-		}
-		setEditorState(newEditorState);
-	}
+	const [visibility, setVisibility] = useState(initial.visibility);
+	const [photos, setPhotos] = useState(initial.photos || []);
+	const [isValid, setIsValid] = useState(true);
+	const [isDirty, setIsDirty] = useState(false);
+	const [dirtyFields, setDirtyFields] = useState([]);
+	const [hasContent, setHasContent] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isFocused, setIsFocused] = useState(autoFocus);
+	const [isOpenPoll, setIsOpenPoll] = useState(initial.poll ? true : false);
+	const [isPollValid, setIsPollValid] = useState(false);
 
-	const handlePost = () => {
+	const {
+		open,
+		files: photoFiles,
+		getRootProps,
+		onPaste,
+		previews,
+		isDragActive,
+		removeByPreview,
+		removeAll,
+	} = useUploadImage({
+		defaultImagesProp: initial.photos,
+		onRemoveDefaultImage: (image) => {
+			setPhotos(photos.filter((photo) => photo.url !== image.url));
+		},
+		multiple: true,
+	});
+
+	const contentEditorRef = useRef(null);
+	const pollEditorRef = useRef(null);
+
+	const uploadPostImages = async (file, userId) => {
+		if (!file.length) return [];
+		const publicIds = await Promise.all(
+			file.map((file) => uploadImage(file, `${userId}/posts`, true)),
+		);
+		const postingWidthPhotos = publicIds.length > 1 ? 500 : 1000;
+		return publicIds.map((publicId) => ({
+			publicId,
+			url: getImageWithDimension({
+				publicId,
+				width: postingWidthPhotos,
+			}),
+		}));
+	};
+
+	const getDataEditor = () => {
+		if (!hasContent) return {};
+		const editorState = contentEditorRef.current.editorState;
 		const currentContentState = editorState.getCurrentContent();
 		const raw = convertToRaw(currentContentState);
-		const newPost = {
-			content: JSON.stringify(raw, null, 2),
+		const entityMap = raw.entityMap;
+		const mentions = [];
+		Object.values(entityMap).forEach((entity) => {
+			if (entity.type === 'mention') {
+				mentions.push(entity.data.mention._id);
+			}
+		});
+		return {
+			content: JSON.stringify(raw),
 			hashtags: extractHashtags(currentContentState.getPlainText()),
+			mentions,
 		};
-		console.log(newPost);
 	};
+
+	const handlePost = async () => {
+		setIsLoading(true);
+		const newPost = { ...initial };
+		const newPhotos = await uploadPostImages(photoFiles, userId);
+		if (isOpenPoll) {
+			newPost.poll = pollEditorRef.current.getPoll();
+		} else newPost.poll = null;
+
+		Object.assign(newPost, {
+			...getDataEditor(),
+			photos: [...photos, ...newPhotos],
+			visibility,
+		});
+		onSubmit(newPost);
+		setIsLoading(false);
+		handleReset();
+	};
+
+	const handleReset = () => {
+		setIsFocused(false);
+		setIsValid(true);
+		setIsDirty(false);
+		setDirtyFields([]);
+		setHasContent(false);
+		setPhotos([]);
+		contentEditorRef.current.reset();
+		setIsOpenPoll(false);
+		removeAll();
+	};
+	const handleDirty = useCallback((field, isDirty) => {
+		setDirtyFields((dirtyFields) => {
+			if (isDirty) {
+				if (!dirtyFields.includes(field))
+					return [...dirtyFields, field];
+				return dirtyFields;
+			}
+			return dirtyFields.filter((dirtyField) => dirtyField !== field);
+		});
+	}, []);
+
+	useEffect(() => {
+		if (dirtyFields.length > 0) setIsDirty(true);
+		else setIsDirty(false);
+	}, [dirtyFields]);
+
+	useEffect(() => {
+		if (isOpenPoll) {
+			if (hasContent && isPollValid) setIsValid(true);
+			else setIsValid(false);
+		} else {
+			if (hasContent || photoFiles.length > 0 || photos.length > 0)
+				setIsValid(true);
+			else setIsValid(false);
+		}
+	}, [hasContent, photoFiles, photos, isPollValid, isOpenPoll]);
+
+	useEffect(() => {
+		handleDirty('visibility', visibility !== initial.visibility);
+	}, [handleDirty, initial.visibility, visibility]);
+
+	useEffect(() => {
+		handleDirty('photos', photos.length !== initial.photos?.length);
+	}, [handleDirty, initial.photos?.length, photos]);
+
+	useEffect(() => {
+		handleDirty('photos', photoFiles.length > 0);
+	}, [handleDirty, photoFiles]);
+
+	useEffect(() => {
+		if (isOpenPoll) {
+			setPlaceholder('What do you want to ask?');
+			if (!initial.poll) handleDirty('poll', true);
+			else handleDirty('poll', false);
+		} else {
+			setPlaceholder(`What's new, ${lastName ? lastName : 'friend'}?`);
+			if (initial.poll) handleDirty('poll', true);
+			else handleDirty('poll', false);
+		}
+	}, [handleDirty, initial.poll, isOpenPoll, lastName]);
+
+	const handleContentEmpty = useCallback((isEmpty) => {
+		setHasContent(!isEmpty);
+	}, []);
+
+	const handleContentDirty = useCallback(
+		(isDirty) => {
+			handleDirty('content', isDirty);
+		},
+		[handleDirty],
+	);
 
 	return (
 		<Layer
-			onClick={() => setIsFocused(true)}
-			className="mb-4 flex w-full flex-col rounded-xl bg-slate-50 pt-4 shadow-md"
+			className={clsx(
+				'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
+				isFocused && 'min-h-[160px]',
+			)}
 		>
-			<ImgUploader>
-				<div className="flex flex-1">
-					<div className="px-4">
-						<Avatar src={avatar} />
-					</div>
-					<div className="flex flex-1 flex-col">
-						{isFocused && <EditAudience />}
-						<div className="overflow-y-overlay mt-2 w-full rounded-xl pr-4">
-							<div className="mb-4">
-								<Editor
-									plugins={plugins}
-									placeholder={`What's on your mind, ${
-										lastName ? lastName : 'friend'
-									}?`}
-									editorState={editorState}
-									onChange={onChange}
+			<div className="flex flex-1">
+				<div className="pl-4 pr-2">
+					<Avatar src={avatar} />
+				</div>
+				<div className="flex flex-1 flex-col pr-4">
+					{isFocused && (
+						<EditAudience
+							onChange={setVisibility}
+							defaultValue={visibility}
+						/>
+					)}
+					<div
+						{...getRootProps()}
+						onPaste={onPaste}
+						onClick={() => {
+							setIsFocused(true);
+						}}
+						className="relative w-full rounded-xl"
+					>
+						<ContentEditor
+							placeholder={placeholder}
+							className="my-2"
+							initial={initial.content}
+							onEmptyChange={handleContentEmpty}
+							onDirtyChange={handleContentDirty}
+							autoFocus={isFocused}
+							ref={contentEditorRef}
+						/>
+
+						{!!previews.length && (
+							<PreviewBox
+								previews={previews}
+								onRemove={removeByPreview}
+								className="border-normal mb-3 w-full rounded-xl border p-1"
+							/>
+						)}
+
+						{isOpenPoll && (
+							<div className="relative">
+								<PollEditor
+									ref={pollEditorRef}
+									onValidChange={setIsPollValid}
+									onDirtyChange={(isDirty) =>
+										handleDirty('poll', isDirty)
+									}
+									initial={initial.poll}
+								/>
+								<CloseButton
+									onClick={() => setIsOpenPoll(false)}
+									className="absolute top-2 right-5"
 								/>
 							</div>
-							<div className="mb-4 rounded-xl border border-dark-500 p-2">
-								<ImgUploader.Preview>
-									<Image className="h-auto w-full rounded-xl" />
-								</ImgUploader.Preview>
-							</div>
-						</div>
+						)}
+
+						{isDragActive && (
+							<div className="absolute inset-0 animate-pulse rounded-xl border-2 border-dashed border-primary-500 bg-black/50" />
+						)}
 					</div>
 				</div>
-				{isFocused && (
-					<div className="h-[1px] w-full bg-slate-200 px-4 dark:bg-dark-500"></div>
-				)}
-				<div className="mt-auto flex h-14 items-center justify-between px-4">
-					<div className="flex">
-						<ImgUploader.Trigger>
-							<IconButton variant="text" size="sm" rounded>
-								<ImageIcon />
-							</IconButton>
-						</ImgUploader.Trigger>
-						<IconButton variant="text" size="sm" rounded>
-							<FaceSmileIcon />
-						</IconButton>
-						<IconButton variant="text" size="sm" rounded>
-							<PollIcon />
-						</IconButton>
-						<IconButton variant="text" size="sm" rounded>
-							<ClockIcon />
-						</IconButton>
-						<IconButton variant="text" size="sm" rounded>
-							<ColorPaletteIcon />
-						</IconButton>
-						<IconButton variant="text" size="sm" rounded>
-							<MapPinIcon />
-						</IconButton>
-					</div>
-					<div>
-						<Button
-							onClick={handlePost}
-							size="sm"
-							disabled={!isValid}
-							rounded
-							className="min-w-[80px]"
-						>
-							Post
-						</Button>
-					</div>
-				</div>
-			</ImgUploader>
+			</div>
+			{isFocused && (
+				<div className="h-[1px] w-full bg-slate-200 px-4 dark:bg-dark-700"></div>
+			)}
+			<ToolBar
+				setIsFocused={setIsFocused}
+				onPoll={() => {
+					setIsOpenPoll(true);
+					setIsFocused(true);
+				}}
+				onUploadImage={open}
+				onSubmit={handlePost}
+				disabled={!isValid || !isDirty}
+				isLoading={isLoading}
+			/>
 		</Layer>
 	);
 };
 
-const EditAudience = () => (
-	<div className="mb-4 flex w-fit min-w-[96px] shrink-0 cursor-pointer items-center gap-1 rounded-full py-0.5 px-2 text-sm dark:bg-primary-500 dark:text-dark-700 dark:hover:bg-primary-300">
-		<IconWrapper size={3}>
-			<LockClosedIcon />
-		</IconWrapper>
-		<span>Public</span>
-		<IconWrapper size={4} className="ml-auto">
-			<ChevronUpDownIcon />
-		</IconWrapper>
-	</div>
-);
+PostEditor.propTypes = {
+	initial: PropTypes.object,
+};
 
-PostEditor.propTypes = {};
+PostEditor.defaultProps = {
+	initial: {
+		content: '',
+		hashtags: [],
+		mentions: [],
+		visibility: 'public',
+		photos: [],
+		poll: null,
+	},
+};
 
 export default PostEditor;

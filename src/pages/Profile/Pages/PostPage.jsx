@@ -1,14 +1,11 @@
+import { Card, Chip, FullViewImage, Img } from 'components/DataDisplay';
 import { PencilIcon, PlusIcon } from 'components/Icon';
 
-import Button from 'components/Action/Button';
-import Card from 'components/DataDisplay/Card';
-import Chip from 'components/DataDisplay/Chip';
-import Details from 'features/user/components/Details/Details';
-import FullViewImage from 'components/DataDisplay/FullViewImage';
-import Img from 'components/DataDisplay/Img';
+import { Button } from 'components/Action';
+import { Details } from 'features/user/components';
 import InterestEditor from 'features/Interest/Components/InterestEditor';
 import Layer from 'components/Layout/Layer';
-import Modal from 'components/OverLay/Modal';
+import { Modal } from 'components/OverLay';
 import ReactStickyBox from 'react-sticky-box';
 import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';

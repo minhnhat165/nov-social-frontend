@@ -112,12 +112,18 @@
 	.text-normal {
 		@apply text-slate-600 dark:text-dark-100;
 	}
+	.border-normal {
+		@apply border-slate-300 dark:border-dark-500;
+	}
 	.clickable {
 		@apply cursor-pointer opacity-90 transition-transform active:scale-90;
 	}
 
 	.absolute-center {
 		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform;
+	}
+	.primary-text {
+		@apply !text-primary-700 dark:!text-primary-500;
 	}
 }
 .max-height {
