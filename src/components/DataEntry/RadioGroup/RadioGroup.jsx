@@ -9,7 +9,7 @@ const sizes = {
 	lg: 'h-12 px-4 text-base rounded-xl',
 	xl: 'h-14 px-4 text-base rounded-xl',
 };
-const RadioGroup = ({ options, size, label, error, registration }) => {
+export const RadioGroup = ({ options, size, label, error, registration }) => {
 	const id = useId();
 	return (
 		<WrapperField label={label} error={error} className="w-full">
@@ -53,5 +53,3 @@ RadioGroup.defaultProps = {
 	registration: {},
 	size: 'md',
 };
-
-export default RadioGroup;
