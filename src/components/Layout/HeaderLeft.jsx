@@ -1,5 +1,5 @@
 import { CubeTransparentIcon } from 'components/Icon';
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 import { Link } from 'react-router-dom';
 import SearchMain from 'features/search/components/SearchMain';
 import { routePaths } from 'routes/routeConfig';
