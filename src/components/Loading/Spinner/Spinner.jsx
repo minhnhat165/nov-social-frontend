@@ -1,6 +1,7 @@
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import './style.css';
+
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 const sizes = {
 	sm: 'h-5 w-5',
@@ -23,7 +24,7 @@ export const Spinner = ({ size, color, className, ...props }) => {
 					'spinner',
 					sizes[size],
 					colors[color],
-					className
+					className,
 				)}
 				viewBox="0 0 50 50"
 			>
