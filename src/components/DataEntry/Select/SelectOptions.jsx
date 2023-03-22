@@ -8,9 +8,10 @@ import {
 } from 'react';
 
 import Tippy from '@tippyjs/react/headless';
+import clsx from 'clsx';
 import { useSelectContext } from '..';
 
-const SelectOptions = ({ children }) => {
+const SelectOptions = ({ children, className }) => {
 	const {
 		options,
 		isOpen,
@@ -196,6 +197,7 @@ const SelectOptions = ({ children }) => {
 			visible={isOpen}
 			reference={triggerRef}
 			interactive
+			offset={[0, 8]}
 			appendTo={() => document.body}
 			placement="bottom"
 			onClickOutside={() => setIsOpen(false)}
@@ -206,7 +208,10 @@ const SelectOptions = ({ children }) => {
 					tabIndex={-1}
 					onKeyDown={handleKeyDown}
 					onMouseMove={handleMouseMove}
-					className="overflow-y-overlay scrollbar-hover scrollbar-track-transparent dark:bg-dark-90 max-h-96 w-32 rounded-lg bg-white p-2 shadow focus:outline-none dark:bg-dark-900 "
+					className={clsx(
+						'overflow-y-overlay scrollbar-hover scrollbar-track-transparent dark:bg-dark-90 max-h-96 w-32 rounded-lg bg-white p-2 shadow focus:outline-none dark:bg-dark-900',
+						className,
+					)}
 				>
 					{Children.map(children, (child) => {
 						if (!child) return null;
