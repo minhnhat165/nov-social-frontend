@@ -1,8 +1,8 @@
 import { ChevronRightIcon, LanguageIcon, MoonIcon } from 'components/Icon';
 
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 import MenuItem from 'components/Navigation/MenuItem';
-import SwitchDarkMode from 'components/Action/SwitchDarkMode/SwitchDarkMode';
+import { SwitchDarkMode } from 'components/Action';
 
 const SettingMenu = () => {
 	return (

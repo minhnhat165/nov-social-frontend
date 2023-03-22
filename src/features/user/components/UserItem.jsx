@@ -1,8 +1,9 @@
-import clsx from 'clsx';
-import Avatar from 'components/DataDisplay/Avatar';
-import Text from 'components/Typography/Text';
-import React from 'react';
+import { Avatar } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Text } from 'components/Typography';
+import clsx from 'clsx';
+
 const sizes = {
 	sm: 'p-1',
 	md: 'p-2',
@@ -25,7 +26,7 @@ const UserItem = ({
 				sizes[size],
 				onClick &&
 					'cursor-pointer hover:bg-slate-200 dark:hover:bg-dark-700',
-				className
+				className,
 			)}
 			onClick={onClick}
 		>

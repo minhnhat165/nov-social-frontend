@@ -11,12 +11,12 @@ import {
 
 import AccountForm from './AccountForm';
 import AvatarForm from './AvatarForm';
-import Button from 'components/Action/Button';
+import { Button } from 'components/Action';
 import FinishForm from './FinishForm';
-import Form from 'components/DataEntry/Form';
+import { Form } from 'components/DataEntry';
 import InformationForm from './InformationForm';
 import { Link } from 'react-router-dom';
-import Stepper from 'components/Navigation/Stepper';
+import { Stepper } from 'components/Navigation';
 import { routePaths } from 'routes/routeConfig';
 import { useRegister } from 'features/auth/hooks/useRegister';
 import { useState } from 'react';

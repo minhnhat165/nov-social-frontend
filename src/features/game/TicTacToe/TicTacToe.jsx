@@ -3,8 +3,8 @@ import './style.css';
 import { ArrowPathIcon, Cog6ToothIcon } from 'components/Icon';
 import { useEffect, useState } from 'react';
 
-import IconButton from 'components/Action/IconButton';
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconButton } from 'components/Action';
+import { IconWrapper } from 'components/DataDisplay';
 import OIcon from './O';
 import XIcon from './X';
 import clsx from 'clsx';

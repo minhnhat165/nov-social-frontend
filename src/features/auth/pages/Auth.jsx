@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 
-import Button from 'components/Action/Button';
+import { Button } from 'components/Action';
 import Layout from '../components/Layout';
 import Login from '../components/Login';
-import Modal from 'components/OverLay/Modal';
+import { Modal } from 'components/OverLay';
 import Register from '../components/Register';
 import ResetPassword from '../components/ResetPassword';
 import TextGradient from 'components/Effect/TextGradient';

@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import Components from 'pages/Lab';
-import Game from 'pages/Game/Game';
+import Game from 'pages/game/Game';
 import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
 import NotFound from 'pages/NotFound';

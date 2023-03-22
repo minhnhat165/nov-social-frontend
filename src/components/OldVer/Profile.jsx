@@ -13,7 +13,7 @@ import Avatar from 'components/DataDisplay/Avatar';
 import Button from 'components/Action/Button';
 import Card from 'components/DataDisplay/Card';
 import IconButton from 'components/Action/IconButton';
-import IconWrapper from 'components/Icon/IconWrapper';
+import IconWrapper from 'components/DataDisplay/IconWrapper/IconWrapper';
 import Intro from 'features/user/components/Details/Details';
 import Modal from 'components/OverLay/Modal';
 import Navbar from './Navbar';

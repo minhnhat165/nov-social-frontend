@@ -1,9 +1,11 @@
-import Button from 'components/Action/Button';
-import NumberField from 'components/DataEntry/NumberField';
-import { ShieldCheckIcon } from 'components/Icon';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { Button } from 'components/Action';
 import FormDescription from './FormDescription';
+import { NumberField } from 'components/DataEntry';
+import { ShieldCheckIcon } from 'components/Icon';
+import { useTranslation } from 'react-i18next';
+
 const Max_Digital = 6;
 
 const OtpForm = ({ isLoading, onSubmit, onResend }) => {

@@ -1,10 +1,18 @@
 import axios from 'axios';
+import getImageFileCompression from './getImageFileCompression';
 import { toast } from 'react-hot-toast';
 
-export const uploadImage = async (file, folder = 'nov-social') => {
+export const uploadImage = async (
+	file,
+	folder = 'nov-social',
+	hasCompression,
+) => {
 	if (!file) return;
+	let fileUpload = file;
+	if (hasCompression) fileUpload = await getImageFileCompression(file);
+
 	const data = new FormData();
-	data.append('file', file);
+	data.append('file', fileUpload);
 	data.append(
 		'upload_preset',
 		process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
@@ -16,7 +24,7 @@ export const uploadImage = async (file, folder = 'nov-social') => {
 			`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload`,
 			data,
 		);
-		return res.data.secure_url;
+		return res.data.public_id;
 	} catch (err) {
 		toast.error(err.message);
 	}

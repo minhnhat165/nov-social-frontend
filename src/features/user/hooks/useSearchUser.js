@@ -1,30 +1,23 @@
-import { useState } from 'react';
+const { searchUser } = require('api/userApi');
+const { useState } = require('react');
+const { useQuery } = require('react-query');
 
-const { searchUsers } = require('api/userApi');
-const { useMutation } = require('react-query');
-
-const useSearchUsers = () => {
-	const [users, setUsers] = useState([]);
-
-	const {
-		mutate,
-		isLoading,
-		isSuccess,
-		reset: resetFn,
-	} = useMutation(searchUsers, {
-		onSuccess: (data) => {
-			setUsers(data.users);
+const useSearchUser = ({ limit }) => {
+	const [query, setQuery] = useState('');
+	const { data, isLoading, isFetching } = useQuery(
+		['searchUser', query],
+		() =>
+			searchUser({
+				query,
+				limit,
+			}),
+		{
+			enabled: query.length > 0,
+			staleTime: 1000 * 60 * 60 * 24,
 		},
+	);
 
-		onError: (error) => {
-			console.log(error);
-		},
-	});
-	const reset = () => {
-		resetFn();
-		setUsers([]);
-	};
-
-	return { searchUsersFn: mutate, isLoading, isSuccess, reset, users };
+	return { data: data.data || [], isLoading, isFetching, setQuery };
 };
-export default useSearchUsers;
+
+export default useSearchUser;

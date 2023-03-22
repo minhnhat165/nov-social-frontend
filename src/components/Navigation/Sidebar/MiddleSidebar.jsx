@@ -1,10 +1,9 @@
 import { BellIcon, BookmarkIcon, MessagesIcon } from 'components/Icon';
+import { Popover, Tooltip } from 'components/OverLay';
 import { forwardRef, useState } from 'react';
 
-import Badge from 'components/DataDisplay/Badge';
-import Popover from 'components/OverLay/Popover';
+import { Badge } from 'components/DataDisplay';
 import Tippy from '@tippyjs/react';
-import Tooltip from 'components/OverLay/Tooltip';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 
@@ -53,7 +52,7 @@ const Item = forwardRef(
 						'mb-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all last:mb-0 active:scale-90 ',
 						isActive
 							? 'text-primary-700 dark:text-primary-500'
-							: 'hover:bg-slate-200s dark:hover:bg-dark-900s text-slate-500 hover:text-slate-800 dark:text-dark-400 dark:hover:text-dark-50'
+							: 'hover:bg-slate-200s dark:hover:bg-dark-900s text-slate-500 hover:text-slate-800 dark:text-dark-400 dark:hover:text-dark-50',
 					)}
 					{...props}
 				>
@@ -61,13 +60,13 @@ const Item = forwardRef(
 				</div>
 			</Tooltip>
 		);
-	}
+	},
 );
 
 const Notifications = ({ onClick, isActive }) => {
 	const [show, setShow] = useState(false);
 	const notificationsCount = useSelector(
-		(state) => state.auth.user?.notificationsCount
+		(state) => state.auth.user?.notificationsCount,
 	);
 	return (
 		<Tippy

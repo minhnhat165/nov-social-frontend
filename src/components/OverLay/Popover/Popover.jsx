@@ -1,33 +1,52 @@
+import { cloneElement, forwardRef, useState } from 'react';
+
 import Layer from 'components/Layout/Layer';
+import { LazyTippy } from './LazyTippy';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
-import { forwardRef } from 'react';
 
-const Popover = ({
+export const Popover = ({
 	interactive,
+	hideOnClick,
 	appendTo,
-	visible,
 	onClickOutside,
 	placement,
 	offset,
 	children,
 	content,
 	render,
+	lazy = true,
 	...props
 }) => {
+	const [visible, setVisible] = useState(false);
+
+	const Component = lazy ? LazyTippy : Tippy;
+
 	return (
-		<Tippy
+		<Component
 			interactive
 			appendTo={document.body}
 			visible={visible}
-			onClickOutside={onClickOutside}
+			onClickOutside={() => {
+				setVisible(false);
+				onClickOutside && onClickOutside();
+			}}
 			placement={placement}
 			offset={offset}
 			{...props}
-			render={render}
+			render={(attrs) =>
+				render && typeof render === 'function'
+					? render(attrs)
+					: cloneElement(render, {
+							...attrs,
+							onClick: () => {
+								hideOnClick && setVisible(false);
+							},
+					  })
+			}
 		>
-			{children}
-		</Tippy>
+			<div onClick={() => setVisible(!visible)}> {children}</div>
+		</Component>
 	);
 };
 
@@ -43,5 +62,3 @@ const Arrow = () => <div className="arrow" data-popper-arrow />;
 Popover.Content = Content;
 
 Popover.Arrow = Arrow;
-
-export default Popover;

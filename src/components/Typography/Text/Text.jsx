@@ -9,7 +9,7 @@ const levels = {
 	5: 'text-slate-300 dark:text-dark-500',
 	6: 'text-slate-200 dark:text-dark-600',
 };
-const Text = ({
+export const Text = ({
 	children,
 	as = 'span',
 	primary,
@@ -32,5 +32,3 @@ const Text = ({
 		</Tag>
 	);
 };
-
-export default Text;

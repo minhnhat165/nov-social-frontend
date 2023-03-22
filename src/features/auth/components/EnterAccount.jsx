@@ -1,6 +1,6 @@
 import { APP_NAME } from 'configs';
 import LoginForm from './Login/Form/LoginForm';
-import Modal from 'components/OverLay/Modal';
+import { Modal } from 'components/OverLay';
 import ResetPassword from './ResetPassword';
 import SocialLogin from './Login/SocialLogin';
 

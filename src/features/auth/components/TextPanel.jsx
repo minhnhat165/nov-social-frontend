@@ -1,5 +1,5 @@
 import { CubeTransparentIcon } from 'components/Icon';
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 
 const TextPanel = ({ children, title, subtitle }) => {
 	return (

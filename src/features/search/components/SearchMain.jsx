@@ -1,7 +1,7 @@
-import Search from 'components/DataEntry/Search';
+import { Search } from 'components/DataEntry';
 import SearchItem from './SearchItem';
 import SearchItemList from './SearchItemList';
-import Text from 'components/Typography/Text';
+import { Text } from 'components/Typography';
 import createSearchHistory from 'utils/createSearchHistory';
 import { searchType } from 'features/search/utils/createSearch';
 import useAddSearchHistory from 'features/search/hooks/useAddSearchHistory';

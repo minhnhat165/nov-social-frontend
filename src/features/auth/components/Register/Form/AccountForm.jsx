@@ -1,4 +1,4 @@
-import Input from 'components/DataEntry/InputField/Input';
+import { Input } from 'components/DataEntry';
 import { checkEmailExists } from 'api/authApi';
 import { useEffect } from 'react';
 

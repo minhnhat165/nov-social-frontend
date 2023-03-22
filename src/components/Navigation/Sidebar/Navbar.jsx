@@ -7,7 +7,7 @@ import {
 import { NavLink, matchPath, useLocation } from 'react-router-dom';
 import { useMemo, useRef } from 'react';
 
-import Tooltip from 'components/OverLay/Tooltip';
+import { Tooltip } from 'components/OverLay';
 
 const TRANSITION_TIME = 500;
 

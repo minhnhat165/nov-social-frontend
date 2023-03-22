@@ -2,7 +2,7 @@ import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-const Tooltip = forwardRef(
+export const Tooltip = forwardRef(
 	({ children, content, className, ...props }, ref) => {
 		return (
 			<Tippy
@@ -13,7 +13,7 @@ const Tooltip = forwardRef(
 						{...attrs}
 						className={clsx(
 							'tooltip rounded-md bg-slate-600 py-2 px-4 text-sm text-slate-50 dark:bg-dark-100 dark:text-dark-700',
-							className
+							className,
 						)}
 						role="tooltip"
 					>
@@ -25,7 +25,5 @@ const Tooltip = forwardRef(
 				{children}
 			</Tippy>
 		);
-	}
+	},
 );
-
-export default Tooltip;

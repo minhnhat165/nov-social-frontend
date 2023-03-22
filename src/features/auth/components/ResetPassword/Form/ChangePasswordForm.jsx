@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 
-import Button from 'components/Action/Button';
-import Form from 'components/DataEntry/Form';
+import { Form, Input } from 'components/DataEntry';
+
+import { Button } from 'components/Action';
 import FormDescription from './FormDescription';
-import { Input } from 'postcss';
 import { KeyIcon } from 'components/Icon';
 import { useTranslation } from 'react-i18next';
 

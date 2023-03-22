@@ -6,9 +6,9 @@ import {
 } from 'components/Icon';
 
 import AddExistingAccount from 'features/auth/components/AddExistingAccount';
-import Button from 'components/Action/Button';
-import Modal from 'components/OverLay/Modal';
-import Text from 'components/Typography/Text';
+import { Button } from 'components/Action';
+import { Modal } from 'components/OverLay';
+import { Text } from 'components/Typography';
 import UserItem from './UserItem';
 import clsx from 'clsx';
 import useGoToProfile from '../hooks/useGoToProfile';

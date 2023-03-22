@@ -2,23 +2,20 @@ import * as yup from 'yup';
 
 import {
 	CakeIcon,
+	GenderIcon,
 	HomeIcon,
 	MailIcon,
 	MapPinIcon,
 	PhoneIcon,
 } from 'components/Icon';
+import { CancelOrOk, SwitchButton } from 'components/Action';
+import { Input, InputDate, RadioGroup } from 'components/DataEntry';
 
-import CancelOrOk from 'components/Action/CancelOrOk';
-import GenderIcon from 'components/Icon/GenderIcon';
-import IconWrapper from 'components/Icon/IconWrapper';
-import InputDateField from 'components/DataEntry/InputDateField';
-import InputField from 'components/DataEntry/InputField';
-import Modal from 'components/OverLay/Modal';
+import { IconWrapper } from 'components/DataDisplay';
+import { Modal } from 'components/OverLay';
 import PhoneInput from 'react-phone-input-2';
 import PropTypes from 'prop-types';
-import RadioGroup from 'components/DataEntry/RadioGroup';
-import { SwitchButton } from 'components/Action/SwitchButton';
-import Text from 'components/Typography/Text';
+import { Text } from 'components/Typography';
 import { getDirtyFields } from 'utils/formFns';
 import { useForm } from 'react-hook-form';
 import useUpdateProfile from 'features/user/hooks/useUpdateProfile';
@@ -108,7 +105,7 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 							title="Hometown"
 							onSwitch={handleSwitchPublic}
 						>
-							<InputField
+							<Input
 								type="text"
 								size="md"
 								registration={register('homeTown')}
@@ -123,7 +120,7 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 								!getValues('profilePrivate').includes('address')
 							}
 						>
-							<InputField
+							<Input
 								type="text"
 								size="md"
 								registration={register('address')}
@@ -145,7 +142,7 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 								)
 							}
 						>
-							<InputDateField
+							<InputDate
 								initialValue={
 									new Date(details.dateOfBirth) || null
 								}

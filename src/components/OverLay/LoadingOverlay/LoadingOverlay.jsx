@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Spinner } from 'components/Loading/Spinner';
+import { Spinner } from 'components/Loading';
 
-const LoadingOverlay = ({ loading, children }) => {
+export const LoadingOverlay = ({ loading, children }) => {
 	return (
 		<div className="relative">
 			{children}
@@ -19,5 +19,3 @@ LoadingOverlay.propTypes = {
 	loading: PropTypes.bool,
 	children: PropTypes.node,
 };
-
-export default LoadingOverlay;

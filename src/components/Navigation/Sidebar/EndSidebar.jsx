@@ -1,12 +1,10 @@
 import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
+import { Popover, Tooltip } from 'components/OverLay';
 
 import AccountMenu from './AccountMenu';
-import Avatar from 'components/DataDisplay/Avatar';
-import Popover from 'components/OverLay/Popover';
+import { Avatar } from 'components/DataDisplay';
 import SettingMenu from './SettingMenu';
-import Tooltip from 'components/OverLay/Tooltip';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 const EndSidebar = () => {
 	return (
@@ -23,7 +21,6 @@ const EndSidebar = () => {
 };
 
 const Account = () => {
-	const [showMenu, setShowMenu] = useState(false);
 	const user = useSelector((state) => {
 		return {
 			_id: state.auth.user?._id,
@@ -36,32 +33,17 @@ const Account = () => {
 		<Popover
 			interactive
 			appendTo={document.body}
-			visible={showMenu}
-			onClickOutside={() => {
-				setShowMenu(false);
-			}}
 			placement="right-end"
 			offset={[8, 16]}
-			render={(attrs) => (
-				<Popover.Content
-					{...attrs}
-					onClick={() => {
-						setShowMenu(false);
-					}}
-					className="h-fit w-80 p-2 shadow-3xl transition-all"
-				>
+			render={
+				<Popover.Content className="h-fit w-80 p-2 shadow-3xl transition-all">
 					<Popover.Arrow />
 					<AccountMenu />
 				</Popover.Content>
-			)}
+			}
 		>
 			<Tooltip content={'Account'} placement="right">
-				<div
-					className="cursor-pointer transition-all hover:opacity-70 active:translate-y-0.5 active:opacity-50"
-					onClick={() => {
-						setShowMenu(!showMenu);
-					}}
-				>
+				<div className="cursor-pointer transition-all hover:opacity-70 active:translate-y-0.5 active:opacity-50">
 					<Avatar
 						src={user?.avatar}
 						alt={user?.name}
@@ -76,33 +58,20 @@ const Account = () => {
 };
 
 const Setting = () => {
-	const [showMenu, setShowMenu] = useState(false);
 	return (
 		<Popover
 			interactive
 			appendTo={'parent'}
-			visible={showMenu}
-			onClickOutside={() => {
-				setShowMenu(false);
-			}}
 			placement="right-end"
 			offset={[64, 16]}
-			render={(attrs) => (
-				<Popover.Content
-					{...attrs}
-					className="h-fit w-80 p-2 shadow-3xl transition-all"
-				>
+			render={
+				<Popover.Content className="h-fit w-80 p-2 shadow-3xl transition-all">
 					<Popover.Arrow />
 					<SettingMenu />
 				</Popover.Content>
-			)}
+			}
 		>
-			<div
-				className="flex h-10 w-10 cursor-pointer items-center justify-center"
-				onClick={() => {
-					setShowMenu(!showMenu);
-				}}
-			>
+			<div className="flex h-10 w-10 cursor-pointer items-center justify-center">
 				<Cog6ToothIcon className="h-6 w-6 text-slate-800 dark:text-dark-100" />
 			</div>
 		</Popover>

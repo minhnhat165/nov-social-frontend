@@ -1,11 +1,13 @@
-import { activeAccount } from 'api/authApi';
-import Button from 'components/Action/Button';
 import { CheckIcon, XMarkIcon } from 'components/Icon';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
-import { routePaths } from 'routes/routeConfig';
+
+import { Button } from 'components/Action';
 import Layout from '../components/Layout';
+import { activeAccount } from 'api/authApi';
+import { routePaths } from 'routes/routeConfig';
+import { useQuery } from 'react-query';
+import { useState } from 'react';
+
 const activationTypes = {
 	success: {
 		name: 'success',
@@ -44,7 +46,7 @@ const AccountActivation = () => {
 				activationTypes.failed.description = error.message;
 				setIsSuccess(false);
 			},
-		}
+		},
 	);
 
 	return (

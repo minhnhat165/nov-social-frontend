@@ -1,6 +1,6 @@
 import { SearchIcon, XMarkIcon } from 'components/Icon';
 
-import Text from 'components/Typography/Text';
+import { Text } from 'components/Typography';
 import UserItem from 'features/user/components/UserItem';
 import { useMemo } from 'react';
 

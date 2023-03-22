@@ -1,7 +1,7 @@
-import Text from 'components/Typography/Text';
-import React from 'react';
+import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
-import IconWrapper from 'components/Icon/IconWrapper';
+import React from 'react';
+import { Text } from 'components/Typography';
 
 const MenuItem = ({ icon, title, onClick, end }) => {
 	return (

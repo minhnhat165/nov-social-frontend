@@ -1,14 +1,17 @@
 import * as yup from 'yup';
 
-import AvatarUploader from 'components/DataEntry/AvatarUploader';
-import Button from 'components/Action/Button';
-import CoverPhotoUploader from 'components/DataEntry/CoverPhotoUploader';
+import {
+	AvatarUploader,
+	CoverPhotoUploader,
+	Form,
+	Input,
+	Textarea,
+} from 'components/DataEntry';
+
+import { Button } from 'components/Action';
 import { Footer } from 'components/DataDisplay/Card';
-import Form from 'components/DataEntry/Form';
-import Input from 'components/DataEntry/InputField';
 import { Link } from 'react-router-dom';
-import Text from 'components/Typography/Text';
-import TextareaField from 'components/DataEntry/Textarea';
+import { Text } from 'components/Typography';
 import { getDirtyFields } from 'utils/formFns';
 import getImageFileCompression from 'utils/getImageFileCompression';
 import useUpdateProfile from 'features/user/hooks/useUpdateProfile';
@@ -19,7 +22,7 @@ const schema = yup.object().shape({
 	avatar: yup.mixed(),
 	cover: yup.mixed(),
 });
-const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
+export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 	const updateProfile = useUpdateProfile({ onSuccess });
 	const handleSubmit = async (data) => {
 		const dirtyData = getDirtyFields(data, profile);
@@ -95,7 +98,7 @@ const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 							/>
 						</Section>
 						<Section title="Bio">
-							<TextareaField
+							<Textarea
 								maxLength={160}
 								rows={3}
 								registration={register('bio')}
@@ -150,5 +153,3 @@ const Section = ({ title, children }) => {
 };
 
 ProfileEdit.propTypes = {};
-
-export default ProfileEdit;

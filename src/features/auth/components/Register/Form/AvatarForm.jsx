@@ -1,4 +1,4 @@
-import AvatarUploader from 'components/DataEntry/AvatarUploader';
+import { AvatarUploader } from 'components/DataEntry';
 import getImageFromFile from 'utils/getImageFromFile';
 
 const AvatarForm = ({ initialValue, setValue }) => {

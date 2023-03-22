@@ -1,6 +1,4 @@
-import Input from 'components/DataEntry/InputField/Input';
-import InputDateField from 'components/DataEntry/InputDateField';
-import RadioGroup from 'components/DataEntry/RadioGroup';
+import { Input, InputDate, RadioGroup } from 'components/DataEntry';
 
 const InformationForm = ({ register, setValue, errors, getValues }) => {
 	return (
@@ -38,7 +36,7 @@ const InformationForm = ({ register, setValue, errors, getValues }) => {
 				error={errors.gender?.message}
 				registration={register('gender')}
 			/>
-			<InputDateField
+			<InputDate
 				label="Date of birth"
 				size="lg"
 				type="date"

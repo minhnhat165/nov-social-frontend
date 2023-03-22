@@ -1,12 +1,13 @@
 import { ModalProvider, useModal } from './ModalContext';
 
-import IconButton from 'components/Action/IconButton';
+import { IconButton } from 'components/Action';
+import Layer from 'components/Layout/Layer';
 import { XMarkIcon } from 'components/Icon';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 
-const Modal = ({
+export const Modal = ({
 	open,
 	onClose,
 	onClickBackDrop = onClose,
@@ -26,10 +27,9 @@ const Modal = ({
 	return createPortal(
 		<div className="fixed z-[9999]">
 			<div
-				className="fixed top-0 left-0 right-0 bottom-0
-            backdrop-brightness-50"
+				className="fixed inset-0 bg-black/50"
 				onClick={onClickBackDrop}
-			></div>
+			/>
 			<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 				{closeIcon && <Close onClick={onClose}>{closeIcon}</Close>}
 				{children}
@@ -80,15 +80,15 @@ const RenderProps = ({ children }) => {
 
 const Panel = ({ children, className, ...props }) => {
 	return (
-		<div
+		<Layer
 			className={clsx(
-				'overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl dark:bg-dark-800',
+				'overflow-hidden text-left align-middle shadow-xl',
 				className,
 			)}
 			{...props}
 		>
 			{children}
-		</div>
+		</Layer>
 	);
 };
 
@@ -98,9 +98,23 @@ const Header = ({ children, className, ...props }) => {
 			className={clsx('h-14 w-full bg-inherit p-4', className)}
 			{...props}
 		>
-			<h2 className="text-xl font-medium leading-6 text-gray-900 dark:text-dark-100">
+			<h2 className="text-xl font-bold leading-6 text-gray-900 dark:text-dark-100">
 				{children}
 			</h2>
+		</div>
+	);
+};
+
+const Body = ({ children, className, ...props }) => {
+	return (
+		<div
+			className={clsx(
+				'flex-grow overflow-y-auto bg-inherit px-4 pb-4',
+				className,
+			)}
+			{...props}
+		>
+			{children}
 		</div>
 	);
 };
@@ -131,10 +145,10 @@ Modal.RenderProps = RenderProps;
 
 Modal.Header = Header;
 
+Modal.Body = Body;
+
 Modal.Footer = Footer;
 
 Modal.Panel = Panel;
-
-export default Modal;
 
 export { Root, Close, Trigger, Props, Header, Footer, Panel };

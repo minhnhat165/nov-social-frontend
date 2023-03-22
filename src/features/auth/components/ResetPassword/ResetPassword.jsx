@@ -1,15 +1,16 @@
 import { changePassword, forgotPassword, verifyOTP } from 'api/authApi';
-import AnimateSlide from 'components/Animate/AnimateSlide';
-import Button from 'components/Action/Button';
-import { CheckIcon } from 'components/Icon';
+
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useMutation } from 'react-query';
+import AnimateSlide from 'components/Animate/AnimateSlide';
+import { Button } from 'components/Action';
 import ChangePasswordForm from './Form/ChangePasswordForm';
+import { CheckIcon } from 'components/Icon';
 import EmailForm from './Form/EmailForm';
 import FormDescription from './Form/FormDescription';
 import OtpForm from './Form/OtpForm';
+import { toast } from 'react-hot-toast';
+import { useMutation } from 'react-query';
+import { useState } from 'react';
 
 const ResetPassword = ({ onLogin }) => {
 	const [stepper, setStepper] = useState(0);

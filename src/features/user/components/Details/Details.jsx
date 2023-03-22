@@ -1,24 +1,23 @@
 import {
 	CakeIcon,
+	GenderIcon,
 	HomeIcon,
 	MailIcon,
 	MapPinIcon,
 	PencilIcon,
 	PhoneIcon,
 } from 'components/Icon';
+import { Card, IconWrapper } from 'components/DataDisplay';
 
-import Button from 'components/Action/Button';
-import Card from 'components/DataDisplay/Card';
+import { Button } from 'components/Action';
 import DetailsEditor from './DetailsEditor';
-import GenderIcon from 'components/Icon/GenderIcon';
-import IconWrapper from 'components/Icon/IconWrapper';
-import Modal from 'components/OverLay/Modal';
-import Text from 'components/Typography/Text';
+import { Modal } from 'components/OverLay';
+import { Text } from 'components/Typography';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-const Details = ({ isOwner }) => {
+export const Details = ({ isOwner }) => {
 	const dateOfBirth = useSelector((state) => state.profile.data.dateOfBirth);
 	const address = useSelector((state) => state.profile.data.address);
 	const homeTown = useSelector((state) => state.profile.data.homeTown);
@@ -151,5 +150,3 @@ const DetailsEdit = ({ details }) => {
 		</Modal.Root>
 	);
 };
-
-export default Details;

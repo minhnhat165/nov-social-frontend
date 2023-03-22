@@ -1,8 +1,8 @@
-import clsx from 'clsx';
 import { CheckIcon } from 'components/Icon';
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
+import clsx from 'clsx';
 
-const Stepper = ({ steps, currentStepId, completedStepIds }) => {
+export const Stepper = ({ steps, currentStepId, completedStepIds }) => {
 	return (
 		<div className="relative my-4">
 			<div className="absolute left-1/2 top-6 z-0 h-0.5 w-[96%] -translate-x-1/2 bg-slate-300 dark:bg-dark-600">
@@ -47,7 +47,7 @@ const StepperItem = ({ item, isFocus, isActive }) => {
 							: 'text-slate-500 dark:text-dark-100',
 						isActive
 							? 'bg-primary-700 text-blue-50 dark:bg-primary-500'
-							: 'bg-slate-300 dark:bg-dark-700'
+							: 'bg-slate-300 dark:bg-dark-700',
 					)}
 				>
 					<IconWrapper>
@@ -76,5 +76,3 @@ const StepperItem = ({ item, isFocus, isActive }) => {
 		</div>
 	);
 };
-
-export default Stepper;

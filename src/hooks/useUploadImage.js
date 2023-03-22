@@ -1,48 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useState } from 'react';
 
-import getImageFileCompression from 'utils/getImageFileCompression';
-import { toast } from 'react-hot-toast';
+function useUploadImage(
+	options = {
+		defaultImagesProp: [],
+		multiple: false,
+		onRemoveDefaultImage: () => {},
+	},
+) {
+	const {
+		multiple = false,
+		defaultImagesProp = [],
+		onRemoveDefaultImage = () => {},
+	} = options;
+	const [files, setFiles] = useState([]);
+	const [previews, setPreviews] = useState([
+		...defaultImagesProp.map((img) => ({ type: 'default', url: img.url })),
+	]);
 
-function useUploadImage(defaultImage, defaultFile, onFinished) {
-	const [imagePreview, setImagePreview] = useState(defaultImage);
-	const [loading, setLoading] = useState(false);
-
-	useEffect(() => {
-		return () => {
-			if (imagePreview) URL.revokeObjectURL(imagePreview);
-		};
-	}, [imagePreview]);
-
-	useEffect(() => {
-		if (defaultFile) {
-			setImagePreview(URL.createObjectURL(defaultFile));
-		}
-	}, [defaultFile]);
-
-	const handleUpload = async (rawFile) => {
-		if (!rawFile) return;
-		setLoading(true);
-		try {
-			const file = await getImageFileCompression(rawFile);
-			const image = URL.createObjectURL(file);
-			onFinished(file);
-			setImagePreview(image);
-		} catch (error) {
-			toast.error(error.message);
-		}
-		setLoading(false);
+	const getFilesAndPreviews = (files) => {
+		let previews = [];
+		let newFiles = [];
+		files.forEach((file) => {
+			const url = URL.createObjectURL(file);
+			newFiles.push(Object.assign(file, { url }));
+			previews.push({ type: 'file', url });
+		});
+		return [newFiles, previews];
 	};
 
-	const handleCancel = () => {
-		setImagePreview(null);
+	const handleNewFilesUpload = (files) => {
+		if (!files.length) return;
+		const [newFiles, previews] = getFilesAndPreviews(files);
+		if (multiple) {
+			setFiles((prev) => [...prev, ...newFiles]);
+			setPreviews((prev) => [...prev, ...previews]);
+		} else {
+			setFiles(newFiles);
+			setPreviews(previews);
+			setFiles([newFiles[files.length - 1]]);
+			setPreviews([previews[previews.length - 1]]);
+		}
+	};
+
+	const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+		accept: {
+			'image/*': [],
+		},
+		multiple: multiple,
+		onDrop: (acceptedFiles) => {
+			handleNewFilesUpload(acceptedFiles);
+		},
+		noClick: true,
+	});
+
+	const onPaste = (e) => {
+		const items = e.clipboardData.items;
+		const files = [];
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].type.indexOf('image') !== -1) {
+				files.push(items[i].getAsFile());
+			}
+		}
+		handleNewFilesUpload(files);
+	};
+
+	const removeByPreview = (previewRemove) => {
+		URL.revokeObjectURL(previewRemove.url);
+		setPreviews((prev) =>
+			prev.filter((preview) => {
+				if (preview.url !== previewRemove.url) return true;
+				if (preview.type === 'default') {
+					onRemoveDefaultImage(
+						defaultImagesProp.find(
+							(img) => img.url === preview.url,
+						),
+					);
+				} else {
+					setFiles((prev) =>
+						prev.filter((file) => file.url !== preview.url),
+					);
+				}
+				return false;
+			}),
+		);
+	};
+
+	const removeAll = () => {
+		files.forEach((file) => URL.revokeObjectURL(file.url));
+		setPreviews([]);
+		setFiles([]);
 	};
 
 	return {
-		imagePreview,
-		setImagePreview,
-		loading,
-		handleUpload,
-		handleCancel,
+		files,
+		previews,
+		getRootProps,
+		getInputProps,
+		isDragActive,
+		open,
+		removeByPreview,
+		onPaste,
+		removeAll,
 	};
 }
 export default useUploadImage;

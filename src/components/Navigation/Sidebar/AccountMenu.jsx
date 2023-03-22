@@ -9,7 +9,7 @@ import {
 import AddExistingAccount from 'features/auth/components/AddExistingAccount';
 import ManageAccounts from 'features/user/components/ManageAccounts';
 import MenuItem from 'components/Navigation/MenuItem';
-import Modal from 'components/OverLay/Modal';
+import { Modal } from 'components/OverLay';
 import UserItem from 'features/user/components/UserItem';
 import useGoToProfile from 'features/user/hooks/useGoToProfile';
 import { useLogout } from 'features/auth/hooks/useLogout';

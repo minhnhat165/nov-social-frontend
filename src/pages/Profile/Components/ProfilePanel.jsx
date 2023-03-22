@@ -1,3 +1,4 @@
+import { Avatar, Card, FullViewImage } from 'components/DataDisplay';
 import {
 	CalendarDaysIcon,
 	ChatBubbleBottomCenterTextIcon,
@@ -7,17 +8,14 @@ import {
 	PencilSquareIcon,
 	TwitterIcon,
 } from 'components/Icon';
+import { Follow, ProfileEdit } from 'features/user/components';
 
-import Avatar from 'components/DataDisplay/Avatar';
-import Button from 'components/Action/Button';
-import Card from 'components/DataDisplay/Card';
-import Follow from 'features/user/components/Follow';
-import FullViewImage from 'components/DataDisplay/FullViewImage';
-import IconButton from 'components/Action/IconButton';
-import Modal from 'components/OverLay/Modal';
+import { Button } from 'components/Action';
+import { IconButton } from 'components/Action';
+import { Modal } from 'components/OverLay';
 import Navbar from './Navbar';
-import ProfileEdit from 'features/user/components/ProfileEdit';
-import Text from 'components/Typography/Text';
+import { Text } from 'components/Typography';
+import { cloneObject } from 'utils';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -109,7 +107,7 @@ const Edit = ({ profile }) => (
 					{({ closeModal }) => {
 						return (
 							<ProfileEdit
-								profile={profile}
+								profile={cloneObject(profile)}
 								onCancel={closeModal}
 								onSuccess={closeModal}
 							/>

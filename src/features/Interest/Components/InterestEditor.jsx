@@ -1,13 +1,10 @@
+import { CancelOrOk, ScrollArea } from 'components/Action';
+import { Card, Chip } from 'components/DataDisplay';
+import { Search, Select } from 'components/DataEntry';
 import { useMemo, useState } from 'react';
 
-import CancelOrOk from 'components/Action/CancelOrOk';
-import Card from 'components/DataDisplay/Card';
-import Chip from 'components/DataDisplay/Chip';
-import Modal from 'components/OverLay/Modal';
-import ScrollArea from 'components/Action/ScrollArea';
-import Search from 'components/DataEntry/Search';
-import { Select } from 'components/DataEntry';
-import Text from 'components/Typography/Text';
+import { Modal } from 'components/OverLay';
+import { Text } from 'components/Typography';
 import useGetCategories from '../hooks/useGetCategory';
 import useSearchInterest from '../hooks/useSearchInterest';
 import useUpdateProfile from 'features/user/hooks/useUpdateProfile';

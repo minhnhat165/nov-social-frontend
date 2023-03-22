@@ -2,7 +2,7 @@ import { FacebookIcon, GoogleIcon, TwitterIcon } from 'components/Icon';
 
 import { FACEBOOK_APP_ID } from 'configs';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import IconButton from 'components/Action/IconButton';
+import { IconButton } from 'components/Action';
 import { useGoogleLogin } from '@react-oauth/google';
 
 const SocialLogin = ({ onLogin }) => {

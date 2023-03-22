@@ -1,4 +1,4 @@
-import Button from 'components/Action/Button';
+import { Button } from 'components/Action';
 import { UserIcon } from 'components/Icon';
 import { useNavigate } from 'react-router-dom';
 

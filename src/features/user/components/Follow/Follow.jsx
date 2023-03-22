@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Children } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { cloneElement } from 'react';
 import { updateUser } from 'store/slices/authSlice';
 import { useMutation } from 'react-query';
 
-const Follow = ({ children, followId }) => {
+export const Follow = ({ children, followId }) => {
 	const followingId = useSelector((state) => state.auth.user.following);
 	const isFollowing = followingId.includes(followId);
 	const dispatch = useDispatch();
@@ -51,4 +50,7 @@ const Follow = ({ children, followId }) => {
 		  });
 };
 
-export default Follow;
+Follow.propTypes = {
+	children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+	followId: PropTypes.string.isRequired,
+};

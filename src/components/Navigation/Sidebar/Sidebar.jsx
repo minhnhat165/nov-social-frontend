@@ -1,8 +1,9 @@
-import Layer from 'components/Layout/Layer';
 import EndSidebar from './EndSidebar';
+import Layer from 'components/Layout/Layer';
 import MiddleSidebar from './MiddleSidebar';
 import StartSidebar from './StartSidebar';
-const Sidebar = () => {
+
+export const Sidebar = () => {
 	return (
 		<Layer className="flex h-full w-14 flex-col rounded-xl shadow-3xl">
 			<StartSidebar />
@@ -17,5 +18,3 @@ const Sidebar = () => {
 const Line = () => {
 	return <hr className="mx-2 dark:border-dark-700" />;
 };
-
-export default Sidebar;

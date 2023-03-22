@@ -1,4 +1,4 @@
-import IconWrapper from 'components/Icon/IconWrapper';
+import { IconWrapper } from 'components/DataDisplay';
 import React from 'react';
 
 const FormDescription = ({ icon, description }) => {

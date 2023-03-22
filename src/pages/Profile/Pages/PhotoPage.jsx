@@ -1,4 +1,4 @@
-import FullViewImage from 'components/DataDisplay/FullViewImage';
+import { FullViewImage } from 'components/DataDisplay';
 import React from 'react';
 import { getImageWithDimension } from 'utils/cloundinaryUtils';
 import useGetPhotos from 'features/user/hooks/useGetPhotos';

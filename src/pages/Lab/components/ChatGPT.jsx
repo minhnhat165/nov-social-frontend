@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import Avatar from 'components/DataDisplay/Avatar';
 import Card from 'components/DataDisplay/Card';
-import IconWrapper from 'components/Icon/IconWrapper';
+import IconWrapper from 'components/DataDisplay/IconWrapper/IconWrapper';
 import { PaperAirplaneIcon } from 'components/Icon';
 import Text from 'components/Typography/Text';
 import openai from 'configs/openAiConfig';
