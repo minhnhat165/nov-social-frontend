@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GenderIcon(props) {
+export function GenderIcon(props) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -19,5 +19,3 @@ function GenderIcon(props) {
 		</svg>
 	);
 }
-
-export default GenderIcon;

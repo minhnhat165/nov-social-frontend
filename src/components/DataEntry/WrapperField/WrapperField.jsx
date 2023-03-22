@@ -1,26 +1,29 @@
-import clsx from 'clsx';
-import { SlideFrom } from 'components/Effect/Transition';
 import PropTypes from 'prop-types';
-const sizes = {
-	sm: 'text-sm',
-	md: 'text-base',
-	lg: 'text-base',
+import { SlideFrom } from 'components/Effect/Transition';
+import clsx from 'clsx';
+
+const labelStyles = {
+	sm: 'text-sm pb-1',
+	md: 'text-base pb-1',
+	lg: 'text-base pb-2',
+	xl: 'text-xl pb-3',
 };
+
 const WrapperField = ({ label, htmlId, error, helper, children, size }) => {
 	return (
-		<div>
+		<div className="w-full">
 			{label && (
 				<label
 					htmlFor={htmlId}
 					className={clsx(
-						'mt-2 flex cursor-pointer pb-2 font-bold capitalize text-slate-800 dark:text-dark-200',
-						sizes[size]
+						'mt-2 flex cursor-pointer font-bold capitalize text-slate-800 dark:text-dark-200',
+						labelStyles[size],
 					)}
 				>
 					{label}
 				</label>
 			)}
-			<div className="flex items-center gap-2">{children}</div>
+			{children}
 			<div className="relative z-10">
 				<SlideFrom show={!!error}>
 					<span className="absolute  left-1/2 w-[94%] -translate-x-1/2 rounded-md rounded-t-none bg-red-400 p-1 text-center text-sm capitalize text-white">
