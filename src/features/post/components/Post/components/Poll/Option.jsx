@@ -18,10 +18,7 @@ const Option = ({ option, total, isVoted, isCheckbox, name, onChange }) => {
 	return (
 		<label
 			htmlFor={id}
-			className={clsx(
-				'cursor-pointer rounded-lg border p-2 px-3',
-				isVoted ? 'border-primary-500' : 'border-normal',
-			)}
+			className="cursor-pointer rounded-lg bg-slate-200 p-2 px-3 dark:bg-dark-700"
 		>
 			<div className="flex items-center gap-2 pb-2">
 				<input
@@ -31,7 +28,7 @@ const Option = ({ option, total, isVoted, isCheckbox, name, onChange }) => {
 					value={_id}
 					name={name}
 					className={clsx(
-						'checked:bg-primary-700 dark:bg-dark-600 dark:checked:bg-primary-500',
+						'checked:bg-primary-700 dark:bg-dark-600 dark:checked:bg-primary-500 ',
 						isCheckbox && 'rounded',
 					)}
 					onChange={onChange}

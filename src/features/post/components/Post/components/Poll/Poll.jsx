@@ -29,13 +29,7 @@ export const Poll = ({ maxShow = 3 }) => {
 		return options.reduce((acc, cur) => acc + cur.votes, 0);
 	}, [options]);
 
-	const optionsSorted = useMemo(() => {
-		return options.sort((a, b) => b.votes - a.votes);
-	}, [options]);
-
-	const [isShowMore, setIsShowMore] = useState(
-		optionsSorted.length <= maxShow,
-	);
+	const [isShowMore, setIsShowMore] = useState(options.length <= maxShow);
 
 	const handleVote = (e) => {
 		// get data from form
@@ -70,7 +64,7 @@ export const Poll = ({ maxShow = 3 }) => {
 		<Layer>
 			<form ref={formRef} className="flex flex-col gap-2">
 				{isShowMore
-					? optionsSorted.map((option) => (
+					? options.map((option) => (
 							<Option
 								key={option._id}
 								option={option}
@@ -81,7 +75,7 @@ export const Poll = ({ maxShow = 3 }) => {
 								onChange={handleVote}
 							/>
 					  ))
-					: optionsSorted
+					: options
 							.slice(0, maxShow)
 							.map((option) => (
 								<Option
@@ -97,7 +91,7 @@ export const Poll = ({ maxShow = 3 }) => {
 
 				{/* show more */}
 
-				{optionsSorted.length > maxShow && (
+				{options.length > maxShow && (
 					<div className="flex items-center gap-2">
 						<Text
 							onClick={() => setIsShowMore((prev) => !prev)}
@@ -106,9 +100,7 @@ export const Poll = ({ maxShow = 3 }) => {
 						>
 							{isShowMore
 								? 'Show less'
-								: `Show more (${
-										optionsSorted.length - maxShow
-								  })`}
+								: `Show more (${options.length - maxShow})`}
 						</Text>
 					</div>
 				)}
