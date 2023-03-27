@@ -8,22 +8,36 @@ import {
 	PollIcon,
 } from 'components/Icon';
 
-export const ToolBar = ({
-	onSubmit,
-	disabled,
-	onUploadImage,
-	onPoll,
-	isLoading,
-	setIsFocused,
-}) => {
+import { editorModes } from '../PostEditor';
+import { usePostEditor } from '../context';
+
+export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
+	const {
+		isLoading,
+		setIsFocused,
+		isValid,
+		isDirty,
+		mode,
+		hasPoll,
+		setHasPoll,
+	} = usePostEditor();
+
+	const handleTriggerImage = () => {
+		setIsFocused(true);
+		onUploadImage();
+	};
+
+	const handleTriggerPoll = () => {
+		if (hasPoll) return;
+		setIsFocused(true);
+		setHasPoll(true);
+	};
+
 	return (
 		<div className="mt-auto flex h-14 items-center justify-between px-4">
 			<div className="flex">
 				<IconButton
-					onClick={() => {
-						setIsFocused(true);
-						onUploadImage();
-					}}
+					onClick={handleTriggerImage}
 					variant="text"
 					size="sm"
 					rounded
@@ -31,10 +45,7 @@ export const ToolBar = ({
 					<ImageIcon />
 				</IconButton>
 				<IconButton
-					onClick={() => {
-						setIsFocused(true);
-						onPoll();
-					}}
+					onClick={handleTriggerPoll}
 					variant="text"
 					size="sm"
 					rounded
@@ -54,16 +65,28 @@ export const ToolBar = ({
 					<MapPinIcon />
 				</IconButton>
 			</div>
-			<div>
+			<div className="flex gap-2">
+				{mode === editorModes.EDIT && (
+					<Button
+						onClick={onCanceled}
+						size="sm"
+						color="secondary"
+						rounded
+						className="min-w-[80px]"
+						disabled={isLoading}
+					>
+						Cancel
+					</Button>
+				)}
 				<Button
 					onClick={onSubmit}
 					size="sm"
-					disabled={disabled}
+					disabled={!isValid || !isDirty}
 					rounded
 					className="min-w-[80px]"
 					loading={isLoading}
 				>
-					Post
+					{mode === editorModes.EDIT ? 'Save' : 'Post'}
 				</Button>
 			</div>
 		</div>

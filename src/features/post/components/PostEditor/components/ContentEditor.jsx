@@ -60,9 +60,7 @@ const ContentEditor = forwardRef(
 				supportWhitespace: true,
 				theme: mentionStyles,
 			});
-			// eslint-disable-next-line no-shadow
 			const { MentionSuggestions } = mentionPlugin;
-			// eslint-disable-next-line no-shadow
 			const plugins = [mentionPlugin, hashtagPlugin, linkifyPlugin];
 			return { plugins, MentionSuggestions };
 		}, []);
