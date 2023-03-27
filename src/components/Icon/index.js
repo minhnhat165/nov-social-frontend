@@ -65,3 +65,4 @@ export * from './EllipsisHorizontalIcon';
 export * from './TrashIcon';
 export * from './EyeIcon';
 export * from './UserMinusIcon';
+export * from './ArchiveBoxXMarkIcon';
