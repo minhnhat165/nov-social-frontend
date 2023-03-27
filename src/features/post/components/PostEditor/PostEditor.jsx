@@ -1,270 +1,186 @@
-import { ContentEditor, EditAudience, PollEditor, ToolBar } from './components';
-import { getImageWithDimension, uploadImage } from 'utils/cloundinaryUtils';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+	EditAudience,
+	PostPhotoEditor,
+	PostPollEditor,
+	PostTextEditor,
+	ToolBar,
+} from './components';
+import {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
+import { getDataEditor, uploadPostImages } from './utils';
 
 import { Avatar } from 'components/DataDisplay';
-import { CloseButton } from 'components/Action';
+import { Divider } from 'components/Layout';
 import Layer from 'components/Layout/Layer';
-import PreviewBox from './components/PreviewBox';
+import { PostEditorContext } from './context';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { convertToRaw } from 'draft-js';
-import { extractHashtags } from './utils/editorUtils';
 import { useSelector } from 'react-redux';
-import useUploadImage from 'hooks/useUploadImage';
 
-const PostEditor = ({ initial, onSubmit, autoFocus }) => {
-	const avatar = useSelector((state) => state.auth.user?.avatar);
-	const lastName = useSelector((state) => state.auth.user?.lastName);
-
-	const userId = useSelector((state) => state.auth.user?._id);
-	const [placeholder, setPlaceholder] = useState(
-		`What's new, ${lastName ? lastName : 'friend'}?`,
-	);
-
-	const [visibility, setVisibility] = useState(initial.visibility);
-	const [photos, setPhotos] = useState(initial.photos || []);
-	const [isValid, setIsValid] = useState(true);
-	const [isDirty, setIsDirty] = useState(false);
-	const [dirtyFields, setDirtyFields] = useState([]);
-	const [hasContent, setHasContent] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isFocused, setIsFocused] = useState(autoFocus);
-	const [isOpenPoll, setIsOpenPoll] = useState(initial.poll ? true : false);
-	const [isPollValid, setIsPollValid] = useState(false);
-
-	const {
-		open,
-		files: photoFiles,
-		getRootProps,
-		onPaste,
-		previews,
-		isDragActive,
-		removeByPreview,
-		removeAll,
-	} = useUploadImage({
-		defaultImagesProp: initial.photos,
-		onRemoveDefaultImage: (image) => {
-			setPhotos(photos.filter((photo) => photo.url !== image.url));
-		},
-		multiple: true,
-	});
-
-	const contentEditorRef = useRef(null);
-	const pollEditorRef = useRef(null);
-
-	const uploadPostImages = async (file, userId) => {
-		if (!file.length) return [];
-		const publicIds = await Promise.all(
-			file.map((file) => uploadImage(file, `${userId}/posts`, true)),
-		);
-		const postingWidthPhotos = publicIds.length > 1 ? 500 : 1000;
-		return publicIds.map((publicId) => ({
-			publicId,
-			url: getImageWithDimension({
-				publicId,
-				width: postingWidthPhotos,
-			}),
-		}));
-	};
-
-	const getDataEditor = () => {
-		if (!hasContent) return {};
-		const editorState = contentEditorRef.current.editorState;
-		const currentContentState = editorState.getCurrentContent();
-		const raw = convertToRaw(currentContentState);
-		const entityMap = raw.entityMap;
-		const mentions = [];
-		Object.values(entityMap).forEach((entity) => {
-			if (entity.type === 'mention') {
-				mentions.push(entity.data.mention._id);
-			}
-		});
-		return {
-			content: JSON.stringify(raw),
-			hashtags: extractHashtags(currentContentState.getPlainText()),
-			mentions,
-		};
-	};
-
-	const handlePost = async () => {
-		setIsLoading(true);
-		const newPost = { ...initial };
-		const newPhotos = await uploadPostImages(photoFiles, userId);
-		if (isOpenPoll) {
-			newPost.poll = pollEditorRef.current.getPoll();
-		} else newPost.poll = null;
-
-		Object.assign(newPost, {
-			...getDataEditor(),
-			photos: [...photos, ...newPhotos],
-			visibility,
-		});
-		onSubmit(newPost);
-		setIsLoading(false);
-		handleReset();
-	};
-
-	const handleReset = () => {
-		setIsFocused(false);
-		setIsValid(true);
-		setIsDirty(false);
-		setDirtyFields([]);
-		setHasContent(false);
-		setPhotos([]);
-		contentEditorRef.current.reset();
-		setIsOpenPoll(false);
-		removeAll();
-	};
-	const handleDirty = useCallback((field, isDirty) => {
-		setDirtyFields((dirtyFields) => {
-			if (isDirty) {
-				if (!dirtyFields.includes(field))
-					return [...dirtyFields, field];
-				return dirtyFields;
-			}
-			return dirtyFields.filter((dirtyField) => dirtyField !== field);
-		});
-	}, []);
-
-	useEffect(() => {
-		if (dirtyFields.length > 0) setIsDirty(true);
-		else setIsDirty(false);
-	}, [dirtyFields]);
-
-	useEffect(() => {
-		if (isOpenPoll) {
-			if (hasContent && isPollValid) setIsValid(true);
-			else setIsValid(false);
-		} else {
-			if (hasContent || photoFiles.length > 0 || photos.length > 0)
-				setIsValid(true);
-			else setIsValid(false);
-		}
-	}, [hasContent, photoFiles, photos, isPollValid, isOpenPoll]);
-
-	useEffect(() => {
-		handleDirty('visibility', visibility !== initial.visibility);
-	}, [handleDirty, initial.visibility, visibility]);
-
-	useEffect(() => {
-		handleDirty('photos', photos.length !== initial.photos?.length);
-	}, [handleDirty, initial.photos?.length, photos]);
-
-	useEffect(() => {
-		handleDirty('photos', photoFiles.length > 0);
-	}, [handleDirty, photoFiles]);
-
-	useEffect(() => {
-		if (isOpenPoll) {
-			setPlaceholder('What do you want to ask?');
-			if (!initial.poll) handleDirty('poll', true);
-			else handleDirty('poll', false);
-		} else {
-			setPlaceholder(`What's new, ${lastName ? lastName : 'friend'}?`);
-			if (initial.poll) handleDirty('poll', true);
-			else handleDirty('poll', false);
-		}
-	}, [handleDirty, initial.poll, isOpenPoll, lastName]);
-
-	const handleContentEmpty = useCallback((isEmpty) => {
-		setHasContent(!isEmpty);
-	}, []);
-
-	const handleContentDirty = useCallback(
-		(isDirty) => {
-			handleDirty('content', isDirty);
-		},
-		[handleDirty],
-	);
-
-	return (
-		<Layer
-			className={clsx(
-				'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
-				isFocused && 'min-h-[160px]',
-			)}
-		>
-			<div className="flex flex-1">
-				<div className="pl-4 pr-2">
-					<Avatar src={avatar} />
-				</div>
-				<div className="flex flex-1 flex-col pr-4">
-					{isFocused && (
-						<EditAudience
-							onChange={setVisibility}
-							defaultValue={visibility}
-						/>
-					)}
-					<div
-						{...getRootProps()}
-						onPaste={onPaste}
-						onClick={() => {
-							setIsFocused(true);
-						}}
-						className="relative w-full rounded-xl"
-					>
-						<ContentEditor
-							placeholder={placeholder}
-							className="my-2"
-							initial={initial.content}
-							onEmptyChange={handleContentEmpty}
-							onDirtyChange={handleContentDirty}
-							autoFocus={isFocused}
-							ref={contentEditorRef}
-						/>
-
-						{!!previews.length && (
-							<PreviewBox
-								previews={previews}
-								onRemove={removeByPreview}
-								className="border-normal mb-3 w-full rounded-xl border p-1"
-							/>
-						)}
-
-						{isOpenPoll && (
-							<div className="relative">
-								<PollEditor
-									ref={pollEditorRef}
-									onValidChange={setIsPollValid}
-									onDirtyChange={(isDirty) =>
-										handleDirty('poll', isDirty)
-									}
-									initial={initial.poll}
-								/>
-								<CloseButton
-									onClick={() => setIsOpenPoll(false)}
-									className="absolute top-2 right-5"
-								/>
-							</div>
-						)}
-
-						{isDragActive && (
-							<div className="absolute inset-0 animate-pulse rounded-xl border-2 border-dashed border-primary-500 bg-black/50" />
-						)}
-					</div>
-				</div>
-			</div>
-			{isFocused && (
-				<div className="h-[1px] w-full bg-slate-200 px-4 dark:bg-dark-700"></div>
-			)}
-			<ToolBar
-				setIsFocused={setIsFocused}
-				onPoll={() => {
-					setIsOpenPoll(true);
-					setIsFocused(true);
-				}}
-				onUploadImage={open}
-				onSubmit={handlePost}
-				disabled={!isValid || !isDirty}
-				isLoading={isLoading}
-			/>
-		</Layer>
-	);
+export const editorModes = {
+	CREATE: 'create',
+	EDIT: 'edit',
 };
+
+const PostEditor = forwardRef(
+	({ initial, onSubmit, autoFocus, mode, onCanceled }, ref) => {
+		const fullName = useSelector((state) => state.auth.user?.name);
+		const lastName = useMemo(() => {
+			if (!fullName) return 'friend';
+			const name = fullName.split(' ');
+			return name[name.length - 1];
+		}, [fullName]);
+
+		const userId = useSelector((state) => state.auth.user?._id);
+		const [placeholder, setPlaceholder] = useState(
+			`What's new, ${lastName}?`,
+		);
+		const [isValid, setIsValid] = useState(true);
+		const [isDirty, setIsDirty] = useState(false);
+		const [dirtyFields, setDirtyFields] = useState([]);
+		const [isLoading, setIsLoading] = useState(false);
+		const [isFocused, setIsFocused] = useState(autoFocus);
+
+		const [hasContent, setHasContent] = useState(false);
+		const [hasPhoto, setHasPhoto] = useState(initial?.photos.length > 0);
+		const [hasPoll, setHasPoll] = useState(initial?.poll ? true : false);
+
+		const contentEditorRef = useRef(null);
+		const pollEditorRef = useRef(null);
+		const photoEditorRef = useRef(null);
+		const audienceEditorRef = useRef(null);
+
+		const handleSubmit = async () => {
+			setIsLoading(true);
+			const newPost = { ...initial };
+			const newPhotos = await uploadPostImages(
+				photoEditorRef.current.getPhotoFiles(),
+				userId,
+			);
+			if (hasPoll) {
+				newPost.poll = pollEditorRef.current.getPoll();
+			} else newPost.poll = null;
+			Object.assign(newPost, {
+				...getDataEditor(contentEditorRef, hasContent),
+				photos: [...photoEditorRef.current.getPhotos(), ...newPhotos],
+				visibility: audienceEditorRef.current.getVisibility(),
+			});
+			onSubmit(newPost);
+		};
+
+		const handleReset = () => {
+			setIsFocused(false);
+			setIsValid(true);
+			setIsDirty(false);
+			setDirtyFields([]);
+			setHasContent(false);
+			setHasPhoto(false);
+			setHasPoll(false);
+			contentEditorRef.current.reset();
+			photoEditorRef.current.reset();
+		};
+		const handleDirty = useCallback((field, isDirty) => {
+			setDirtyFields((dirtyFields) => {
+				if (isDirty) {
+					if (!dirtyFields.includes(field))
+						return [...dirtyFields, field];
+					return dirtyFields;
+				}
+				return dirtyFields.filter((dirtyField) => dirtyField !== field);
+			});
+		}, []);
+
+		useEffect(() => {
+			if (dirtyFields.length > 0) setIsDirty(true);
+			else setIsDirty(false);
+		}, [dirtyFields]);
+
+		useEffect(() => {
+			if (hasPoll) {
+				setPlaceholder('What do you want to ask?');
+			} else {
+				setPlaceholder(`What's new, ${lastName}?`);
+			}
+		}, [hasPoll, lastName]);
+
+		useImperativeHandle(
+			ref,
+			() => ({
+				setIsLoading,
+				reset: handleReset,
+			}),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[],
+		);
+
+		return (
+			<PostEditorContext.Provider
+				value={{
+					isLoading,
+					setIsFocused,
+					isValid,
+					isDirty,
+					mode,
+					initial,
+					setIsValid,
+					setIsDirty,
+					hasContent,
+					handleDirty,
+					setHasContent,
+					hasPhoto,
+					setHasPhoto,
+					hasPoll,
+					setHasPoll,
+				}}
+			>
+				<Layer
+					className={clsx(
+						'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
+						isFocused && 'min-h-[160px]',
+					)}
+				>
+					<div className="flex flex-1">
+						<PostSideRight />
+						<div className="flex flex-1 flex-col pr-4">
+							{isFocused && (
+								<EditAudience ref={audienceEditorRef} />
+							)}
+							<PostPhotoEditor ref={photoEditorRef}>
+								<PostTextEditor
+									placeholder={placeholder}
+									contentEditorRef={contentEditorRef}
+								/>
+
+								{hasPoll && (
+									<PostPollEditor
+										pollEditorRef={pollEditorRef}
+									/>
+								)}
+							</PostPhotoEditor>
+						</div>
+					</div>
+					{isFocused && <Divider />}
+					<ToolBar
+						onUploadImage={photoEditorRef?.current?.triggerUpload}
+						onSubmit={handleSubmit}
+						onCanceled={onCanceled}
+					/>
+				</Layer>
+			</PostEditorContext.Provider>
+		);
+	},
+);
 
 PostEditor.propTypes = {
 	initial: PropTypes.object,
+	mode: PropTypes.oneOf(Object.values(editorModes)),
 };
 
 PostEditor.defaultProps = {
@@ -276,6 +192,16 @@ PostEditor.defaultProps = {
 		photos: [],
 		poll: null,
 	},
+	mode: editorModes.CREATE,
 };
 
 export default PostEditor;
+
+function PostSideRight() {
+	const avatar = useSelector((state) => state.auth.user?.avatar);
+	return (
+		<div className="pl-4 pr-2">
+			<Avatar src={avatar} />
+		</div>
+	);
+}
