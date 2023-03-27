@@ -63,16 +63,13 @@ export const Button = ({
 			ref={ref}
 			disabled={disabled || loading}
 			className={clsx(
-				'relative flex shrink-0 cursor-pointer items-center justify-center no-underline transition-all active:scale-95',
+				'dark:!disabled:bg-gray-700 dark:!disabled:text-white relative flex shrink-0 cursor-pointer items-center justify-center no-underline transition-all active:scale-95 disabled:scale-100 disabled:cursor-not-allowed disabled:!bg-gray-300 disabled:!text-gray-500 disabled:!opacity-40',
 				sizes[size],
 				rounded ? 'rounded-full' : borderRadius[size],
 				fullWidth ? 'w-full' : '',
 				variant,
 				color,
 				className,
-				disabled
-					? 'dark:!disabled:bg-gray-700 dark:!disabled:text-white disabled:scale-100 disabled:cursor-not-allowed disabled:!bg-gray-300 disabled:!text-gray-500 disabled:!opacity-40'
-					: '',
 				elevated ? 'shadow' : '',
 			)}
 			{...props}
