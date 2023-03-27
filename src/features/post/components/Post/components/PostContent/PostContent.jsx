@@ -1,3 +1,5 @@
+import './styles/editorStyle.css';
+
 import { EditorState, convertFromRaw } from 'draft-js';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -59,7 +61,7 @@ export const PostContent = () => {
 	};
 
 	return (
-		<div className={`mb-2 ${fontSize}`}>
+		<div className={`mb-2 ${fontSize} post-content`}>
 			<Editor
 				readOnly
 				plugins={plugins}

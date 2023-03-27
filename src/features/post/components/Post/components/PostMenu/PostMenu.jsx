@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 export const PostMenu = () => {
-	const { author } = usePost();
+	const { author, handleHidePost, setIsEditing } = usePost();
 	const userId = useSelector((state) => state.auth.user._id);
 	const isAuthor = author._id === userId;
 	return (
@@ -31,14 +31,24 @@ export const PostMenu = () => {
 
 			{isAuthor && (
 				<>
-					<EditPost />
+					<Menu.Item
+						onClick={() => setIsEditing(true)}
+						icon={<PencilSquareIcon />}
+					>
+						Edit
+					</Menu.Item>
 					<DeletePost />
 				</>
 			)}
 			{!isAuthor && (
 				<>
-					<Menu.Item icon={<EyeIcon />}>Hide post</Menu.Item>
-					<Menu.Item icon={<UserMinusIcon />}>
+					<Menu.Item onClick={handleHidePost} icon={<EyeIcon />}>
+						Hide post
+					</Menu.Item>
+					<Menu.Item
+						onClick={() => setIsEditing(true)}
+						icon={<UserMinusIcon />}
+					>
 						Hide all from {author.name}
 					</Menu.Item>
 					<Menu.Item icon={<FlagIcon />}>Report post</Menu.Item>

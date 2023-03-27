@@ -1,14 +1,23 @@
+import {
+	Cog6ToothIcon,
+	EllipsisHorizontalIcon,
+	GlobeAsiaAustraliaIcon,
+	LockClosedIcon,
+	UserIcon,
+} from 'components/Icon';
 import React, { useMemo } from 'react';
 
-import { EllipsisHorizontalIcon } from 'components/Icon';
 import { IconButton } from 'components/Action';
+import { IconWrapper } from 'components/DataDisplay';
 import { Popover } from 'components/OverLay';
 import { PostMenu } from '../PostMenu';
 import { Text } from 'components/Typography';
+import { audienceTypes } from 'features/post/components/PostEditor/components';
 import { usePost } from '../../Post';
 
 export const PostHeader = () => {
-	const { author, createdAt } = usePost();
+	const { post } = usePost();
+	const { visibility, author, createdAt } = post;
 	const timeDisplay = useMemo(() => {
 		const now = new Date();
 		let timeDiff = Math.floor(
@@ -46,15 +55,35 @@ export const PostHeader = () => {
 		}).format(new Date(createdAt));
 	}, [createdAt]);
 
+	const AudienceIcon = useMemo(() => {
+		switch (visibility) {
+			case audienceTypes.PUBLIC:
+				return <GlobeAsiaAustraliaIcon />;
+			case audienceTypes.PRIVATE:
+				return <LockClosedIcon />;
+			case audienceTypes.FOLLOWERS:
+				return <UserIcon className="h-4 w-4" />;
+			case audienceTypes.CUSTOM:
+				return <Cog6ToothIcon />;
+			default:
+				return <GlobeAsiaAustraliaIcon />;
+		}
+	}, [visibility]);
+
 	return (
 		<div className="flex">
 			<div className="flex-1">
-				<Text as="p" className="font-bold leading-4">
+				<Text as="p" className="font-bold">
 					{author?.name}
 				</Text>
-				<Text level={3} className="text-xs">
-					{timeDisplay}
-				</Text>
+				<div className="flex items-center gap-2">
+					<Text level={3} className="text-sm">
+						{timeDisplay}
+					</Text>
+					<IconWrapper className="text-normal" size={4}>
+						{AudienceIcon}
+					</IconWrapper>
+				</div>
 			</div>
 			<Popover
 				placement="bottom-end"
@@ -71,7 +100,9 @@ export const PostHeader = () => {
 				}
 			>
 				<IconButton rounded variant="text" color="secondary" size="sm">
-					<EllipsisHorizontalIcon />
+					<IconWrapper>
+						<EllipsisHorizontalIcon className="h-8 w-8" />
+					</IconWrapper>
 				</IconButton>
 			</Popover>
 		</div>
