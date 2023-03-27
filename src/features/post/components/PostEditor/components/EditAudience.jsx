@@ -5,45 +5,78 @@ import {
 	LockClosedIcon,
 	UserIcon,
 } from 'components/Icon';
-import React, { useMemo } from 'react';
+import React, {
+	forwardRef,
+	useImperativeHandle,
+	useMemo,
+	useState,
+} from 'react';
 import { Select, SelectTrigger } from 'components/DataEntry';
 
 import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
+import { usePostEditor } from '../context';
 
-const EditAudience = ({ onChange, defaultValue }) => {
+export const audienceTypes = {
+	PUBLIC: 'public',
+	FOLLOWERS: 'followers',
+	PRIVATE: 'private',
+	CUSTOM: 'custom',
+};
+
+const EditAudience = forwardRef((props, ref) => {
+	const { initial, handleDirty } = usePostEditor();
+	const { visibility: defaultVisibility } = initial;
+
+	const [visibility, setVisibility] = useState(defaultVisibility);
+
 	const options = useMemo(() => {
 		return [
 			{
 				icon: <GlobeAsiaAustraliaIcon />,
 				label: 'Public',
-				value: 'public',
-				defaultSelected: defaultValue === 'public',
+				value: audienceTypes.PUBLIC,
+				defaultSelected: defaultVisibility === 'public',
 			},
 			{
 				icon: <UserIcon />,
 
 				label: 'Follower',
-				value: 'friends',
-				defaultSelected: defaultValue === 'followers',
+				value: audienceTypes.FOLLOWERS,
+				defaultSelected: defaultVisibility === 'followers',
 			},
 			{
 				icon: <LockClosedIcon />,
 				label: 'Only me',
-				value: 'private',
-				defaultSelected: defaultValue === 'private',
+				value: audienceTypes.PRIVATE,
+				defaultSelected: defaultVisibility === 'private',
 			},
 			{
 				icon: <Cog6ToothIcon />,
 				label: 'Custom',
-				value: 'custom',
-				defaultSelected: defaultValue === 'custom',
+				value: audienceTypes.CUSTOM,
+				defaultSelected: defaultVisibility === 'custom',
 			},
 		];
-	}, [defaultValue]);
+	}, [defaultVisibility]);
+
+	useImperativeHandle(
+		ref,
+		() => {
+			return {
+				getVisibility: () => visibility,
+			};
+		},
+		[visibility],
+	);
 
 	return (
-		<Select onChange={onChange}>
+		<Select
+			onChange={(value) => {
+				handleDirty('visibility', value !== visibility);
+				setVisibility(value);
+			}}
+		>
 			<SelectTrigger className="h-8 text-sm">
 				{({ selectedOption, setTriggerRef, toggleSelect }) => (
 					<div
@@ -75,7 +108,7 @@ const EditAudience = ({ onChange, defaultValue }) => {
 			</Select.Options>
 		</Select>
 	);
-};
+});
 EditAudience.propTypes = {
 	onChange: PropTypes.func,
 };
