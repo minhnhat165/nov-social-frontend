@@ -34,6 +34,7 @@ const Account = () => {
 			interactive
 			appendTo={document.body}
 			placement="right-end"
+			hideOnClick
 			offset={[8, 16]}
 			render={
 				<Popover.Content className="h-fit w-80 p-2 shadow-3xl transition-all">

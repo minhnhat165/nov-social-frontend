@@ -114,8 +114,8 @@ const OverlayContainer = ({ children, responsive, isLeft }) => {
 		>
 			<div
 				className={clsx(
-					'relative -left-full h-full w-[200%] translate-x-0 transform bg-gradient-to-r from-cyan-500 to-blue-500 transition-transform duration-700 ease-in-out dark:to-primary-700',
-					isLeft ? 'translate-x-1/2' : '',
+					'relative -left-full h-full w-[200%]  transform bg-gradient-to-r from-cyan-500 to-blue-500 transition-transform duration-700 ease-in-out dark:to-primary-700',
+					isLeft ? 'translate-x-1/2' : 'translate-x-0',
 				)}
 			>
 				{children}

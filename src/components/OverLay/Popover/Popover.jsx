@@ -2,6 +2,7 @@ import { cloneElement, forwardRef, useState } from 'react';
 
 import Layer from 'components/Layout/Layer';
 import { LazyTippy } from './LazyTippy';
+import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
@@ -60,5 +61,17 @@ const Content = forwardRef(({ children, className, ...props }, ref) => {
 
 const Arrow = () => <div className="arrow" data-popper-arrow />;
 Popover.Content = Content;
-
 Popover.Arrow = Arrow;
+
+Popover.propTypes = {
+	interactive: PropTypes.bool,
+	hideOnClick: PropTypes.bool,
+	appendTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	onClickOutside: PropTypes.func,
+	placement: PropTypes.string,
+	offset: PropTypes.array,
+	children: PropTypes.node,
+	content: PropTypes.node,
+	render: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+	lazy: PropTypes.bool,
+};

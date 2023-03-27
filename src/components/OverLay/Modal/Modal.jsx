@@ -5,7 +5,6 @@ import Layer from 'components/Layout/Layer';
 import { XMarkIcon } from 'components/Icon';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
-import { useEffect } from 'react';
 
 export const Modal = ({
 	open,
@@ -15,12 +14,12 @@ export const Modal = ({
 	closeIcon = <XMarkIcon />,
 }) => {
 	// stop body scroll
-	useEffect(() => {
-		document.body.style.overflow = 'hidden';
-		return () => {
-			document.body.style.overflow = 'unset';
-		};
-	}, []);
+	// useEffect(() => {
+	// 	document.body.style.overflow = 'hidden';
+	// 	return () => {
+	// 		document.body.style.overflow = 'unset';
+	// 	};
+	// }, []);
 
 	if (!open) return null;
 
@@ -35,7 +34,7 @@ export const Modal = ({
 				{children}
 			</div>
 		</div>,
-		document.body,
+		document.getElementById('root'),
 	);
 };
 
