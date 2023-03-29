@@ -3,8 +3,9 @@ import React, { useMemo } from 'react';
 import { CloseButton } from 'components/Action';
 import { Img } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
-const PreviewBox = ({ previews, onRemove, className }) => {
+const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 	const groupPreview = useMemo(() => {
 		const group = {
 			left: [],
@@ -42,17 +43,22 @@ const PreviewBox = ({ previews, onRemove, className }) => {
 		return group;
 	}, [previews]);
 
+	const handleClick = (url) => {
+		// exactly only one index with preview.url form previews
+		const index = previews.findIndex((preview) => preview.url === url);
+		onClick(index);
+	};
+
 	return (
 		<div className={className}>
 			<div className="flex gap-1 overflow-hidden rounded-xl">
 				<div className="flex flex-1 flex-col gap-1">
 					{groupPreview.left.map((preview, index) => (
 						<div key={index} className="relative flex-1">
-							<Img
-								draggable={false}
-								src={preview.url}
-								alt=""
-								className="h-full w-full object-cover"
+							<ImgItems
+								img={preview.url}
+								index={index}
+								onClick={onClick && handleClick}
 							/>
 							{onRemove && (
 								<CloseButton
@@ -67,15 +73,20 @@ const PreviewBox = ({ previews, onRemove, className }) => {
 					<div className="flex flex-1 flex-col gap-1">
 						{groupPreview.right.map((preview, index) => (
 							<div key={index} className="relative flex-1">
-								<Img
-									draggable={false}
-									src={preview.url}
-									alt=""
-									className="h-full w-full object-cover"
+								<ImgItems
+									img={preview.url}
+									index={index}
+									onClick={onClick && handleClick}
 								/>
 								{groupPreview.rest.length > 0 &&
 								groupPreview.right.length - 1 === index ? (
-									<div className="absolute inset-0 flex items-center justify-center bg-black/70 text-3xl text-white">
+									<div
+										onClick={
+											onClick &&
+											(() => handleClick(preview.url))
+										}
+										className="absolute inset-0 flex items-center justify-center bg-black/70 text-3xl text-white"
+									>
 										+{groupPreview.rest.length}
 									</div>
 								) : (
@@ -110,3 +121,19 @@ PreviewBox.defaultProps = {
 };
 
 export default PreviewBox;
+
+function ImgItems({ img, onClick = null }) {
+	return (
+		<div className="h-full w-full" onClick={() => onClick(img)}>
+			<Img
+				draggable={false}
+				src={img}
+				alt=""
+				className={clsx(
+					'h-full w-full object-cover',
+					onClick ? 'cursor-pointer hover:opacity-70' : '',
+				)}
+			/>
+		</div>
+	);
+}
