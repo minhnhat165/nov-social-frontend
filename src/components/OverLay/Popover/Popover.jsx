@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef, useState } from 'react';
+import { cloneElement, forwardRef, useImperativeHandle, useState } from 'react';
 
 import Layer from 'components/Layout/Layer';
 import { LazyTippy } from './LazyTippy';
@@ -6,50 +6,75 @@ import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import clsx from 'clsx';
 
-export const Popover = ({
-	interactive,
-	hideOnClick,
-	appendTo,
-	onClickOutside,
-	placement,
-	offset,
-	children,
-	content,
-	render,
-	lazy = true,
-	...props
-}) => {
-	const [visible, setVisible] = useState(false);
+export const Popover = forwardRef(
+	(
+		{
+			interactive,
+			hideOnClick,
+			appendTo,
+			onClickOutside,
+			placement,
+			offset,
+			children,
+			render,
+			hideOnClickOutside = true,
+			lazy = true,
+			...props
+		},
+		ref,
+	) => {
+		const [visible, setVisible] = useState(false);
 
-	const Component = lazy ? LazyTippy : Tippy;
+		const Component = lazy ? LazyTippy : Tippy;
 
-	return (
-		<Component
-			interactive
-			appendTo={document.body}
-			visible={visible}
-			onClickOutside={() => {
-				setVisible(false);
-				onClickOutside && onClickOutside();
-			}}
-			placement={placement}
-			offset={offset}
-			{...props}
-			render={(attrs) =>
-				render && typeof render === 'function'
-					? render(attrs)
-					: cloneElement(render, {
-							...attrs,
-							onClick: () => {
-								hideOnClick && setVisible(false);
-							},
-					  })
-			}
-		>
-			<div onClick={() => setVisible(!visible)}> {children}</div>
-		</Component>
-	);
-};
+		useImperativeHandle(
+			ref,
+			() => {
+				return {
+					show: () => setVisible(true),
+					hide: () => setVisible(false),
+					toggle: () => setVisible(!visible),
+				};
+			},
+			[visible],
+		);
+
+		return (
+			<Component
+				interactive
+				appendTo={document.body}
+				visible={visible}
+				onClickOutside={() => {
+					hideOnClickOutside && setVisible(false);
+					onClickOutside && onClickOutside();
+				}}
+				placement={placement}
+				offset={offset}
+				{...props}
+				render={(attrs) =>
+					render && typeof render === 'function'
+						? render(attrs)
+						: cloneElement(render, {
+								...attrs,
+								onClick: () => {
+									hideOnClick && setVisible(false);
+								},
+						  })
+				}
+			>
+				<div onClick={() => setVisible(!visible)}>
+					{typeof children === 'function'
+						? cloneElement(
+								children({
+									visible,
+								}),
+						  )
+						: children}
+				</div>
+			</Component>
+		);
+	},
+);
 
 const Content = forwardRef(({ children, className, ...props }, ref) => {
 	return (
@@ -70,8 +95,7 @@ Popover.propTypes = {
 	onClickOutside: PropTypes.func,
 	placement: PropTypes.string,
 	offset: PropTypes.array,
-	children: PropTypes.node,
-	content: PropTypes.node,
+	children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 	render: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 	lazy: PropTypes.bool,
 };
