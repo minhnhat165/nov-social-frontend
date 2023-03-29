@@ -1,18 +1,14 @@
-import HeaderLeft from './HeaderLeft';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from 'components/Navigation';
 
 const MainLayout = () => {
 	return (
-		<div className="mx-auto h-screen w-full overflow-hidden">
-			<div className="pl-[72px]">
-				<Outlet />
-			</div>
-			<div className="fixed left-2 top-0 h-screen pt-20 pb-2">
+		<div className="mx-auto flex h-screen w-full overflow-hidden">
+			<div className="h-screen">
 				<Sidebar />
 			</div>
-			<div className="fixed left-2 top-2">
-				<HeaderLeft />
+			<div className="flex-1 pl-2">
+				<Outlet />
 			</div>
 		</div>
 	);
