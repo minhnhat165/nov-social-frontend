@@ -36,6 +36,10 @@ export const getOriginalImageFromURL = (url) => {
 	const publicId = url.split('/').slice(7).join('/').split('.')[0];
 	return `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/${publicId}`;
 };
+export const getOriginalImageByPublicId = (publicId) => {
+	if (!publicId) return null;
+	return `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/${publicId}`;
+};
 
 export const getImageWithDimension = ({ publicId, width, height }) => {
 	if (!publicId) return null;
