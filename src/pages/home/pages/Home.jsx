@@ -1,6 +1,5 @@
 import { useMemo, useRef } from 'react';
 
-import Layer from 'components/Layout/Layer';
 import Layout from '../components/Layout';
 import Post from 'features/post/components/Post';
 import PostEditor from 'features/post/components/PostEditor';
@@ -18,8 +17,7 @@ const Home = () => {
 	const editorRef = useRef();
 	return (
 		<Layout>
-			<div className="mx-auto flex max-w-[600px] flex-col pt-2">
-				<Layer className="mb-4 h-14"></Layer>
+			<div className="mx-auto flex max-w-[600px] flex-col pt-4">
 				<div className="mb-4">
 					<PostEditor onSubmit={mutate} ref={editorRef} />
 				</div>

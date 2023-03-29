@@ -31,7 +31,7 @@ const Layout = () => {
 					<Head title={profile.name} />
 					<div className="flex h-screen w-full items-start overflow-y-scroll">
 						<StickyBox offsetTop={0}>
-							<aside className="h-screen pt-20 pb-2">
+							<aside className="h-screen py-4">
 								<div className="h-full w-full px-2">
 									<ProfilePanel profile={profile} />
 								</div>

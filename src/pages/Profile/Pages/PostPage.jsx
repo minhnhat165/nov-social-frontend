@@ -14,9 +14,9 @@ const PostPage = () => {
 	const { isOwner } = useOutletContext();
 
 	return (
-		<div className="flex h-full items-start pt-2">
+		<div className="flex h-full items-start">
 			<ReactStickyBox
-				offsetTop={72}
+				offsetTop={8}
 				offsetBottom={8}
 				className="max-w-96 mx-2 w-1/3"
 			>
@@ -26,7 +26,7 @@ const PostPage = () => {
 					<Photos />
 				</div>
 			</ReactStickyBox>
-			<div className="flex max-w-[600px] flex-1 flex-col px-2">
+			<div className="flex max-w-[600px] flex-1 flex-col px-2 py-4">
 				<Layer className="mb-4 h-14 w-full rounded-xl bg-slate-50 shadow-md"></Layer>
 				<div className="flex flex-col gap-4">
 					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
