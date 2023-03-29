@@ -24,7 +24,7 @@ const MiddleSidebar = () => {
 		setCurrentActiveType(type);
 	};
 	return (
-		<div className="w-full px-2 py-4">
+		<div className="mx-1 w-14  px-2 py-4">
 			<Chat
 				isActive={currentActiveType === types.CHAT}
 				onClick={handleClick}

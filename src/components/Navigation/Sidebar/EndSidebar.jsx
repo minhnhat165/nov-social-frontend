@@ -3,12 +3,13 @@ import { Popover, Tooltip } from 'components/OverLay';
 
 import AccountMenu from './AccountMenu';
 import { Avatar } from 'components/DataDisplay';
+import Layer from 'components/Layout/Layer';
 import SettingMenu from './SettingMenu';
 import { useSelector } from 'react-redux';
 
 const EndSidebar = () => {
 	return (
-		<div className="mt-auto py-2">
+		<Layer level={0} className="mx-1 mt-auto rounded-lg py-2">
 			<div className="flex flex-col gap-4 px-2">
 				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 shadow dark:bg-dark-700">
 					<PlusIcon className="h-6 w-6 text-primary-700" />
@@ -16,7 +17,7 @@ const EndSidebar = () => {
 				<Setting />
 				<Account />
 			</div>
-		</div>
+		</Layer>
 	);
 };
 
