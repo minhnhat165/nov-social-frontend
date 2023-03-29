@@ -13,16 +13,7 @@ export const Modal = ({
 	children,
 	closeIcon = <XMarkIcon />,
 }) => {
-	// stop body scroll
-	// useEffect(() => {
-	// 	document.body.style.overflow = 'hidden';
-	// 	return () => {
-	// 		document.body.style.overflow = 'unset';
-	// 	};
-	// }, []);
-
 	if (!open) return null;
-
 	return createPortal(
 		<div className="fixed z-[9999]">
 			<div
@@ -34,7 +25,7 @@ export const Modal = ({
 				{children}
 			</div>
 		</div>,
-		document.getElementById('root'),
+		document.body,
 	);
 };
 
