@@ -9,7 +9,7 @@ export const useCreatePost = (
 		onError: null,
 	},
 ) => {
-	const { onSuccess, onError } = options;
+	const { onSuccess } = options;
 	const queryClient = useQueryClient();
 	const user = useSelector((state) => state.auth.user);
 	return useMutation((data) => postApi.create(data, user), {
