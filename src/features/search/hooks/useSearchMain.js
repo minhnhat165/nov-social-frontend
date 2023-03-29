@@ -9,7 +9,7 @@ const useSearchMain = () => {
 		() =>
 			api({
 				query: search,
-				limit: 10,
+				limit: 8,
 			}),
 		{
 			onError: (error) => {

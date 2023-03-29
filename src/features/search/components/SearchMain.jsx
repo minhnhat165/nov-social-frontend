@@ -1,3 +1,5 @@
+import { forwardRef, useState } from 'react';
+
 import { Search } from 'components/DataEntry';
 import SearchItem from './SearchItem';
 import SearchItemList from './SearchItemList';
@@ -10,9 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import useRemoveSearchHistory from 'features/search/hooks/useRemoveSearchHistory';
 import useSearchMain from '../hooks/useSearchMain';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
-const SearchMain = () => {
+const SearchMain = forwardRef(({ placeholder, ...props }, ref) => {
 	const [showResult, setShowResult] = useState(false);
 	const addSearchHistory = useAddSearchHistory();
 	const { data, isFetching, isLoading, setSearch } = useSearchMain();
@@ -38,6 +39,7 @@ const SearchMain = () => {
 		}
 		if (type === searchType.USER) {
 			const { user } = data;
+			ref.current.blur();
 			navigate(`/profile/${user._id}`);
 			return;
 		}
@@ -52,9 +54,13 @@ const SearchMain = () => {
 
 	return (
 		<Search
+			ref={ref}
 			onChange={handleOnChange}
 			onSearch={handleSearch}
 			loading={isLoading || isFetching}
+			placeholder={placeholder}
+			autoFocus
+			{...props}
 		>
 			<div className="flex flex-col gap-2 p-2">
 				{showResult ? (
@@ -68,7 +74,7 @@ const SearchMain = () => {
 			</div>
 		</Search>
 	);
-};
+});
 
 const HistoryPanel = ({ onClickItem }) => {
 	const searchHistory = useSelector((state) => state.searchHistory.data);
@@ -114,7 +120,7 @@ const ResultPanel = ({ result, onClickItem }) => {
 const Panel = ({ title, children }) => {
 	return (
 		<div className="py-2">
-			<h3 className="text-normal">{title}</h3>
+			<h3 className="text-normal mb-2 text-lg">{title}</h3>
 			<div className="flex flex-col gap-2">{children}</div>
 		</div>
 	);
