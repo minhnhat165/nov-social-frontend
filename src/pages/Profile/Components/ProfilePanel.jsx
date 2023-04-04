@@ -9,6 +9,7 @@ import {
 	TwitterIcon,
 } from 'components/Icon';
 import { Follow, ProfileEdit } from 'features/user/components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from 'components/Action';
 import { IconButton } from 'components/Action';
@@ -17,11 +18,13 @@ import Navbar from './Navbar';
 import { Text } from 'components/Typography';
 import { cloneObject } from 'utils';
 import clsx from 'clsx';
+import { updateProfile } from 'store/slices/profileSlice';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 
 const ProfilePanel = ({ profile }) => {
-	const isUser = useSelector((state) => state.auth.user._id === profile._id);
+	const isUser = useSelector(
+		(state) => state.auth?.user?._id === profile?._id,
+	);
 
 	return (
 		<Card
@@ -41,8 +44,8 @@ const ProfilePanel = ({ profile }) => {
 				)}
 				<ProfileProvider provider={profile.provider} />
 				<Statistical
-					followers={profile?.followers?.length}
-					following={profile?.following?.length}
+					followers={profile?.followersCount}
+					following={profile?.followingCount}
 					posts={profile?.posts?.length}
 				/>
 				<Action isUser={isUser} profile={profile} />
@@ -92,7 +95,7 @@ const Edit = ({ profile }) => (
 	<Modal.Root>
 		<Modal.Trigger>
 			<Button
-				size="lg"
+				size="md"
 				rounded
 				color="secondary"
 				startIcon={<PencilSquareIcon />}
@@ -122,26 +125,39 @@ const Edit = ({ profile }) => (
 export default ProfilePanel;
 
 function Action({ isUser, profile }) {
+	const dispatch = useDispatch();
 	return (
-		<div className="flex h-[72px] items-center justify-center gap-4 px-2">
+		<div className="flex items-center justify-center gap-4 py-1 px-2">
 			{isUser ? (
 				<Edit profile={profile} />
 			) : (
 				<>
-					<IconButton size="lg" rounded color="secondary">
+					<IconButton size="md" rounded color="secondary">
 						<ChatBubbleBottomCenterTextIcon />
 					</IconButton>
-					<Follow followId={profile._id}>
+					<Follow
+						followId={profile._id}
+						isFollowed={profile.isFollowed}
+						onChange={(isFollowed) => {
+							dispatch(
+								updateProfile({
+									isFollowed,
+									followersCount: isFollowed
+										? profile.followersCount + 1
+										: profile.followersCount - 1,
+								}),
+							);
+						}}
+					>
 						{({ isLoading, isFollowing, onClick }) => (
 							<Button
-								size="lg"
+								size="md"
 								rounded
 								color={isFollowing ? 'primary' : 'secondary'}
 								onClick={onClick}
 								loading={isLoading}
-								className="w-28"
 							>
-								{isFollowing ? 'Followed' : 'Follow'}
+								{isFollowing ? 'Following' : 'Follow'}
 							</Button>
 						)}
 					</Follow>
