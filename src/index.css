@@ -129,6 +129,9 @@
 	.primary-text {
 		@apply !text-primary-700 dark:!text-primary-500;
 	}
+	.text-color-primary {
+		@apply text-primary-700 dark:text-primary-500;
+	}
 }
 .max-height {
 	max-height: min((100vh - 6px) - 60px, 734px);
