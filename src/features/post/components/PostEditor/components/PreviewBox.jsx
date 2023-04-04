@@ -51,10 +51,13 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 
 	return (
 		<div className={className}>
-			<div className="flex gap-1 overflow-hidden rounded-xl">
-				<div className="flex flex-1 flex-col gap-1">
+			<div className="flex gap-[1px] overflow-hidden rounded-xl">
+				<div className="flex flex-1 flex-col gap-[1px]">
 					{groupPreview.left.map((preview, index) => (
-						<div key={index} className="relative flex-1">
+						<div
+							key={index}
+							className="relative flex-1 overflow-hidden"
+						>
 							<ImgItems
 								img={preview.url}
 								index={index}
@@ -70,9 +73,12 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 					))}
 				</div>
 				{groupPreview.right.length > 0 && (
-					<div className="flex flex-1 flex-col gap-1">
+					<div className="flex flex-1 flex-col gap-[1px]">
 						{groupPreview.right.map((preview, index) => (
-							<div key={index} className="relative flex-1">
+							<div
+								key={index}
+								className="relative flex-1 overflow-hidden"
+							>
 								<ImgItems
 									img={preview.url}
 									index={index}
@@ -85,7 +91,11 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 											onClick &&
 											(() => handleClick(preview.url))
 										}
-										className="absolute inset-0 flex items-center justify-center bg-black/70 text-3xl text-white"
+										className={clsx(
+											'absolute inset-0 flex items-center justify-center bg-black/50 text-3xl text-white',
+											onClick &&
+												'cursor-pointer transition-all hover:bg-black/60',
+										)}
 									>
 										+{groupPreview.rest.length}
 									</div>
@@ -131,7 +141,8 @@ function ImgItems({ img, onClick = null }) {
 				alt=""
 				className={clsx(
 					'h-full w-full object-cover',
-					onClick ? 'cursor-pointer hover:opacity-70' : '',
+					onClick &&
+						'cursor-pointer hover:opacity-90 dark:hover:opacity-70',
 				)}
 			/>
 		</div>
