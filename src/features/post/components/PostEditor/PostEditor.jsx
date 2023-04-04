@@ -29,36 +29,34 @@ export const editorModes = {
 	EDIT: 'edit',
 };
 
-const PostEditor = forwardRef(
-	({ initial, onSubmit, autoFocus, mode, onCanceled }, ref) => {
-		const fullName = useSelector((state) => state.auth.user?.name);
-		const lastName = useMemo(() => {
-			if (!fullName) return 'friend';
-			const name = fullName.split(' ');
-			return name[name.length - 1];
-		}, [fullName]);
+const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
+	const fullName = useSelector((state) => state.auth.user?.name);
+	const lastName = useMemo(() => {
+		if (!fullName) return 'friend';
+		const name = fullName.split(' ');
+		return name[name.length - 1];
+	}, [fullName]);
 
-		const userId = useSelector((state) => state.auth.user?._id);
-		const [placeholder, setPlaceholder] = useState(
-			`What's new, ${lastName}?`,
-		);
-		const [isValid, setIsValid] = useState(true);
-		const [isDirty, setIsDirty] = useState(false);
-		const [dirtyFields, setDirtyFields] = useState([]);
-		const [isLoading, setIsLoading] = useState(false);
-		const [isFocused, setIsFocused] = useState(autoFocus);
+	const userId = useSelector((state) => state.auth.user?._id);
+	const [placeholder, setPlaceholder] = useState(`What's new, ${lastName}?`);
+	const [isValid, setIsValid] = useState(true);
+	const [isDirty, setIsDirty] = useState(false);
+	const [dirtyFields, setDirtyFields] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isFocused, setIsFocused] = useState(autoFocus);
 
-		const [hasContent, setHasContent] = useState(false);
-		const [hasPhoto, setHasPhoto] = useState(initial?.photos.length > 0);
-		const [hasPoll, setHasPoll] = useState(initial?.poll ? true : false);
+	const [hasContent, setHasContent] = useState(false);
+	const [hasPhoto, setHasPhoto] = useState(initial?.photos.length > 0);
+	const [hasPoll, setHasPoll] = useState(initial?.poll ? true : false);
 
-		const contentEditorRef = useRef(null);
-		const pollEditorRef = useRef(null);
-		const photoEditorRef = useRef(null);
-		const audienceEditorRef = useRef(null);
+	const contentEditorRef = useRef(null);
+	const pollEditorRef = useRef(null);
+	const photoEditorRef = useRef(null);
+	const audienceEditorRef = useRef(null);
 
-		const handleSubmit = async () => {
-			setIsLoading(true);
+	const handleSubmit = async () => {
+		setIsLoading(true);
+		try {
 			const newPost = { ...initial };
 			const newPhotos = await uploadPostImages(
 				photoEditorRef.current.getPhotoFiles(),
@@ -72,111 +70,101 @@ const PostEditor = forwardRef(
 				photos: [...photoEditorRef.current.getPhotos(), ...newPhotos],
 				visibility: audienceEditorRef.current.getVisibility(),
 			});
-			onSubmit(newPost);
-		};
+			await onSubmit(newPost);
+			handleReset();
+		} catch (error) {
+			console.log(error);
+		}
+		setIsLoading(false);
+	};
 
-		const handleReset = () => {
-			setIsFocused(false);
-			setIsValid(true);
-			setIsDirty(false);
-			setDirtyFields([]);
-			setHasContent(false);
-			setHasPhoto(false);
-			setHasPoll(false);
-			contentEditorRef.current.reset();
-			photoEditorRef.current.reset();
-		};
-		const handleDirty = useCallback((field, isDirty) => {
-			setDirtyFields((dirtyFields) => {
-				if (isDirty) {
-					if (!dirtyFields.includes(field))
-						return [...dirtyFields, field];
-					return dirtyFields;
-				}
-				return dirtyFields.filter((dirtyField) => dirtyField !== field);
-			});
-		}, []);
-
-		useEffect(() => {
-			if (dirtyFields.length > 0) setIsDirty(true);
-			else setIsDirty(false);
-		}, [dirtyFields]);
-
-		useEffect(() => {
-			if (hasPoll) {
-				setPlaceholder('What do you want to ask?');
-			} else {
-				setPlaceholder(`What's new, ${lastName}?`);
+	const handleReset = () => {
+		setIsFocused(false);
+		setIsValid(true);
+		setIsDirty(false);
+		setDirtyFields([]);
+		setHasContent(false);
+		setHasPhoto(false);
+		setHasPoll(false);
+		contentEditorRef.current.reset();
+		photoEditorRef.current.reset();
+	};
+	const handleDirty = useCallback((field, isDirty) => {
+		setDirtyFields((dirtyFields) => {
+			if (isDirty) {
+				if (!dirtyFields.includes(field))
+					return [...dirtyFields, field];
+				return dirtyFields;
 			}
-		}, [hasPoll, lastName]);
+			return dirtyFields.filter((dirtyField) => dirtyField !== field);
+		});
+	}, []);
 
-		useImperativeHandle(
-			ref,
-			() => ({
-				setIsLoading,
-				reset: handleReset,
-			}),
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[],
-		);
+	useEffect(() => {
+		if (dirtyFields.length > 0) setIsDirty(true);
+		else setIsDirty(false);
+	}, [dirtyFields]);
 
-		return (
-			<PostEditorContext.Provider
-				value={{
-					isLoading,
-					setIsFocused,
-					isValid,
-					isDirty,
-					mode,
-					initial,
-					setIsValid,
-					setIsDirty,
-					hasContent,
-					handleDirty,
-					setHasContent,
-					hasPhoto,
-					setHasPhoto,
-					hasPoll,
-					setHasPoll,
-				}}
+	useEffect(() => {
+		if (hasPoll) {
+			setPlaceholder('What do you want to ask?');
+		} else {
+			setPlaceholder(`What's new, ${lastName}?`);
+		}
+	}, [hasPoll, lastName]);
+
+	return (
+		<PostEditorContext.Provider
+			value={{
+				isLoading,
+				setIsFocused,
+				isValid,
+				isDirty,
+				mode,
+				initial,
+				setIsValid,
+				setIsDirty,
+				hasContent,
+				handleDirty,
+				setHasContent,
+				hasPhoto,
+				setHasPhoto,
+				hasPoll,
+				setHasPoll,
+			}}
+		>
+			<Layer
+				className={clsx(
+					'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
+					isFocused && 'min-h-[160px]',
+				)}
 			>
-				<Layer
-					className={clsx(
-						'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
-						isFocused && 'min-h-[160px]',
-					)}
-				>
-					<div className="flex flex-1">
-						<PostSideRight />
-						<div className="flex flex-1 flex-col pr-4">
-							{isFocused && (
-								<EditAudience ref={audienceEditorRef} />
-							)}
-							<PostPhotoEditor ref={photoEditorRef}>
-								<PostTextEditor
-									placeholder={placeholder}
-									contentEditorRef={contentEditorRef}
-								/>
+				<div className="flex flex-1">
+					<PostSideRight />
+					<div className="flex flex-1 flex-col pr-4">
+						{isFocused && <EditAudience ref={audienceEditorRef} />}
+						<PostPhotoEditor ref={photoEditorRef}>
+							<PostTextEditor
+								placeholder={placeholder}
+								contentEditorRef={contentEditorRef}
+							/>
 
-								{hasPoll && (
-									<PostPollEditor
-										pollEditorRef={pollEditorRef}
-									/>
-								)}
-							</PostPhotoEditor>
-						</div>
+							{hasPoll && (
+								<PostPollEditor pollEditorRef={pollEditorRef} />
+							)}
+						</PostPhotoEditor>
 					</div>
-					{isFocused && <Divider />}
-					<ToolBar
-						onUploadImage={photoEditorRef?.current?.triggerUpload}
-						onSubmit={handleSubmit}
-						onCanceled={onCanceled}
-					/>
-				</Layer>
-			</PostEditorContext.Provider>
-		);
-	},
-);
+				</div>
+				{isFocused && <Divider />}
+				<ToolBar
+					onUploadImage={photoEditorRef?.current?.triggerUpload}
+					onSubmit={handleSubmit}
+					onCanceled={onCanceled}
+				/>
+			</Layer>
+		</PostEditorContext.Provider>
+	);
+};
 
 PostEditor.propTypes = {
 	initial: PropTypes.object,
