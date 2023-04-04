@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from 'react-query';
-
 import { deletePost } from 'api/postApi';
 import { toast } from 'react-hot-toast';
+import { useMutation } from 'react-query';
 
 export const useDeletePost = (
 	options = {
@@ -10,16 +9,9 @@ export const useDeletePost = (
 	},
 ) => {
 	const { onSuccess, onError } = options;
-	const queryClient = useQueryClient();
+
 	return useMutation(deletePost, {
 		onSuccess: (data, variables) => {
-			// delete post from cache
-			queryClient.setQueryData(
-				['posts', window.location.pathname],
-				(oldData) => {
-					return oldData.filter((post) => post._id !== variables);
-				},
-			);
 			onSuccess && onSuccess(data, variables);
 		},
 		onError: (error, variables, context) => {
