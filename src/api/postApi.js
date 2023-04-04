@@ -19,6 +19,10 @@ export const updatePost = ({ _id, ...data }) =>
 
 export const deletePost = (id) => axiosClient.delete(`${URL}/${id}`);
 
+export const likePost = (id) => axiosClient.patch(`${URL}/${id}/like`);
+
+export const unlikePost = (id) => axiosClient.patch(`${URL}/${id}/unlike`);
+
 const postApi = {
 	create: createPost,
 	getPosts,
