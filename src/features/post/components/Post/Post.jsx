@@ -4,6 +4,7 @@ import { Avatar, Card, IconWrapper } from 'components/DataDisplay';
 import { Poll, PostContent, PostFooter, PostHeader } from './components';
 import { cloneObject, getModifiedFields } from 'utils';
 import { createContext, memo, useContext, useState } from 'react';
+import { useLikePost, useUpdatePost } from 'features/post/hooks';
 
 import { ArchiveBoxXMarkIcon } from 'components/Icon';
 import { Button } from 'components/Action';
@@ -15,7 +16,6 @@ import { Text } from 'components/Typography';
 import { editorModes } from '../PostEditor/PostEditor';
 import { getOriginalImageByPublicId } from 'utils/cloundinaryUtils';
 import { toast } from 'react-hot-toast';
-import { useUpdatePost } from 'features/post/hooks';
 
 // You need to import the CSS only once
 
@@ -30,12 +30,23 @@ const PostContext = createContext({
 	handleUnHidePost: () => {},
 	handleHidePost: () => {},
 	setIsEditing: () => {},
+	onDeletePost: () => {},
+	handleLike: () => {},
 });
 
 export const usePost = () => useContext(PostContext);
 
-const Post = ({ post }) => {
-	const { author, photos, content, createdAt, poll, _id: postId } = post;
+const Post = ({ post, onDeletePost, onUpdatePost }) => {
+	const {
+		author,
+		photos,
+		content,
+		createdAt,
+		poll,
+		_id: postId,
+		isLiked,
+		likesCount,
+	} = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
 	const handleHidePost = () => {
@@ -45,9 +56,27 @@ const Post = ({ post }) => {
 		setIsHidden(false);
 	};
 
+	const { mutate } = useLikePost(isLiked);
+
+	const handleLike = (postId) => {
+		mutate(postId);
+		onUpdatePost({
+			_id: postId,
+			isLiked: !isLiked,
+			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
+		});
+	};
+
 	if (isHidden) return <PostHidden onUnHidePost={handleUnHidePost} />;
 
-	if (isEditing) return <PostEdit post={post} setIsEditing={setIsEditing} />;
+	if (isEditing)
+		return (
+			<PostEdit
+				post={post}
+				onUpdatePost={onUpdatePost}
+				setIsEditing={setIsEditing}
+			/>
+		);
 
 	return (
 		<PostContext.Provider
@@ -62,9 +91,11 @@ const Post = ({ post }) => {
 				setIsEditing,
 				handleHidePost,
 				handleUnHidePost,
+				onDeletePost,
+				handleLike: () => handleLike(postId),
 			}}
 		>
-			<Card className="flex pt-4">
+			<Card className="flex pt-4 shadow">
 				<div className="px-2 pl-4">
 					<Avatar src={author.avatar} />
 				</div>
@@ -90,7 +121,7 @@ export default memo(Post);
 
 function PostHidden({ onUnHidePost }) {
 	return (
-		<Card className="flex h-14 items-center justify-between px-4">
+		<Card className="flex h-14 items-center justify-between px-4 ">
 			<div className="flex items-center gap-2">
 				<IconWrapper>
 					<ArchiveBoxXMarkIcon className="text-normal" />
@@ -104,11 +135,11 @@ function PostHidden({ onUnHidePost }) {
 	);
 }
 
-function PostEdit({ post, setIsEditing }) {
-	const { mutate } = useUpdatePost({
-		onSuccess: () => {
-			toast.success('Post updated successfully');
+function PostEdit({ post, setIsEditing, onUpdatePost }) {
+	const { mutateAsync } = useUpdatePost({
+		onSuccess: (data) => {
 			setIsEditing(false);
+			onUpdatePost(data);
 		},
 	});
 
@@ -120,7 +151,7 @@ function PostEdit({ post, setIsEditing }) {
 				mode={editorModes.EDIT}
 				onCanceled={() => setIsEditing(false)}
 				onSubmit={(newPost) => {
-					mutate({
+					mutateAsync({
 						_id: post._id,
 						...getModifiedFields(post, newPost),
 					});

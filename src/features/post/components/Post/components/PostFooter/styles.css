@@ -1,0 +1,7 @@
+.button-active-effect {
+	@apply border transition-all duration-300 active:border-slate-400 active:!bg-slate-200 dark:active:border-dark-200 dark:active:!bg-dark-700;
+}
+
+.button {
+	@apply flex h-full flex-1 cursor-pointer items-center justify-center border border-transparent px-2 hover:bg-slate-300  dark:hover:bg-dark-600;
+}

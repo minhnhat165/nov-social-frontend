@@ -55,11 +55,12 @@ export const PostMenu = () => {
 
 function DeletePost() {
 	const [open, setOpen] = useState(false);
-	const { postId } = usePost();
+	const { postId, onDeletePost } = usePost();
 	const { mutate, isLoading } = useDeletePost({
 		onSuccess: () => {
 			toast.success('Post deleted successfully');
 			handleClose();
+			onDeletePost(postId);
 		},
 	});
 
