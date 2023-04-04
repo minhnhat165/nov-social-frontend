@@ -1,40 +1,17 @@
-import { followUser, unFollowUser } from 'api/userApi';
-import { useDispatch, useSelector } from 'react-redux';
+import { Children, cloneElement } from 'react';
 
-import { Children } from 'react';
 import PropTypes from 'prop-types';
-import { cloneElement } from 'react';
-import { updateUser } from 'store/slices/authSlice';
-import { useMutation } from 'react-query';
+import { useFollowUser } from 'features/user/hooks/useFollowUser';
 
-export const Follow = ({ children, followId }) => {
-	const followingId = useSelector((state) => state.auth.user.following);
-	const isFollowing = followingId.includes(followId);
-	const dispatch = useDispatch();
-	const { mutate, isLoading } = useMutation(
-		(api) => {
-			return api(followId);
+export const Follow = ({ children, followId, isFollowed, onChange }) => {
+	const isFollowing = isFollowed;
+	const { isLoading, mutate } = useFollowUser(isFollowed, {
+		onSuccess: () => {
+			onChange && onChange(!isFollowing);
 		},
-		{
-			onSuccess: ({ data }) => {
-				let newFollowing = [];
-				if (data.message.includes('UnFollow')) {
-					newFollowing = followingId.filter((id) => id !== followId);
-				} else {
-					newFollowing = [...followingId, followId];
-				}
-
-				dispatch(updateUser({ following: newFollowing }));
-			},
-			onError: (error) => {
-				console.log(error);
-			},
-		},
-	);
-
+	});
 	const handleFollow = () => {
-		const api = isFollowing ? unFollowUser : followUser;
-		mutate(api);
+		mutate(followId);
 	};
 
 	return children && typeof children === 'function'

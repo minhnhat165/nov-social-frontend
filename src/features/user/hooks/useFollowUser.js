@@ -1,5 +1,22 @@
-const { useMutation } = require('react-query');
+import { followUser, unFollowUser } from 'api/userApi';
 
-const useFollowUser = (userId) => {
-	const {} = useMutation;
+import { useMutation } from 'react-query';
+
+export const useFollowUser = (
+	isFollowed,
+	options = {
+		onSuccess: null,
+		onError: null,
+	},
+) => {
+	const { onSuccess, onError } = options;
+	const queryFn = isFollowed ? unFollowUser : followUser;
+	return useMutation(queryFn, {
+		onSuccess: () => {
+			onSuccess && onSuccess();
+		},
+		onError: () => {
+			onError && onError();
+		},
+	});
 };
