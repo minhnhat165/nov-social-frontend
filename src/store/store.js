@@ -1,15 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+
+import appReducer from './slices/appSlice';
 import authReducer from './slices/authSlice';
 import chatReducer from './slices/chatSlice';
-import profileReducer from './slices/profileSlice';
-import socketReducer from './slices/socketSlice';
 import notificationReducer from './slices/notificationSlice';
-import settingReducer from './slices/settingSlice';
+import { persistReducer } from 'redux-persist';
+import profileReducer from './slices/profileSlice';
 import searchHistoryReducer from './slices/searchHistorySlice';
+import settingReducer from './slices/settingSlice';
+import socketReducer from './slices/socketSlice';
+import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
+	app: appReducer,
 	auth: authReducer,
 	chat: chatReducer,
 	socket: socketReducer,
