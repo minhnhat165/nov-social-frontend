@@ -1,10 +1,10 @@
 import {
 	BookmarkIcon,
+	BookmarkSlashIcon,
 	EyeIcon,
 	FlagIcon,
 	PencilSquareIcon,
 	TrashIcon,
-	UserMinusIcon,
 } from 'components/Icon';
 
 import { Button } from 'components/Action';
@@ -18,12 +18,18 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 export const PostMenu = () => {
-	const { author, handleHidePost, setIsEditing } = usePost();
+	const { author, handleHidePost, handleSavePost, setIsEditing, post } =
+		usePost();
 	const userId = useSelector((state) => state.auth.user._id);
 	const isAuthor = author._id === userId;
 	return (
 		<Menu>
-			<Menu.Item icon={<BookmarkIcon />}>Save post</Menu.Item>
+			<Menu.Item
+				onClick={handleSavePost}
+				icon={post.isSaved ? <BookmarkSlashIcon /> : <BookmarkIcon />}
+			>
+				{post.isSaved ? 'Unsave post' : 'Save post'}
+			</Menu.Item>
 			{isAuthor && (
 				<>
 					<Menu.Item
@@ -39,12 +45,6 @@ export const PostMenu = () => {
 				<>
 					<Menu.Item onClick={handleHidePost} icon={<EyeIcon />}>
 						Hide post
-					</Menu.Item>
-					<Menu.Item
-						onClick={() => setIsEditing(true)}
-						icon={<UserMinusIcon />}
-					>
-						Hide all from {author.name.split(' ').slice(-1)[0]}
 					</Menu.Item>
 					<Menu.Item icon={<FlagIcon />}>Report post</Menu.Item>
 				</>
