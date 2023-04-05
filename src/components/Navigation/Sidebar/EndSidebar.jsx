@@ -1,19 +1,23 @@
 import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
-import { Popover, Tooltip } from 'components/OverLay';
+import { Modal, Popover, Tooltip } from 'components/OverLay';
 
 import AccountMenu from './AccountMenu';
 import { Avatar } from 'components/DataDisplay';
+import { IconButton } from 'components/Action';
 import Layer from 'components/Layout/Layer';
+import PostEditor from 'features/post/components/PostEditor/PostEditor';
 import SettingMenu from './SettingMenu';
+import { toast } from 'react-hot-toast';
+import { useCreatePost } from 'features/post/hooks';
+import { useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const EndSidebar = () => {
 	return (
 		<Layer level={0} className="mx-1 mt-auto rounded-lg py-2">
 			<div className="flex flex-col gap-4 px-2">
-				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 shadow dark:bg-dark-700">
-					<PlusIcon className="h-6 w-6 text-primary-700" />
-				</div>
+				<Creator />
 				<Setting />
 				<Account />
 			</div>
@@ -79,6 +83,56 @@ const Setting = () => {
 		</Popover>
 	);
 };
+
+function Creator() {
+	const [open, setOpen] = useState(false);
+	const queryClient = useQueryClient();
+	const { mutateAsync } = useCreatePost({
+		onSuccess: (data) => {
+			queryClient.setQueryData('timeline', (oldData) => {
+				if (!oldData) return;
+				const newData = {
+					...oldData,
+					pages: [
+						{
+							...oldData.pages[0],
+							items: [data, ...oldData.pages[0].items],
+						},
+						...oldData.pages.slice(1),
+					],
+				};
+				return newData;
+			});
+			toast.success('Post updated successfully');
+			handleClose();
+		},
+	});
+
+	const handleClose = () => setOpen(false);
+	return (
+		<>
+			<Tooltip content={'Create'} placement="right">
+				<div>
+					<IconButton
+						rounded
+						color="secondary"
+						onClick={() => setOpen(true)}
+					>
+						<PlusIcon className="h-6 w-6 text-primary-700" />
+					</IconButton>
+				</div>
+			</Tooltip>
+			<Modal open={open} onClose={handleClose}>
+				<Modal.Panel>
+					<Modal.Header>Create post</Modal.Header>
+					<Modal.Body className="my-0 w-[600px] px-0 !pb-0">
+						<PostEditor autoFocus={true} onSubmit={mutateAsync} />
+					</Modal.Body>
+				</Modal.Panel>
+			</Modal>
+		</>
+	);
+}
 
 EndSidebar.propTypes = {};
 

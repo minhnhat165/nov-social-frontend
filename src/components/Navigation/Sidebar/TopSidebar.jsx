@@ -89,6 +89,9 @@ function Search() {
 						}}
 						ref={searchRef}
 						placeholder="Search for Nov"
+						onNavigate={() => {
+							popoverRef.current.hide();
+						}}
 					/>
 				</Popover.Content>
 			}

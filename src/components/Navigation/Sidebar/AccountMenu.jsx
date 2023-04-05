@@ -37,7 +37,7 @@ const AccountList = () => {
 			_id: state.auth.user?._id,
 			name: state.auth.user?.name,
 			avatar: state.auth.user?.avatar,
-			email: state.auth.user?.email,
+			username: state.auth.user?.username,
 		};
 	});
 	const switchAccount = useSwitchAccount();
@@ -107,8 +107,8 @@ const AddExistingAccountTrigger = () => {
 				<Modal.Panel>
 					<Modal.Header />
 					<Modal.Props>
-						{({ onClose }) => (
-							<AddExistingAccount onSuccess={onClose} />
+						{({ closeModal }) => (
+							<AddExistingAccount onSuccess={closeModal} />
 						)}
 					</Modal.Props>
 				</Modal.Panel>
