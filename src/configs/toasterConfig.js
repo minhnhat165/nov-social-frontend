@@ -1,6 +1,8 @@
+import { ToastBar, Toaster, toast } from 'react-hot-toast';
+
+import { IconWrapper } from 'components/DataDisplay';
 import { XMarkIcon } from 'components/Icon';
 import { createPortal } from 'react-dom';
-import { toast, ToastBar, Toaster } from 'react-hot-toast';
 
 const ToasterClient = () => {
 	return createPortal(
@@ -21,7 +23,9 @@ const ToasterClient = () => {
 										toast.dismiss(t.id);
 									}}
 								>
-									<XMarkIcon />
+									<IconWrapper size={5}>
+										<XMarkIcon />
+									</IconWrapper>
 								</button>
 							)}
 						</>
@@ -29,7 +33,7 @@ const ToasterClient = () => {
 				</ToastBar>
 			)}
 		</Toaster>,
-		document.body
+		document.body,
 	);
 };
 
