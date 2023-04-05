@@ -1,5 +1,5 @@
 .DraftEditor-root {
-	@apply text-normal relative break-all dark:text-dark-200;
+	@apply relative break-all dark:text-dark-200;
 }
 .public-DraftEditorPlaceholder-root {
 	@apply absolute z-0;

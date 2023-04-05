@@ -1,5 +1,5 @@
 .button-active-effect {
-	@apply border transition-all duration-300 active:border-slate-400 active:!bg-slate-200 dark:active:border-dark-200 dark:active:!bg-dark-700;
+	@apply border transition-all ease-in-out active:border-slate-400 active:!bg-slate-200 dark:active:border-dark-200 dark:active:!bg-dark-700;
 }
 
 .button {

@@ -11,6 +11,28 @@
 		--dark-color-placeholder: rgb(78, 97, 131);
 		--scrollbarBG: #cfd8dc;
 		--thumbBG: #90a4ae;
+		--theme-rank-highlight: #f5f8fc;
+		--theme-rank-1-color: #a8b3cf;
+		--theme-rank-1-color-top: #a8b3cf;
+		--theme-rank-1-color-bottom: #525866;
+		--theme-rank-2-color: #ad6648;
+		--theme-rank-2-color-top: #ad6648;
+		--theme-rank-2-color-bottom: #ff8e3b;
+		--theme-rank-3-color: #f5f8fc;
+		--theme-rank-3-color-top: #f5f8fc;
+		--theme-rank-3-color-bottom: #a8b3cf;
+		--theme-rank-4-color: #ffe923;
+		--theme-rank-4-color-top: #ffe923;
+		--theme-rank-4-color-bottom: #ff8e3b;
+		--theme-rank-5-color: #2cdce6;
+		--theme-rank-5-color-top: #427ef7;
+		--theme-rank-5-color-bottom: #2cdce6;
+		--theme-rank-6-color: #ce3df3;
+		--theme-rank-6-color-top: #ce3df3;
+		--theme-rank-6-color-bottom: #7147ed;
+		--theme-rank-7-color: #fc538d;
+		--theme-rank-7-color-top: #fc538d;
+		--theme-rank-7-color-bottom: #e04337;
 	}
 	@font-face {
 		font-family: 'SF Font';
@@ -177,4 +199,70 @@
 
 .tooltip[data-placement^='right'] > .arrow {
 	left: -4px;
+}
+
+@keyframes enter {
+	0% {
+		transform: scale(0.9);
+		opacity: 0;
+	}
+
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.animate-enter {
+	animation: enter 0.2s ease-out;
+}
+
+@keyframes leave {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	to {
+		transform: scale(0.9);
+		opacity: 0;
+	}
+}
+
+.animate-leave {
+	animation: leave 0.15s ease-in forwards;
+}
+
+.react-tel-input {
+	@apply rounded-lg border !bg-slate-100 focus-within:border-primary-700 dark:border-transparent dark:!bg-dark-700 dark:focus-within:border-primary-500;
+}
+.react-tel-input .form-control {
+	@apply !text-normal !h-10 !w-full !rounded-lg !border-none !bg-transparent !pl-16 focus:!ring-0;
+}
+.react-tel-input .flag-dropdown {
+	@apply !rounded-l-lg !border-r !border-l-0 !border-t-0 !border-b-0 !bg-transparent hover:!rounded-l-lg dark:border-r-dark-500;
+}
+
+.react-tel-input .flag-dropdown .selected-flag {
+	@apply !w-12 !rounded-l-lg !bg-transparent hover:!rounded-l-lg;
+}
+
+.react-tel-input .flag-dropdown .arrow {
+	@apply absolute top-0 right-0 bottom-0 left-0 m-auto h-0 w-0 border-4 border-solid border-transparent before:contents after:contents;
+}
+
+.react-tel-input .flag-dropdown .country-list {
+	@apply !rounded-lg dark:!bg-dark-700;
+}
+
+.react-tel-input .flag-dropdown .country-list li {
+	@apply !text-normal dark:hover:bg-dark-500;
+}
+
+.react-tel-input .flag-dropdown .country-list .highlight {
+	@apply dark:!bg-dark-500;
+}
+
+.react-tel-input .flag-dropdown .country-list li .dial-code {
+	@apply !text-normal;
 }
