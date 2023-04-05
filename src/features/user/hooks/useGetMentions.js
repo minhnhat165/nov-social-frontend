@@ -14,7 +14,19 @@ const useGetMentions = () => {
 		},
 	);
 
-	return { mentions: data?.mentions || [], isLoading, isFetching, setQuery };
+	return {
+		mentions: [
+			...(data?.mentions?.map((mention) => ({
+				...mention,
+				id: mention._id,
+				name: mention.username,
+				username: mention.name,
+			})) || []),
+		],
+		isLoading,
+		isFetching,
+		setQuery,
+	};
 };
 
 export default useGetMentions;

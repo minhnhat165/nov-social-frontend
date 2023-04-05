@@ -1,8 +1,0 @@
-.hashtag {
-	@apply text-primary-700;
-	font-family: cursive;
-}
-
-:global(.dark) .hashtag {
-	@apply text-primary-300;
-}

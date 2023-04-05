@@ -31,6 +31,7 @@ const ContentEditor = forwardRef(
 			onEmptyChange,
 			onDirtyChange,
 			autoFocus,
+			readOnly,
 			...props
 		},
 		ref,
@@ -59,6 +60,10 @@ const ContentEditor = forwardRef(
 				entityMutability: 'IMMUTABLE',
 				supportWhitespace: true,
 				theme: mentionStyles,
+
+				mentionPrefix: '@',
+				mentionTrigger: '@',
+				// using username to display the mention
 			});
 			const { MentionSuggestions } = mentionPlugin;
 			const plugins = [mentionPlugin, hashtagPlugin, linkifyPlugin];
@@ -127,6 +132,7 @@ const ContentEditor = forwardRef(
 					onChange={onChange}
 					autoFocus={autoFocus}
 					ref={editor}
+					readOnly={readOnly}
 				/>
 				<MentionSuggestions
 					open={open}

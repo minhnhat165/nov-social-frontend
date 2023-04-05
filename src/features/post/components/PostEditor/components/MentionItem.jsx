@@ -12,7 +12,14 @@ const MentionItem = ({
 }) => {
 	return (
 		<div {...parentProps}>
-			<UserItem size="md" user={mention} />
+			<UserItem
+				size="md"
+				user={{
+					...mention,
+					username: mention.name,
+					name: mention.username,
+				}}
+			/>
 		</div>
 	);
 };
