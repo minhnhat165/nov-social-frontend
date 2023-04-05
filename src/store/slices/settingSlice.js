@@ -4,15 +4,37 @@ const settingSlice = createSlice({
 	name: 'setting',
 	initialState: {
 		theme: null,
+		focusMode: false,
+		hideRankBoard: false,
+		hideRecommendation: false,
+		isRankingBoardMinimized: false,
 	},
 	reducers: {
 		setTheme: (state, action) => {
 			state.theme = action.payload;
 		},
+		setFocusMode: (state, action) => {
+			state.focusMode = action.payload;
+		},
+		setHideRankBoard: (state, action) => {
+			state.hideRankBoard = action.payload;
+		},
+		setHideRecommendation: (state, action) => {
+			state.hideRecommendation = action.payload;
+		},
+		setRankingBoardMinimized: (state, action) => {
+			state.isRankingBoardMinimized = action.payload;
+		},
 	},
 });
 
-export const { setTheme } = settingSlice.actions;
+export const {
+	setTheme,
+	setFocusMode,
+	setHideRankBoard,
+	setHideRecommendation,
+	setRankingBoardMinimized,
+} = settingSlice.actions;
 
 // export const selectTheme = (state) => state.setting.theme;
 const settingReducer = settingSlice.reducer;
