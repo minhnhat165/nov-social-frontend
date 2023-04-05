@@ -23,6 +23,14 @@ export const likePost = (id) => axiosClient.patch(`${URL}/${id}/like`);
 
 export const unlikePost = (id) => axiosClient.patch(`${URL}/${id}/unlike`);
 
+export const hidePost = (id) => axiosClient.patch(`${URL}/${id}/hide`);
+
+export const unhidePost = (id) => axiosClient.patch(`${URL}/${id}/unhide`);
+
+export const savePost = (id) => axiosClient.patch(`${URL}/${id}/save`);
+
+export const unSavePost = (id) => axiosClient.patch(`${URL}/${id}/unsave`);
+
 const postApi = {
 	create: createPost,
 	getPosts,

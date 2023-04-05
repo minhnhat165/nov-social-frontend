@@ -2,6 +2,9 @@ import { axiosClient } from 'configs/axiosConfig';
 
 const URL = '/users';
 
+const getTopRankers = ({ limit = 7 }) =>
+	axiosClient.get(URL + `/top-ranked?limit=${limit}`);
+
 const searchUser = ({ query, limit, page }) =>
 	axiosClient.get(
 		URL +
@@ -24,16 +27,6 @@ const getPhotos = ({ userId, limit, page }) =>
 			(page ? `&page=${page}` : ''),
 	);
 
-// const getUser = () =>
-// 	axiosClientPrivate.get(URL, {
-// 		headers: setHeader(),
-// 	});
-
-// const getUserInfo = (id) =>
-// 	axiosClientPrivate.get(URL + `profile/${id}`, {
-// 		headers: setHeader(),
-// 	});
-
 const updateProfile = (data) =>
 	axiosClient.patch(URL + `/profile`, data, {
 		headers: {
@@ -41,18 +34,8 @@ const updateProfile = (data) =>
 		},
 	});
 
-// const getFollowings = (userId, limit = 0) =>
-// 	axiosClientPrivate.get(URL + `${userId}/following?&limit=${limit}`, {
-// 		headers: setHeader(),
-// 	});
-// const getFollowers = (userId, limit = 0) =>
-// 	axiosClientPrivate.get(URL + `${userId}/follower?&limit=${limit}`, {
-// 		headers: setHeader(),
-// 	});
-// const getUserPhotos = (userId, limit = 0) =>
-// 	axiosClientPrivate.get(URL + `${userId}/photo?&limit=${limit}`, {
-// 		headers: setHeader(),
-// 	});
+const getRecommendations = ({ limit = 3 }) =>
+	axiosClient.get(URL + `/recommendations?limit=${limit}`);
 
 export {
 	getProfile,
@@ -62,12 +45,6 @@ export {
 	getPhotos,
 	searchUser,
 	getMentions,
-	// getUser,
-	// updateUser,
-	// getUserInfo,
-	// followUser,
-	// getSuggestionsUser,
-	// getFollowings,
-	// getUserPhotos,
-	// getFollowers,
+	getTopRankers,
+	getRecommendations,
 };
