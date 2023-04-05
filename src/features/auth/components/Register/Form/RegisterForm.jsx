@@ -184,10 +184,14 @@ const RegisterForm = () => {
 								<Button
 									size="lg"
 									className="w-full"
-									as={Link}
-									to={routePaths.LOGIN}
+									onClick={() => {
+										// open email in new tab
+										window.open(
+											`https://mail.google.com/mail/u/0`,
+										);
+									}}
 								>
-									Go To Login
+									Open email
 								</Button>
 							) : (
 								<>

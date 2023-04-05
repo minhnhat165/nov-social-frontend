@@ -7,7 +7,7 @@ const FinishForm = ({ isCreated }) => {
 						title="Congratz, you successfully created your account."
 						subtitle={
 							<>
-								We just sent you a confirmation email. PLease
+								We just sent you a confirmation email. Please
 								confirm your account within 24 hours.
 							</>
 						}
