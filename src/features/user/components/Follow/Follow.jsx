@@ -1,5 +1,6 @@
 import { Children, cloneElement } from 'react';
 
+import { Button } from 'components/Action';
 import PropTypes from 'prop-types';
 import { useFollowUser } from 'features/user/hooks/useFollowUser';
 
@@ -22,9 +23,25 @@ export const Follow = ({ children, followId, isFollowed, onChange }) => {
 		  })
 		: Children.map(children, (child) => {
 				return cloneElement(child, {
+					isFollowing,
+					isLoading,
 					onClick: handleFollow,
 				});
 		  });
+};
+
+Follow.Button = ({ isFollowing, isLoading, onClick, ...props }) => {
+	return (
+		<Button
+			rounded
+			color={isFollowing ? 'primary' : 'secondary'}
+			onClick={onClick}
+			loading={isLoading}
+			{...props}
+		>
+			{isFollowing ? 'Following' : 'Follow'}
+		</Button>
+	);
 };
 
 Follow.propTypes = {

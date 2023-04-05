@@ -149,17 +149,7 @@ function Action({ isUser, profile }) {
 							);
 						}}
 					>
-						{({ isLoading, isFollowing, onClick }) => (
-							<Button
-								size="md"
-								rounded
-								color={isFollowing ? 'primary' : 'secondary'}
-								onClick={onClick}
-								loading={isLoading}
-							>
-								{isFollowing ? 'Following' : 'Follow'}
-							</Button>
-						)}
+						<Follow.Button />
 					</Follow>
 				</>
 			)}
