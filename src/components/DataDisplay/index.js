@@ -5,3 +5,4 @@ export * from './Chip';
 export * from './FullViewImage';
 export * from './Img';
 export * from './IconWrapper';
+export * from './Rank';
