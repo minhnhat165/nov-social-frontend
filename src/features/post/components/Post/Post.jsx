@@ -4,7 +4,12 @@ import { Avatar, Card, IconWrapper } from 'components/DataDisplay';
 import { Poll, PostContent, PostFooter, PostHeader } from './components';
 import { cloneObject, getModifiedFields } from 'utils';
 import { createContext, memo, useContext, useState } from 'react';
-import { useLikePost, useUpdatePost } from 'features/post/hooks';
+import {
+	useHidePost,
+	useLikePost,
+	useSavePost,
+	useUpdatePost,
+} from 'features/post/hooks';
 
 import { ArchiveBoxXMarkIcon } from 'components/Icon';
 import { Button } from 'components/Action';
@@ -15,9 +20,6 @@ import PropTypes from 'prop-types';
 import { Text } from 'components/Typography';
 import { editorModes } from '../PostEditor/PostEditor';
 import { getOriginalImageByPublicId } from 'utils/cloundinaryUtils';
-import { toast } from 'react-hot-toast';
-
-// You need to import the CSS only once
 
 const PostContext = createContext({
 	post: {},
@@ -32,6 +34,7 @@ const PostContext = createContext({
 	setIsEditing: () => {},
 	onDeletePost: () => {},
 	handleLike: () => {},
+	handleSavePost: () => {},
 });
 
 export const usePost = () => useContext(PostContext);
@@ -49,11 +52,27 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 	} = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
+	const hidePost = useHidePost(isHidden);
 	const handleHidePost = () => {
 		setIsHidden(true);
+		hidePost.mutate(postId);
 	};
 	const handleUnHidePost = () => {
 		setIsHidden(false);
+		hidePost.mutate(postId);
+	};
+
+	const savePost = useSavePost(post?.isSaved, {
+		onSuccess: () => {
+			onUpdatePost({
+				...post,
+				isSaved: !post.isSaved,
+			});
+		},
+	});
+
+	const handleSavePost = () => {
+		savePost.mutate(postId);
 	};
 
 	const { mutate } = useLikePost(isLiked);
@@ -91,6 +110,7 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 				setIsEditing,
 				handleHidePost,
 				handleUnHidePost,
+				handleSavePost,
 				onDeletePost,
 				handleLike: () => handleLike(postId),
 			}}

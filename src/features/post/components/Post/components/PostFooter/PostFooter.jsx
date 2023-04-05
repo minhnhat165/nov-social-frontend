@@ -25,7 +25,7 @@ export const PostFooter = () => {
 				icon={
 					<SparklesIcon
 						className={clsx(
-							'transition-all group-active:scale-150',
+							'transition-all duration-300 ease-in-out',
 							isLiked ? 'text-color-primary' : 'text-normal',
 						)}
 					/>

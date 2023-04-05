@@ -5,16 +5,8 @@ import {
 	PostTextEditor,
 	ToolBar,
 } from './components';
-import {
-	forwardRef,
-	useCallback,
-	useEffect,
-	useImperativeHandle,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
 import { getDataEditor, uploadPostImages } from './utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Avatar } from 'components/DataDisplay';
 import { Divider } from 'components/Layout';
@@ -189,7 +181,7 @@ function PostSideRight() {
 	const avatar = useSelector((state) => state.auth.user?.avatar);
 	return (
 		<div className="pl-4 pr-2">
-			<Avatar src={avatar} />
+			<Avatar src={avatar} className="border-2 border-primary-500/50" />
 		</div>
 	);
 }
