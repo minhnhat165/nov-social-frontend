@@ -91,9 +91,8 @@ function RankingBoard() {
 			<Card
 				className={clsx(
 					'mb-4 w-80 dark:bg-dark-850',
-					focusMode && '!bg-transparent',
 					isMinimized &&
-						'flex justify-between rounded-lg px-2 py-1.5',
+						'flex justify-between rounded-lg px-4 py-1.5',
 				)}
 			>
 				{!isMinimized ? (
@@ -138,12 +137,7 @@ function WhoToFollow() {
 			<div className="flex h-12 items-center">
 				<Text className="text-lg font-bold">Who to follow</Text>
 			</div>
-			<Card
-				className={clsx(
-					'top-0 w-80 rounded-xl dark:bg-dark-850',
-					focusMode && '!bg-transparent',
-				)}
-			>
+			<Card className={clsx('top-0 w-80 rounded-xl dark:bg-dark-850')}>
 				<Card.Body className="!p-2">
 					{users.map((user) => (
 						<UserItem

@@ -7,11 +7,11 @@
 }
 
 .mention {
-	@apply rounded bg-primary-700 py-0.5 px-1 text-white;
+	@apply rounded py-0.5 px-1 text-white;
 }
 
 :global(.dark) .mention {
-	@apply bg-primary-500;
+	@apply text-primary-500;
 }
 
 /* .mentionSuggestions */
