@@ -14,15 +14,16 @@ const sizes = {
 const UserItem = ({
 	user,
 	size = 'lg',
-	subName = user.email,
+	subName = '@' + user.username,
 	end,
+	start,
 	className,
 	onClick,
 }) => {
 	return (
 		<div
 			className={clsx(
-				'flex items-center overflow-hidden rounded-xl transition-all',
+				'flex w-full items-center overflow-hidden rounded-xl transition-all',
 				sizes[size],
 				onClick &&
 					'cursor-pointer hover:bg-slate-200 dark:hover:bg-dark-700',
@@ -30,12 +31,15 @@ const UserItem = ({
 			)}
 			onClick={onClick}
 		>
+			{start && <div className="mr-2">{start}</div>}
 			<div className="mr-2 shrink-0">
 				<Avatar size={size} src={user.avatar} alt={user.name} />
 			</div>
 			<div className="mr-2 overflow-hidden">
 				<Text className="block truncate text-[15px]">{user.name}</Text>
-				<Text className="block truncate text-sm">{subName}</Text>
+				<Text className="block truncate text-sm opacity-60">
+					{subName}
+				</Text>
 			</div>
 			{end && <div className="ml-auto">{end}</div>}
 		</div>

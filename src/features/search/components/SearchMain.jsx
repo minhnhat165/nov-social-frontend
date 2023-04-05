@@ -13,7 +13,7 @@ import useRemoveSearchHistory from 'features/search/hooks/useRemoveSearchHistory
 import useSearchMain from '../hooks/useSearchMain';
 import { useSelector } from 'react-redux';
 
-const SearchMain = forwardRef(({ placeholder, ...props }, ref) => {
+const SearchMain = forwardRef(({ placeholder, onNavigate, ...props }, ref) => {
 	const [showResult, setShowResult] = useState(false);
 	const addSearchHistory = useAddSearchHistory();
 	const { data, isFetching, isLoading, setSearch } = useSearchMain();
@@ -32,6 +32,7 @@ const SearchMain = forwardRef(({ placeholder, ...props }, ref) => {
 	const handleClickSearchItem = (search) => {
 		addSearchHistory(search);
 		const { data, type } = search;
+		onNavigate && onNavigate();
 		if (type === searchType.KEYWORD) {
 			const { keyword } = data;
 			navigate(`/search?q=${keyword}`);
@@ -50,6 +51,7 @@ const SearchMain = forwardRef(({ placeholder, ...props }, ref) => {
 			createSearchHistory(searchType.KEYWORD, value, { keyword: value }),
 		);
 		navigate(`/search?q=${value}`);
+		onNavigate && onNavigate();
 	};
 
 	return (
