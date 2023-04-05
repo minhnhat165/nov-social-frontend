@@ -135,7 +135,7 @@ const Timeline = () => {
 						className="mb-4 flex flex-col items-center justify-center gap-5 p-6"
 					>
 						<div className="mt-2 flex flex-col items-center">
-							<Text className="text-2xl font-bold">
+							<Text className="text-xl font-bold">
 								No more posts to show
 							</Text>
 							<Text level={2}>
@@ -143,7 +143,7 @@ const Timeline = () => {
 								Feed.
 							</Text>
 						</div>
-						<Button>Find People</Button>
+						<Button size="md">Find People</Button>
 					</Layer>
 				}
 			>
