@@ -4,8 +4,11 @@
 		"cloundinary",
 		"clsx",
 		"headlessui",
+		"Lightbox",
 		"linkify",
 		"reduxjs",
+		"tippyjs",
+		"Unsave",
 		"Xmark"
 	]
 }

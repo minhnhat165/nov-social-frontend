@@ -20,8 +20,10 @@ const AppProvider = ({ children }) => {
 					<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
 						<HelmetProvider>
 							<PersistGate persistor={persistStore(store)}>
-								<ToasterClient />
-								<BrowserRouter>{children}</BrowserRouter>
+								<BrowserRouter>
+									<ToasterClient />
+									{children}
+								</BrowserRouter>
 							</PersistGate>
 						</HelmetProvider>
 					</GoogleOAuthProvider>
