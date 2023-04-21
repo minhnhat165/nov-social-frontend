@@ -77,3 +77,5 @@ export * from './LegendaryRankIcon';
 export * from './ArrowsPointingInIcon';
 export * from './ArrowsPointingOutIcon';
 export * from './LightBulbIcon';
+export * from './ArrowDropDownIcon';
+export * from './PhotoIcon';
