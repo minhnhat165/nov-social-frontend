@@ -1,6 +1,6 @@
-const { getMentions } = require('api/userApi');
-const { useState } = require('react');
-const { useQuery } = require('react-query');
+import { getMentions } from 'api/userApi';
+import { useQuery } from 'react-query';
+import { useState } from 'react';
 
 const useGetMentions = () => {
 	const [query, setQuery] = useState('');
