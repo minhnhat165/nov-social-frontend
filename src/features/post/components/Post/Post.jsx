@@ -35,11 +35,14 @@ const PostContext = createContext({
 	onDeletePost: () => {},
 	handleLike: () => {},
 	handleSavePost: () => {},
+	increaseNumComments: () => {},
+	decreaseNumComments: () => {},
 });
 
 export const usePost = () => useContext(PostContext);
 
-const Post = ({ post, onDeletePost, onUpdatePost }) => {
+const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
+	const [post, setPost] = useState(initial);
 	const {
 		author,
 		photos,
@@ -52,6 +55,12 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 	} = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
+
+	const handleUpDatePost = (updatedPost) => {
+		setPost((prev) => ({ ...prev, ...updatedPost }));
+		onUpdatePost(updatedPost);
+	};
+
 	const hidePost = useHidePost(isHidden);
 	const handleHidePost = () => {
 		setIsHidden(true);
@@ -77,6 +86,20 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 
 	const { mutate } = useLikePost(isLiked);
 
+	const increaseNumComments = () => {
+		setPost((prev) => ({
+			...prev,
+			numComments: prev.numComments + 1,
+		}));
+	};
+
+	const decreaseNumComments = (num = 1) => {
+		setPost((prev) => ({
+			...prev,
+			numComments: prev.numComments - num,
+		}));
+	};
+
 	const handleLike = (postId) => {
 		mutate(postId);
 		onUpdatePost({
@@ -84,6 +107,12 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 			isLiked: !isLiked,
 			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
 		});
+
+		setPost((prev) => ({
+			...prev,
+			isLiked: !isLiked,
+			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
+		}));
 	};
 
 	if (isHidden) return <PostHidden onUnHidePost={handleUnHidePost} />;
@@ -92,7 +121,7 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 		return (
 			<PostEdit
 				post={post}
-				onUpdatePost={onUpdatePost}
+				onUpdatePost={handleUpDatePost}
 				setIsEditing={setIsEditing}
 			/>
 		);
@@ -113,21 +142,23 @@ const Post = ({ post, onDeletePost, onUpdatePost }) => {
 				handleSavePost,
 				onDeletePost,
 				handleLike: () => handleLike(postId),
+				increaseNumComments,
+				decreaseNumComments,
 			}}
 		>
-			<Card className="flex pt-4 shadow">
-				<div className="px-2 pl-4">
+			<Card className="flex flex-col overflow-hidden pt-4 shadow">
+				<div className="flex gap-2 px-2 pl-4">
 					<Avatar src={author.avatar} />
-				</div>
-				<div className="flex flex-1 flex-col gap-3 pr-4">
 					<PostHeader />
+				</div>
+				<div className="mt-2 flex flex-1 flex-col gap-3 pl-16 pr-4">
 					<div>
 						{content && <PostContent />}
 						{poll && <Poll />}
 						<PostPhoto photos={photos} />
 					</div>
-					<PostFooter />
 				</div>
+				<PostFooter />
 			</Card>
 		</PostContext.Provider>
 	);
