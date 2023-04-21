@@ -18,7 +18,7 @@ import { useEffect } from 'react';
 const Home = () => {
 	return (
 		<Layout>
-			<div className="relative mx-auto flex max-w-[600px] flex-col pt-4">
+			<div className="relative mx-auto flex max-w-[590px] flex-col pt-4">
 				<PostCreator />
 				<Timeline />
 			</div>

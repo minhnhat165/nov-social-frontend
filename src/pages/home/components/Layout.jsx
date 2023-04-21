@@ -7,13 +7,12 @@ import { Card, Rank } from 'components/DataDisplay';
 import { getRecommendations, getTopRankers } from 'api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Follow } from 'features/user/components';
 import Head from 'components/Head';
-import Layer from 'components/Layout/Layer';
 import { Menu } from 'components/Navigation';
 import StickyBox from 'react-sticky-box';
 import { Text } from 'components/Typography';
 import UserItem from 'features/user/components/UserItem';
+import { WhoToFollow } from './WhoToFollow';
 import clsx from 'clsx';
 import { setRankingBoardMinimized } from 'store/slices/settingSlice';
 import { useQuery } from 'react-query';
@@ -28,16 +27,17 @@ const Layout = ({ children }) => {
 		>
 			<Head />
 			<StickyBox offsetTop={8} offsetBottom={8}>
-				<aside className="hidden px-2 pt-1 transition-all tablet:block">
+				<aside className="hidden w-[336px] flex-col gap-4 px-2 transition-all tablet:flex">
 					<RankingBoard />
-					<WhoToFollow />
 				</aside>
 			</StickyBox>
-
 			<main className="flex-1">{children}</main>
-			<aside className="hidden h-full p-2 py-4 laptop:block">
-				<Layer className="h-96 w-80 rounded-xl"></Layer>
-			</aside>
+			<StickyBox offsetTop={8} offsetBottom={8}>
+				<div className="hidden w-[336px] flex-col gap-4 rounded-none px-2 transition-all laptop:flex">
+					<WhoToFollow />
+					<ContactList />
+				</div>
+			</StickyBox>
 		</div>
 	);
 };
@@ -55,15 +55,14 @@ function RankingBoard() {
 	const isMinimized = useSelector(
 		(state) => state.setting.isRankingBoardMinimized,
 	);
-	const focusMode = useSelector((state) => state.setting.focusMode);
 
 	const dispatch = useDispatch();
 	if (!data) return null;
 	const { users } = data;
 	return (
-		<div className={focusMode && 'opacity-60'}>
-			<div className="flex h-12 items-center justify-between">
-				<Text className="text-lg font-bold">Top Ranking</Text>
+		<FocusModePanel
+			title="Top Ranking"
+			EndHeader={
 				<Menu>
 					<Menu.Trigger size="sm" />
 					<Menu.Content className="w-40 !rounded-lg p-2">
@@ -86,73 +85,74 @@ function RankingBoard() {
 						</Menu.Item>
 					</Menu.Content>
 				</Menu>
+			}
+		>
+			<div className="flex flex-col gap-1">
+				{users.map((user, index) => (
+					<UserItem
+						key={user._id}
+						user={user}
+						size="md"
+						start={
+							<div
+								className={clsx(
+									'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-lg font-bold',
+									rankColors[index + 1] || 'text-gray-500',
+								)}
+							>
+								{index + 1}
+							</div>
+						}
+						end={<Rank rank={user.rank.number} />}
+					/>
+				))}
 			</div>
-
-			<Card
-				className={clsx(
-					'mb-4 w-80 dark:bg-dark-850',
-					isMinimized &&
-						'flex justify-between rounded-lg px-4 py-1.5',
-				)}
-			>
-				{!isMinimized ? (
-					<Card.Body className="!p-2">
-						{users.map((user, index) => (
-							<UserItem
-								key={user._id}
-								user={user}
-								size="md"
-								start={
-									<div
-										className={clsx(
-											'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-lg font-bold',
-											rankColors[index + 1] ||
-												'text-gray-500',
-										)}
-									>
-										{index + 1}
-									</div>
-								}
-								end={<Rank rank={user.rank.number} />}
-							/>
-						))}
-					</Card.Body>
-				) : (
-					<Rank.All />
-				)}
-			</Card>
-		</div>
+		</FocusModePanel>
 	);
 }
 
-function WhoToFollow() {
-	const { data } = useQuery('who-to-follow', getRecommendations);
-	const focusMode = useSelector((state) => state.setting.focusMode);
+const ContactList = () => {
+	const { data } = useQuery('who-to-follow', () =>
+		getRecommendations({ limit: 10 }),
+	);
 	if (!data) return null;
 	const { users } = data;
 	if (!users.length) return null;
-
 	return (
-		<div className={focusMode && 'opacity-60'}>
-			<div className="flex h-12 items-center">
-				<Text className="text-lg font-bold">Who to follow</Text>
+		<FocusModePanel title="Contacts">
+			{users.map((user) => (
+				<UserItem
+					key={user._id}
+					user={user}
+					subName={<span className="text-green-500">Online</span>}
+					onClick={() => {}}
+				/>
+			))}
+			{users.map((user) => (
+				<UserItem
+					key={user._id}
+					user={user}
+					subName={<span className="text-red-500">Offline</span>}
+					onClick={() => {}}
+				/>
+			))}
+		</FocusModePanel>
+	);
+};
+
+export const FocusModePanel = ({ children, title, EndHeader, className }) => {
+	const focusMode = useSelector((state) => state.setting.focusMode);
+	return (
+		<div className={clsx(className, focusMode && 'opacity-60')}>
+			<div className="flex h-12 items-center justify-between">
+				<Text bold size="lg">
+					{title}
+				</Text>
+				{EndHeader}
 			</div>
 			<Card className={clsx('top-0 w-80 rounded-xl dark:bg-dark-850')}>
-				<Card.Body className="!p-2">
-					{users.map((user) => (
-						<UserItem
-							key={user._id}
-							user={user}
-							onClick={() => {}}
-							end={
-								<Follow followId={user._id}>
-									<Follow.Button size="sm" />
-								</Follow>
-							}
-						/>
-					))}
-				</Card.Body>
+				<Card.Body className="!p-2">{children}</Card.Body>
 			</Card>
 		</div>
 	);
-}
+};
