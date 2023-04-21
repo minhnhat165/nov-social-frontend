@@ -1,0 +1,6 @@
+.comment-content .DraftEditor-root {
+	@apply relative break-all dark:text-dark-100;
+}
+.comment-content .public-DraftEditorPlaceholder-root {
+	@apply absolute z-0 opacity-60;
+}
