@@ -4,9 +4,9 @@ import { Button } from 'components/Action';
 import PropTypes from 'prop-types';
 import { useFollowUser } from 'features/user/hooks/useFollowUser';
 
-export const Follow = ({ children, followId, isFollowed, onChange }) => {
-	const isFollowing = isFollowed;
-	const { isLoading, mutate } = useFollowUser(isFollowed, {
+export const Follow = ({ children, followId, followed, onChange }) => {
+	const isFollowing = followed;
+	const { isLoading, mutate } = useFollowUser(followed, {
 		onSuccess: () => {
 			onChange && onChange(!isFollowing);
 		},
@@ -35,7 +35,10 @@ Follow.Button = ({ isFollowing, isLoading, onClick, ...props }) => {
 		<Button
 			rounded
 			color={isFollowing ? 'primary' : 'secondary'}
-			onClick={onClick}
+			onClick={(e) => {
+				e.stopPropagation();
+				onClick();
+			}}
 			loading={isLoading}
 			{...props}
 		>
@@ -46,5 +49,5 @@ Follow.Button = ({ isFollowing, isLoading, onClick, ...props }) => {
 
 Follow.propTypes = {
 	children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-	followId: PropTypes.string.isRequired,
+	followId: PropTypes.string,
 };
