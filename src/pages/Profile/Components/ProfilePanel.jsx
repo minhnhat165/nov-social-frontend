@@ -137,12 +137,12 @@ function Action({ isUser, profile }) {
 					</IconButton>
 					<Follow
 						followId={profile._id}
-						isFollowed={profile.isFollowed}
-						onChange={(isFollowed) => {
+						followed={profile.followed}
+						onChange={(followed) => {
 							dispatch(
 								updateProfile({
-									isFollowed,
-									followersCount: isFollowed
+									followed,
+									followersCount: followed
 										? profile.followersCount + 1
 										: profile.followersCount - 1,
 								}),
