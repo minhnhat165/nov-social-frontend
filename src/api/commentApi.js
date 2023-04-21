@@ -1,38 +1,31 @@
-// import { axiosClientPrivate, setHeader } from 'configs/axiosConfig';
+const { axiosClient } = require('configs/axiosConfig');
 
-// const URL = 'comment/';
+const URL = '/comments';
 
-// const getComments = (postId) =>
-// 	axiosClientPrivate.get(URL + `${postId}`, {
-// 		headers: setHeader(),
-// 	});
-// const getReplyComments = (commentId) =>
-// 	axiosClientPrivate.get(URL + 'reply/' + commentId, {
-// 		headers: setHeader(),
-// 	});
-// const createComment = (data) =>
-// 	axiosClientPrivate.post(URL + 'create', data, {
-// 		headers: setHeader(),
-// 	});
-// const updateComment = (commentId, data) =>
-// 	axiosClientPrivate.put(URL + `update/${commentId}`, data, {
-// 		headers: setHeader(),
-// 	});
-// const deleteComment = (commentId) =>
-// 	axiosClientPrivate.delete(URL + `delete/${commentId}`, {
-// 		headers: setHeader(),
-// 	});
-// const likeComment = (commentId) =>
-// 	axiosClientPrivate.patch(
-// 		URL + `like/${commentId}`,
-// 		{},
-// 		{ headers: setHeader() }
-// 	);
-// export {
-// 	getComments,
-// 	getReplyComments,
-// 	createComment,
-// 	updateComment,
-// 	deleteComment,
-// 	likeComment,
-// };
+export const createComment = (data) => axiosClient.post(URL, data);
+
+export const getChildComments = (id) => axiosClient.get(`${URL}/${id}/child`);
+
+export const updateComment = ({ _id, ...data }) =>
+	axiosClient.patch(`${URL}/${_id}`, {
+		...data,
+	});
+
+export const deleteComment = (id) => axiosClient.delete(`${URL}/${id}`);
+
+export const likeComment = (id) => axiosClient.patch(`${URL}/${id}/like`);
+
+export const unlikeComment = (id) => axiosClient.patch(`${URL}/${id}/unlike`);
+
+export const hidePost = (id) => axiosClient.patch(`${URL}/${id}/hide`);
+
+export const unhidePost = (id) => axiosClient.patch(`${URL}/${id}/unhide`);
+
+export const savePost = (id) => axiosClient.patch(`${URL}/${id}/save`);
+
+export const unSavePost = (id) => axiosClient.patch(`${URL}/${id}/unsave`);
+
+const commentApi = {
+	create: createComment,
+};
+export default commentApi;

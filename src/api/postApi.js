@@ -1,5 +1,3 @@
-// import { axiosClientPrivate, setHeader } from 'configs/axiosConfig';
-
 const { axiosClient } = require('configs/axiosConfig');
 
 const URL = '/posts';
@@ -11,6 +9,11 @@ export const getPosts = (limit = 10, lastCreatedAt) =>
 				lastCreatedAt ? `&lastCreatedAt=${lastCreatedAt}` : ''
 			}`,
 	);
+
+export const getPostComments = ({ id, page = 0, limit = 10 }) => {
+  
+	return axiosClient.get(`${URL}/${id}/comments?limit=${limit}&page=${page}`);
+};
 export const createPost = (data) => axiosClient.post(URL, data);
 export const updatePost = ({ _id, ...data }) =>
 	axiosClient.patch(`${URL}/${_id}`, {
@@ -36,5 +39,6 @@ const postApi = {
 	getPosts,
 	deletePost,
 	updatePost,
+	getPostComments,
 };
 export default postApi;
