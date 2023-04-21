@@ -1,27 +1,35 @@
-const getDiffTime = (startDate, endDate = new Date()) => {
-	let start = startDate;
-	let end = endDate;
+export const getDiffTime = (startDate, endDate = new Date()) => {
+	let timeDiff = Math.floor(
+		(endDate.getTime() - new Date(startDate).getTime()) / 1000,
+	); // calculate time difference in seconds
 
-	if (typeof start === 'string') start = new Date(start);
-	if (typeof end === 'string') end = new Date();
-	let diffMs = end - start; // milliseconds between now & Christmas
-	let diffDays = Math.floor(diffMs / 86400000); // days
-	if (diffDays > 0) {
-		return { number: diffDays, unit: 'd' };
+	if (timeDiff < 60) {
+		return `Just now`;
 	}
-	let diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-	if (diffHrs > 0) {
-		return { number: diffHrs, unit: 'h' };
+
+	timeDiff = Math.floor(timeDiff / 60); // calculate time difference in minutes
+
+	if (timeDiff < 60) {
+		return `${timeDiff} m`;
 	}
-	let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-	if (diffMins > 0) {
-		return { number: diffMins, unit: 'm' };
+
+	timeDiff = Math.floor(timeDiff / 60); // calculate time difference in hours
+
+	if (timeDiff < 24) {
+		return `${timeDiff}h`;
 	}
-	let diffSec = Math.floor((end?.getTime() - start?.getTime()) / 1000);
-	return {
-		number: diffSec,
-		unit: 's',
-	};
+
+	timeDiff = Math.floor(timeDiff / 24); // calculate time difference in days
+
+	if (timeDiff < 365) {
+		const date = new Date(startDate);
+		const options = { day: '2-digit', month: 'short' };
+		return date.toLocaleDateString('en-US', options);
+	}
+
+	return Intl.DateTimeFormat('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: '2-digit',
+	}).format(new Date(startDate));
 };
-
-export default getDiffTime;
