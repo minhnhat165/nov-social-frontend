@@ -11,7 +11,7 @@ export const Popover = forwardRef(
 		{
 			interactive,
 			hideOnClick,
-			appendTo,
+			appendTo = document.body,
 			onClickOutside,
 			placement,
 			offset,
@@ -42,7 +42,7 @@ export const Popover = forwardRef(
 		return (
 			<Component
 				interactive
-				appendTo={document.body}
+				appendTo={appendTo}
 				visible={visible}
 				onClickOutside={() => {
 					hideOnClickOutside && setVisible(false);
@@ -62,7 +62,12 @@ export const Popover = forwardRef(
 						  })
 				}
 			>
-				<div onClick={() => setVisible(!visible)}>
+				<div
+					onClick={(e) => {
+						e.stopPropagation();
+						setVisible(!visible);
+					}}
+				>
 					{typeof children === 'function'
 						? cloneElement(
 								children({
