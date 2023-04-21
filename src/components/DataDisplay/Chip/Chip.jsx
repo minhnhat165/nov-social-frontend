@@ -15,7 +15,7 @@ export const Chip = ({
 		<span
 			onClick={onClick}
 			className={clsx(
-				'clickable  inline-flex h-8 items-center rounded-full border border-slate-500 text-sm font-medium text-gray-800 hover:bg-slate-300 dark:border-gray-600 dark:hover:bg-gray-700',
+				'clickable  inline-flex h-8 items-center rounded-lg border border-slate-500 text-sm font-medium text-gray-800 hover:bg-slate-300 dark:border-gray-600 dark:hover:bg-gray-700',
 				className,
 			)}
 		>
