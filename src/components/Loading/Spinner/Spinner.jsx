@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 const sizes = {
+	xs: 'h-5 w-5',
 	sm: 'h-5 w-5',
 	md: 'h-6 w-6',
 	lg: 'h-7 w-7',
@@ -42,7 +43,7 @@ export const Spinner = ({ size, color, className, ...props }) => {
 };
 
 Spinner.propTypes = {
-	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+	size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
 	color: PropTypes.oneOf(['light', 'primary']),
 	className: PropTypes.string,
 };
