@@ -15,3 +15,4 @@ export * from './ImageCropper';
 export * from './Search';
 export * from './Slider';
 export * from './Textarea';
+export * from './RichTextEditor';
