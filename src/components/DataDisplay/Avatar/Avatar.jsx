@@ -10,6 +10,7 @@ const sizes = {
 	md: 'w-9 h-9',
 	lg: 'w-10 h-10',
 	xl: 'w-12 h-12',
+	'2xl': 'w-16 h-16',
 	max: 'w-28 h-28 text-2xl',
 };
 
@@ -96,7 +97,7 @@ Avatar.Group = Group;
 
 Avatar.propTypes = {
 	src: PropTypes.string,
-	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'max']),
+	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', '2xl', 'max']),
 	rounded: PropTypes.bool,
 	alt: PropTypes.string,
 };
