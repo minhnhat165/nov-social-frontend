@@ -17,6 +17,9 @@ const getMentions = ({ query }) =>
 	axiosClient.get(URL + `/mentions?q=${query}`);
 
 const getProfile = (id = 'me') => axiosClient.get(URL + `/profile/${id}`);
+
+const getUserPreview = ({ id }) => axiosClient.get(URL + `/preview/${id}`);
+
 const followUser = (id) => axiosClient.patch(URL + `/follow/${id}`);
 const unFollowUser = (id) => axiosClient.patch(URL + `/unFollow/${id}`);
 const getPhotos = ({ userId, limit, page }) =>
@@ -47,4 +50,5 @@ export {
 	getMentions,
 	getTopRankers,
 	getRecommendations,
+	getUserPreview,
 };
