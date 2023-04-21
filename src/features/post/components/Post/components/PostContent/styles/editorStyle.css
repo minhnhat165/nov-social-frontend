@@ -1,12 +1,6 @@
-@tailwind utilities;
-@layer utilities {
-	.text-normal {
-		@apply text-slate-600 dark:text-dark-100;
-	}
-	.post-content .DraftEditor-root {
-		@apply text-normal static break-all text-lg;
-	}
-	.post-content .DraftEditor-editorContainer {
-		@apply static z-10 h-full;
-	}
+.post-content .DraftEditor-root {
+	@apply static;
+}
+.post-content .DraftEditor-editorContainer {
+	@apply static z-10 h-full;
 }

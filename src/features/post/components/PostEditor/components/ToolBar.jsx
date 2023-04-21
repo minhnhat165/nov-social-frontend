@@ -37,31 +37,35 @@ export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 		<div className="mt-auto flex h-14 items-center justify-between px-4">
 			<div className="flex">
 				<IconButton
+					disabled={isLoading}
 					onClick={handleTriggerImage}
 					variant="text"
 					size="sm"
+					color="secondary"
 					rounded
 				>
 					<ImageIcon />
 				</IconButton>
 				<IconButton
+					disabled={isLoading}
 					onClick={handleTriggerPoll}
 					variant="text"
+					color="secondary"
 					size="sm"
 					rounded
 				>
 					<PollIcon />
 				</IconButton>
-				<IconButton variant="text" size="sm" rounded>
+				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<ColorPaletteIcon />
 				</IconButton>
-				<IconButton variant="text" size="sm" rounded>
+				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<FaceSmileIcon />
 				</IconButton>
-				<IconButton variant="text" size="sm" rounded>
+				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<ClockIcon />
 				</IconButton>
-				<IconButton variant="text" size="sm" rounded>
+				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<MapPinIcon />
 				</IconButton>
 			</div>

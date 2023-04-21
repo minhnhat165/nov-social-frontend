@@ -24,31 +24,36 @@ export const PostMenu = () => {
 	const isAuthor = author._id === userId;
 	return (
 		<Menu>
-			<Menu.Item
-				onClick={handleSavePost}
-				icon={post.isSaved ? <BookmarkSlashIcon /> : <BookmarkIcon />}
-			>
-				{post.isSaved ? 'Unsave post' : 'Save post'}
-			</Menu.Item>
-			{isAuthor && (
-				<>
-					<Menu.Item
-						onClick={() => setIsEditing(true)}
-						icon={<PencilSquareIcon />}
-					>
-						Edit
-					</Menu.Item>
-					<DeletePost />
-				</>
-			)}
-			{!isAuthor && (
-				<>
-					<Menu.Item onClick={handleHidePost} icon={<EyeIcon />}>
-						Hide post
-					</Menu.Item>
-					<Menu.Item icon={<FlagIcon />}>Report post</Menu.Item>
-				</>
-			)}
+			<Menu.Trigger size="sm" />
+			<Menu.Content className="flex max-h-[200px] w-60 flex-col gap-2 p-2 drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] dark:shadow-2xl">
+				<Menu.Item
+					onClick={handleSavePost}
+					icon={
+						post.isSaved ? <BookmarkSlashIcon /> : <BookmarkIcon />
+					}
+				>
+					{post.isSaved ? 'Unsave post' : 'Save post'}
+				</Menu.Item>
+				{isAuthor && (
+					<>
+						<Menu.Item
+							onClick={() => setIsEditing(true)}
+							icon={<PencilSquareIcon />}
+						>
+							Edit
+						</Menu.Item>
+						<DeletePost />
+					</>
+				)}
+				{!isAuthor && (
+					<>
+						<Menu.Item onClick={handleHidePost} icon={<EyeIcon />}>
+							Hide post
+						</Menu.Item>
+						<Menu.Item icon={<FlagIcon />}>Report post</Menu.Item>
+					</>
+				)}
+			</Menu.Content>
 		</Menu>
 	);
 };
@@ -102,43 +107,3 @@ function DeletePost() {
 		</>
 	);
 }
-
-// function EditPost() {
-// 	const [open, setOpen] = useState(false);
-// 	const { post } = usePost();
-// 	const { mutate } = useUpdatePost({
-// 		onSuccess: () => {
-// 			toast.success('Post updated successfully');
-// 			handleClose();
-// 		},
-// 	});
-
-// 	const handleClose = () => setOpen(false);
-// 	return (
-// 		<>
-// 			<Menu.Item
-// 				onClick={() => setOpen(true)}
-// 				icon={<PencilSquareIcon />}
-// 			>
-// 				Edit
-// 			</Menu.Item>
-// 			<Modal open={open} onClose={handleClose}>
-// 				<Modal.Panel>
-// 					<Modal.Header>Edit post</Modal.Header>
-// 					<Modal.Body className="my-0 w-[600px] px-0 !pb-0">
-// 						<PostEditor
-// 							autoFocus
-// 							initial={cloneObject(post)} // clone to avoid mutating the original post
-// 							onSubmit={(newPost) => {
-// 								mutate({
-// 									_id: post._id,
-// 									...getModifiedFields(post, newPost),
-// 								});
-// 							}}
-// 						/>
-// 					</Modal.Body>
-// 				</Modal.Panel>
-// 			</Modal>
-// 		</>
-// 	);
-// }

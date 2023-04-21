@@ -1,4 +1,4 @@
-import { ContentEditor } from '.';
+import { RichTextEditor } from 'components/DataEntry';
 import { useCallback } from 'react';
 import { usePostEditor } from '../context';
 
@@ -18,9 +18,9 @@ export const PostTextEditor = ({ placeholder, contentEditorRef }) => {
 		[handleDirty],
 	);
 	return (
-		<ContentEditor
+		<RichTextEditor
 			placeholder={placeholder}
-			className="my-2"
+			className="my-2.5"
 			initial={initial.content}
 			onEmptyChange={handleContentEmpty}
 			onDirtyChange={handleContentDirty}

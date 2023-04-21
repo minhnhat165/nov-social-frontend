@@ -7,7 +7,7 @@
 }
 
 .mention {
-	@apply rounded py-0.5 px-1 text-white;
+	@apply rounded text-primary-700;
 }
 
 :global(.dark) .mention {

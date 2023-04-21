@@ -5,7 +5,13 @@ import { Img } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
+const PreviewBox = ({
+	previews,
+	onRemove,
+	className,
+	onClick = null,
+	imgSize,
+}) => {
 	const groupPreview = useMemo(() => {
 		const group = {
 			left: [],
@@ -51,7 +57,7 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 
 	return (
 		<div className={className}>
-			<div className="flex gap-[1px] overflow-hidden rounded-xl">
+			<div className="flex overflow-hidden rounded-xl">
 				<div className="flex flex-1 flex-col gap-[1px]">
 					{groupPreview.left.map((preview, index) => (
 						<div
@@ -62,10 +68,11 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 								img={preview.url}
 								index={index}
 								onClick={onClick && handleClick}
+								imgSize={imgSize}
 							/>
 							{onRemove && (
 								<CloseButton
-									className="absolute top-2 right-2"
+									className="absolute right-2 top-2"
 									onClick={() => onRemove(preview)}
 								/>
 							)}
@@ -103,7 +110,7 @@ const PreviewBox = ({ previews, onRemove, className, onClick = null }) => {
 									<>
 										{onRemove && (
 											<CloseButton
-												className="absolute top-2 right-2"
+												className="absolute right-2 top-2"
 												onClick={() =>
 													onRemove(preview)
 												}
@@ -132,7 +139,7 @@ PreviewBox.defaultProps = {
 
 export default PreviewBox;
 
-function ImgItems({ img, onClick = null }) {
+function ImgItems({ img, onClick = null, imgSize }) {
 	return (
 		<div className="h-full w-full" onClick={() => onClick(img)}>
 			<Img
@@ -141,8 +148,8 @@ function ImgItems({ img, onClick = null }) {
 				alt=""
 				className={clsx(
 					'h-full w-full object-cover',
-					onClick &&
-						'cursor-pointer hover:opacity-90 dark:hover:opacity-70',
+					onClick && 'cursor-pointer',
+					imgSize && imgSize,
 				)}
 			/>
 		</div>

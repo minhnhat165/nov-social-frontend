@@ -14,3 +14,18 @@ export const uploadPostImages = async (file, userId) => {
 		}),
 	}));
 };
+
+export const uploadCommentImages = async (file, path) => {
+	if (!file.length) return [];
+	const publicIds = await Promise.all(
+		file.map((file) => uploadImage(file, path, true)),
+	);
+	const postingWidthPhotos = 320;
+	return publicIds.map((publicId) => ({
+		publicId,
+		url: getImageWithDimension({
+			publicId,
+			width: postingWidthPhotos,
+		}),
+	}));
+};

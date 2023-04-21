@@ -109,6 +109,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 		<PostEditorContext.Provider
 			value={{
 				isLoading,
+				isFocused,
 				setIsFocused,
 				isValid,
 				isDirty,

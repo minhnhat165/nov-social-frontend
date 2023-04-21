@@ -1,4 +1,6 @@
-import { ContentEditor } from 'features/post/components/PostEditor/components';
+import './styles/editorStyle.css';
+
+import { RichTextEditor } from 'components/DataEntry';
 import { usePost } from '../../Post';
 
 export const PostContent = () => {
@@ -6,7 +8,7 @@ export const PostContent = () => {
 
 	return (
 		<div className={`post-content mb-2`}>
-			<ContentEditor readOnly={true} initial={content} />
+			<RichTextEditor readOnly={true} initial={content} />
 		</div>
 	);
 };

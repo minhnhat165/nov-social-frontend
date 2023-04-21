@@ -76,6 +76,7 @@ const Content = ({ children, className, ...props }) => {
 	const { setPopoverRef, triggerRef } = useMenu();
 	return (
 		<Popover
+			{...props}
 			ref={setPopoverRef}
 			reference={triggerRef}
 			placement="bottom-end"
@@ -85,7 +86,7 @@ const Content = ({ children, className, ...props }) => {
 				<Popover.Content
 					level={0}
 					className={clsx(
-						'flex flex-col gap-2 drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] dark:shadow-2xl',
+						'flex flex-col gap-1 drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] dark:shadow-2xl',
 						className,
 					)}
 				>

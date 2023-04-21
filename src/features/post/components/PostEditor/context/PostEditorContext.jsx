@@ -7,6 +7,7 @@ export const editorModes = {
 export const PostEditorContext = createContext({
 	isLoading: false,
 	setIsOpenPoll: () => {},
+	isFocused: false,
 	setIsFocused: () => {},
 	isValid: true,
 	isDirty: false,

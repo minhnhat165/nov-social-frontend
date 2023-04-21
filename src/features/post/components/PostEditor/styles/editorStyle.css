@@ -1,5 +1,5 @@
 .DraftEditor-root {
-	@apply relative break-all dark:text-dark-200;
+	@apply relative break-all dark:text-dark-100;
 }
 .public-DraftEditorPlaceholder-root {
 	@apply absolute z-0;
@@ -10,4 +10,9 @@
 }
 .DraftEditor-editorContainer {
 	@apply relative z-10 h-full;
+}
+
+.editor-readonly .DraftEditor-root,
+.editor-readonly .DraftEditor-editorContainer {
+	@apply !static;
 }

@@ -1,7 +1,7 @@
 import '@draft-js-plugins/linkify/lib/plugin.css';
 import '../styles/editorStyle.css';
 
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import {
 	forwardRef,
 	memo,
@@ -16,6 +16,7 @@ import {
 import Editor from '@draft-js-plugins/editor';
 import MentionItem from './MentionItem';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
 import createMentionPlugin from '@draft-js-plugins/mention';
@@ -30,8 +31,12 @@ const ContentEditor = forwardRef(
 			placeholder,
 			onEmptyChange,
 			onDirtyChange,
-			autoFocus,
+			autoFocus = false,
 			readOnly,
+			fontSizeDefault = 1.2,
+			fontSizeReduced = 1,
+			enterToSubmit = false,
+			className,
 			...props
 		},
 		ref,
@@ -46,8 +51,8 @@ const ContentEditor = forwardRef(
 		}, [initial]);
 
 		const [editorState, setEditorState] = useState(initialEditorState);
-		const [fontSize, setFontSize] = useState(1.2);
-		const editor = useRef(null);
+		const [fontSize, setFontSize] = useState(fontSizeDefault);
+		const editorRef = useRef(null);
 		const [open, setOpen] = useState(false);
 		const { mentions, setQuery } = useGetMentions();
 		const { MentionSuggestions, plugins } = useMemo(() => {
@@ -86,9 +91,9 @@ const ContentEditor = forwardRef(
 				.getCurrentContent()
 				.getPlainText();
 			if (newPlainText.length > 100) {
-				setFontSize(1);
+				setFontSize(fontSizeReduced);
 			} else {
-				setFontSize(1.2);
+				setFontSize(fontSizeDefault);
 			}
 
 			onDirtyChange && onDirtyChange(initialPlainText !== newPlainText);
@@ -105,6 +110,8 @@ const ContentEditor = forwardRef(
 			() => ({
 				editorState,
 				reset,
+				isEmpty:
+					editorState.getCurrentContent().getPlainText().length === 0,
 
 				// eslint-disable-next-line react-hooks/exhaustive-deps
 			}),
@@ -112,27 +119,53 @@ const ContentEditor = forwardRef(
 		);
 
 		useEffect(() => {
-			if (editor.current && autoFocus) {
-				editor.current.focus();
+			if (editorRef.current && autoFocus) {
+				// editorRef.current.focus();
+				setTimeout(() => {
+					editorRef.current.focus();
+				}, 1);
 				setEditorState(EditorState.moveFocusToEnd(editorState));
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [autoFocus, editor]);
+		}, [autoFocus, editorRef]);
+
+		function handleKeyCommand(command) {
+			if (command === 'submit') {
+				// Your code here
+				return 'handled';
+			}
+			return 'not-handled';
+		}
+
+		function keyBindingFn(event) {
+			if (event.keyCode === 13 && enterToSubmit) {
+				editorRef.current.blur();
+				return 'submit';
+			}
+			return getDefaultKeyBinding(event);
+		}
+
 		return (
 			<div
 				{...props}
+				className={clsx(
+					className,
+					readOnly ? 'editor-readonly' : 'editor',
+				)}
 				style={{
 					fontSize: `${fontSize}rem`,
 				}}
 			>
 				<Editor
+					readOnly={readOnly}
 					plugins={plugins}
 					placeholder={placeholder}
 					editorState={editorState}
 					onChange={onChange}
 					autoFocus={autoFocus}
-					ref={editor}
-					readOnly={readOnly}
+					ref={editorRef}
+					handleKeyCommand={handleKeyCommand}
+					keyBindingFn={keyBindingFn}
 				/>
 				<MentionSuggestions
 					open={open}
@@ -151,6 +184,8 @@ ContentEditor.propTypes = {
 	onEmpty: PropTypes.func,
 	hasContent: PropTypes.func,
 	dirtyState: PropTypes.func,
+	fontSizeDefault: PropTypes.number,
+	fontSizeReduced: PropTypes.number,
 };
 
 const MemoizedContentEditor = memo(ContentEditor);
