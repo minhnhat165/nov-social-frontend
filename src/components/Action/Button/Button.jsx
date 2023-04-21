@@ -6,6 +6,7 @@ import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
 
 const sizes = {
+	xs: 'h-8 px-4 text-sm',
 	sm: 'h-9 px-4 text-sm',
 	md: 'h-10 px-6 text-base',
 	lg: 'h-12 px-6 text-lg',
@@ -13,6 +14,7 @@ const sizes = {
 };
 
 const borderRadius = {
+	xs: 'rounded-md',
 	sm: 'rounded-md',
 	md: 'rounded-lg',
 	lg: 'rounded-xl',
@@ -20,6 +22,7 @@ const borderRadius = {
 };
 
 const iconStyle = {
+	xs: '!w-3 !h-3',
 	sm: '!w-4 !h-4',
 	md: '!w-5 !h-5',
 	lg: '!w-5 !h-5',
@@ -27,6 +30,7 @@ const iconStyle = {
 };
 
 const iconLeftStyle = {
+	xs: 'mr-1',
 	sm: 'mr-1',
 	md: 'mr-2',
 	lg: 'mr-2',
@@ -34,6 +38,7 @@ const iconLeftStyle = {
 };
 
 const iconRightStyle = {
+	xs: 'ml-1',
 	sm: 'ml-1',
 	md: 'ml-2',
 	lg: 'ml-2',
@@ -106,7 +111,7 @@ Button.propTypes = {
 	loading: PropTypes.bool,
 	disabled: PropTypes.bool,
 	fullWidth: PropTypes.bool,
-	size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+	size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
 	color: PropTypes.oneOf(['primary', 'secondary']),
 	children: PropTypes.node,
 	rounded: PropTypes.bool,
