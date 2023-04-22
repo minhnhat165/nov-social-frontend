@@ -10,7 +10,7 @@ import AddExistingAccount from 'features/auth/components/AddExistingAccount';
 import ManageAccounts from 'features/user/components/ManageAccounts';
 import MenuItem from 'components/Navigation/MenuItem';
 import { Modal } from 'components/OverLay';
-import UserItem from 'features/user/components/UserItem';
+import { UserItem } from 'features/user/components';
 import useGoToProfile from 'features/user/hooks/useGoToProfile';
 import { useLogout } from 'features/auth/hooks/useLogout';
 import { useSelector } from 'react-redux';
@@ -84,7 +84,7 @@ const BellCount = ({ count }) => {
 		<div className="ml-auto">
 			<div className="relative flex h-10 items-center justify-center">
 				<BellIcon className="h-6 w-6 text-primary-700 dark:text-primary-500" />
-				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
+				<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
 					<span className="text-sm font-bold text-dark-50">
 						{count}
 					</span>
