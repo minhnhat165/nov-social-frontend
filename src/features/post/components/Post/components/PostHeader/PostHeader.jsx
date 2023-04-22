@@ -1,3 +1,4 @@
+import { Avatar, IconWrapper } from 'components/DataDisplay';
 import {
 	Cog6ToothIcon,
 	GlobeAsiaAustraliaIcon,
@@ -5,9 +6,10 @@ import {
 	UserIcon,
 } from 'components/Icon';
 
-import { IconWrapper } from 'components/DataDisplay';
 import { PostMenu } from '../PostMenu';
+import { ProfilePreviewWrapper } from 'features/user/components';
 import { Text } from 'components/Typography';
+import { UserProvider } from 'features/user/context';
 import { audienceTypes } from 'features/post/components/PostEditor/components';
 import { getDiffTime } from 'utils';
 import { useMemo } from 'react';
@@ -36,21 +38,51 @@ export const PostHeader = () => {
 	}, [visibility]);
 
 	return (
-		<div className="flex flex-1">
-			<div className="flex-1">
-				<Text as="p" className="font-bold">
-					{author?.name}
-				</Text>
-				<div className="flex items-center gap-2">
-					<Text level={3} className="text-sm">
-						{timeDisplay}
-					</Text>
-					<IconWrapper className="text-normal" size={4}>
-						{AudienceIcon}
-					</IconWrapper>
+		<div className="flex gap-2 px-2 pl-4">
+			<UserProvider user={author}>
+				<ProfilePreviewWrapper>
+					<Avatar src={author.avatar} />
+				</ProfilePreviewWrapper>
+				<div className="flex flex-1">
+					<div>
+						<ProfilePreviewWrapper>
+							<Text as="p" className="font-bold">
+								{author?.name}
+							</Text>
+						</ProfilePreviewWrapper>
+						<div className="flex items-center gap-1">
+							<ProfilePreviewWrapper>
+								<Text level={3} className="text-sm">
+									@{author?.username}
+								</Text>
+							</ProfilePreviewWrapper>
+							<Text
+								level={3}
+								className="pb-2 leading-3"
+								size="lg"
+								bold
+							>
+								.
+							</Text>
+							<Text level={3} className="text-sm">
+								{timeDisplay}
+							</Text>
+							<Text
+								level={3}
+								className="pb-2 leading-3"
+								size="lg"
+								bold
+							>
+								.
+							</Text>
+							<IconWrapper className="text-normal" size={4}>
+								{AudienceIcon}
+							</IconWrapper>
+						</div>
+					</div>
+					<PostMenu />
 				</div>
-			</div>
-			<PostMenu />
+			</UserProvider>
 		</div>
 	);
 };
