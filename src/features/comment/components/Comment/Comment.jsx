@@ -97,7 +97,7 @@ const Comment = ({
 						<div className="mr-2 flex w-9 justify-center">
 							{(comment.numReplies > 0 || isReplying) && <Line />}
 						</div>
-						<div className="comment-content flex-1 pt-2">
+						<div className="comment-content relative max-h-40 flex-1 overflow-y-hidden pt-2">
 							{comment?.content && (
 								<RichTextEditor
 									readOnly={true}
