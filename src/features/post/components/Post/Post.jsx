@@ -119,7 +119,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 
 	if (isEditing)
 		return (
-			<PostEdit
+			<PostEditMode
 				post={post}
 				onUpdatePost={handleUpDatePost}
 				setIsEditing={setIsEditing}
@@ -186,7 +186,7 @@ function PostHidden({ onUnHidePost }) {
 	);
 }
 
-function PostEdit({ post, setIsEditing, onUpdatePost }) {
+function PostEditMode({ post, setIsEditing, onUpdatePost }) {
 	const { mutateAsync } = useUpdatePost({
 		onSuccess: (data) => {
 			setIsEditing(false);
@@ -201,8 +201,8 @@ function PostEdit({ post, setIsEditing, onUpdatePost }) {
 				initial={cloneObject(post)} // clone to avoid mutating the original post
 				mode={editorModes.EDIT}
 				onCanceled={() => setIsEditing(false)}
-				onSubmit={(newPost) => {
-					mutateAsync({
+				onSubmit={async (newPost) => {
+					await mutateAsync({
 						_id: post._id,
 						...getModifiedFields(post, newPost),
 					});
