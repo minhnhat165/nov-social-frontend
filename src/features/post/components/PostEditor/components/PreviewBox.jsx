@@ -30,6 +30,8 @@ const PreviewBox = ({
 		switch (rest.length) {
 			case 1:
 			case 2:
+				group.right = rest;
+				break;
 			case 3:
 				group.right.push(rest[0], rest[1]);
 				group.left.push(rest[2]);
@@ -67,7 +69,7 @@ const PreviewBox = ({
 							className="relative flex-1 overflow-hidden"
 						>
 							<ImgItems
-								img={preview.url}
+								img={preview?.url}
 								index={index}
 								onClick={onClick && handleClick}
 								imgSize={imgSize}
