@@ -209,7 +209,7 @@ const SelectOptions = ({ children, className }) => {
 					onKeyDown={handleKeyDown}
 					onMouseMove={handleMouseMove}
 					className={clsx(
-						'overflow-y-overlay scrollbar-hover scrollbar-track-transparent dark:bg-dark-90 max-h-96 w-32 rounded-lg bg-white p-2 shadow focus:outline-none dark:bg-dark-900',
+						'overflow-y-overlay scrollbar-hoverAble scrollbar-track-transparent dark:bg-dark-90 max-h-96 w-32 rounded-lg bg-white p-2 shadow focus:outline-none dark:bg-dark-900',
 						className,
 					)}
 				>
