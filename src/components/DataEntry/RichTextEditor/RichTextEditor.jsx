@@ -1,6 +1,7 @@
 import '@draft-js-plugins/linkify/lib/plugin.css';
 import './styles/editorStyle.css';
 
+import { ArrowDropDownIcon, ArrowRightIcon } from 'components/Icon';
 import { EditorState, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import {
 	forwardRef,
@@ -14,8 +15,10 @@ import {
 } from 'react';
 
 import Editor from '@draft-js-plugins/editor';
+import { IconWrapper } from 'components/DataDisplay';
 import { MentionItem } from './components';
 import PropTypes from 'prop-types';
+import { Text } from 'components/Typography';
 import clsx from 'clsx';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
