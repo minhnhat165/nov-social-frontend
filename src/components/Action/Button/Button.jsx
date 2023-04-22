@@ -4,6 +4,7 @@ import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
 import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
+import { Children, cloneElement } from 'react';
 
 const sizes = {
 	xs: 'h-8 px-4 text-sm',
@@ -105,6 +106,39 @@ export const Button = ({
 		</Component>
 	);
 };
+
+const Group = ({ children, ...props }) => {
+	const numChildren = Children.count(children);
+	if (numChildren === 1) return children;
+	return (
+		<div className="flex">
+			{Children.map(children, (child, index) => {
+				const position =
+					index === 0
+						? 'first'
+						: index === numChildren - 1
+						? 'last'
+						: 'middle';
+				return (
+					<div className="flex flex-col sm:flex-row sm:space-x-2">
+						{cloneElement(child, {
+							...props,
+							className: clsx(
+								child.props.className,
+								position === 'first' && 'rounded-r-none',
+								position === 'last' && 'rounded-l-none',
+								position !== 'first' &&
+									'border-l border-normal',
+							),
+						})}
+					</div>
+				);
+			})}
+		</div>
+	);
+};
+
+Button.Group = Group;
 
 Button.propTypes = {
 	variant: PropTypes.oneOf(['filled', 'outlined', 'text']),
