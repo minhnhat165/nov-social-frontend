@@ -6,7 +6,7 @@ import { TopSidebar } from './TopSidebar';
 
 export const Sidebar = () => {
 	return (
-		<Layer className="scrollbar-hover overflow-y-overlay flex h-full flex-col rounded-none  py-2 shadow-3xl">
+		<Layer className="scrollbar-hoverAble overflow-y-overlay flex h-full flex-col rounded-none  py-2 shadow-3xl">
 			<TopSidebar />
 			<Line />
 			<StartSidebar />
