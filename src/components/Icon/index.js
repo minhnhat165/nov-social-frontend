@@ -79,3 +79,4 @@ export * from './ArrowsPointingOutIcon';
 export * from './LightBulbIcon';
 export * from './ArrowDropDownIcon';
 export * from './PhotoIcon';
+export * from './TagIcon';
