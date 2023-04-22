@@ -31,7 +31,9 @@ const PreviewBox = ({
 			case 1:
 			case 2:
 			case 3:
-				group.right = rest;
+				group.right.push(rest[0], rest[1]);
+				group.left.push(rest[2]);
+
 				break;
 			case 4:
 				const [last, ...rest2] = rest.reverse();
@@ -57,7 +59,7 @@ const PreviewBox = ({
 
 	return (
 		<div className={className}>
-			<div className="flex overflow-hidden rounded-xl">
+			<div className="flex gap-[1px] overflow-hidden rounded-xl">
 				<div className="flex flex-1 flex-col gap-[1px]">
 					{groupPreview.left.map((preview, index) => (
 						<div
