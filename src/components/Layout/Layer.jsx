@@ -9,13 +9,30 @@ const levels = {
 	4: 'bg-slate-300 dark:bg-dark-500',
 };
 
+const shadows = {
+	0: 'drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] dark:shadow-xl',
+	1: 'shadow-sm',
+	2: 'shadow',
+	3: 'shadow-md',
+	4: 'shadow-lg',
+	5: 'shadow-xl',
+	6: 'shadow-2xl',
+	7: 'shadow-inner',
+	8: 'shadow-none',
+};
+
 const Layer = forwardRef(
-	({ level = 1, className, children, ...props }, ref) => {
+	({ level = 1, className, children, shadow, ...props }, ref) => {
 		return (
 			<div
 				ref={ref}
 				{...props}
-				className={clsx('rounded-xl', levels[level], className)}
+				className={clsx(
+					'rounded-xl',
+					levels[level],
+					shadow && shadows[level],
+					className,
+				)}
 			>
 				{children}
 			</div>
