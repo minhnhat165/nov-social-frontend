@@ -92,7 +92,7 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 		<Modal.Panel className="w-[480px]">
 			<Modal.Header>Details</Modal.Header>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
-				<div className="overflow-y-overlay scrollbar-hover flex aspect-square w-full flex-col gap-10 py-2 px-4">
+				<div className="overflow-y-overlay scrollbar-hoverAble flex aspect-square w-full flex-col gap-10 px-4 py-2">
 					<Section title="Places Lived">
 						<InputItem
 							isPublic={
