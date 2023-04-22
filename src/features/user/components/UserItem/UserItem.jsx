@@ -1,8 +1,8 @@
 import { Avatar } from 'components/DataDisplay';
-import { ProfilePreviewWrapper } from './ProfilePreview';
+import { ProfilePreviewWrapper } from '../ProfilePreview';
 import PropTypes from 'prop-types';
 import { Text } from 'components/Typography';
-import { UserProvider } from '../context';
+import { UserProvider } from 'features/user/context';
 import clsx from 'clsx';
 import { memo } from 'react';
 

@@ -11,7 +11,7 @@ import Head from 'components/Head';
 import { Menu } from 'components/Navigation';
 import StickyBox from 'react-sticky-box';
 import { Text } from 'components/Typography';
-import UserItem from 'features/user/components/UserItem';
+import { UserItem } from 'features/user/components';
 import { WhoToFollow } from './WhoToFollow';
 import clsx from 'clsx';
 import { setRankingBoardMinimized } from 'store/slices/settingSlice';

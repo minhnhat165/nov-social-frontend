@@ -1,6 +1,6 @@
 import { FocusModePanel } from './Layout';
 import { FollowButton } from 'features/user/context';
-import UserItem from 'features/user/components/UserItem';
+import { UserItem } from 'features/user/components';
 import { getRecommendations } from 'api/userApi';
 import { useQuery } from 'react-query';
 

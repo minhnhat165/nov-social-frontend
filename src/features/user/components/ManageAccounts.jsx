@@ -9,7 +9,7 @@ import AddExistingAccount from 'features/auth/components/AddExistingAccount';
 import { Button } from 'components/Action';
 import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
-import UserItem from './UserItem';
+import { UserItem } from './UserItem';
 import clsx from 'clsx';
 import useGoToProfile from '../hooks/useGoToProfile';
 import useRemoveAccount from 'features/auth/hooks/useRemoveAccount';
@@ -54,7 +54,7 @@ const ManageAccounts = () => {
 					/>
 				))}
 
-			<div className="mt-4 -ml-4">
+			<div className="-ml-4 mt-4">
 				<Modal.Root>
 					<Modal.Trigger>
 						<Button variant="text" size="md">
@@ -105,7 +105,7 @@ const AccountItem = ({ user, onRemove, onClick, size }) => {
 						{user?.notificationsCount > 0 && (
 							<div className="relative flex h-10 items-center justify-center">
 								<BellIcon className="h-7 w-7 text-primary-700 dark:text-primary-500" />
-								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
+								<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
 									<span className="text-sm font-bold text-dark-50">
 										{user?.notificationsCount}
 									</span>

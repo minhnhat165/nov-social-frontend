@@ -1,7 +1,7 @@
 import { SearchIcon, XMarkIcon } from 'components/Icon';
 
 import { Text } from 'components/Typography';
-import UserItem from 'features/user/components/UserItem';
+import { UserItem } from 'features/user/components';
 import { useMemo } from 'react';
 
 const SearchItem = ({ search, onClick, onRemove }) => {
