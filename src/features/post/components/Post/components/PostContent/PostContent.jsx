@@ -36,7 +36,7 @@ export const PostContent = () => {
 			{expandable && !isExpanded && (
 				<div
 					onClick={() => setIsExpanded(true)}
-					className="absolute bottom-0 flex h-16 w-full items-end justify-center bg-gradient-to-t from-slate-50 to-transparent text-center align-text-bottom dark:from-dark-800"
+					className="absolute bottom-0 flex h-16 w-full items-end justify-center bg-gradient-to-t from-slate-50 from-70% to-transparent text-center align-text-bottom dark:from-dark-800"
 				>
 					<Button
 						rounded
