@@ -32,8 +32,8 @@ const UserProvider = ({ user: initialUser, children }) => {
 
 const FollowButton = ({ onChange, ...props }) => {
 	const { user, updateUser } = useUser();
-	const followed = user.followed;
-	const { mutate, isLoading } = useFollowUser(user.followed, {
+	const followed = user?.followed;
+	const { mutate, isLoading } = useFollowUser(user?.followed, {
 		onSuccess: () => {
 			const followed = !user.followed;
 			updateUser({

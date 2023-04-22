@@ -57,13 +57,13 @@ const UserItem = ({
 					</Wrapper>
 				</div>
 				<div className="mr-2.5 overflow-hidden">
-					<Wrapper user={user}>
-						<Text
-							className={clsx('block truncate', textSizes[size])}
-						>
-							{user.name}
-						</Text>
-					</Wrapper>
+					<div className="flex justify-start">
+						<Wrapper user={user}>
+							<Text className={clsx('truncate', textSizes[size])}>
+								{user.name}
+							</Text>
+						</Wrapper>
+					</div>
 					<Text
 						className={clsx(
 							'block truncate text-sm opacity-60',
