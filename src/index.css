@@ -117,10 +117,10 @@
 	::-webkit-scrollbar-track {
 		@apply bg-gray-300 dark:bg-gray-700;
 	}
-	.scrollbar-hover::-webkit-scrollbar {
+	.scrollbar-hoverAble::-webkit-scrollbar {
 		@apply hidden;
 	}
-	.scrollbar-hover:hover::-webkit-scrollbar {
+	.scrollbar-hoverAble:hover::-webkit-scrollbar {
 		@apply block;
 	}
 
@@ -146,7 +146,7 @@
 	}
 
 	.absolute-center {
-		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform;
+		@apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform;
 	}
 	.primary-text {
 		@apply !text-primary-700 dark:!text-primary-500;
@@ -240,7 +240,7 @@
 	@apply !text-normal !h-10 !w-full !rounded-lg !border-none !bg-transparent !pl-16 focus:!ring-0;
 }
 .react-tel-input .flag-dropdown {
-	@apply !rounded-l-lg !border-r !border-l-0 !border-t-0 !border-b-0 !bg-transparent hover:!rounded-l-lg dark:border-r-dark-500;
+	@apply !rounded-l-lg !border-b-0 !border-l-0 !border-r !border-t-0 !bg-transparent hover:!rounded-l-lg dark:border-r-dark-500;
 }
 
 .react-tel-input .flag-dropdown .selected-flag {
@@ -248,7 +248,7 @@
 }
 
 .react-tel-input .flag-dropdown .arrow {
-	@apply absolute top-0 right-0 bottom-0 left-0 m-auto h-0 w-0 border-4 border-solid border-transparent before:contents after:contents;
+	@apply absolute bottom-0 left-0 right-0 top-0 m-auto h-0 w-0 border-4 border-solid border-transparent before:contents after:contents;
 }
 
 .react-tel-input .flag-dropdown .country-list {
