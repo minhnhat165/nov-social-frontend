@@ -3,7 +3,7 @@ import { PaperAirplaneIcon, PhotoIcon } from 'components/Icon';
 import { IconButton } from 'components/Action';
 import { useCommentEditor } from '../context';
 
-export const CommentToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
+export const CommentToolBar = ({ onSubmit, onUploadImage }) => {
 	const { setIsFocused, isValid, isDirty, isLoading } = useCommentEditor();
 
 	const handleTriggerImage = () => {

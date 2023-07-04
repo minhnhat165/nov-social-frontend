@@ -17,8 +17,8 @@ const CommentsContext = createContext({
 });
 const useComments = () => useContext(CommentsContext);
 
-const CommentsProvider = ({ children }) => {
-	const [comments, setComments] = useState([]);
+const CommentsProvider = ({ children, comments: _comments = [] }) => {
+	const [comments, setComments] = useState(_comments);
 	const [commentsCount, setCommentsCount] = useState(0);
 	const { increaseNumComments, decreaseNumComments } = usePost();
 

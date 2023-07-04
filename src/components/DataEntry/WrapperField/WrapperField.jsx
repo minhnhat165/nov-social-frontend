@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { SlideFrom } from 'components/Effect/Transition';
 import clsx from 'clsx';
 
 const labelStyles = {
@@ -9,9 +8,9 @@ const labelStyles = {
 	xl: 'text-xl pb-3',
 };
 
-const WrapperField = ({ label, htmlId, error, helper, children, size }) => {
+const WrapperField = ({ label, htmlId, error, children, size }) => {
 	return (
-		<div className="w-full">
+		<div className="group w-full">
 			{label && (
 				<label
 					htmlFor={htmlId}
@@ -24,13 +23,11 @@ const WrapperField = ({ label, htmlId, error, helper, children, size }) => {
 				</label>
 			)}
 			{children}
-			<div className="relative z-10">
-				<SlideFrom show={!!error}>
-					<span className="absolute  left-1/2 w-[94%] -translate-x-1/2 rounded-md rounded-t-none bg-red-400 p-1 text-center text-sm capitalize text-white">
-						{error}
-					</span>
-				</SlideFrom>
-			</div>
+			{error && (
+				<span className="block h-0 overflow-hidden text-sm  text-red-400 opacity-0 transition-all ease-in-out first-letter:capitalize group-focus-within:h-5 group-focus-within:opacity-100">
+					{error}
+				</span>
+			)}
 		</div>
 	);
 };

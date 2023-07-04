@@ -1,11 +1,11 @@
 import { APP_NAME } from 'configs';
 import { Link } from 'react-router-dom';
-import { routePaths } from 'routes/routeConfig';
 import RegisterForm from './Form/RegisterForm';
+import { routePaths } from 'routes/routeConfig';
 
 const Register = () => {
 	return (
-		<div className="prose flex h-full flex-col bg-light-50 dark:bg-dark-800 lg:prose-lg">
+		<div className="prose flex h-full flex-col justify-center bg-light-50 lg:prose-lg dark:bg-dark-800">
 			<RegisterHeader />
 			<RegisterForm />
 			<RegisterFooter />

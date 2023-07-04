@@ -1,0 +1,12 @@
+export const POST = {
+	VISIBILITY: {
+		PUBLIC: 'PUBLIC',
+		FOLLOWER: 'FOLLOWER',
+		PRIVATE: 'PRIVATE',
+		CUSTOM: 'CUSTOM',
+	},
+	TYPE: {
+		POST: 'POST',
+		SHARE: 'SHARE',
+	},
+};

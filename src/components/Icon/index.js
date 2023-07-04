@@ -80,3 +80,5 @@ export * from './LightBulbIcon';
 export * from './ArrowDropDownIcon';
 export * from './PhotoIcon';
 export * from './TagIcon';
+export * from './CheckAllIcon';
+export * from './BellAlertIcon';

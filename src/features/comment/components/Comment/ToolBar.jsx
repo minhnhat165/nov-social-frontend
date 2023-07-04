@@ -4,7 +4,7 @@ import { IconWrapper } from 'components/DataDisplay';
 import { SparklesIcon } from 'components/Icon';
 import { Spinner } from 'components/Loading';
 import { Text } from 'components/Typography';
-import { useComments } from 'features/comment/context/CommentsContext';
+import { useComments } from 'features/comment/context';
 import { useToggleLikeComment } from 'features/comment/hooks';
 
 export function ToolBar() {
@@ -23,7 +23,7 @@ export function ToolBar() {
 		},
 	});
 	return (
-		<div className="mt-2">
+		<div className="my-2">
 			{status === COMMENT_STATUS.PENDING && <Text>Uploading...</Text>}
 
 			{status !== COMMENT_STATUS.PENDING &&

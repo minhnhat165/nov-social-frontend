@@ -1,10 +1,11 @@
 import 'style/button.css';
 
+import { Children, cloneElement } from 'react';
+
 import { IconWrapper } from 'components/DataDisplay';
 import PropTypes from 'prop-types';
 import { Spinner } from 'components/Loading';
 import clsx from 'clsx';
-import { Children, cloneElement } from 'react';
 
 const sizes = {
 	xs: 'h-8 px-4 text-sm',
@@ -18,7 +19,7 @@ const borderRadius = {
 	xs: 'rounded-md',
 	sm: 'rounded-md',
 	md: 'rounded-lg',
-	lg: 'rounded-xl',
+	lg: 'rounded-lg',
 	xl: 'rounded-xl',
 };
 

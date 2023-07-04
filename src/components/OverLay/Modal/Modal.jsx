@@ -40,7 +40,7 @@ const Close = ({ children, onClick, className, ...props }) => {
 			size="sm"
 			variant="text"
 			color="secondary"
-			className={clsx('absolute top-2 right-2', className)}
+			className={clsx('absolute right-2 top-2', className)}
 			onClick={onClick}
 			{...props}
 		>

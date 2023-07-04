@@ -18,7 +18,7 @@ const authSlice = createSlice({
 		setUser: (state, action) => {
 			const user = action.payload;
 			const hasLinkedAccountsNotify = user?.linkedAccounts?.some(
-				(account) => account.notificationsCount > 0,
+				(account) => account.numNotifications > 0,
 			);
 
 			state.user = { ...user, hasLinkedAccountsNotify };
@@ -27,7 +27,7 @@ const authSlice = createSlice({
 		setLinkedAccounts: (state, action) => {
 			const linkedAccounts = action.payload;
 			const hasLinkedAccountsNotify = linkedAccounts?.some(
-				(account) => account.notificationsCount > 0,
+				(account) => account.numNotifications > 0,
 			);
 			state.user.hasLinkedAccountsNotify = hasLinkedAccountsNotify;
 			state.user.linkedAccounts = linkedAccounts;

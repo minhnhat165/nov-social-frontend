@@ -1,4 +1,4 @@
-import { convertToRaw } from 'draft-js';
+import { convertToRaw, genKey } from 'draft-js';
 
 function extractHashtags(content) {
 	const regex = /#(\w+)/g;
@@ -32,4 +32,46 @@ const getDataEditor = (contentEditorRef, hasContent) => {
 	};
 };
 
-export { extractHashtags, extractMentions, getDataEditor };
+const generateContentWithMentionUser = (user) => {
+	return {
+		blocks: [
+			{
+				key: genKey(),
+				text: `@${user.username} `,
+				type: 'unstyled',
+				depth: 0,
+				inlineStyleRanges: [],
+				entityRanges: [
+					{
+						offset: 0,
+						length: user.username.length + 1,
+						key: 0,
+					},
+				],
+				data: {},
+			},
+		],
+		entityMap: {
+			0: {
+				type: 'mention',
+				mutability: 'IMMUTABLE',
+				data: {
+					mention: {
+						_id: user._id,
+						name: user.username,
+						avatar: user.avatar,
+						username: user.name,
+						id: user._id,
+					},
+				},
+			},
+		},
+	};
+};
+
+export {
+	extractHashtags,
+	extractMentions,
+	getDataEditor,
+	generateContentWithMentionUser,
+};

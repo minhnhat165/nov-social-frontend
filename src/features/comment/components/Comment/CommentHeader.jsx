@@ -1,15 +1,14 @@
+import { Avatar, TimeDisplay } from 'components/DataDisplay';
 import { COMMENT_STATUS, useComment } from './Comment';
 import { useMemo, useState } from 'react';
 
-import { Avatar } from 'components/DataDisplay';
 import { Button } from 'components/Action';
 import { Menu } from 'components/Navigation';
 import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
 import { deleteComment } from 'api/commentApi';
-import { getDiffTime } from 'utils';
 import { toast } from 'react-hot-toast';
-import { useComments } from 'features/comment/context/CommentsContext';
+import { useComments } from 'features/comment/context';
 import { useMutation } from 'react-query';
 import { usePost } from 'features/post/components/Post/Post';
 import { useSelector } from 'react-redux';
@@ -19,10 +18,6 @@ export function CommentHeader() {
 
 	const { post } = usePost();
 	const { author, createdAt = null } = comment;
-	const timeDisplay = useMemo(() => {
-		if (!createdAt) return '';
-		return getDiffTime(createdAt);
-	}, [createdAt]);
 
 	const isPostAuthor = post.author._id === author._id;
 
@@ -72,7 +67,7 @@ export function CommentHeader() {
 									.
 								</Text>
 								<Text level={3} size="sm">
-									{timeDisplay}
+									<TimeDisplay date={createdAt} />
 								</Text>
 							</>
 						)}

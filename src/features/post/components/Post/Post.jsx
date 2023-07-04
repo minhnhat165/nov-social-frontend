@@ -1,7 +1,7 @@
 import 'react-awesome-lightbox/build/style.css';
 
 import { Poll, PostContent, PostFooter, PostHeader } from './components';
-import { createContext, memo, useContext, useState } from 'react';
+import { createContext, memo, useContext, useEffect, useState } from 'react';
 import { useHidePost, useLikePost, useSavePost } from 'features/post/hooks';
 
 import { Card } from 'components/DataDisplay';
@@ -45,9 +45,17 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
 
-	const handleUpDatePost = (updatedPost) => {
-		setPost((prev) => ({ ...prev, ...updatedPost }));
-		onUpdatePost(updatedPost);
+	useEffect(() => {
+		setPost(initial);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initial._id]);
+
+	const handleUpDatePost = (updatedData) => {
+		setPost((prev) => ({ ...prev, ...updatedData }));
+		onUpdatePost({
+			_id: postId,
+			...updatedData,
+		});
 	};
 
 	const hidePost = useHidePost(isHidden);
@@ -62,8 +70,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 
 	const savePost = useSavePost(post?.isSaved, {
 		onSuccess: () => {
-			onUpdatePost({
-				...post,
+			handleUpDatePost({
 				isSaved: !post.isSaved,
 			});
 		},
@@ -91,17 +98,10 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 
 	const handleLike = (postId) => {
 		mutate(postId);
-		onUpdatePost({
-			_id: postId,
+		handleUpDatePost({
 			isLiked: !isLiked,
 			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
 		});
-
-		setPost((prev) => ({
-			...prev,
-			isLiked: !isLiked,
-			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
-		}));
 	};
 
 	if (isHidden) return <PostHiddenMode onUnHidePost={handleUnHidePost} />;

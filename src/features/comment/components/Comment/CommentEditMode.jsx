@@ -2,7 +2,7 @@ import { CommentEditor, editorModes } from '../CommentEditor';
 import { cloneObject, getModifiedFields } from 'utils';
 
 import { KeyboardTextAction } from './KeyboardTextAction';
-import { useComments } from 'features/comment/context/CommentsContext';
+import { useComments } from 'features/comment/context';
 import { useEffect } from 'react';
 import { useUpdateComment } from 'features/comment/hooks';
 

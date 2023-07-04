@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Layout from './Components/Layout';
-import PhotoPage from './Pages/PhotoPage';
-import PostPage from './Pages/PostPage';
+import Layout from './components/Layout';
+import PhotoPage from './pages/PhotoPage';
+import PostPage from './pages/PostPage';
 
 const ProfileRoute = () => {
 	return (

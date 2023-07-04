@@ -49,7 +49,7 @@ const LoginForm = ({ onSubmit, loading }) => {
 						disabled={!isDirty || !isValid}
 						type="submit"
 						size="lg"
-						className="my-6"
+						className="mb-6 mt-10"
 					>
 						Login
 					</Button>

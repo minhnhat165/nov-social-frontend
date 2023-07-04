@@ -32,23 +32,17 @@ const Timeline = () => {
 	const isReload = useSelector((state) => state.app.isReload);
 	const dispatch = useDispatch();
 	const queryClient = useQueryClient();
-	const {
-		data,
-		hasNextPage,
-		fetchNextPage,
-		isLoading,
-		refetch,
-		isRefetching,
-	} = useInfiniteQuery(
-		'timeline',
-		({ pageParam }) => getTimeline({ lastIndex: pageParam }),
-		{
-			getNextPageParam: (lastPage) => {
-				if (!lastPage.moreAvailable) return undefined;
-				return lastPage.lastIndex;
+	const { data, hasMore, fetchNextPage, isLoading, refetch, isRefetching } =
+		useInfiniteQuery(
+			'timeline',
+			({ pageParam }) => getTimeline({ lastIndex: pageParam }),
+			{
+				getNextPageParam: (lastPage) => {
+					if (!lastPage.moreAvailable) return undefined;
+					return lastPage.lastIndex;
+				},
 			},
-		},
-	);
+		);
 
 	useEffect(() => {
 		if (!isReload) return;
@@ -126,7 +120,7 @@ const Timeline = () => {
 				dataLength={posts.length}
 				next={fetchNextPage}
 				scrollThreshold={0.7}
-				hasMore={hasNextPage}
+				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}
 				scrollableTarget="main-layout"
 				endMessage={

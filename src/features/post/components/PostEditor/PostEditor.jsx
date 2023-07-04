@@ -11,6 +11,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Avatar } from 'components/DataDisplay';
 import { Divider } from 'components/Layout';
 import Layer from 'components/Layout/Layer';
+import { POST } from 'constants/post';
 import { PostEditorContext } from './context';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -128,7 +129,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 		>
 			<Layer
 				className={clsx(
-					'flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
+					'relative z-50 flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
 					isFocused && 'min-h-[160px]',
 				)}
 			>
@@ -169,7 +170,7 @@ PostEditor.defaultProps = {
 		content: '',
 		hashtags: [],
 		mentions: [],
-		visibility: 'public',
+		visibility: POST.VISIBILITY.PUBLIC,
 		photos: [],
 		poll: null,
 	},

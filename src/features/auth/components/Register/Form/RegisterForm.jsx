@@ -15,9 +15,7 @@ import { Button } from 'components/Action';
 import FinishForm from './FinishForm';
 import { Form } from 'components/DataEntry';
 import InformationForm from './InformationForm';
-import { Link } from 'react-router-dom';
 import { Stepper } from 'components/Navigation';
-import { routePaths } from 'routes/routeConfig';
 import { useRegister } from 'features/auth/hooks/useRegister';
 import { useState } from 'react';
 

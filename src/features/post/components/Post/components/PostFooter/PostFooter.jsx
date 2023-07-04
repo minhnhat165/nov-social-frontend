@@ -8,7 +8,7 @@ import {
 import { useMemo, useRef } from 'react';
 
 import { CommentZone } from './CommentZone';
-import { CommentsProvider } from 'features/comment/context/CommentsContext';
+import { CommentsProvider } from 'features/comment/context';
 import { IconWrapper } from 'components/DataDisplay';
 import { Text } from 'components/Typography';
 import clsx from 'clsx';
@@ -42,10 +42,23 @@ export const PostFooter = () => {
 					icon={<ChatBubbleBottomCenterTextIcon />}
 					number={numComments}
 				/>
-				<ActionButton icon={<ShareIcon />} number={9} />
+				<ActionButton icon={<ShareIcon />} number={0} />
 			</footer>
-			<CommentsProvider>
-				<CommentZone ref={commentZoneRef} postId={post._id} />
+			<CommentsProvider
+				comments={() => {
+					if (!post?.comments?.comments) return [];
+					return post?.comments?.comments.map((comment) => ({
+						...comment,
+						isShowReplies: true,
+					}));
+				}}
+			>
+				<CommentZone
+					ref={commentZoneRef}
+					postId={post._id}
+					fetchOnMount={post?.comments?.comments?.length === 0}
+					showComment={post?.comments?.comments.length > 0}
+				/>
 			</CommentsProvider>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { Avatar, IconWrapper } from 'components/DataDisplay';
+import { Avatar, IconWrapper, TimeDisplay } from 'components/DataDisplay';
 import {
 	Cog6ToothIcon,
 	GlobeAsiaAustraliaIcon,
@@ -6,31 +6,28 @@ import {
 	UserIcon,
 } from 'components/Icon';
 
+import { POST } from 'constants/post';
 import { PostMenu } from '../PostMenu';
 import { ProfilePreviewWrapper } from 'features/user/components';
 import { Text } from 'components/Typography';
 import { UserProvider } from 'features/user/context';
-import { audienceTypes } from 'features/post/components/PostEditor/components';
-import { getDiffTime } from 'utils';
 import { useMemo } from 'react';
 import { usePost } from '../../Post';
 
+const { VISIBILITY } = POST;
 export const PostHeader = () => {
 	const { post } = usePost();
 	const { visibility, author, createdAt } = post;
-	const timeDisplay = useMemo(() => {
-		return getDiffTime(createdAt);
-	}, [createdAt]);
 
 	const AudienceIcon = useMemo(() => {
 		switch (visibility) {
-			case audienceTypes.PUBLIC:
+			case VISIBILITY.PUBLIC:
 				return <GlobeAsiaAustraliaIcon />;
-			case audienceTypes.PRIVATE:
+			case VISIBILITY.PRIVATE:
 				return <LockClosedIcon />;
-			case audienceTypes.FOLLOWERS:
+			case VISIBILITY.FOLLOWER:
 				return <UserIcon className="h-4 w-4" />;
-			case audienceTypes.CUSTOM:
+			case VISIBILITY.CUSTOM:
 				return <Cog6ToothIcon />;
 			default:
 				return <GlobeAsiaAustraliaIcon />;
@@ -46,16 +43,22 @@ export const PostHeader = () => {
 				<div className="flex flex-1">
 					<div>
 						<ProfilePreviewWrapper>
-							<Text as="p" className="font-bold">
+							<Text as="span" className="font-bold">
 								{author?.name}
 							</Text>
 						</ProfilePreviewWrapper>
-						<div className="flex items-center gap-1">
-							<ProfilePreviewWrapper>
-								<Text level={3} className="text-sm">
-									@{author?.username}
-								</Text>
-							</ProfilePreviewWrapper>
+						<div className="flex  items-center justify-start gap-1">
+							<div className="w-fit">
+								<ProfilePreviewWrapper>
+									<Text
+										level={3}
+										as="span"
+										className="text-sm"
+									>
+										@{author?.username}
+									</Text>
+								</ProfilePreviewWrapper>
+							</div>
 							<Text
 								level={3}
 								className="pb-2 leading-3"
@@ -65,7 +68,7 @@ export const PostHeader = () => {
 								.
 							</Text>
 							<Text level={3} className="text-sm">
-								{timeDisplay}
+								<TimeDisplay date={createdAt} />
 							</Text>
 							<Text
 								level={3}

@@ -1,4 +1,4 @@
-export const generateParamsString = (params) => {
+export const genQueryParams = (params) => {
 	return Object.keys(params)
 		.filter((key) => params[key] !== null)
 		.map((key) => `${key}=${params[key]}`)

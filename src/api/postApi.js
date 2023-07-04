@@ -1,38 +1,58 @@
+import { genQueryParams } from 'utils/genQueryParams';
+
 const { axiosClient } = require('configs/axiosConfig');
 
 const URL = '/posts';
 
-export const getPosts = (limit = 10, lastCreatedAt) =>
+const getPosts = (limit = 10, lastCreatedAt) =>
 	axiosClient.get(
 		URL +
 			`?limit=${limit}${
 				lastCreatedAt ? `&lastCreatedAt=${lastCreatedAt}` : ''
 			}`,
 	);
-
-export const getPostComments = ({ id, page = 0, limit = 10 }) => {
-  
-	return axiosClient.get(`${URL}/${id}/comments?limit=${limit}&page=${page}`);
+const getPost = ({ id, queryParams }) => {
+	const queryString = genQueryParams(queryParams);
+	return axiosClient.get(`${URL}/${id}?${queryString}`);
 };
-export const createPost = (data) => axiosClient.post(URL, data);
-export const updatePost = ({ _id, ...data }) =>
+const getPostComments = ({ id, cursor = null, limit = 10 }) => {
+	const queryString = genQueryParams({ cursor, limit });
+	return axiosClient.get(`${URL}/${id}/comments?${queryString}`);
+};
+const createPost = (data) => axiosClient.post(URL, data);
+const updatePost = ({ _id, ...data }) =>
 	axiosClient.patch(`${URL}/${_id}`, {
 		...data,
 	});
 
-export const deletePost = (id) => axiosClient.delete(`${URL}/${id}`);
+const deletePost = (id) => axiosClient.delete(`${URL}/${id}`);
 
-export const likePost = (id) => axiosClient.patch(`${URL}/${id}/like`);
+const likePost = (id) => axiosClient.patch(`${URL}/${id}/like`);
 
-export const unlikePost = (id) => axiosClient.patch(`${URL}/${id}/unlike`);
+const unlikePost = (id) => axiosClient.patch(`${URL}/${id}/unlike`);
 
-export const hidePost = (id) => axiosClient.patch(`${URL}/${id}/hide`);
+const hidePost = (id) => axiosClient.patch(`${URL}/${id}/hide`);
 
-export const unhidePost = (id) => axiosClient.patch(`${URL}/${id}/unhide`);
+const unhidePost = (id) => axiosClient.patch(`${URL}/${id}/unhide`);
 
-export const savePost = (id) => axiosClient.patch(`${URL}/${id}/save`);
+const savePost = (id) => axiosClient.patch(`${URL}/${id}/save`);
 
-export const unSavePost = (id) => axiosClient.patch(`${URL}/${id}/unsave`);
+const unSavePost = (id) => axiosClient.patch(`${URL}/${id}/unsave`);
+
+export {
+	getPosts,
+	getPost,
+	getPostComments,
+	createPost,
+	updatePost,
+	deletePost,
+	likePost,
+	unlikePost,
+	hidePost,
+	unhidePost,
+	savePost,
+	unSavePost,
+};
 
 const postApi = {
 	create: createPost,

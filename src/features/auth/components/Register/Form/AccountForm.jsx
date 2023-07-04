@@ -1,5 +1,6 @@
 import { Input } from 'components/DataEntry';
 import { checkEmailExists } from 'api/authApi';
+import useDebounce from 'hooks/useDebounce';
 import { useEffect } from 'react';
 
 export const AccountForm = ({
@@ -10,45 +11,17 @@ export const AccountForm = ({
 	setError,
 	clearErrors,
 }) => {
-	const { invalid } = getFieldState('email');
-	const email = watch('email');
-	const handleCheckEmailExisted = async () => {
-		try {
-			if (!email) return;
-			const res = await checkEmailExists(email);
-			if (res.isExisted) {
-				setError('email', {
-					type: 'manual',
-					message: 'Email is existed',
-				});
-			} else {
-				clearErrors('email');
-			}
-		} catch (error) {
-			console.log(error);
-			// if (error?.details[0]?.message.includes('must be a valid email')) {
-			// 	setError('email', {
-			// 		type: 'manual',
-			// 		message: 'Email Must Be A Valid Email',
-			// 	});
-			// }
-		}
-	};
-
-	useEffect(() => {
-		if (invalid) return;
-		handleCheckEmailExisted();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [invalid, email]);
-
 	return (
 		<>
-			<Input
-				autoFocus
-				label="email"
-				error={errors.email?.message}
-				placeholder="Enter your email"
-				registration={register('email')}
+			<EmailInput
+				{...{
+					register,
+					errors,
+					watch,
+					getFieldState,
+					setError,
+					clearErrors,
+				}}
 			/>
 			<Input
 				label="password"
@@ -65,6 +38,52 @@ export const AccountForm = ({
 				registration={register('confirmPassword')}
 			/>
 		</>
+	);
+};
+
+const EmailInput = ({
+	register,
+	errors,
+	watch,
+	getFieldState,
+	setError,
+	clearErrors,
+}) => {
+	const { invalid } = getFieldState('email');
+	const email = watch('email');
+	const debounceValue = useDebounce(email, 500);
+	const handleCheckEmailExisted = async () => {
+		try {
+			if (!email) return;
+			const res = await checkEmailExists(email);
+			if (res.isExisted) {
+				setError('email', {
+					type: 'manual',
+					message: 'Email is existed',
+				});
+			} else {
+				clearErrors('email');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		if (invalid) return;
+		handleCheckEmailExisted();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [invalid, debounceValue]);
+
+	return (
+		<Input
+			autoFocus
+			label="email"
+			error={errors.email?.message}
+			placeholder="Enter your email"
+			registration={register('email')}
+		/>
 	);
 };
 

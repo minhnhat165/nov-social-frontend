@@ -54,7 +54,6 @@
 	input {
 		caret-color: rgb(var(--color-primary-bold));
 	}
-
 	html {
 		font-family: var(--font-primary);
 		font-weight: 400;
@@ -167,19 +166,19 @@
 	position: relative;
 }
 
-.arrow,
-.arrow::before {
+.tooltip .arrow,
+.tooltip .arrow::before {
 	position: absolute;
 	width: 8px;
 	height: 8px;
 	background: inherit;
 }
 
-.arrow {
+.tooltip .arrow {
 	visibility: hidden;
 }
 
-.arrow::before {
+.tooltip .arrow::before {
 	visibility: visible;
 	content: '';
 	transform: rotate(45deg);
@@ -237,18 +236,22 @@
 	@apply rounded-lg border !bg-slate-100 focus-within:border-primary-700 dark:border-transparent dark:!bg-dark-700 dark:focus-within:border-primary-500;
 }
 .react-tel-input .form-control {
-	@apply !text-normal !h-10 !w-full !rounded-lg !border-none !bg-transparent !pl-16 focus:!ring-0;
+	@apply !text-normal !h-10 !w-full !rounded-lg !border-none !bg-transparent !pl-20 pt-3 focus:!ring-0;
 }
 .react-tel-input .flag-dropdown {
-	@apply !rounded-l-lg !border-b-0 !border-l-0 !border-r !border-t-0 !bg-transparent hover:!rounded-l-lg dark:border-r-dark-500;
+	@apply !rounded-l-lg !border-b-0 !border-l-0 !border-r !border-t-0 !bg-slate-200 hover:!rounded-l-lg dark:border-r-dark-500 dark:!bg-dark-600;
 }
 
 .react-tel-input .flag-dropdown .selected-flag {
-	@apply !w-12 !rounded-l-lg !bg-transparent hover:!rounded-l-lg;
+	@apply !w-16 !rounded-l-lg !bg-transparent !px-4 hover:!rounded-l-lg;
 }
 
 .react-tel-input .flag-dropdown .arrow {
-	@apply absolute bottom-0 left-0 right-0 top-0 m-auto h-0 w-0 border-4 border-solid border-transparent before:contents after:contents;
+	@apply !left-6 !border-x-[5px] !border-t-[6px] !border-t-slate-600 dark:!border-t-dark-200;
+}
+
+.react-tel-input .flag-dropdown .arrow.up {
+	@apply !border-b-[6px] !border-b-slate-600 dark:!border-b-dark-200;
 }
 
 .react-tel-input .flag-dropdown .country-list {

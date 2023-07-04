@@ -26,8 +26,8 @@ export const PostContent = () => {
 		<div
 			ref={contentRef}
 			className={clsx(
-				'post-content relative mb-2',
-				expandable && 'h-40 overflow-y-hidden',
+				'post-content mb-2',
+				expandable && 'relative h-40 overflow-y-hidden',
 				isExpanded && 'h-auto',
 			)}
 		>

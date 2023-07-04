@@ -2,13 +2,13 @@ import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
 const Head = ({ title = '', description = '' }) => {
-	const notificationsCount = useSelector(
-		(state) => state.auth.user?.notificationsCount,
+	const numNotifications = useSelector(
+		(state) => state.auth.user?.numNotifications,
 	);
 	return (
 		<Helmet
 			title={
-				`${notificationsCount > 0 ? `(${notificationsCount}) ` : ''}` +
+				`${numNotifications > 0 ? `(${numNotifications}) ` : ''}` +
 				(title ? `${title} | Nov Social` : 'Nov Social')
 			}
 			defaultTitle="Nov Social"

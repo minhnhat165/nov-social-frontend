@@ -10,6 +10,7 @@ export function CommentCreator({
 	onLocalCommentCreated,
 	onServerCommentCreated,
 	initial,
+	editorRef,
 	...props
 }) {
 	const { mutate } = useCreateComment({
@@ -55,6 +56,7 @@ export function CommentCreator({
 			}}
 			onSubmit={handleCreateComment}
 			{...props}
+			ref={editorRef}
 		/>
 	);
 }

@@ -12,107 +12,120 @@ import {
 import { ChatBubbleBottomCenterTextIcon } from 'components/Icon';
 import { IconWrapper } from 'components/DataDisplay';
 import { Text } from 'components/Typography';
+import clsx from 'clsx';
 import { getPostComments } from 'api/postApi';
-import { useComments } from 'features/comment/context/CommentsContext';
-import { useQuery } from 'react-query';
+import { useComments } from 'features/comment/context';
+import { useInfiniteQuery } from 'react-query';
 
 const LIMIT = 10;
-export const CommentZone = forwardRef(({ postId }, ref) => {
-	const { addComment, replaceComment, rootComments, setComments } =
-		useComments();
-	const [showComments, setShowComments] = useState(false);
+export const CommentZone = forwardRef(
+	({ postId, showComment: _showComment = false, fetchOnMount }, ref) => {
+		const { addComment, replaceComment, rootComments, setUniqueComments } =
+			useComments();
+		const [showComments, setShowComments] = useState(_showComment);
+		const [fetchEnabled, setFetchEnabled] = useState(
+			fetchOnMount && _showComment,
+		);
 
-	const [hasNextPage, setHasNextPage] = useState(true);
-
-	const [page, setPage] = useState(0);
-	const [currentPage, setCurrentPage] = useState(-1);
-	const { isLoading } = useQuery(
-		['comments', postId, page],
-		() => getPostComments({ id: postId, page }),
-		{
-			onSuccess: ({ comments, total }) => {
-				setComments((prev) => [...prev, ...comments]);
-				setCurrentPage(page);
-				setHasNextPage(comments.length === LIMIT);
-			},
-			enabled: showComments && currentPage !== page,
-		},
-	);
-
-	useImperativeHandle(
-		ref,
-		() => {
-			return {
-				showComments: () => setShowComments(true),
-				hideComments: () => setShowComments(false),
-				toggleComments: () => {
-					setShowComments((prev) => !prev);
+		const { isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery(
+			['comments', postId],
+			({ pageParam }) =>
+				getPostComments({
+					id: postId,
+					cursor: pageParam,
+					limit: LIMIT,
+				}),
+			{
+				getNextPageParam: (lastPage) => {
+					if (!lastPage.hasMore) return undefined;
+					return lastPage.endCursor;
 				},
-			};
-		},
-		[],
-	);
+				onSuccess: ({ pages }) => {
+					const comments = pages.flatMap((page) => page.comments);
+					setUniqueComments(comments);
+				},
+				enabled: fetchEnabled,
+				staleTime: 1000 * 60 * 5, // 5 minutes
+			},
+		);
 
-	if (!showComments) return null;
+		useImperativeHandle(
+			ref,
+			() => {
+				return {
+					showComments: () => setShowComments(true),
+					hideComments: () => setShowComments(false),
+					toggleComments: () => {
+						setShowComments((prev) => !prev);
+					},
+				};
+			},
+			[],
+		);
+		useEffect(() => {
+			setFetchEnabled(showComments);
+		}, [showComments]);
 
-	return (
-		<div className="border-normal border-t">
-			<div className="px-4 pb-2 pt-4">
-				<CommentCreator
-					onLocalCommentCreated={addComment}
-					onServerCommentCreated={replaceComment}
-					initial={{
-						parentId: null,
-						postId,
-						path: postId,
-					}}
-				/>
+		if (!showComments) return null;
 
-				{rootComments.length === 0 && !isLoading ? (
-					<div className="flex h-32 flex-col items-center justify-center">
-						<Text primary>
-							<IconWrapper size={10}>
-								<ChatBubbleBottomCenterTextIcon />
-							</IconWrapper>
-						</Text>
-						<Text level={1} className="text-xl">
-							No comments yet
-						</Text>
-						<Text level={2} className="text-sm">
-							Be the first to comment
-						</Text>
-					</div>
-				) : (
-					<CommentList comments={rootComments} />
-				)}
-				{isLoading && (
-					<div className="mb-2">
-						<CommentSkeleton />
-						<CommentSkeleton />
+		return (
+			<div className="border-normal border-t">
+				<div className="px-4 pb-2 pt-4">
+					<CommentCreator
+						onLocalCommentCreated={addComment}
+						onServerCommentCreated={replaceComment}
+						initial={{
+							parentId: null,
+							postId,
+							path: postId,
+						}}
+					/>
+
+					{rootComments.length === 0 && !isFetching ? (
+						<div className="flex h-32 flex-col items-center justify-center">
+							<Text primary>
+								<IconWrapper size={10}>
+									<ChatBubbleBottomCenterTextIcon />
+								</IconWrapper>
+							</Text>
+							<Text level={1} className="text-xl">
+								No comments yet
+							</Text>
+							<Text level={2} className="text-sm">
+								Be the first to comment
+							</Text>
+						</div>
+					) : (
+						<CommentList comments={rootComments} />
+					)}
+					{isFetching && (
+						<div className="mb-2">
+							<CommentSkeleton />
+							<CommentSkeleton />
+						</div>
+					)}
+				</div>
+				{hasNextPage && (
+					<div className="flex justify-center px-4 pb-4">
+						<Button
+							loading={isFetching}
+							variant="text"
+							fullWidth
+							onClick={fetchNextPage}
+						>
+							<Text level={1} className="text-base">
+								Load more
+							</Text>
+						</Button>
 					</div>
 				)}
 			</div>
-			{hasNextPage && (
-				<div className="flex justify-center px-4 pb-4">
-					<Button
-						loading={isLoading}
-						variant="text"
-						fullWidth
-						onClick={() => setPage((prev) => prev + 1)}
-					>
-						<Text level={1} className="text-base">
-							Load more
-						</Text>
-					</Button>
-				</div>
-			)}
-		</div>
-	);
-});
-const MAX_HEIGHT = 384;
+		);
+	},
+);
+const MAX_HEIGHT = 383;
 function CommentList({ comments }) {
 	const [scrollMode, setScrollMode] = useState(false);
-	const CommentsWrapper = scrollMode ? ScrollableCommentsWrapper : Fragment;
 
 	const [hasSwitchMode, setHasSwitchMode] = useState(true);
 
@@ -136,7 +149,7 @@ function CommentList({ comments }) {
 	}, [listRef]);
 
 	return (
-		<>
+		<Fragment>
 			{hasSwitchMode && (
 				<div className="my-2 flex items-center justify-end gap-2">
 					<Text>Scroll mode</Text>
@@ -147,25 +160,20 @@ function CommentList({ comments }) {
 					/>
 				</div>
 			)}
-			<div ref={listRef}>
-				<CommentsWrapper>
-					<div className="flex flex-col gap-2 py-2">
-						{comments.map((comment) => (
-							<Comment key={comment._id} comment={comment} />
-						))}
-					</div>
-				</CommentsWrapper>
+			<div
+				ref={listRef}
+				id="scrollable-comments-wrapper"
+				className={clsx(
+					scrollMode &&
+						'overflow-y-overlay border-normal -mx-4 max-h-96 border-t px-4',
+				)}
+			>
+				<div className="flex flex-col gap-2 py-2">
+					{comments.map((comment) => (
+						<Comment key={comment._id} comment={comment} />
+					))}
+				</div>
 			</div>
-		</>
+		</Fragment>
 	);
 }
-const ScrollableCommentsWrapper = ({ children }) => {
-	return (
-		<div
-			id="scrollable-comments-wrapper"
-			className="overflow-y-overlay border-normal -mx-4 max-h-96 border-t px-4"
-		>
-			{children}
-		</div>
-	);
-};

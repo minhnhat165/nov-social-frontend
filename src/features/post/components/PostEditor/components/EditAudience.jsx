@@ -14,15 +14,9 @@ import React, {
 import { Select, SelectTrigger } from 'components/DataEntry';
 
 import { IconWrapper } from 'components/DataDisplay';
+import { POST } from 'constants/post';
 import PropTypes from 'prop-types';
 import { usePostEditor } from '../context';
-
-export const audienceTypes = {
-	PUBLIC: 'public',
-	FOLLOWERS: 'followers',
-	PRIVATE: 'private',
-	CUSTOM: 'custom',
-};
 
 const EditAudience = forwardRef((props, ref) => {
 	const { initial, handleDirty } = usePostEditor();
@@ -30,32 +24,34 @@ const EditAudience = forwardRef((props, ref) => {
 
 	const [visibility, setVisibility] = useState(defaultVisibility);
 
+	const { VISIBILITY } = POST;
+
 	const options = useMemo(() => {
 		return [
 			{
 				icon: <GlobeAsiaAustraliaIcon />,
 				label: 'Public',
-				value: audienceTypes.PUBLIC,
-				defaultSelected: defaultVisibility === 'public',
+				value: VISIBILITY.PUBLIC,
+				defaultSelected: defaultVisibility === VISIBILITY.PUBLIC,
 			},
 			{
 				icon: <UserIcon />,
 
 				label: 'Follower',
-				value: audienceTypes.FOLLOWERS,
-				defaultSelected: defaultVisibility === 'followers',
+				value: VISIBILITY.FOLLOWER,
+				defaultSelected: defaultVisibility === VISIBILITY.FOLLOWER,
 			},
 			{
 				icon: <LockClosedIcon />,
 				label: 'Only me',
-				value: audienceTypes.PRIVATE,
-				defaultSelected: defaultVisibility === 'private',
+				value: VISIBILITY.PRIVATE,
+				defaultSelected: defaultVisibility === VISIBILITY.PRIVATE,
 			},
 			{
 				icon: <Cog6ToothIcon />,
 				label: 'Custom',
-				value: audienceTypes.CUSTOM,
-				defaultSelected: defaultVisibility === 'custom',
+				value: VISIBILITY.CUSTOM,
+				defaultSelected: defaultVisibility === VISIBILITY.CUSTOM,
 			},
 		];
 	}, [defaultVisibility]);
@@ -82,7 +78,7 @@ const EditAudience = forwardRef((props, ref) => {
 					<div
 						ref={setTriggerRef}
 						onClick={toggleSelect}
-						className="mb-[10px] flex w-fit min-w-[96px] shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary-700 py-0.5 px-2 text-sm text-slate-50 dark:bg-primary-500  dark:text-dark-700 dark:hover:bg-primary-300"
+						className="mb-[10px] flex w-fit min-w-[96px] shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary-700 px-2 py-0.5 text-sm text-slate-50 dark:bg-primary-500  dark:text-dark-700 dark:hover:bg-primary-300"
 					>
 						{selectedOption?.label || 'Public'}
 						<IconWrapper size={4} className="ml-auto">

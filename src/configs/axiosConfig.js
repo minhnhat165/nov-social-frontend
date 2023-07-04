@@ -23,7 +23,7 @@ axiosClient.interceptors.response.use(
 		if (error.message === 'Invalid token specified') {
 			store.dispatch(logout());
 			toast.error('expire login');
-			return Promise.reject(error);
+			return Promise.reject(error.response.data);
 		}
 		return Promise.reject(error.response.data);
 	},

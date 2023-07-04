@@ -3,14 +3,14 @@ import './styles/editorStyle.css';
 
 import { EditorState, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import {
-  forwardRef,
-  memo,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
+	forwardRef,
+	memo,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+	useState,
 } from 'react';
 
 import Editor from '@draft-js-plugins/editor';
@@ -68,7 +68,6 @@ const RichTextEditor = forwardRef(
 
 				mentionPrefix: '@',
 				mentionTrigger: '@',
-				// using username to display the mention
 			});
 			const { MentionSuggestions } = mentionPlugin;
 			const plugins = [mentionPlugin, hashtagPlugin, linkifyPlugin];
@@ -97,7 +96,7 @@ const RichTextEditor = forwardRef(
 			}
 
 			onDirtyChange && onDirtyChange(initialPlainText !== newPlainText);
-			onEmptyChange && onEmptyChange(newPlainText.length === 0);
+			onEmptyChange && onEmptyChange(newPlainText.trim().length === 0);
 			setEditorState(newEditorState);
 		};
 
@@ -105,29 +104,47 @@ const RichTextEditor = forwardRef(
 			setEditorState(EditorState.createEmpty());
 		};
 
+		const editorWrapperRef = useRef(null);
+
 		useImperativeHandle(
 			ref,
 			() => ({
 				editorState,
 				reset,
 				isEmpty:
-					editorState.getCurrentContent().getPlainText().length === 0,
-
-				// eslint-disable-next-line react-hooks/exhaustive-deps
+					editorState.getCurrentContent().getPlainText().trim()
+						.length === 0,
+				focus: () => {
+					setTimeout(() => {
+						editorRef.current.focus();
+						editorWrapperRef.current.scrollIntoView({
+							behavior: 'smooth',
+							block: 'center',
+						});
+					}, 10);
+					setEditorState(EditorState.moveFocusToEnd(editorState));
+				},
+				setContent: (content) => {
+					setEditorState(
+						EditorState.createWithContent(
+							convertFromRaw(JSON.parse(content)),
+						),
+					);
+				},
 			}),
-			[editorState],
+			[editorState, editorRef, editorWrapperRef],
 		);
+
+		// scroll into view when editor is focused
 
 		useEffect(() => {
 			if (editorRef.current && autoFocus) {
-				// editorRef.current.focus();
 				setTimeout(() => {
 					editorRef.current.focus();
 				}, 1);
-				setEditorState(EditorState.moveFocusToEnd(editorState));
+				setEditorState((prev) => EditorState.moveFocusToEnd(prev));
 			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [autoFocus, editorRef]);
+		}, [autoFocus]);
 
 		function handleKeyCommand(command) {
 			if (command === 'submit') {
@@ -147,6 +164,7 @@ const RichTextEditor = forwardRef(
 
 		return (
 			<div
+				ref={editorWrapperRef}
 				{...props}
 				className={clsx(
 					className,
@@ -191,4 +209,3 @@ RichTextEditor.propTypes = {
 const MemoizedRichTextEditor = memo(RichTextEditor);
 
 export { MemoizedRichTextEditor as RichTextEditor };
-

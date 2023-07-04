@@ -1,10 +1,10 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
 import Button from '../../../components/ButtonOld';
+import PostContainer from '../components/Main/PostContainer';
 import PostListContextProvider from '../../../contexts/PostListContext';
+import React from 'react';
+import SideBar from '../components/Main/SideBar';
+import { useParams } from 'react-router-dom';
 
-import PostContainer from '../Components/Main/PostContainer';
-import SideBar from '../Components/Main/SideBar';
 const Main = () => {
 	const { id } = useParams();
 
@@ -15,8 +15,8 @@ const Main = () => {
 			</div>
 			<div className="flex flex-1 flex-col gap-4">
 				<div className="dark:bg-dark-regulars relative flex w-full items-center justify-center rounded-xl">
-					<div className="absolute top-1/2 left-0 h-[1px] w-full -translate-y-1/2 bg-primary/50"></div>
-					<span className="button circle relative border border-primary/50 bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
+					<div className="bg-primary/50 absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2"></div>
+					<span className="button circle border-primary/50 relative border bg-dark-very-light px-2 text-center text-xl font-light dark:text-dark-text-regular">
 						<i className="fa-brands fa-ioxhost"></i>
 					</span>
 					<div className="absolute right-0 pl-2 dark:bg-dark-very-light">

@@ -56,8 +56,8 @@ const AccountList = () => {
 					switchAccount.mutate(account._id);
 				}}
 				end={
-					account?.notificationsCount > 0 && (
-						<BellCount count={account.notificationsCount} />
+					account?.numNotifications > 0 && (
+						<BellCount count={account.numNotifications} />
 					)
 				}
 			/>

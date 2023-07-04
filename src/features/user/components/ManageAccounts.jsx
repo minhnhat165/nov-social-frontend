@@ -102,12 +102,12 @@ const AccountItem = ({ user, onRemove, onClick, size }) => {
 							showX ? 'mr-0' : '-mr-9',
 						)}
 					>
-						{user?.notificationsCount > 0 && (
+						{user?.numNotifications > 0 && (
 							<div className="relative flex h-10 items-center justify-center">
 								<BellIcon className="h-7 w-7 text-primary-700 dark:text-primary-500" />
 								<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pb-1">
 									<span className="text-sm font-bold text-dark-50">
-										{user?.notificationsCount}
+										{user?.numNotifications}
 									</span>
 								</div>
 							</div>

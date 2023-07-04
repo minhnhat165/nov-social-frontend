@@ -1,4 +1,11 @@
-import { createContext, memo, useContext, useState } from 'react';
+import {
+	createContext,
+	memo,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import { CommentEditMode } from './CommentEditMode';
 import { CommentHeader } from './CommentHeader';
@@ -8,6 +15,7 @@ import { RepliesZone } from './RepliesZone';
 import { RichTextEditor } from 'components/DataEntry';
 import { ToolBar } from './ToolBar';
 import clsx from 'clsx';
+import { useSearchParams } from 'react-router-dom';
 
 export const MAX_LEVEL = 2;
 
@@ -43,12 +51,27 @@ const Comment = ({
 }) => {
 	const [isReplying, setIsReplying] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
+	const [searchParams] = useSearchParams();
+	const isActivated = comment._id === searchParams.get('commentId');
 
+	useEffect(() => {
+		if (isActivated) {
+			const element = document.getElementById(comment._id);
+			element.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center',
+				inline: 'nearest',
+			});
+		}
+	}, [comment._id, isActivated]);
+
+	const replyZoneRef = useRef(null);
 	const handleClickReply = () => {
 		if (currentLevel === MAX_LEVEL) {
-			onClickReply && onClickReply();
+			onClickReply && onClickReply(comment);
 			return;
 		}
+		replyZoneRef.current?.reply(comment);
 		setIsReplying(true);
 	};
 
@@ -81,55 +104,81 @@ const Comment = ({
 			}}
 		>
 			<Layer
+				id={comment._id}
 				className={clsx(
-					'border-normal relative border !bg-transparent p-2',
+					'border-normal relative border !bg-transparent',
 					className,
 				)}
 			>
-				{currentLevel !== 0 && (
-					<div className="absolute left-0 top-0 z-10 -ml-[1.25px] -mt-[1.25px] -translate-x-full">
-						<Corner />
-					</div>
-				)}
-				<div className={`group items-center gap-2`}>
-					<CommentHeader />
-					<div className="flex">
-						<div className="mr-2 flex w-9 justify-center">
-							{(comment.numReplies > 0 || isReplying) && <Line />}
+				<div
+					className={clsx(
+						'relative rounded-xl p-2 pb-0',
+						isActivated ? '!bg-[#2a4158]' : '!bg-transparent',
+					)}
+				>
+					{currentLevel !== 0 && (
+						<div className="absolute left-0 top-0 z-10 -ml-[1.25px] -mt-[1.25px] -translate-x-full">
+							<Corner />
 						</div>
-						<div className="comment-content relative max-h-40 flex-1 overflow-y-hidden pt-2">
-							{comment?.content && (
-								<RichTextEditor
-									readOnly={true}
-									initial={comment.content}
-									fontSizeDefault={1}
-									fontSizeReduced={1}
-								/>
-							)}
-							{!!comment?.photos?.length && (
-								<div className="mt-2 max-w-[120px] overflow-hidden rounded">
-									<Image src={comment.photos[0].url} />
-								</div>
-							)}
-							<ToolBar />
+					)}
+					<div className={`group items-center gap-2`}>
+						<CommentHeader />
+						<div className="flex">
+							<div className="mr-2 flex w-9 justify-center">
+								{(comment.numReplies > 0 || isReplying) && (
+									<Line />
+								)}
+							</div>
+							<div className="comment-content relative flex-1 pt-2">
+								{comment?.content && (
+									<RichTextEditor
+										readOnly={true}
+										initial={comment.content}
+										fontSizeDefault={1}
+										fontSizeReduced={1}
+									/>
+								)}
+								{!!comment?.photos?.length && (
+									<div className="mt-2 max-w-[120px] overflow-hidden rounded">
+										<Image src={comment.photos[0].url} />
+									</div>
+								)}
+								<ToolBar />
+							</div>
 						</div>
 					</div>
 				</div>
-				{currentLevel !== MAX_LEVEL && <RepliesZone />}
+				{
+					// (isReplying || comment.numReplies > 0) &&
+					currentLevel !== MAX_LEVEL && (
+						<RepliesZone ref={replyZoneRef} />
+					)
+				}
 			</Layer>
 		</CommentContext.Provider>
 	);
 };
 
 const commentMemo = memo(Comment);
-const Corner = () => (
-	<div className="h-[18px] w-[18px] rounded-bl-xl border-b border-l border-slate-200 dark:border-dark-600" />
+const Corner = ({ height = 26, width = 26 }) => (
+	<div
+		className={clsx(
+			'rounded-bl-lg border-b border-l-2 border-slate-200 dark:border-dark-600',
+		)}
+		style={{
+			width: `${width}px`,
+			height: `${height}px`,
+		}}
+	/>
 );
 
 const Line = ({ isVertical = true }) => (
 	<Layer
 		level={3}
-		className={clsx(isVertical ? 'h-full w-[1px]' : 'h-[1px] w-full')}
+		className={clsx(
+			'rounded-none',
+			isVertical ? 'h-full w-[2px]' : 'h-[2px] w-full',
+		)}
 	/>
 );
 

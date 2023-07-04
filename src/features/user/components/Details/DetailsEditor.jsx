@@ -1,3 +1,5 @@
+import 'react-phone-input-2/lib/style.css';
+
 import * as yup from 'yup';
 
 import {

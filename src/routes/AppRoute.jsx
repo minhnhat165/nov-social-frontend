@@ -6,6 +6,7 @@ import Game from 'pages/game/Game';
 import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
 import NotFound from 'pages/NotFound';
+import { PostRoute } from 'pages';
 import PrivateRoute from './PrivateRoute';
 import ProfileRoute from 'pages/Profile/route';
 import { useSelector } from 'react-redux';
@@ -21,12 +22,12 @@ const AppRoute = () => {
 				<Route path="/" element={<MainLayout />}>
 					<Route element={<PrivateRoute isLogin={isLogin} />}>
 						<Route path="/" element={<Home />} />
-						<Route path="/post" element={<h1>Home</h1>} />
 						<Route path="/chat" element={<h1>Home</h1>} />
 						<Route path="/videos" element={<h1>Home</h1>} />
 						<Route path="/friends" element={<h1>Home</h1>} />
 						<Route path="/games" element={<Game />} />
 					</Route>
+					<Route path="/post/*" element={<PostRoute />} />
 					<Route path="/profile/*" element={<ProfileRoute />} />
 					<Route path="/lab" element={<Components />} />
 				</Route>
