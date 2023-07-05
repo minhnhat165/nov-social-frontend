@@ -12,6 +12,7 @@ import { Text } from 'components/Typography';
 import { UserItem } from './UserItem';
 import clsx from 'clsx';
 import useGoToProfile from '../hooks/useGoToProfile';
+import { useModal } from 'hooks/useModal';
 import useRemoveAccount from 'features/auth/hooks/useRemoveAccount';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -30,6 +31,7 @@ const ManageAccounts = () => {
 	const removeAccount = useRemoveAccount();
 	const goToProfile = useGoToProfile();
 	const switchAccount = useSwitchAccount();
+	const { isOpen, close, open } = useModal();
 
 	return (
 		<div className="w-[500px] max-w-full px-4">
@@ -55,23 +57,22 @@ const ManageAccounts = () => {
 				))}
 
 			<div className="-ml-4 mt-4">
-				<Modal.Root>
-					<Modal.Trigger>
-						<Button variant="text" size="md">
-							Add an existing Account
-						</Button>
-					</Modal.Trigger>
-					<Modal closeIcon={<ArrowLeftIcon />}>
+				<>
+					<Button onClick={open} variant="text" size="md">
+						Add an existing Account
+					</Button>
+					<Modal
+						open={isOpen}
+						closeIcon={<ArrowLeftIcon />}
+						onClose={close}
+					>
 						<Modal.Panel>
 							<Modal.Header />
-							<Modal.Props>
-								{({ onClose }) => (
-									<AddExistingAccount onSuccess={onClose} />
-								)}
-							</Modal.Props>
+
+							<AddExistingAccount onSuccess={close} />
 						</Modal.Panel>
 					</Modal>
-				</Modal.Root>
+				</>
 			</div>
 			<div className="mt-2 p-2">
 				<Text as="p" className="text-[15px]">

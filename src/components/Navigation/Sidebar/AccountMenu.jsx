@@ -13,8 +13,8 @@ import { Modal } from 'components/OverLay';
 import { UserItem } from 'features/user/components';
 import useGoToProfile from 'features/user/hooks/useGoToProfile';
 import { useLogout } from 'features/auth/hooks/useLogout';
+import { useModal } from 'hooks/useModal';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
 
 const AccountMenu = () => {
@@ -96,42 +96,19 @@ const BellCount = ({ count }) => {
 };
 
 const AddExistingAccountTrigger = () => {
-	const [open, setOpen] = useState(false);
-	const handleClose = () => setOpen(false);
+	const { isOpen, close, open } = useModal();
 	return (
-		// <Modal.Root>
-		// 	<Modal.Trigger>
-		// 		<MenuItem
-		// 			icon={<UserPlusIcon />}
-		// 			title="Add an existing account"
-		// 		></MenuItem>
-		// 	</Modal.Trigger>
-		// 	<Modal>
-		// 		<Modal.Panel>
-		// 			<Modal.Header />
-		// 			<Modal.Props>
-		// 				{({ closeModal }) => (
-		// 					<AddExistingAccount onSuccess={closeModal} />
-		// 				)}
-		// 			</Modal.Props>
-		// 		</Modal.Panel>
-		// 	</Modal>
-		// </Modal.Root>
-
 		<>
 			<MenuItem
-				onClick={() => setOpen(true)}
+				onClick={open}
 				icon={<UserPlusIcon />}
 				title="Add an existing account"
 			></MenuItem>
-			<Modal open={open} onClose={handleClose}>
+			<Modal open={isOpen} onClose={close}>
 				<Modal.Panel>
 					<Modal.Header />
-					<Modal.Props>
-						{({ closeModal }) => (
-							<AddExistingAccount onSuccess={closeModal} />
-						)}
-					</Modal.Props>
+
+					<AddExistingAccount onSuccess={close} />
 				</Modal.Panel>
 			</Modal>
 		</>
@@ -139,15 +116,15 @@ const AddExistingAccountTrigger = () => {
 };
 
 const ManageAccountsTrigger = () => {
+	const { isOpen, close, open } = useModal();
 	return (
-		<Modal.Root>
-			<Modal.Trigger>
-				<MenuItem
-					icon={<ListCheckIcon />}
-					title="Manage linked accounts"
-				/>
-			</Modal.Trigger>
-			<Modal>
+		<>
+			<MenuItem
+				onClick={open}
+				icon={<ListCheckIcon />}
+				title="Manage linked accounts"
+			></MenuItem>
+			<Modal open={isOpen} onClose={close}>
 				<Modal.Panel>
 					<Modal.Header>Manage linked accounts</Modal.Header>
 					<div className="pb-4">
@@ -155,7 +132,7 @@ const ManageAccountsTrigger = () => {
 					</div>
 				</Modal.Panel>
 			</Modal>
-		</Modal.Root>
+		</>
 	);
 };
 

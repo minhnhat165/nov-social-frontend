@@ -20,6 +20,7 @@ import { cloneObject } from 'utils';
 import clsx from 'clsx';
 import { updateProfile } from 'store/slices/profileSlice';
 import { useMemo } from 'react';
+import { useModal } from 'hooks/useModal';
 
 const ProfilePanel = ({ profile }) => {
 	const isUser = useSelector(
@@ -91,10 +92,12 @@ const Provider = ({ type }) => {
 	);
 };
 
-const Edit = ({ profile }) => (
-	<Modal.Root>
-		<Modal.Trigger>
+const Edit = ({ profile }) => {
+	const { isOpen, close, open } = useModal();
+	return (
+		<>
 			<Button
+				onClick={open}
 				size="md"
 				rounded
 				color="secondary"
@@ -102,32 +105,27 @@ const Edit = ({ profile }) => (
 			>
 				Edit Profile
 			</Button>
-		</Modal.Trigger>
-		<Modal>
-			<Modal.Panel>
-				<Modal.Header>Edit Profile</Modal.Header>
-				<Modal.Props>
-					{({ closeModal }) => {
-						return (
-							<ProfileEdit
-								profile={cloneObject(profile)}
-								onCancel={closeModal}
-								onSuccess={closeModal}
-							/>
-						);
-					}}
-				</Modal.Props>
-			</Modal.Panel>
-		</Modal>
-	</Modal.Root>
-);
+			<Modal open={isOpen} onClose={close}>
+				<Modal.Panel>
+					<Modal.Header>Edit Profile</Modal.Header>
+
+					<ProfileEdit
+						profile={cloneObject(profile)}
+						onCancel={close}
+						onSuccess={close}
+					/>
+				</Modal.Panel>
+			</Modal>
+		</>
+	);
+};
 
 export default ProfilePanel;
 
 function Action({ isUser, profile }) {
 	const dispatch = useDispatch();
 	return (
-		<div className="flex items-center justify-center gap-4 py-1 px-2">
+		<div className="flex items-center justify-center gap-4 px-2 py-1">
 			{isUser ? (
 				<Edit profile={profile} />
 			) : (
@@ -184,7 +182,7 @@ function ProfileAvatar({ avatar, name }) {
 	if (!avatar && !name) return null;
 	return (
 		<div className="relative h-12 px-2">
-			<div className="absolute left-1/2 flex -translate-y-1/2 -translate-x-1/2 justify-center rounded-full">
+			<div className="absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 justify-center rounded-full">
 				<FullViewImage src={avatar}>
 					<Avatar
 						size="max"

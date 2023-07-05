@@ -15,6 +15,7 @@ import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import { useMemo } from 'react';
+import { useModal } from 'hooks/useModal';
 import { useSelector } from 'react-redux';
 
 export const Details = ({ isOwner }) => {
@@ -124,29 +125,25 @@ const Item = ({ title, value, icon }) => {
 };
 
 const DetailsEdit = ({ details }) => {
+	const { isOpen, close, open } = useModal();
 	return (
-		<Modal.Root>
-			<Modal.Trigger>
-				<Button
-					rounded
-					color="secondary"
-					startIcon={<PencilIcon />}
-					size="sm"
-				>
-					Edit
-				</Button>
-			</Modal.Trigger>
-			<Modal>
-				<Modal.Props>
-					{({ closeModal }) => (
-						<DetailsEditor
-							details={details}
-							onCancel={closeModal}
-							onSubmit={closeModal}
-						/>
-					)}
-				</Modal.Props>
+		<>
+			<Button
+				onClick={open}
+				rounded
+				color="secondary"
+				startIcon={<PencilIcon />}
+				size="sm"
+			>
+				Edit
+			</Button>
+			<Modal open={isOpen} onClose={close}>
+				<DetailsEditor
+					details={details}
+					onCancel={close}
+					onSubmit={close}
+				/>
 			</Modal>
-		</Modal.Root>
+		</>
 	);
 };

@@ -13,6 +13,7 @@ import socket from 'configs/socket-config';
 import { toast } from 'react-hot-toast';
 import { updateLinkedAccount } from 'store/slices/authSlice';
 import { useCreatePost } from 'features/post/hooks';
+import { useModal } from 'hooks/useModal';
 import { useQueryClient } from 'react-query';
 
 const EndSidebar = () => {
@@ -105,7 +106,7 @@ const Setting = () => {
 };
 
 function Creator() {
-	const [open, setOpen] = useState(false);
+	const { isOpen, close, open } = useModal();
 	const queryClient = useQueryClient();
 	const { mutateAsync } = useCreatePost({
 		onSuccess: (data) => {
@@ -124,25 +125,20 @@ function Creator() {
 				return newData;
 			});
 			toast.success('Post updated successfully');
-			handleClose();
+			close();
 		},
 	});
 
-	const handleClose = () => setOpen(false);
 	return (
 		<>
 			<Tooltip content={'Create'} placement="right">
 				<div>
-					<IconButton
-						rounded
-						color="secondary"
-						onClick={() => setOpen(true)}
-					>
+					<IconButton rounded color="secondary" onClick={open}>
 						<PlusIcon className="h-6 w-6 text-primary-700" />
 					</IconButton>
 				</div>
 			</Tooltip>
-			<Modal open={open} onClose={handleClose}>
+			<Modal open={isOpen} onClose={close}>
 				<Modal.Panel>
 					<Modal.Header>Create post</Modal.Header>
 					<Modal.Body className="my-0 w-[600px] px-0 !pb-0">

@@ -3,6 +3,7 @@ import LoginForm from './Login/Form/LoginForm';
 import { Modal } from 'components/OverLay';
 import ResetPassword from './ResetPassword';
 import SocialLogin from './Login/SocialLogin';
+import { useModal } from 'hooks/useModal';
 
 const EnterAccount = ({ title, footer, onSubmit, loading, onSocialLogin }) => {
 	return (
@@ -33,27 +34,23 @@ const Header = ({ content }) => {
 };
 
 function ForgotPassword() {
+	const { isOpen, close, open } = useModal();
 	return (
-		<Modal.Root>
-			<Modal.Trigger>
-				<div className="mb-3 text-center text-base">
-					<span className="cursor-pointer text-base text-primary-700 hover:text-primary-800 dark:text-primary-600 dark:hover:text-primary-700">
-						Forgot password?
-					</span>
-				</div>
-			</Modal.Trigger>
-			<Modal>
+		<>
+			<div onClick={open} className="mb-3 text-center text-base">
+				<span className="cursor-pointer text-base text-primary-700 hover:text-primary-800 dark:text-primary-600 dark:hover:text-primary-700">
+					Forgot password?
+				</span>
+			</div>
+			<Modal open={isOpen} onClose={close}>
 				<Modal.Panel>
 					<Modal.Header />
-					<Modal.Props>
-						{({ onClose }) => (
-							<div className="px-4 pb-4">
-								<ResetPassword onSuccess={onClose} />
-							</div>
-						)}
-					</Modal.Props>
+
+					<div className="px-4 pb-4">
+						<ResetPassword onSuccess={close} />
+					</div>
 				</Modal.Panel>
 			</Modal>
-		</Modal.Root>
+		</>
 	);
 }

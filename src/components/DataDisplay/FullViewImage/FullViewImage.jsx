@@ -4,20 +4,18 @@ import { Modal } from 'components/OverLay';
 import { Spinner } from 'components/Loading';
 import { XMarkIcon } from 'components/Icon';
 import { getOriginalImageFromURL } from 'utils/cloundinaryUtils';
+import { useModal } from 'hooks/useModal';
 import { useState } from 'react';
 
 export const FullViewImage = ({ src, children }) => {
+	const { isOpen, close, open } = useModal();
 	return (
-		<Modal.Root>
-			<Modal.Trigger>{children}</Modal.Trigger>
-			<Modal closeIcon={null}>
-				<Modal.Props>
-					{({ closeModal }) => (
-						<ImageScreen onClose={closeModal} src={src} />
-					)}
-				</Modal.Props>
+		<>
+			<div onClick={open}>{children}</div>
+			<Modal closeIcon={null} open={isOpen} onClose={close}>
+				<ImageScreen onClose={close} src={src} />
 			</Modal>
-		</Modal.Root>
+		</>
 	);
 };
 

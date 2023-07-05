@@ -7,6 +7,7 @@ import InterestEditor from 'features/Interest/Components/InterestEditor';
 import Layer from 'components/Layout/Layer';
 import { Modal } from 'components/OverLay';
 import ReactStickyBox from 'react-sticky-box';
+import { useModal } from 'hooks/useModal';
 import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -44,33 +45,28 @@ export default PostPage;
 
 function Interests({ isOwner }) {
 	const interests = useSelector((state) => state.profile.data.interests);
+	const { isOpen, close, open } = useModal();
 	const renderAction = (interests) => {
 		const isEmpty = !interests?.length;
 		return (
-			<Modal.Root>
-				<Modal.Trigger>
-					<Button
-						rounded
-						color="secondary"
-						startIcon={isEmpty ? <PlusIcon /> : <PencilIcon />}
-						size="sm"
-					>
-						{isEmpty ? 'Add' : 'Edit'}
-					</Button>
-				</Modal.Trigger>
-				<Modal>
-					<Modal.Props>
-						{({ closeModal }) => {
-							return (
-								<InterestEditor
-									defaultSelected={interests}
-									onCancel={closeModal}
-								/>
-							);
-						}}
-					</Modal.Props>
+			<>
+				<Button
+					onClick={open}
+					rounded
+					color="secondary"
+					startIcon={isEmpty ? <PlusIcon /> : <PencilIcon />}
+					size="sm"
+				>
+					{isEmpty ? 'Add' : 'Edit'}
+				</Button>
+
+				<Modal open={isOpen} onClose={close}>
+					<InterestEditor
+						defaultSelected={interests}
+						onCancel={close}
+					/>
 				</Modal>
-			</Modal.Root>
+			</>
 		);
 	};
 
@@ -81,7 +77,7 @@ function Interests({ isOwner }) {
 				{isOwner && renderAction(interests)}
 			</Card.Header>
 			{interests?.length > 0 && (
-				<Card.Body className="pt-2 pb-4 ">
+				<Card.Body className="pb-4 pt-2 ">
 					<div className="-m-1">
 						{interests.map((interest) => (
 							<Chip
