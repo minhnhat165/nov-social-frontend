@@ -14,6 +14,7 @@ import { UserItem } from 'features/user/components';
 import useGoToProfile from 'features/user/hooks/useGoToProfile';
 import { useLogout } from 'features/auth/hooks/useLogout';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
 
 const AccountMenu = () => {
@@ -95,15 +96,35 @@ const BellCount = ({ count }) => {
 };
 
 const AddExistingAccountTrigger = () => {
+	const [open, setOpen] = useState(false);
+	const handleClose = () => setOpen(false);
 	return (
-		<Modal.Root>
-			<Modal.Trigger>
-				<MenuItem
-					icon={<UserPlusIcon />}
-					title="Add an existing account"
-				></MenuItem>
-			</Modal.Trigger>
-			<Modal>
+		// <Modal.Root>
+		// 	<Modal.Trigger>
+		// 		<MenuItem
+		// 			icon={<UserPlusIcon />}
+		// 			title="Add an existing account"
+		// 		></MenuItem>
+		// 	</Modal.Trigger>
+		// 	<Modal>
+		// 		<Modal.Panel>
+		// 			<Modal.Header />
+		// 			<Modal.Props>
+		// 				{({ closeModal }) => (
+		// 					<AddExistingAccount onSuccess={closeModal} />
+		// 				)}
+		// 			</Modal.Props>
+		// 		</Modal.Panel>
+		// 	</Modal>
+		// </Modal.Root>
+
+		<>
+			<MenuItem
+				onClick={() => setOpen(true)}
+				icon={<UserPlusIcon />}
+				title="Add an existing account"
+			></MenuItem>
+			<Modal open={open} onClose={handleClose}>
 				<Modal.Panel>
 					<Modal.Header />
 					<Modal.Props>
@@ -113,7 +134,7 @@ const AddExistingAccountTrigger = () => {
 					</Modal.Props>
 				</Modal.Panel>
 			</Modal>
-		</Modal.Root>
+		</>
 	);
 };
 
