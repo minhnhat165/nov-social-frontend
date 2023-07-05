@@ -2,15 +2,14 @@ import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import Components from 'pages/Lab';
+import Game from 'pages/game';
 import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
-import NotFound from 'pages/NotFound';
+import NotFound from 'pages/not-found';
 import { PostRoute } from 'pages';
 import PrivateRoute from './PrivateRoute';
-import ProfileRoute from 'pages/Profile/route';
+import ProfileRoute from 'pages/profile/route';
 import { useSelector } from 'react-redux';
-
-// import Game from 'pages/game';
 
 const AuthRoutes = lazy(() => import('features/auth/routes'));
 
@@ -26,7 +25,7 @@ const AppRoute = () => {
 						<Route path="/chat" element={<h1>Home</h1>} />
 						<Route path="/videos" element={<h1>Home</h1>} />
 						<Route path="/friends" element={<h1>Home</h1>} />
-						{/* <Route path="/games" element={<Game />} /> */}
+						<Route path="/games" element={<Game />} />
 					</Route>
 					<Route path="/post/*" element={<PostRoute />} />
 					<Route path="/profile/*" element={<ProfileRoute />} />
