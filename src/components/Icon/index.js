@@ -1,4 +1,4 @@
-export * from './XmarkIcon';
+export * from './XMarkIcon';
 export * from './CircleCheckIcon';
 export * from './FacebookIcon';
 export * from './GoogleIcon';
