@@ -1,14 +1,19 @@
 import { Card, Chip, FullViewImage, Img } from 'components/DataDisplay';
 import { PencilIcon, PlusIcon } from 'components/Icon';
+import Post, { PostSkeleton } from 'features/post/components/Post/Post';
+import { useCreatePost, usePostList } from 'features/post/hooks';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 import { Button } from 'components/Action';
 import { Details } from 'features/user/components';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import InterestEditor from 'features/Interest/Components/InterestEditor';
 import Layer from 'components/Layout/Layer';
 import { Modal } from 'components/OverLay';
+import PostEditor from 'features/post/components/PostEditor/PostEditor';
 import ReactStickyBox from 'react-sticky-box';
+import { getPostsByUserId } from 'api/postApi';
 import { useModal } from 'hooks/useModal';
-import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PostPage = () => {
@@ -27,16 +32,7 @@ const PostPage = () => {
 					<Photos />
 				</div>
 			</ReactStickyBox>
-			<div className="flex max-w-[600px] flex-1 flex-col px-2 py-4">
-				<Layer className="mb-4 h-14 w-full rounded-xl bg-slate-50 shadow-md"></Layer>
-				<div className="flex flex-col gap-4">
-					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
-					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
-					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
-					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
-					<Layer className="h-96 w-full rounded-xl shadow"></Layer>
-				</div>
-			</div>
+			<Main />
 		</div>
 	);
 };
@@ -125,3 +121,60 @@ function Photos() {
 		)
 	);
 }
+
+const Main = () => {
+	const { id } = useParams();
+
+	const {
+		fetchNextPage,
+		handleDeletePost,
+		handleUpdatePost,
+		handleAddPost,
+		hasNextPage,
+		posts,
+	} = usePostList({
+		queryFn: getPostsByUserId,
+		queryKey: ['posts', { userId: id }],
+		fnParams: { userId: id },
+		limit: 5,
+	});
+	const { mutateAsync } = useCreatePost({
+		onSuccess: (data) => {
+			handleAddPost(data);
+		},
+	});
+	return (
+		<div className="flex max-w-[600px] flex-1 flex-col px-2 py-4">
+			<div className="mb-4">
+				<PostEditor onSubmit={mutateAsync} />
+			</div>
+			<div className="flex flex-col gap-4">
+				<InfiniteScroll
+					dataLength={posts.length}
+					next={fetchNextPage}
+					scrollThreshold={0.7}
+					hasMore={hasNextPage}
+					loader={
+						<div className="flex flex-col gap-4">
+							<PostSkeleton />
+							<PostSkeleton />
+							<PostSkeleton />
+						</div>
+					}
+					scrollableTarget="main-layout"
+				>
+					<div className="flex flex-col gap-4 pb-4">
+						{posts?.map((post) => (
+							<Post
+								key={post._id}
+								post={post}
+								onDeletePost={handleDeletePost}
+								onUpdatePost={handleUpdatePost}
+							/>
+						))}
+					</div>
+				</InfiniteScroll>
+			</div>
+		</div>
+	);
+};

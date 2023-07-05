@@ -40,6 +40,14 @@ const updateProfile = (data) =>
 const getRecommendations = ({ limit = 3 }) =>
 	axiosClient.get(URL + `/recommendations?limit=${limit}`);
 
+const getFollowing = ({ userId, limit, page }) =>
+	axiosClient.get(
+		URL +
+			`/${userId}/following` +
+			(limit ? `?limit=${limit}` : '') +
+			(page ? `&page=${page}` : ''),
+	);
+
 const readNotify = () => axiosClient.patch(URL + `/read-notify`);
 
 const checkUsernameAvailability = (username) =>
@@ -58,4 +66,5 @@ export {
 	getUserPreview,
 	readNotify,
 	checkUsernameAvailability,
+	getFollowing,
 };

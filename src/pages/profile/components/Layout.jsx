@@ -29,7 +29,10 @@ const Layout = () => {
 			{isSuccess && (
 				<>
 					<Head title={profile.name} />
-					<div className="flex h-screen w-full items-start overflow-y-scroll">
+					<div
+						id="main-layout"
+						className="flex h-screen w-full items-start overflow-y-scroll"
+					>
 						<StickyBox offsetTop={0}>
 							<aside className="h-screen py-4">
 								<div className="h-full w-full px-2">

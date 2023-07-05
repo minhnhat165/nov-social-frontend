@@ -15,6 +15,11 @@ const getPost = ({ id, queryParams }) => {
 	const queryString = genQueryParams(queryParams);
 	return axiosClient.get(`${URL}/${id}?${queryString}`);
 };
+const getPostsByUserId = ({ userId, cursor = null, limit = 10 }) => {
+	const queryString = genQueryParams({ cursor, limit });
+	return axiosClient.get(`${URL}/user/${userId}?${queryString}`);
+};
+
 const getPostComments = ({ id, cursor = null, limit = 10 }) => {
 	const queryString = genQueryParams({ cursor, limit });
 	return axiosClient.get(`${URL}/${id}/comments?${queryString}`);
@@ -52,6 +57,7 @@ export {
 	unhidePost,
 	savePost,
 	unSavePost,
+	getPostsByUserId,
 };
 
 const postApi = {
@@ -60,5 +66,6 @@ const postApi = {
 	deletePost,
 	updatePost,
 	getPostComments,
+	getPostsByUserId,
 };
 export default postApi;

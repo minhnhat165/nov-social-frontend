@@ -4,7 +4,7 @@ import {
 	EyeIcon,
 } from 'components/Icon';
 import { Card, Rank } from 'components/DataDisplay';
-import { getRecommendations, getTopRankers } from 'api/userApi';
+import { getFollowing, getTopRankers } from 'api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Head from 'components/Head';
@@ -112,14 +112,14 @@ function RankingBoard() {
 }
 
 const ContactList = () => {
-	const { data } = useQuery('who-to-follow', () =>
-		getRecommendations({ limit: 10 }),
+	const userId = useSelector((state) => state.auth.user._id);
+	const { data } = useQuery('user-contact', () =>
+		getFollowing({ userId, limit: 10, page: 1 }),
 	);
 	const userOnlineIds = useSelector((state) => state.app.userOnlineIds);
 
 	if (!data) return null;
-	const { users } = data;
-	if (!users.length) return null;
+	const { items: users } = data.data;
 	return (
 		<FocusModePanel title="Contacts">
 			{users.map((user) => (

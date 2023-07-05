@@ -149,7 +149,29 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 		</PostContext.Provider>
 	);
 };
+export const PostSkeleton = () => {
+	return (
+		<Card className="flex flex-col overflow-hidden p-4 shadow  ">
+			<div className="flex gap-2">
+				<div className="h-10 w-10 animate-pulse rounded-full bg-dark-300" />
+				<div>
+					<div className="mt-2 h-3 w-40 animate-pulse rounded-full bg-dark-300" />
+					<div className="mt-2 h-2 w-20 animate-pulse rounded-full bg-dark-300" />
+				</div>
+			</div>
 
+			<div className="mt-2 pl-12">
+				<div className="mt-2 h-4 w-[90%] animate-pulse rounded-full bg-dark-300" />
+				<div className="mt-2 h-4 w-40 animate-pulse rounded-full bg-dark-300" />
+			</div>
+			<div className="ml-auto mt-4 flex gap-4 ">
+				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />
+				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />
+				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />
+			</div>
+		</Card>
+	);
+};
 Post.propTypes = {
 	post: PropTypes.object.isRequired,
 };
