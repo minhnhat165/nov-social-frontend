@@ -1,4 +1,3 @@
-export * from './XMarkIcon';
 export * from './CircleCheckIcon';
 export * from './FacebookIcon';
 export * from './GoogleIcon';
@@ -82,3 +81,4 @@ export * from './PhotoIcon';
 export * from './TagIcon';
 export * from './CheckAllIcon';
 export * from './BellAlertIcon';
+export * from './XMarkIcon';
