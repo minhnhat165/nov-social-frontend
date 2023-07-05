@@ -32,17 +32,24 @@ const Timeline = () => {
 	const isReload = useSelector((state) => state.app.isReload);
 	const dispatch = useDispatch();
 	const queryClient = useQueryClient();
-	const { data, hasMore, fetchNextPage, isLoading, refetch, isRefetching } =
-		useInfiniteQuery(
-			'timeline',
-			({ pageParam }) => getTimeline({ lastIndex: pageParam }),
-			{
-				getNextPageParam: (lastPage) => {
-					if (!lastPage.moreAvailable) return undefined;
-					return lastPage.lastIndex;
-				},
+	const {
+		data,
+		hasNextPage,
+		fetchNextPage,
+		isLoading,
+		refetch,
+		isRefetching,
+	} = useInfiniteQuery(
+		'timeline',
+		({ pageParam }) => getTimeline({ lastIndex: pageParam }),
+		{
+			getNextPageParam: (lastPage) => {
+				if (!lastPage.moreAvailable) return undefined;
+				console.log(lastPage.lastIndex);
+				return lastPage.lastIndex;
 			},
-		);
+		},
+	);
 
 	useEffect(() => {
 		if (!isReload) return;
@@ -115,44 +122,41 @@ const Timeline = () => {
 		);
 
 	return (
-		<>
-			<InfiniteScroll
-				dataLength={posts.length}
-				next={fetchNextPage}
-				scrollThreshold={0.7}
-				hasMore={hasMore}
-				loader={<h4>Loading...</h4>}
-				scrollableTarget="main-layout"
-				endMessage={
-					<Layer
-						level={1}
-						className="mb-4 flex flex-col items-center justify-center gap-5 p-6"
-					>
-						<div className="mt-2 flex flex-col items-center">
-							<Text className="text-xl font-bold">
-								No more posts to show
-							</Text>
-							<Text level={2}>
-								Follow more people to see more posts in your
-								Feed.
-							</Text>
-						</div>
-						<Button size="md">Find People</Button>
-					</Layer>
-				}
-			>
-				<div className="flex flex-col gap-4 pb-4">
-					{posts?.map((post) => (
-						<Post
-							key={post._id}
-							post={post}
-							onDeletePost={handleDeletePost}
-							onUpdatePost={handleUpdatePost}
-						/>
-					))}
-				</div>
-			</InfiniteScroll>
-		</>
+		<InfiniteScroll
+			dataLength={posts.length}
+			next={fetchNextPage}
+			scrollThreshold={0.7}
+			hasMore={hasNextPage}
+			loader={<h4>Loading...</h4>}
+			scrollableTarget="main-layout"
+			endMessage={
+				<Layer
+					level={1}
+					className="mb-4 flex flex-col items-center justify-center gap-5 p-6"
+				>
+					<div className="mt-2 flex flex-col items-center">
+						<Text className="text-xl font-bold">
+							No more posts to show
+						</Text>
+						<Text level={2}>
+							Follow more people to see more posts in your Feed.
+						</Text>
+					</div>
+					<Button size="md">Find People</Button>
+				</Layer>
+			}
+		>
+			<div className="flex flex-col gap-4 pb-4">
+				{posts?.map((post) => (
+					<Post
+						key={post._id}
+						post={post}
+						onDeletePost={handleDeletePost}
+						onUpdatePost={handleUpdatePost}
+					/>
+				))}
+			</div>
+		</InfiniteScroll>
 	);
 };
 
