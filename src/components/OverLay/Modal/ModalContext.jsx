@@ -18,6 +18,7 @@ const useModal = () => useContext(ModalContext);
 
 const ModalProvider = ({ rootOpen = false, children }) => {
 	const [open, setOpen] = useState(false);
+	console.log(open);
 
 	useEffect(() => {
 		setOpen(rootOpen);
