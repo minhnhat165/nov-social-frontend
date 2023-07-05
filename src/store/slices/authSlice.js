@@ -33,6 +33,21 @@ const authSlice = createSlice({
 			state.user.linkedAccounts = linkedAccounts;
 		},
 
+		updateLinkedAccount: (state, action) => {
+			console.log('action.payload', action.payload);
+			const linkedAccounts = state.user.linkedAccounts.map((account) => {
+				if (account._id === action.payload._id) {
+					return { ...account, ...action.payload };
+				}
+				return account;
+			});
+			const hasLinkedAccountsNotify = linkedAccounts?.some(
+				(account) => account.numNotifications > 0,
+			);
+			state.user.hasLinkedAccountsNotify = hasLinkedAccountsNotify;
+			state.user.linkedAccounts = linkedAccounts;
+		},
+
 		updateUser: (state, action) => {
 			state.user = { ...state.user, ...action.payload };
 		},
@@ -61,5 +76,6 @@ export const {
 	setLinkedAccounts,
 	login,
 	updateUser,
+	updateLinkedAccount,
 } = authSlice.actions;
 export default authSlice.reducer;

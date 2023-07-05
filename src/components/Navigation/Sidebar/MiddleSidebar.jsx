@@ -1,12 +1,13 @@
 import { BellIcon, BookmarkIcon, MessagesIcon } from 'components/Icon';
 import { Popover, Tooltip } from 'components/OverLay';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Badge } from 'components/DataDisplay';
 import { NotificationPanel } from 'features/notification';
 import clsx from 'clsx';
 import { readNotify } from 'api/userApi';
+import socket from 'configs/socket-config';
 import { updateUser } from 'store/slices/authSlice';
 import { useMutation } from 'react-query';
 
@@ -68,14 +69,29 @@ const Item = forwardRef(
 
 const Notifications = ({ onClick, isActive }) => {
 	const dispatch = useDispatch();
-	const numNotifications = useSelector(
+	const _numNotifications = useSelector(
 		(state) => state.auth.user?.numNotifications,
 	);
+
+	const [numNotifications, setNumNotifications] = useState(_numNotifications);
 	const { mutate } = useMutation(readNotify, {
 		onSuccess: () => {
 			dispatch(updateUser({ numNotifications: 0 }));
 		},
 	});
+
+	useEffect(() => {
+		socket.on('server.notification.count', (num) => {
+			setNumNotifications(num);
+		});
+		return () => {
+			socket.off('server.notification.count');
+		};
+	}, []);
+
+	useEffect(() => {
+		setNumNotifications(_numNotifications);
+	}, [_numNotifications]);
 
 	return (
 		<Popover

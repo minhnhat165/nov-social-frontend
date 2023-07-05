@@ -1,6 +1,6 @@
 import { BellAlertIcon, CheckAllIcon, Cog6ToothIcon } from 'components/Icon';
 import { Button, IconButton } from 'components/Action';
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Notification, NotificationSkeleton } from 'features/notification';
 import {
 	getNotifications,
@@ -12,6 +12,7 @@ import { IconWrapper } from 'components/DataDisplay';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Layer from 'components/Layout/Layer';
 import { Text } from 'components/Typography';
+import socket from 'configs/socket-config';
 
 export function NotificationPanel() {
 	const queryClient = useQueryClient();
@@ -108,6 +109,28 @@ export function NotificationPanel() {
 
 	const numNotifications =
 		data?.pages.reduce((acc, page) => acc + page.items.length, 0) || 0;
+
+	useEffect(() => {
+		socket.on('server.notification', (notification) => {
+			queryClient.setQueryData(queryKey, (data) => {
+				return {
+					pages: [
+						{
+							items: [notification, ...data.pages[0].items],
+							hasMore: data.pages[0].hasMore,
+							endCursor: data.pages[0].endCursor,
+						},
+						...data.pages.slice(1),
+					],
+					pageParams: data.pageParams,
+				};
+			});
+		});
+		return () => {
+			socket.off('server.notification');
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<Layer className="flex h-full w-96 flex-col rounded shadow-md">

@@ -1,52 +1,52 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import io from 'socket.io-client';
-import { updateConversations } from '../redux/slices/chatSlice';
 import {
-	addNotification,
-	removeNotification,
-} from '../redux/slices/notificationSlice';
-import { setSocket } from '../redux/slices/socketSlice';
+	addUserOnline,
+	removeUserOnline,
+	setUserOnlineIds,
+} from 'store/slices/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+import socket from 'configs/socket-config';
 
 const SocketClient = () => {
-	// const dispatch = useDispatch();
-	// const socket = useSelector((state) => state.socket.socket);
-	// const user = useSelector((state) => state.auth.user);
-	// useEffect(() => {
-	// 	let socket = io.connect(process.env.REACT_APP_SERVER_URL);
+	const user = useSelector((state) => state.auth.user);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		socket.connect();
+		function onConnect() {
+			console.log('connected');
+			if (user?._id) {
+				socket.emit('client.join', user._id);
+			}
+		}
 
-	// 	dispatch(setSocket(socket));
-	// 	socket.emit('join user', user);
-	// 	return () => {
-	// 		socket.close();
-	// 	};
-	// }, [user._id]);
+		function onDisconnect() {
+			console.log('disconnected');
+		}
 
-	// useEffect(() => {
-	// 	if (socket) {
-	// 		socket.on('update room', (data) => {
-	// 			dispatch(updateConversations(data));
-	// 		});
+		socket.on('connect', onConnect);
+		socket.on('disconnect', onDisconnect);
+		socket.on('server.user.online', (userId) => {
+			dispatch(addUserOnline(userId));
+		});
+		socket.on('server.user.online.all', (userIds) => {
+			dispatch(setUserOnlineIds(userIds));
+		});
 
-	// 		socket.on('receive notification', (notification) => {
-	// 			dispatch(addNotification(notification));
-	// 		});
+		socket.on('server.user.offline', (userId) => {
+			dispatch(removeUserOnline(userId));
+		});
 
-	// 		socket.on('receive remove notification', (notificationId) => {
-	// 			dispatch(removeNotification(notificationId));
-	// 		});
-	// 		socket.on('check user online', (data) => {
-	// 			console.log(data);
-	// 		});
-	// 	}
-	// 	return () => {
-	// 		if (socket) {
-	// 			socket.off('remove comment');
-	// 			socket.off('update room');
-	// 			socket.off('receive notification');
-	// 		}
-	// 	};
-	// }, [socket]);
+		return () => {
+			socket.off('connect', onConnect);
+			socket.off('disconnect', onDisconnect);
+			socket.off('server.user.online');
+			socket.off('server.user.online.all');
+			socket.off('server.user.offline');
+			socket.disconnect();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user?._id]);
 
 	return <></>;
 };

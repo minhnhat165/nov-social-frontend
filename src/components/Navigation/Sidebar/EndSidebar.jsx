@@ -1,5 +1,7 @@
 import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
 import { Modal, Popover, Tooltip } from 'components/OverLay';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import AccountMenu from './AccountMenu';
 import { Avatar } from 'components/DataDisplay';
@@ -7,11 +9,11 @@ import { IconButton } from 'components/Action';
 import Layer from 'components/Layout/Layer';
 import PostEditor from 'features/post/components/PostEditor/PostEditor';
 import SettingMenu from './SettingMenu';
+import socket from 'configs/socket-config';
 import { toast } from 'react-hot-toast';
+import { updateLinkedAccount } from 'store/slices/authSlice';
 import { useCreatePost } from 'features/post/hooks';
 import { useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 const EndSidebar = () => {
 	return (
@@ -34,6 +36,23 @@ const Account = () => {
 			hasLinkedAccountsNotify: state.auth.user?.hasLinkedAccountsNotify,
 		};
 	});
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		socket.on('server.notification.link.count', (data) => {
+			dispatch(
+				updateLinkedAccount({
+					_id: data.accountId,
+					numNotifications: data.numNotifications,
+				}),
+			);
+		});
+		return () => {
+			socket.off('server.notification.link.count');
+		};
+	}, []);
+
 	return (
 		<Popover
 			interactive

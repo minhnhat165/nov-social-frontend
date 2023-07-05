@@ -115,6 +115,8 @@ const ContactList = () => {
 	const { data } = useQuery('who-to-follow', () =>
 		getRecommendations({ limit: 10 }),
 	);
+	const userOnlineIds = useSelector((state) => state.app.userOnlineIds);
+
 	if (!data) return null;
 	const { users } = data;
 	if (!users.length) return null;
@@ -124,15 +126,19 @@ const ContactList = () => {
 				<UserItem
 					key={user._id}
 					user={user}
-					subName={<span className="text-green-500">Online</span>}
-					onClick={() => {}}
-				/>
-			))}
-			{users.map((user) => (
-				<UserItem
-					key={user._id}
-					user={user}
-					subName={<span className="text-red-500">Offline</span>}
+					subName={
+						<span
+							className={clsx(
+								userOnlineIds.includes(user._id)
+									? 'text-green-500'
+									: 'text-red-500',
+							)}
+						>
+							{userOnlineIds.includes(user._id)
+								? 'Online'
+								: 'Offline'}
+						</span>
+					}
 					onClick={() => {}}
 				/>
 			))}
