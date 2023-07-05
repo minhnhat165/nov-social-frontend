@@ -51,6 +51,7 @@ const Account = () => {
 		return () => {
 			socket.off('server.notification.link.count');
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
