@@ -1,5 +1,5 @@
 import { Button, IconButton } from 'components/Action';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { ArrowLeftIcon } from 'components/Icon';
 import { Avatar } from 'components/DataDisplay';
@@ -105,6 +105,8 @@ const Game = () => {
 
 const Chat = ({ room, onLeave }) => {
 	const [messages, setMessages] = useState([]);
+	const chatContainerRef = useRef(null);
+
 	const user = useSelector((state) => state.auth.user);
 	const createMessage = (e) => {
 		e.preventDefault();
@@ -122,6 +124,11 @@ const Chat = ({ room, onLeave }) => {
 		e.target[0].value = '';
 
 		setMessages([...messages, message]);
+		setTimeout(() => {
+			chatContainerRef.current.scrollTop =
+				chatContainerRef.current.scrollHeight;
+		}, 100);
+
 		socket.emit('client.game.room.message.send', {
 			message,
 			roomId: room._id,
@@ -131,6 +138,10 @@ const Chat = ({ room, onLeave }) => {
 	useEffect(() => {
 		socket.on('server.game.room.message.send', (message) => {
 			setMessages((prev) => [...prev, message]);
+			setTimeout(() => {
+				chatContainerRef.current.scrollTop =
+					chatContainerRef.current.scrollHeight;
+			}, 100);
 		});
 		return () => {
 			socket.off('server.game.room.message.send');
@@ -145,7 +156,10 @@ const Chat = ({ room, onLeave }) => {
 				</IconButton>
 				<Text>Room of {room?.host?.name}</Text>
 			</div>
-			<div className="flex flex-1 overflow-y-scroll">
+			<div
+				ref={chatContainerRef}
+				className="flex flex-1 overflow-y-scroll"
+			>
 				<div className="mt-auto flex w-full flex-col gap-2 px-2">
 					{messages.map((message) => {
 						return (
@@ -159,13 +173,13 @@ const Chat = ({ room, onLeave }) => {
 								)}
 							>
 								<Avatar size="sm" src={message.sender.avatar} />
-								<div>{message.content}</div>
+								<Text>{message.content}</Text>
 							</div>
 						);
 					})}
 				</div>
 			</div>
-			<Layer className="p-2">
+			<Layer className="p-2 ">
 				<form className="flex gap-2" onSubmit={createMessage}>
 					<Input size="md"></Input>
 					<IconButton type="submit" size="md">
