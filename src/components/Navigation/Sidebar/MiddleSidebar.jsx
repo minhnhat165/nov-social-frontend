@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Badge } from 'components/DataDisplay';
 import { BookmarkPanel } from 'features/bookmark/components';
+import Layer from 'components/Layout/Layer';
 import { NotificationPanel } from 'features/notification';
+import { Text } from 'components/Typography';
 import clsx from 'clsx';
 import { readNotify } from 'api/userApi';
 import socket from 'configs/socket-config';
@@ -96,6 +98,9 @@ const Notifications = ({ onClick, isActive }) => {
 
 	return (
 		<Popover
+			onClickOutside={() => {
+				onClick(types.NOTIFICATIONS);
+			}}
 			interactive
 			placement="right-start"
 			offset={[0, 14]}
@@ -133,6 +138,9 @@ const Bookmarks = ({ onClick, isActive }) => {
 			interactive
 			placement="right-start"
 			offset={[0, 14]}
+			onClickOutside={() => {
+				onClick(types.BOOKMARKS);
+			}}
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
@@ -157,6 +165,9 @@ const Bookmarks = ({ onClick, isActive }) => {
 const Chat = ({ onClick, isActive }) => {
 	return (
 		<Popover
+			onClickOutside={() => {
+				onClick(types.CHAT);
+			}}
 			interactive
 			placement="right-start"
 			offset={[0, 14]}
@@ -165,7 +176,12 @@ const Chat = ({ onClick, isActive }) => {
 					{...attrs}
 					className="h-screen !bg-transparent pb-1.5"
 				>
-					<BookmarkPanel />
+					<Layer className="flex h-full w-96 flex-col items-center justify-center rounded shadow-md">
+						<Text primary className="text-4xl font-bold">
+							Coming Soon
+						</Text>
+						<Text>This feature is under construction</Text>
+					</Layer>
 				</Popover.Content>
 			)}
 		>
