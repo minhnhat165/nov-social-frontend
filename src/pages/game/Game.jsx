@@ -17,7 +17,6 @@ const Game = () => {
 	const user = useSelector((state) => state.auth.user);
 	const [rooms, setRooms] = useState([]);
 
-	const [currentRoomId, setCurrentRoomId] = useState(null);
 	const [joinedRoomId, setJoinedRoomId] = useState(null);
 	const createNewRoom = () => {
 		const room = {
@@ -67,9 +66,8 @@ const Game = () => {
 						<RoomFolder
 							rooms={rooms}
 							onSelectRoom={(room) => {
-								setCurrentRoomId(room._id);
+								setJoinedRoomId(room._id);
 							}}
-							selectedRoomId={currentRoomId}
 						/>
 					)}
 					{!joinedRoomId && (
@@ -77,23 +75,12 @@ const Game = () => {
 							level={1}
 							className="mt-auto flex w-full flex-col gap-2 p-2"
 						>
-							{currentRoomId ? (
-								<Button
-									className="!bg-green-500"
-									onClick={() => {
-										setJoinedRoomId(currentRoomId);
-									}}
-								>
-									Join
-								</Button>
-							) : (
-								<Button
-									onClick={createNewRoom}
-									className="!bg-green-500"
-								>
-									Create
-								</Button>
-							)}
+							<Button
+								onClick={createNewRoom}
+								className="!bg-green-500"
+							>
+								Create
+							</Button>
 						</Layer>
 					)}
 				</Layer>
@@ -183,7 +170,7 @@ const Chat = ({ room, onLeave }) => {
 	);
 };
 
-const RoomFolder = ({ rooms, onSelectRoom, selectedRoomId }) => {
+const RoomFolder = ({ rooms, onSelectRoom }) => {
 	return (
 		<div className="p-2">
 			{rooms.map((room) => {
@@ -193,11 +180,6 @@ const RoomFolder = ({ rooms, onSelectRoom, selectedRoomId }) => {
 							onClick={() => {
 								onSelectRoom(room);
 							}}
-							className={
-								selectedRoomId === room._id
-									? '!bg-yellow-300/50'
-									: ''
-							}
 							user={room.host}
 						/>
 					</div>
