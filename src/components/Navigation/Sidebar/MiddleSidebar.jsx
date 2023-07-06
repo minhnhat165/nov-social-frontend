@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Badge } from 'components/DataDisplay';
+import { BookmarkPanel } from 'features/bookmark/components';
 import { NotificationPanel } from 'features/notification';
 import clsx from 'clsx';
 import { readNotify } from 'api/userApi';
@@ -128,27 +129,55 @@ const Notifications = ({ onClick, isActive }) => {
 
 const Bookmarks = ({ onClick, isActive }) => {
 	return (
-		<Item
-			isActive={isActive}
-			icon={<BookmarkIcon />}
-			tooltipContent="Bookmarks"
-			onClick={() => {
-				onClick(types.BOOKMARKS);
-			}}
-		/>
+		<Popover
+			interactive
+			placement="right-start"
+			offset={[0, 14]}
+			render={(attrs) => (
+				<Popover.Content
+					{...attrs}
+					className="h-screen !bg-transparent pb-1.5"
+				>
+					<BookmarkPanel />
+				</Popover.Content>
+			)}
+		>
+			<Item
+				isActive={isActive}
+				icon={<BookmarkIcon />}
+				tooltipContent="Bookmarks"
+				onClick={() => {
+					onClick(types.BOOKMARKS);
+				}}
+			/>
+		</Popover>
 	);
 };
 
 const Chat = ({ onClick, isActive }) => {
 	return (
-		<Item
-			isActive={isActive}
-			icon={<MessagesIcon />}
-			tooltipContent="Chat"
-			onClick={() => {
-				onClick(types.CHAT);
-			}}
-		/>
+		<Popover
+			interactive
+			placement="right-start"
+			offset={[0, 14]}
+			render={(attrs) => (
+				<Popover.Content
+					{...attrs}
+					className="h-screen !bg-transparent pb-1.5"
+				>
+					<BookmarkPanel />
+				</Popover.Content>
+			)}
+		>
+			<Item
+				isActive={isActive}
+				icon={<MessagesIcon />}
+				tooltipContent="Chat"
+				onClick={() => {
+					onClick(types.CHAT);
+				}}
+			/>
+		</Popover>
 	);
 };
 

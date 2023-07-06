@@ -12,7 +12,7 @@ export const Tooltip = forwardRef(
 					<div
 						{...attrs}
 						className={clsx(
-							'tooltip rounded-md bg-slate-600 py-2 px-4 text-sm text-slate-50 dark:bg-dark-100 dark:text-dark-700',
+							'tooltip rounded-md bg-slate-600 px-4 py-2 text-sm text-slate-50 dark:bg-dark-100 dark:text-dark-700',
 							className,
 						)}
 						role="tooltip"

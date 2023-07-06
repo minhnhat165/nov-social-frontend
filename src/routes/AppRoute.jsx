@@ -26,6 +26,7 @@ const AppRoute = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/chat" element={<ComingSoon />} />
 						<Route path="/videos" element={<ComingSoon />} />
+						<Route path="/bookmark" element={<ComingSoon />} />
 						<Route path="/people" element={<PeoplePage />} />
 						<Route path="/games" element={<Game />} />
 					</Route>
