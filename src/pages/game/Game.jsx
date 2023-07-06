@@ -124,10 +124,6 @@ const Chat = ({ room, onLeave }) => {
 		e.target[0].value = '';
 
 		setMessages([...messages, message]);
-		setTimeout(() => {
-			chatContainerRef.current.scrollTop =
-				chatContainerRef.current.scrollHeight;
-		}, 100);
 
 		socket.emit('client.game.room.message.send', {
 			message,
@@ -138,10 +134,6 @@ const Chat = ({ room, onLeave }) => {
 	useEffect(() => {
 		socket.on('server.game.room.message.send', (message) => {
 			setMessages((prev) => [...prev, message]);
-			setTimeout(() => {
-				chatContainerRef.current.scrollTop =
-					chatContainerRef.current.scrollHeight;
-			}, 100);
 		});
 		return () => {
 			socket.off('server.game.room.message.send');
@@ -158,9 +150,9 @@ const Chat = ({ room, onLeave }) => {
 			</div>
 			<div
 				ref={chatContainerRef}
-				className="flex flex-1 overflow-y-scroll"
+				className="flex flex-1 flex-col-reverse overflow-y-scroll"
 			>
-				<div className="mt-auto flex w-full flex-col gap-2 px-2">
+				<div className="flex w-full flex-col gap-2 px-2">
 					{messages.map((message) => {
 						return (
 							<div
