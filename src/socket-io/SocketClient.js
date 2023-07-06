@@ -14,7 +14,6 @@ const SocketClient = () => {
 	useEffect(() => {
 		socket.connect();
 		function onConnect() {
-			console.log('connected');
 			if (user?._id) {
 				socket.emit('client.join', user._id);
 			}

@@ -27,9 +27,9 @@ const Navbar = () => {
 				path: '/videos',
 			},
 			{
-				name: 'Friends',
+				name: 'People',
 				icon: <UsersIcon />,
-				path: '/friends',
+				path: '/people',
 			},
 			{
 				name: 'Games',
@@ -51,7 +51,7 @@ const Navbar = () => {
 			{indexActive >= 0 && (
 				<>
 					<div
-						className="absolute top-0 left-0"
+						className="absolute left-0 top-0"
 						style={{
 							transform: `translateY(${
 								indexActive * 40 + indexActive * 16
@@ -62,7 +62,7 @@ const Navbar = () => {
 						<div className="-ml-1 h-10 w-1 rounded-r-md bg-primary-500" />
 					</div>
 					<div
-						className="absolute top-0 right-0"
+						className="absolute right-0 top-0"
 						style={{
 							transform: `translateY(${
 								indexActive * 40 + indexActive * 16

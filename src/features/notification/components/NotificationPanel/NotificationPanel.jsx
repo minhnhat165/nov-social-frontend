@@ -1,3 +1,5 @@
+import * as ScrollArea from '@radix-ui/react-scroll-area';
+
 import { BellAlertIcon, CheckAllIcon, Cog6ToothIcon } from 'components/Icon';
 import { Button, IconButton } from 'components/Action';
 import { Fragment, useCallback, useEffect, useState } from 'react';
@@ -31,7 +33,7 @@ export function NotificationPanel() {
 		return getNotifications(query);
 	};
 
-	const { fetchNextPage, hasMore, data, isLoading } = useInfiniteQuery(
+	const { fetchNextPage, hasNextPage, data, isLoading } = useInfiniteQuery(
 		queryKey,
 		queryFn,
 		{
@@ -135,7 +137,7 @@ export function NotificationPanel() {
 	return (
 		<Layer className="flex h-full w-96 flex-col rounded shadow-md">
 			<div className="h-14 w-full">
-				<div className="flex h-full items-center justify-between px-4">
+				<div className="flex h-full items-center justify-between p-4">
 					<Text className="text-xl font-semibold">Notifications</Text>
 					<div className="-mr-2 flex items-center">
 						<IconButton
@@ -178,62 +180,71 @@ export function NotificationPanel() {
 					</Button>
 				</Button.Group>
 			</div>
-			<div
-				id="notification-panel"
-				className="overflow-y-overlay scrollbar-hoverAble flex-1 p-4 pt-0"
-			>
-				{isLoading && (
-					<div className="flex flex-col gap-2">
-						<NotificationSkeleton />
-						<NotificationSkeleton />
-						<NotificationSkeleton />
-						<NotificationSkeleton />
-						<NotificationSkeleton />
-						<NotificationSkeleton />
-					</div>
-				)}
-				{numNotifications === 0 && !isLoading ? (
-					<div className="flex h-full flex-1 flex-col items-center justify-center">
-						<Text primary>
-							<IconWrapper size={16}>
-								<BellAlertIcon />
-							</IconWrapper>
-						</Text>
-						<Text className="text-xl">
-							You have no notifications
-						</Text>
-					</div>
-				) : (
-					<InfiniteScroll
-						dataLength={numNotifications}
-						next={fetchNextPage}
-						scrollThreshold={0.7}
-						hasMore={hasMore}
-						loader={
-							<>
-								<NotificationSkeleton />
-								<NotificationSkeleton />
-							</>
-						}
-						scrollableTarget="notification-panel"
-					>
-						<div className="flex flex-col gap-1">
-							{data?.pages.map((page, i) => (
-								<Fragment key={i}>
-									{page.items.map((notification) => (
-										<Notification
-											key={notification._id}
-											notification={notification}
-											onRead={handleRead}
-											onDelete={handleDelete}
-										/>
-									))}
-								</Fragment>
-							))}
+
+			<ScrollArea.Root className="overflow-hidden rounded-b">
+				<ScrollArea.Viewport
+					id="notification-panel"
+					className="h-full w-full p-2 pt-0"
+				>
+					{isLoading && (
+						<div className="flex flex-col gap-2">
+							<NotificationSkeleton />
+							<NotificationSkeleton />
+							<NotificationSkeleton />
+							<NotificationSkeleton />
+							<NotificationSkeleton />
+							<NotificationSkeleton />
 						</div>
-					</InfiniteScroll>
-				)}
-			</div>
+					)}
+					{numNotifications === 0 && !isLoading ? (
+						<div className="flex h-full flex-1 flex-col items-center justify-center">
+							<Text primary>
+								<IconWrapper size={16}>
+									<BellAlertIcon />
+								</IconWrapper>
+							</Text>
+							<Text className="text-xl">
+								You have no notifications
+							</Text>
+						</div>
+					) : (
+						<InfiniteScroll
+							dataLength={numNotifications}
+							next={fetchNextPage}
+							scrollThreshold={0.7}
+							hasMore={hasNextPage}
+							loader={
+								<>
+									<NotificationSkeleton />
+									<NotificationSkeleton />
+								</>
+							}
+							scrollableTarget="notification-panel"
+						>
+							<div className="flex flex-col gap-1">
+								{data?.pages.map((page, i) => (
+									<Fragment key={i}>
+										{page.items.map((notification) => (
+											<Notification
+												key={notification._id}
+												notification={notification}
+												onRead={handleRead}
+												onDelete={handleDelete}
+											/>
+										))}
+									</Fragment>
+								))}
+							</div>
+						</InfiniteScroll>
+					)}
+				</ScrollArea.Viewport>
+				<ScrollArea.Scrollbar
+					className="w-[0.7rem] bg-gray-300/50 p-[2px] dark:bg-gray-600/50"
+					orientation="vertical"
+				>
+					<ScrollArea.Thumb className="rounded-md bg-gray-500/50 hover:bg-gray-500 dark:bg-gray-500 hover:dark:bg-gray-400" />
+				</ScrollArea.Scrollbar>
+			</ScrollArea.Root>
 		</Layer>
 	);
 }

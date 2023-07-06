@@ -7,7 +7,7 @@ import { useQuery } from 'react-query';
 export function WhoToFollow() {
 	const { data } = useQuery('who-to-follow', getRecommendations);
 	if (!data) return null;
-	const { users } = data;
+	const { items: users } = data.data;
 	if (!users.length) return null;
 	return (
 		<FocusModePanel title="Who to follow">

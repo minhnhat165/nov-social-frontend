@@ -37,8 +37,8 @@ const updateProfile = (data) =>
 		},
 	});
 
-const getRecommendations = ({ limit = 3 }) =>
-	axiosClient.get(URL + `/recommendations?limit=${limit}`);
+const getRecommendations = ({ limit = 3, page = 1 }) =>
+	axiosClient.get(URL + `/recommendations?limit=${limit}&page=${page}`);
 
 const getFollowing = ({ userId, limit, page }) =>
 	axiosClient.get(

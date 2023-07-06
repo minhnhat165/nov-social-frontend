@@ -6,9 +6,11 @@ import Game from 'pages/game';
 import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
 import NotFound from 'pages/not-found';
+import { PeoplePage } from 'pages/people';
 import { PostRoute } from 'pages';
 import PrivateRoute from './PrivateRoute';
 import ProfileRoute from 'pages/profile/route';
+import { Text } from 'components/Typography';
 import { useSelector } from 'react-redux';
 
 const AuthRoutes = lazy(() => import('features/auth/routes'));
@@ -22,9 +24,9 @@ const AppRoute = () => {
 				<Route path="/" element={<MainLayout />}>
 					<Route element={<PrivateRoute isLogin={isLogin} />}>
 						<Route path="/" element={<Home />} />
-						<Route path="/chat" element={<h1>Home</h1>} />
-						<Route path="/videos" element={<h1>Home</h1>} />
-						<Route path="/friends" element={<h1>Home</h1>} />
+						<Route path="/chat" element={<ComingSoon />} />
+						<Route path="/videos" element={<ComingSoon />} />
+						<Route path="/people" element={<PeoplePage />} />
 						<Route path="/games" element={<Game />} />
 					</Route>
 					<Route path="/post/*" element={<PostRoute />} />
@@ -34,6 +36,17 @@ const AppRoute = () => {
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</Suspense>
+	);
+};
+
+const ComingSoon = () => {
+	return (
+		<div className="flex h-screen flex-col items-center justify-center">
+			<Text primary className="text-4xl font-bold">
+				Coming Soon
+			</Text>
+			<Text>This page is under construction</Text>
+		</div>
 	);
 };
 

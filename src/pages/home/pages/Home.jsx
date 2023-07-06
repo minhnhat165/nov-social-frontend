@@ -6,6 +6,7 @@ import { Button } from 'components/Action';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Layer from 'components/Layout/Layer';
 import Layout from '../components/Layout';
+import { Link } from 'react-router-dom';
 import Post from 'features/post/components/Post';
 import PostEditor from 'features/post/components/PostEditor';
 import { PostSkeleton } from 'features/post/components/Post/Post';
@@ -46,7 +47,6 @@ const Timeline = () => {
 		{
 			getNextPageParam: (lastPage) => {
 				if (!lastPage.moreAvailable) return undefined;
-				console.log(lastPage.lastIndex);
 				return lastPage.lastIndex;
 			},
 		},
@@ -149,7 +149,9 @@ const Timeline = () => {
 							Follow more people to see more posts in your Feed.
 						</Text>
 					</div>
-					<Button size="md">Find People</Button>
+					<Button as={Link} to="/people" size="md">
+						Find People
+					</Button>
 				</Layer>
 			}
 		>
