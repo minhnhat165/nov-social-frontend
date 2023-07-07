@@ -29,14 +29,14 @@ const PostPage = () => {
 					offsetBottom={8}
 					className="max-w-96 mx-2 w-1/3"
 				>
-					<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-2">
+					<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-4">
 						<Details isOwner={isOwner} />
 						<Interests isOwner={isOwner} />
 						<Photos />
 					</div>
 				</ReactStickyBox>
 			) : (
-				<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-2">
+				<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-4">
 					<Details isOwner={isOwner} />
 					<Interests isOwner={isOwner} />
 					<Photos />
