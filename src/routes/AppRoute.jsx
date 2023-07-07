@@ -48,7 +48,7 @@ const AppRoute = () => {
 
 const ComingSoon = () => {
 	return (
-		<div className="flex h-screen flex-col items-center justify-center">
+		<div className="flex h-full flex-col items-center justify-center">
 			<Text primary className="text-4xl font-bold">
 				Coming Soon
 			</Text>
