@@ -44,9 +44,9 @@ function useUploadImage(
 	};
 
 	const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
-		accept: {
-			'image/*': [],
-		},
+		// accept: {
+		// 	'image/*': [],
+		// },
 		multiple: multiple,
 		onDrop: (acceptedFiles) => {
 			handleNewFilesUpload(acceptedFiles);
