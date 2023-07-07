@@ -9,7 +9,7 @@ const MainLayout = () => {
 	const screenMode = useSelector((state) => state.app.screenMode);
 	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
 	return (
-		<div className="mx-auto flex h-screen w-full overflow-hidden">
+		<div className="mx-auto flex h-screen w-full items-start">
 			<div className="h-screen">
 				{isMobile ? <SidebarMobile /> : <Sidebar />}
 			</div>

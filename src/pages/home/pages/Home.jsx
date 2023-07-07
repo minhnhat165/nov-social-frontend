@@ -135,7 +135,7 @@ const Timeline = () => {
 					<PostSkeleton />
 				</div>
 			}
-			scrollableTarget="main-layout"
+			// scrollableTarget="main-layout"
 			endMessage={<FindMorePeople />}
 		>
 			<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">

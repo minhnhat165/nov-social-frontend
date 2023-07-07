@@ -21,10 +21,7 @@ const Layout = ({ children }) => {
 	const user = useSelector((state) => state.auth?.user);
 	if (!user) return null;
 	return (
-		<div
-			id="main-layout"
-			className="flex h-screen w-full items-start overflow-y-scroll pt-20 sm:pt-0"
-		>
+		<div id="main-layout" className="flex w-full items-start pt-20 sm:pt-0">
 			<Head />
 			<StickyBox offsetTop={8} offsetBottom={8}>
 				<aside className="hidden w-[336px] flex-col gap-4 px-2 transition-all tablet:flex">

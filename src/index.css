@@ -61,7 +61,7 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 	body {
-		overflow-y: visible;
+		/* overflow-y: visible; */
 	}
 
 	.bouncy {
@@ -74,7 +74,7 @@
 	}
 
 	body {
-		overflow: hidden;
+		/* overflow: hidden; */
 	}
 
 	@keyframes bouncyAnimate {
