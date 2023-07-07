@@ -66,8 +66,8 @@ const ResetPassword = ({ onLogin }) => {
 
 	return (
 		<div
-			className="w-96 rounded-xl
-      bg-white dark:bg-dark-800"
+			className="rounded-xl bg-white
+      dark:bg-dark-800 sm:w-96"
 		>
 			<AnimatePresence>
 				<div>

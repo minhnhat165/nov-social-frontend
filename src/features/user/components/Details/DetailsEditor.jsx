@@ -249,8 +249,8 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 			</form>
 			<Modal.Footer>
 				<div className="ml-auto">
-          <CancelOrOk
-            formId={id}
+					<CancelOrOk
+						formId={id}
 						onCancel={onCancel}
 						okDisabled={!isDirty || !isValid}
 						okLoading={isLoading}

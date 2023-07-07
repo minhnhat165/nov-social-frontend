@@ -10,6 +10,7 @@ import {
 
 import { editorModes } from '../PostEditor';
 import { usePostEditor } from '../context';
+import { useScreenMode } from 'hooks/useScreenMode';
 
 export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 	const {
@@ -21,6 +22,7 @@ export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 		hasPoll,
 		setHasPoll,
 	} = usePostEditor();
+	const { isMobile } = useScreenMode();
 
 	const handleTriggerImage = () => {
 		setIsFocused(true);
@@ -59,15 +61,34 @@ export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<ColorPaletteIcon />
 				</IconButton>
-				<IconButton variant="text" color="secondary" size="sm" rounded>
-					<FaceSmileIcon />
-				</IconButton>
-				<IconButton variant="text" color="secondary" size="sm" rounded>
-					<ClockIcon />
-				</IconButton>
-				<IconButton variant="text" color="secondary" size="sm" rounded>
-					<MapPinIcon />
-				</IconButton>
+				{!isMobile && (
+					<>
+						<IconButton
+							variant="text"
+							color="secondary"
+							size="sm"
+							rounded
+						>
+							<FaceSmileIcon />
+						</IconButton>
+						<IconButton
+							variant="text"
+							color="secondary"
+							size="sm"
+							rounded
+						>
+							<ClockIcon />
+						</IconButton>
+						<IconButton
+							variant="text"
+							color="secondary"
+							size="sm"
+							rounded
+						>
+							<MapPinIcon />
+						</IconButton>
+					</>
+				)}
 			</div>
 			<div className="flex gap-2">
 				{mode === editorModes.EDIT && (

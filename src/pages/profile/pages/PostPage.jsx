@@ -11,16 +11,15 @@ import InterestEditor from 'features/Interest/Components/InterestEditor';
 import { Modal } from 'components/OverLay';
 import PostEditor from 'features/post/components/PostEditor/PostEditor';
 import ReactStickyBox from 'react-sticky-box';
-import { SCREEN_MODE } from 'constants/app';
 import { getPostsByUserId } from 'api/postApi';
 import { useModal } from 'hooks/useModal';
+import { useScreenMode } from 'hooks/useScreenMode';
 import { useSelector } from 'react-redux';
 
 const PostPage = () => {
 	const { isOwner } = useOutletContext();
 
-	const screenMode = useSelector((state) => state.app.screenMode);
-	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
+	const { isMobile } = useScreenMode();
 
 	return (
 		<div className="flex h-full flex-col items-start sm:flex-row">

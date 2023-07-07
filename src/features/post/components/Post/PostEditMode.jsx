@@ -13,7 +13,7 @@ export function PostEditMode({ post, setIsEditing, onUpdatePost }) {
 	});
 
 	return (
-		<div className="rounded-xl border border-primary-500">
+		<div className="border border-primary-500 sm:rounded-xl">
 			<PostEditor
 				autoFocus={true}
 				initial={cloneObject(post)} // clone to avoid mutating the original post

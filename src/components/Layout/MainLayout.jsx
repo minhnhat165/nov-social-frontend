@@ -1,14 +1,12 @@
 import { Sidebar, SidebarMobile } from 'components/Navigation';
 
 import { Outlet } from 'react-router-dom';
-import { SCREEN_MODE } from 'constants/app';
 import StickyBox from 'react-sticky-box';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { useScreenMode } from 'hooks/useScreenMode';
 
 const MainLayout = () => {
-	const screenMode = useSelector((state) => state.app.screenMode);
-	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
+	const { isMobile } = useScreenMode();
 	return (
 		<div className="mx-auto flex h-full w-full items-start">
 			{isMobile ? (

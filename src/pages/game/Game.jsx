@@ -6,7 +6,6 @@ import { ArrowLeftIcon } from 'components/Icon';
 import { Input } from 'components/DataEntry';
 import Layer from 'components/Layout/Layer';
 import OIcon from 'features/game/TicTacToe/O';
-import { SCREEN_MODE } from 'constants/app';
 import { SendIcon } from 'components/Icon/SendIcon';
 import { Text } from 'components/Typography';
 import TicTacToe from 'features/game/TicTacToe';
@@ -14,14 +13,14 @@ import { UserItem } from 'features/user/components';
 import XIcon from 'features/game/TicTacToe/X';
 import clsx from 'clsx';
 import socket from 'configs/socket-config';
+import { useScreenMode } from 'hooks/useScreenMode';
 import { useSelector } from 'react-redux';
 
 const Game = () => {
 	const user = useSelector((state) => state.auth.user);
 	const [rooms, setRooms] = useState([]);
 
-	const screenMode = useSelector((state) => state.app.screenMode);
-	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
+	const { isMobile } = useScreenMode();
 
 	const [joinedRoomId, setJoinedRoomId] = useState(null);
 	const createNewRoom = () => {

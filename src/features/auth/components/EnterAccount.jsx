@@ -7,7 +7,7 @@ import { useModal } from 'hooks/useModal';
 
 const EnterAccount = ({ title, footer, onSubmit, loading, onSocialLogin }) => {
 	return (
-		<div className="prose flex h-full flex-col justify-center bg-light-50 lg:prose-lg dark:bg-dark-800">
+		<div className="prose flex h-full flex-col bg-light-50 lg:prose-lg dark:bg-dark-800 sm:justify-center">
 			<Header content={title} />
 			<SocialLogin onLogin={onSocialLogin} />
 			<div className="relative text-center">
@@ -43,7 +43,7 @@ function ForgotPassword() {
 				</span>
 			</div>
 			<Modal open={isOpen} onClose={close}>
-				<Modal.Panel>
+				<Modal.Panel responsive>
 					<Modal.Header />
 
 					<div className="px-4 pb-4">

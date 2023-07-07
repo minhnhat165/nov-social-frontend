@@ -14,6 +14,7 @@ import clsx from 'clsx';
 import useGoToProfile from '../hooks/useGoToProfile';
 import { useModal } from 'hooks/useModal';
 import useRemoveAccount from 'features/auth/hooks/useRemoveAccount';
+import { useScreenMode } from 'hooks/useScreenMode';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
@@ -85,13 +86,22 @@ const ManageAccounts = () => {
 };
 
 const AccountItem = ({ user, onRemove, onClick, size }) => {
-	const [showX, setShowX] = useState(false);
+	const { isMobile } = useScreenMode();
+
+	const [showX, setShowX] = useState(isMobile);
+
+	const handleMouseEnter = () => {
+		if (isMobile) return;
+		setShowX(true);
+	};
+
+	const handleMouseLeave = () => {
+		if (isMobile) return;
+		setShowX(false);
+	};
 
 	return (
-		<div
-			onMouseEnter={() => setShowX(true)}
-			onMouseLeave={() => setShowX(false)}
-		>
+		<div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			<UserItem
 				user={user}
 				size={size}

@@ -105,7 +105,7 @@ const AddExistingAccountTrigger = () => {
 				title="Add an existing account"
 			></MenuItem>
 			<Modal open={isOpen} onClose={close}>
-				<Modal.Panel>
+				<Modal.Panel responsive>
 					<Modal.Header />
 
 					<AddExistingAccount onSuccess={close} />
@@ -125,7 +125,7 @@ const ManageAccountsTrigger = () => {
 				title="Manage linked accounts"
 			></MenuItem>
 			<Modal open={isOpen} onClose={close}>
-				<Modal.Panel>
+				<Modal.Panel responsive>
 					<Modal.Header>Manage linked accounts</Modal.Header>
 					<div className="pb-4">
 						<ManageAccounts />

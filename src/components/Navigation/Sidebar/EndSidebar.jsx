@@ -1,7 +1,6 @@
 import { Cog6ToothIcon, PlusIcon } from 'components/Icon';
 import { Modal, Popover, Tooltip } from 'components/OverLay';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 
 import AccountMenu from './AccountMenu';
 import { Avatar } from 'components/DataDisplay';
@@ -13,6 +12,7 @@ import socket from 'configs/socket-config';
 import { toast } from 'react-hot-toast';
 import { updateLinkedAccount } from 'store/slices/authSlice';
 import { useCreatePost } from 'features/post/hooks';
+import { useEffect } from 'react';
 import { useModal } from 'hooks/useModal';
 import { useQueryClient } from 'react-query';
 

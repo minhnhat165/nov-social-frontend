@@ -7,7 +7,7 @@ const AddExistingAccount = ({ onSuccess }) => {
 	const { mutate, isLoading } = useAddAccount({ onSuccess });
 
 	return (
-		<div className="w-[500px] px-16 pb-4">
+		<div className="h-full w-screen px-2 pb-4 sm:w-[500px] sm:px-16">
 			<EnterAccount
 				title={'Add Existing Account'}
 				onSubmit={(data) => mutate(addAccount(data))}

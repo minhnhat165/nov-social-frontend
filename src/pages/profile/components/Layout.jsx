@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Head from 'components/Head';
 import ProfilePanel from './ProfilePanel';
-import { SCREEN_MODE } from 'constants/app';
 import StickyBox from 'react-sticky-box';
 import { getProfile } from 'api/userApi';
 import { setProfile } from 'store/slices/profileSlice';
 import { useQuery } from 'react-query';
+import { useScreenMode } from 'hooks/useScreenMode';
 
 const Layout = () => {
 	const { id } = useParams();
@@ -25,8 +25,7 @@ const Layout = () => {
 		},
 	);
 	const profile = useSelector((state) => state.profile.data);
-	const screenMode = useSelector((state) => state.app.screenMode);
-	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
+	const { isMobile } = useScreenMode();
 	return (
 		<>
 			{isSuccess && (
