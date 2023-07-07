@@ -63,7 +63,7 @@ const Game = () => {
 	};
 
 	return (
-		<div className="relative flex h-screen w-screen items-center justify-center overflow-hidden sm:p-10 sm:pt-10">
+		<div className="relative flex h-[calc(100vh_-_96px)] w-screen justify-center overflow-hidden sm:h-screen sm:p-10 sm:pt-10">
 			<Layer
 				responsive
 				level={1}
