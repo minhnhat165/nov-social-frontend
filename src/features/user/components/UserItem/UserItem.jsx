@@ -30,7 +30,7 @@ const subNameSizes = {
 const UserItem = ({
 	user,
 	size,
-	subName = '@' + user.username,
+	subName = '@' + user?.username,
 	end,
 	start,
 	onClick,

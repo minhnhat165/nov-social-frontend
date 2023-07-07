@@ -58,13 +58,15 @@ export const SidebarMobile = () => {
 								}}
 							/>
 						</Card.Header>
-						<SearchMain
-							onNavigate={() => {
-								setShowSearch(false);
-							}}
-							className="px-2 !shadow-none"
-							placeholder="Search for Nov"
-						/>
+						<Card.Body>
+							<SearchMain
+								onNavigate={() => {
+									setShowSearch(false);
+								}}
+								className="!shadow-none"
+								placeholder="Search for Nov"
+							/>
+						</Card.Body>
 					</Card>
 				)}
 				{showMenu && (

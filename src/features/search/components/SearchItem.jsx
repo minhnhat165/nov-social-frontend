@@ -16,7 +16,6 @@ const SearchItem = ({ search, onClick, onRemove }) => {
 		e.stopPropagation();
 		onRemove(search._id);
 	};
-
 	const item = useMemo(() => {
 		switch (type) {
 			case 'keyword':
@@ -30,6 +29,7 @@ const SearchItem = ({ search, onClick, onRemove }) => {
 					/>
 				);
 			case 'user':
+				if (!user) return null;
 				return (
 					<UserItem
 						user={user}
