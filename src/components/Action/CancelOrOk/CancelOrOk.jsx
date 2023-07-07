@@ -2,10 +2,17 @@ import { Button } from '../Button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const CancelOrOk = ({ onCancel, onOk, okDisabled, okLoading }) => {
+export const CancelOrOk = ({
+	formId,
+	onCancel,
+	onOk,
+	okDisabled,
+	okLoading,
+}) => {
 	return (
 		<div className="flex gap-2">
 			<Button
+				form={formId}
 				color="secondary"
 				className="min-w-[96px]"
 				onClick={onCancel}
@@ -13,6 +20,7 @@ export const CancelOrOk = ({ onCancel, onOk, okDisabled, okLoading }) => {
 				Cancel
 			</Button>
 			<Button
+				form={formId}
 				type="submit"
 				className="min-w-[96px]"
 				onClick={onOk}

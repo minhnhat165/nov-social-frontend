@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'components/Typography';
 import { getDirtyFields } from 'utils/formFns';
 import { useForm } from 'react-hook-form';
+import { useId } from 'react';
 import useUpdateProfile from 'features/user/hooks/useUpdateProfile';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -90,11 +91,17 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 		}
 	};
 
+	const id = useId();
+
 	return (
-		<Modal.Panel responsive className="sm:w-[480px]">
+		<Modal.Panel responsive className="flex flex-col sm:w-[480px]">
 			<Modal.Header>Details</Modal.Header>
-			<form onSubmit={handleSubmit(handleSubmitData)}>
-				<div className="overflow-y-overlay flex aspect-square h-[calc(100vh_-_112px)] w-full  flex-col gap-10 px-2 py-2 sm:aspect-square sm:h-fit sm:w-[480px] sm:px-4">
+			<form
+				id={id}
+				className="flex-1"
+				onSubmit={handleSubmit(handleSubmitData)}
+			>
+				<div className="overflow-y-overlay flex aspect-square h-full w-full flex-1 flex-col gap-10 px-2 py-2 sm:aspect-square sm:h-fit sm:w-[480px] sm:px-4">
 					<Section title="Places Lived">
 						<InputItem
 							isPublic={
@@ -239,16 +246,17 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 						</InputItem>
 					</Section>
 				</div>
-				<Modal.Footer>
-					<div className="ml-auto">
-						<CancelOrOk
-							onCancel={onCancel}
-							okDisabled={!isDirty || !isValid}
-							okLoading={isLoading}
-						/>
-					</div>
-				</Modal.Footer>
 			</form>
+			<Modal.Footer>
+				<div className="ml-auto">
+          <CancelOrOk
+            formId={id}
+						onCancel={onCancel}
+						okDisabled={!isDirty || !isValid}
+						okLoading={isLoading}
+					/>
+				</div>
+			</Modal.Footer>
 		</Modal.Panel>
 	);
 };
