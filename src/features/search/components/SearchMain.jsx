@@ -64,7 +64,7 @@ const SearchMain = forwardRef(({ placeholder, onNavigate, ...props }, ref) => {
 			autoFocus
 			{...props}
 		>
-			<div className="flex h-full w-full flex-col gap-2 p-2 sm:w-fit">
+			<div className="flex h-full w-full flex-col gap-2 p-2">
 				{showResult ? (
 					<ResultPanel
 						result={data}

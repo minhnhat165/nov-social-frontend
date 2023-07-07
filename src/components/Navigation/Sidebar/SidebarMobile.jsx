@@ -1,18 +1,21 @@
+import { Bars3Icon, MessagesIcon, SearchIcon } from 'components/Icon';
 import { CloseButton, IconButton } from 'components/Action';
-import { MessagesIcon, SearchIcon } from 'components/Icon';
 
 import { APP_NAME } from 'configs';
+import AccountMenu from './AccountMenu';
 import { Card } from 'components/DataDisplay';
 import Layer from 'components/Layout/Layer';
 import { LogoAction } from './TopSidebar';
 import Navbar from './Navbar';
 import { NotificationBell } from 'features/notification';
 import SearchMain from 'features/search/components/SearchMain';
+import SettingMenu from './SettingMenu';
 import { Text } from 'components/Typography';
 import { useState } from 'react';
 
 export const SidebarMobile = () => {
 	const [showSearch, setShowSearch] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	return (
 		<Layer className="fixed z-[998] w-full rounded-none shadow-md">
 			<div className="flex items-center border-b-2 px-3 py-1 dark:border-dark-850">
@@ -21,17 +24,30 @@ export const SidebarMobile = () => {
 						{APP_NAME}
 					</Text>
 				</LogoAction>
-				<IconButton
-					onClick={() => {
-						setShowSearch(true);
-					}}
-					size="sm"
-					className="ml-auto"
-					color={'secondary'}
-					rounded
-				>
-					<SearchIcon />
-				</IconButton>
+				<div className="ml-auto flex gap-4">
+					<IconButton
+						onClick={() => {
+							setShowSearch(true);
+						}}
+						size="sm"
+						className="ml-auto"
+						color={'secondary'}
+						rounded
+					>
+						<SearchIcon />
+					</IconButton>
+					<IconButton
+						onClick={() => {
+							setShowMenu(true);
+						}}
+						size="sm"
+						className="ml-auto"
+						color={'secondary'}
+						rounded
+					>
+						<Bars3Icon />
+					</IconButton>
+				</div>
 				{showSearch && (
 					<Card className="absolute left-0 top-0 z-[10] h-screen w-screen">
 						<Card.Header className="flex items-center justify-between">
@@ -49,6 +65,22 @@ export const SidebarMobile = () => {
 							className="px-2 !shadow-none"
 							placeholder="Search for Nov"
 						/>
+					</Card>
+				)}
+				{showMenu && (
+					<Card className="absolute left-0 top-0 z-[10] h-screen w-screen">
+						<Card.Header className="flex items-center justify-between">
+							<Card.Title>Menu</Card.Title>
+							<CloseButton
+								onClick={() => {
+									setShowMenu(false);
+								}}
+							/>
+						</Card.Header>
+						<Card.Body className="!px-2">
+							<AccountMenu />
+							<SettingMenu />
+						</Card.Body>
 					</Card>
 				)}
 			</div>

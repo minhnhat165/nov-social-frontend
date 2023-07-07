@@ -82,3 +82,4 @@ export * from './TagIcon';
 export * from './CheckAllIcon';
 export * from './BellAlertIcon';
 export * from './XMarkIcon';
+export * from './Bars3Icon';
