@@ -16,20 +16,23 @@ export const Modal = ({
 	if (!open) {
 		return null;
 	}
+	document.body.style.overflow = 'hidden';
 
 	const closeModal = () => {
+		// Remove scroll-lock styles from the body element when the modal is closed
+		document.body.style.overflow = 'auto';
 		onClose();
 	};
 	return createPortal(
-		<div className="fixed z-[9999] flex-1">
+		<div className="absolute left-0 top-0 z-[9999] sm:fixed sm:flex-1">
 			<div
-				className="fixed inset-0 bg-black/50"
+				className="sm:fixed sm:inset-0 sm:bg-black/50"
 				onClick={() => {
 					closeModal();
 					onClickBackDrop();
 				}}
 			/>
-			<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+			<div className="absolute left-0 top-0 sm:fixed sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2">
 				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
 				{children}
 			</div>
