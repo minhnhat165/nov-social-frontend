@@ -1,5 +1,3 @@
-import * as ScrollArea from '@radix-ui/react-scroll-area';
-
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Layer from 'components/Layout/Layer';
 import { ProfilePreview } from 'features/user/components';
@@ -29,11 +27,8 @@ export const PeoplePage = () => {
 	if (!data) return null;
 	const users = data.pages.flatMap((page) => page.data.items);
 	return (
-		<ScrollArea.Root className="h-full w-full overflow-hidden rounded-b pt-24 sm:pt-0">
-			<ScrollArea.Viewport
-				id="notification-panel"
-				className="flex h-full w-full p-2 sm:p-4 md:p-10"
-			>
+		<div className="h-full w-full">
+			<div className="flex h-full w-full p-2 sm:p-4 md:p-10">
 				<InfiniteScroll
 					dataLength={users.length}
 					next={fetchNextPage}
@@ -56,13 +51,7 @@ export const PeoplePage = () => {
 						))}
 					</div>
 				</InfiniteScroll>
-			</ScrollArea.Viewport>
-			<ScrollArea.Scrollbar
-				className="w-[0.7rem] bg-gray-300/50 p-[2px] dark:bg-gray-600/50"
-				orientation="vertical"
-			>
-				<ScrollArea.Thumb className="rounded-md bg-gray-500/50 hover:bg-gray-500 dark:bg-gray-500 hover:dark:bg-gray-400" />
-			</ScrollArea.Scrollbar>
-		</ScrollArea.Root>
+			</div>
+		</div>
 	);
 };

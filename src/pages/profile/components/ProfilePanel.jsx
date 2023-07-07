@@ -29,8 +29,9 @@ const ProfilePanel = ({ profile }) => {
 
 	return (
 		<Card
+			responsive
 			level={1}
-			className="max-w-96 flex h-full w-[24vw] flex-col gap-3 overflow-hidden shadow"
+			className="flex h-full w-screen flex-col gap-3 overflow-hidden shadow sm:w-96"
 		>
 			<Cover cover={profile.cover} />
 			<Card
@@ -169,6 +170,7 @@ function Cover({ cover }) {
 	return (
 		<FullViewImage src={cover}>
 			<Card
+				responsive
 				level={4}
 				className="aspect-[3/1] w-full shrink-0 overflow-hidden rounded-b-none"
 			>

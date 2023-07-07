@@ -63,11 +63,12 @@ const Game = () => {
 	};
 
 	return (
-		<div className="relative flex h-screen w-screen items-center justify-center pt-24 sm:p-10 sm:pt-10">
+		<div className="relative flex h-screen w-screen items-center justify-center overflow-hidden sm:p-10 sm:pt-10">
 			<Layer
+				responsive
 				level={1}
 				className={clsx(
-					'fixed left-0 top-0 z-[10] flex h-full w-full flex-col rounded-r-none pt-24 sm:relative sm:w-[340px] sm:pt-0',
+					'fixed left-0 top-0 z-[10] flex h-full w-full flex-col !rounded-r-none pt-24 sm:relative sm:w-[340px] sm:pt-0',
 					visibleSidebar ? 'flex' : 'hidden',
 				)}
 			>

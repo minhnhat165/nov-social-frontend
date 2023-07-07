@@ -88,7 +88,7 @@ const Setting = () => {
 	return (
 		<Popover
 			interactive
-			appendTo={'parent'}
+			appendTo={document.body}
 			placement="right-end"
 			offset={[64, 16]}
 			render={

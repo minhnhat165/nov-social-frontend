@@ -13,6 +13,24 @@ import { routePaths } from 'routes/routeConfig';
 import { setReload } from 'store/slices/appSlice';
 
 export function TopSidebar() {
+	return (
+		<Layer
+			level={0}
+			className="mx-1 mb-2 flex w-14 flex-col items-center justify-center gap-2 rounded-lg rounded-b-lg  py-2"
+		>
+			<LogoAction>
+				<div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-b from-primary-400 to-primary-900 font-bold text-slate-100">
+					<IconWrapper>
+						<CubeTransparentIcon strokeWidth={3} />
+					</IconWrapper>
+				</div>
+			</LogoAction>
+			<Search />
+		</Layer>
+	);
+}
+
+export const LogoAction = ({ children }) => {
 	const { pathname } = useLocation();
 	const isReload = useSelector((state) => state.app.isReload);
 	const dispatch = useDispatch();
@@ -21,25 +39,12 @@ export function TopSidebar() {
 		e.preventDefault();
 		dispatch(setReload(true));
 	};
-
 	return (
-		<Layer
-			level={0}
-			className="mx-1 mb-2 flex w-14 flex-col items-center justify-center gap-2 rounded-lg rounded-b-lg  py-2"
-		>
-			<Link
-				to={routePaths.HOME}
-				className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-b from-primary-400 to-primary-900 font-bold text-slate-100"
-				onClick={handleReload}
-			>
-				<IconWrapper>
-					<CubeTransparentIcon strokeWidth={3} />
-				</IconWrapper>
-			</Link>
-			<Search />
-		</Layer>
+		<Link to={routePaths.HOME} onClick={handleReload}>
+			{children}
+		</Link>
 	);
-}
+};
 
 function Search() {
 	const popoverRef = useRef(null);

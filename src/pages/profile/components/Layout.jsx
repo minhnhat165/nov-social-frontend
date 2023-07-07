@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Head from 'components/Head';
 import ProfilePanel from './ProfilePanel';
+import { SCREEN_MODE } from 'constants/app';
 import StickyBox from 'react-sticky-box';
 import { getProfile } from 'api/userApi';
 import { setProfile } from 'store/slices/profileSlice';
@@ -24,22 +25,25 @@ const Layout = () => {
 		},
 	);
 	const profile = useSelector((state) => state.profile.data);
+	const screenMode = useSelector((state) => state.app.screenMode);
+	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
 	return (
 		<>
 			{isSuccess && (
 				<>
 					<Head title={profile.name} />
-					<div
-						id="main-layout"
-						className="flex h-screen w-full items-start overflow-y-scroll"
-					>
-						<StickyBox offsetTop={0}>
-							<aside className="h-screen py-4">
-								<div className="h-full w-full px-2">
-									<ProfilePanel profile={profile} />
-								</div>
-							</aside>
-						</StickyBox>
+					<div className="flex h-full w-full flex-col items-start sm:flex-row">
+						{!isMobile ? (
+							<StickyBox offsetTop={0}>
+								<aside className="h-screen py-4">
+									<div className="h-full w-full px-2">
+										<ProfilePanel profile={profile} />
+									</div>
+								</aside>
+							</StickyBox>
+						) : (
+							<ProfilePanel profile={profile} />
+						)}
 						<div className="flex-1">
 							<Outlet
 								context={{

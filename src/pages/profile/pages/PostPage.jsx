@@ -8,10 +8,10 @@ import { Button } from 'components/Action';
 import { Details } from 'features/user/components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import InterestEditor from 'features/Interest/Components/InterestEditor';
-import Layer from 'components/Layout/Layer';
 import { Modal } from 'components/OverLay';
 import PostEditor from 'features/post/components/PostEditor/PostEditor';
 import ReactStickyBox from 'react-sticky-box';
+import { SCREEN_MODE } from 'constants/app';
 import { getPostsByUserId } from 'api/postApi';
 import { useModal } from 'hooks/useModal';
 import { useSelector } from 'react-redux';
@@ -19,19 +19,30 @@ import { useSelector } from 'react-redux';
 const PostPage = () => {
 	const { isOwner } = useOutletContext();
 
+	const screenMode = useSelector((state) => state.app.screenMode);
+	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
+
 	return (
-		<div className="flex h-full items-start">
-			<ReactStickyBox
-				offsetTop={8}
-				offsetBottom={8}
-				className="max-w-96 mx-2 w-1/3"
-			>
-				<div className="flex h-full w-full flex-col gap-y-4 pt-2">
+		<div className="flex h-full flex-col items-start sm:flex-row">
+			{!isMobile ? (
+				<ReactStickyBox
+					offsetTop={8}
+					offsetBottom={8}
+					className="max-w-96 mx-2 w-1/3"
+				>
+					<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-2">
+						<Details isOwner={isOwner} />
+						<Interests isOwner={isOwner} />
+						<Photos />
+					</div>
+				</ReactStickyBox>
+			) : (
+				<div className="flex h-full w-full flex-col pt-1 sm:gap-y-4 sm:pt-2">
 					<Details isOwner={isOwner} />
 					<Interests isOwner={isOwner} />
 					<Photos />
 				</div>
-			</ReactStickyBox>
+			)}
 			<Main />
 		</div>
 	);
@@ -67,7 +78,7 @@ function Interests({ isOwner }) {
 	};
 
 	return (
-		<Card className="w-full ">
+		<Card responsive className="w-full ">
 			<Card.Header className="flex items-center justify-between">
 				<Card.Title>Interest</Card.Title>
 				{isOwner && renderAction(interests)}
@@ -95,7 +106,7 @@ function Photos() {
 	const photos = useSelector((state) => state.profile.data.photos) || [];
 	return (
 		photos.length > 0 && (
-			<Card className="w-full">
+			<Card responsive className="w-full">
 				<Card.Header>
 					<Card.Title>Photos</Card.Title>
 				</Card.Header>
@@ -144,8 +155,8 @@ const Main = () => {
 		},
 	});
 	return (
-		<div className="flex max-w-[600px] flex-1 flex-col px-2 py-4">
-			<div className="mb-4">
+		<div className="flex max-w-[600px] flex-1 flex-col py-1 sm:px-2 sm:py-4">
+			<div className="pb-1 sm:mb-4">
 				<PostEditor onSubmit={mutateAsync} />
 			</div>
 			<div className="flex flex-col gap-4">
@@ -155,15 +166,14 @@ const Main = () => {
 					scrollThreshold={0.7}
 					hasMore={hasNextPage}
 					loader={
-						<div className="flex flex-col gap-4">
+						<div className="flex flex-col gap-1 sm:gap-4">
 							<PostSkeleton />
 							<PostSkeleton />
 							<PostSkeleton />
 						</div>
 					}
-					scrollableTarget="main-layout"
 				>
-					<div className="flex flex-col gap-4 pb-4">
+					<div className="flex flex-col gap-1 sm:gap-4">
 						{posts?.map((post) => (
 							<Post
 								key={post._id}

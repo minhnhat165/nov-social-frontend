@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 const Home = () => {
 	return (
 		<Layout>
-			<div className="relative mx-auto flex max-w-[590px] flex-col pt-4">
+			<div className="relative mx-auto flex max-w-[590px] flex-col sm:pt-4">
 				<PostCreator />
 				<Timeline />
 			</div>
@@ -129,13 +129,12 @@ const Timeline = () => {
 			scrollThreshold={0.7}
 			hasMore={hasNextPage}
 			loader={
-				<div className="flex flex-col gap-4">
+				<div className="flex flex-col gap-1 sm:gap-4">
 					<PostSkeleton />
 					<PostSkeleton />
 					<PostSkeleton />
 				</div>
 			}
-			// scrollableTarget="main-layout"
 			endMessage={<FindMorePeople />}
 		>
 			<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">

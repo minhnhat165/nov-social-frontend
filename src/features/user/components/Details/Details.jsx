@@ -44,7 +44,7 @@ export const Details = ({ isOwner }) => {
 	}, [phoneNumber]);
 
 	return (
-		<Card className="h-fit w-full">
+		<Card responsive className="h-fit w-full">
 			<Card.Header className="flex items-center justify-between">
 				<Card.Title>Details</Card.Title>
 				{isOwner && (
