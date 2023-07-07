@@ -5,6 +5,7 @@ import Layer from 'components/Layout/Layer';
 import { XMarkIcon } from 'components/Icon';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
+import { useScreenMode } from 'hooks/useScreenMode';
 
 export const Modal = ({
 	open,
@@ -13,6 +14,7 @@ export const Modal = ({
 	children,
 	closeIcon = <XMarkIcon />,
 }) => {
+	const { isMobile } = useScreenMode();
 	if (!open) {
 		return null;
 	}
@@ -23,16 +25,24 @@ export const Modal = ({
 		// document.body.style.overflow = 'auto';
 		onClose();
 	};
+	if (isMobile) {
+		return (
+			<div className="absolute left-0 top-0 z-[9999]">
+				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
+				{children}
+			</div>
+		);
+	}
 	return createPortal(
-		<div className="absolute left-0 top-0 z-[9999] sm:fixed sm:flex-1">
+		<div className="fixed z-[9999] flex-1">
 			<div
-				className="sm:fixed sm:inset-0 sm:bg-black/50"
+				className="fixed inset-0 sm:bg-black/50"
 				onClick={() => {
 					closeModal();
 					onClickBackDrop();
 				}}
 			/>
-			<div className="absolute left-0 top-0 sm:fixed sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2">
+			<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
 				{children}
 			</div>
