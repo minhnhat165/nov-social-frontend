@@ -1,18 +1,12 @@
-import { BellIcon, BookmarkIcon, MessagesIcon } from 'components/Icon';
+import { BookmarkIcon, MessagesIcon } from 'components/Icon';
 import { Popover, Tooltip } from 'components/OverLay';
-import { forwardRef, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { forwardRef, useState } from 'react';
 
-import { Badge } from 'components/DataDisplay';
-import { BookmarkPanel } from 'features/bookmark/components';
-import Layer from 'components/Layout/Layer';
-import { NotificationPanel } from 'features/notification';
-import { Text } from 'components/Typography';
 import clsx from 'clsx';
-import { readNotify } from 'api/userApi';
-import socket from 'configs/socket-config';
-import { updateUser } from 'store/slices/authSlice';
-import { useMutation } from 'react-query';
+import Layer from 'components/Layout/Layer';
+import { Text } from 'components/Typography';
+import { BookmarkPanel } from 'features/bookmark/components';
+import { NotificationBell, NotificationPanel } from 'features/notification';
 
 const types = {
 	CHAT: 'CHAT',
@@ -71,31 +65,6 @@ const Item = forwardRef(
 );
 
 const Notifications = ({ onClick, isActive }) => {
-	const dispatch = useDispatch();
-	const _numNotifications = useSelector(
-		(state) => state.auth.user?.numNotifications,
-	);
-
-	const [numNotifications, setNumNotifications] = useState(_numNotifications);
-	const { mutate } = useMutation(readNotify, {
-		onSuccess: () => {
-			dispatch(updateUser({ numNotifications: 0 }));
-		},
-	});
-
-	useEffect(() => {
-		socket.on('server.notification.count', (num) => {
-			setNumNotifications(num);
-		});
-		return () => {
-			socket.off('server.notification.count');
-		};
-	}, []);
-
-	useEffect(() => {
-		setNumNotifications(_numNotifications);
-	}, [_numNotifications]);
-
 	return (
 		<Popover
 			onClickOutside={() => {
@@ -116,16 +85,9 @@ const Notifications = ({ onClick, isActive }) => {
 			<Item
 				onClick={() => {
 					onClick(types.NOTIFICATIONS);
-					if (numNotifications > 0) {
-						mutate();
-					}
 				}}
 				isActive={isActive}
-				icon={
-					<Badge count={numNotifications}>
-						<BellIcon />
-					</Badge>
-				}
+				icon={<NotificationBell />}
 				tooltipContent="Notifications"
 			/>
 		</Popover>

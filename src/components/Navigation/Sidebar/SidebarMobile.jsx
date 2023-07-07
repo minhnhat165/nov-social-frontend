@@ -1,9 +1,10 @@
-import { BellAlertIcon, MessagesIcon, SearchIcon } from 'components/Icon';
+import { MessagesIcon, SearchIcon } from 'components/Icon';
 
 import { IconButton } from 'components/Action';
 import Layer from 'components/Layout/Layer';
 import { Text } from 'components/Typography';
 import { APP_NAME } from 'configs';
+import { NotificationBell } from 'features/notification';
 import Navbar from './Navbar';
 import { LogoAction } from './TopSidebar';
 
@@ -30,7 +31,7 @@ export const SidebarMobile = () => {
 				extraItems={[
 					{
 						name: 'Notification',
-						icon: <BellAlertIcon />,
+						icon: <NotificationBell />,
 						path: '/notifications',
 					},
 					{

@@ -9,6 +9,7 @@ import { NavLink, matchPath, useLocation } from 'react-router-dom';
 import { Tooltip } from 'components/OverLay';
 import clsx from 'clsx';
 import { useMemo } from 'react';
+import { IconWrapper } from 'components/DataDisplay';
 
 const TRANSITION_TIME = 500;
 
@@ -119,7 +120,7 @@ const Item = ({ item, isHorizontal }) => {
 					} ${isHorizontal ? 'h-12 w-12' : 'h-10 w-10'}`
 				}
 			>
-				<div className="flex h-6 w-6 items-center justify-center">
+				<div className="h-6 w-6 items-center justify-center">
 					{item.icon}
 				</div>
 			</NavLink>
