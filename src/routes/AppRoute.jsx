@@ -6,6 +6,7 @@ import Game from 'pages/game';
 import Home from 'pages/home/pages/Home';
 import MainLayout from 'components/Layout/MainLayout';
 import NotFound from 'pages/not-found';
+import NotificationPage from 'features/notification/pages';
 import { PeoplePage } from 'pages/people';
 import { PostRoute } from 'pages';
 import PrivateRoute from './PrivateRoute';
@@ -27,7 +28,11 @@ const AppRoute = () => {
 						<Route path="/chat" element={<ComingSoon />} />
 						<Route path="/videos" element={<ComingSoon />} />
 						<Route path="/bookmark" element={<ComingSoon />} />
-						<Route path="/notifications" element={<ComingSoon />} />
+						<Route path="/search" element={<ComingSoon />} />
+						<Route
+							path="/notifications"
+							element={<NotificationPage />}
+						/>
 						<Route path="/people" element={<PeoplePage />} />
 						<Route path="/games" element={<Game />} />
 					</Route>

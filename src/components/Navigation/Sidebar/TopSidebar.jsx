@@ -46,7 +46,7 @@ export const LogoAction = ({ children }) => {
 	);
 };
 
-function Search() {
+export function Search() {
 	const popoverRef = useRef(null);
 	const searchRef = useRef(null);
 	const [isFocused, setIsFocused] = useState(false);

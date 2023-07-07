@@ -172,7 +172,7 @@ function Cover({ cover }) {
 			<Card
 				responsive
 				level={4}
-				className="aspect-[3/1] w-full shrink-0 overflow-hidden rounded-b-none"
+				className="aspect-[3/1] w-full shrink-0 overflow-hidden !rounded-b-none"
 			>
 				<Card.Image src={cover} />
 			</Card>

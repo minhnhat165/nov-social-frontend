@@ -155,7 +155,7 @@ const Main = () => {
 		},
 	});
 	return (
-		<div className="flex max-w-[600px] flex-1 flex-col py-1 sm:px-2 sm:py-4">
+		<div className="flex w-screen max-w-[600px] flex-1 flex-col py-1 sm:w-fit sm:px-2 sm:py-4">
 			<div className="pb-1 sm:mb-4">
 				<PostEditor onSubmit={mutateAsync} />
 			</div>
@@ -166,7 +166,7 @@ const Main = () => {
 					scrollThreshold={0.7}
 					hasMore={hasNextPage}
 					loader={
-						<div className="flex flex-col gap-1 sm:gap-4">
+						<div className="mt-1 flex flex-col gap-1 sm:mt-4 sm:gap-4">
 							<PostSkeleton />
 							<PostSkeleton />
 							<PostSkeleton />

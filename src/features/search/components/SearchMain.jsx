@@ -40,7 +40,7 @@ const SearchMain = forwardRef(({ placeholder, onNavigate, ...props }, ref) => {
 		}
 		if (type === searchType.USER) {
 			const { user } = data;
-			ref.current.blur();
+			ref?.current?.blur();
 			navigate(`/profile/${user._id}`);
 			return;
 		}
@@ -64,7 +64,7 @@ const SearchMain = forwardRef(({ placeholder, onNavigate, ...props }, ref) => {
 			autoFocus
 			{...props}
 		>
-			<div className="flex flex-col gap-2 p-2">
+			<div className="flex h-full w-full flex-col gap-2 p-2 sm:w-fit">
 				{showResult ? (
 					<ResultPanel
 						result={data}
