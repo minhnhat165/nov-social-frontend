@@ -13,16 +13,19 @@ export const Modal = ({
 	children,
 	closeIcon = <XMarkIcon />,
 }) => {
-	if (!open) return null;
-	document.body.style.overflow = 'hidden';
+	if (!open) {
+		// document.body.style.overflow = 'auto';
+		return null;
+	}
+	// document.body.style.overflow = 'hidden';
 
 	const closeModal = () => {
 		// Remove scroll-lock styles from the body element when the modal is closed
-		document.body.style.overflow = 'auto';
+		// document.body.style.overflow = 'auto';
 		onClose();
 	};
 	return createPortal(
-		<div className="fixed z-[9999]">
+		<div className="fixed z-[9999] flex-1">
 			<div
 				className="fixed inset-0 bg-black/50"
 				onClick={() => {
