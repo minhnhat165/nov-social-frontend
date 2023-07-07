@@ -16,6 +16,8 @@ import { RichTextEditor } from 'components/DataEntry';
 import { ToolBar } from './ToolBar';
 import clsx from 'clsx';
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { SCREEN_MODE } from 'constants/app';
 
 export const MAX_LEVEL = 2;
 
@@ -53,6 +55,7 @@ const Comment = ({
 	const [isEditing, setIsEditing] = useState(false);
 	const [searchParams] = useSearchParams();
 	const isActivated = comment._id === searchParams.get('commentId');
+	const screenMode = useSelector((state) => state.app.screenMode);
 
 	useEffect(() => {
 		if (isActivated) {
@@ -134,8 +137,18 @@ const Comment = ({
 									<RichTextEditor
 										readOnly={true}
 										initial={comment.content}
-										fontSizeDefault={1}
-										fontSizeReduced={1}
+										fontSizeDefault={
+											screenMode ===
+											SCREEN_MODE.MOBILE.name
+												? 0.75
+												: 1
+										}
+										fontSizeReduced={
+											screenMode ===
+											SCREEN_MODE.MOBILE.name
+												? 0.75
+												: 1
+										}
 									/>
 								)}
 								{!!comment?.photos?.length && (

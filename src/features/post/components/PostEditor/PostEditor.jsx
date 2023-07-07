@@ -128,6 +128,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 			}}
 		>
 			<Layer
+				responsive
 				className={clsx(
 					'relative z-50 flex w-full transform flex-col rounded-xl pt-4 shadow transition-all',
 					isFocused && 'min-h-[160px]',

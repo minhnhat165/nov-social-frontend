@@ -22,16 +22,16 @@ const shadows = {
 };
 
 const Layer = forwardRef(
-	({ level = 1, className, children, shadow, ...props }, ref) => {
+	({ level = 1, className, children, responsive, shadow, ...props }, ref) => {
 		return (
 			<div
 				ref={ref}
 				{...props}
 				className={clsx(
-					'rounded-xl',
 					levels[level],
 					shadow && shadows[level],
 					className,
+					responsive ? 'rounded-none sm:rounded-xl' : 'rounded-xl',
 				)}
 			>
 				{children}

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 	isReload: false,
 	userOnlineIds: [],
+	screenMode: 'desktop',
 };
 
 const appSlice = createSlice({
@@ -31,11 +32,19 @@ const appSlice = createSlice({
 				state.userOnlineIds.splice(index, 1);
 			}
 		},
+		setScreenMode: (state, action) => {
+			state.screenMode = action.payload;
+		},
 	},
 });
 
-export const { setReload, addUserOnline, removeUserOnline, setUserOnlineIds } =
-	appSlice.actions;
+export const {
+	setReload,
+	addUserOnline,
+	removeUserOnline,
+	setUserOnlineIds,
+	setScreenMode,
+} = appSlice.actions;
 
 const appReducer = appSlice.reducer;
 

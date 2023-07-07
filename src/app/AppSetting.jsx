@@ -1,15 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { SCREEN_MODE } from 'constants/app';
 import { getUser } from 'api/authApi';
+import { setScreenMode } from 'store/slices/appSlice';
 import { setTheme } from 'store/slices/settingSlice';
 import { setUser } from 'store/slices/authSlice';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 const AppSetting = (props) => {
 	const dispatch = useDispatch();
 	const theme = useSelector((state) => state.setting.theme);
 	const isLogin = useSelector((state) => state.auth.isLogin);
+	const { width } = useWindowSize();
+	useEffect(() => {
+		if (width < SCREEN_MODE.MOBILE.max) {
+			dispatch(setScreenMode(SCREEN_MODE.MOBILE.name));
+		} else if (width < SCREEN_MODE.TABLET.max) {
+			dispatch(setScreenMode(SCREEN_MODE.TABLET.name));
+		} else {
+			dispatch(setScreenMode(SCREEN_MODE.DESKTOP.name));
+		}
+	}, [dispatch, width]);
 
 	useQuery('user', getUser, {
 		enabled: isLogin,

@@ -136,26 +136,9 @@ const Timeline = () => {
 				</div>
 			}
 			scrollableTarget="main-layout"
-			endMessage={
-				<Layer
-					level={1}
-					className="mb-4 flex flex-col items-center justify-center gap-5 p-6"
-				>
-					<div className="mt-2 flex flex-col items-center">
-						<Text className="text-xl font-bold">
-							No more posts to show
-						</Text>
-						<Text level={2}>
-							Follow more people to see more posts in your Feed.
-						</Text>
-					</div>
-					<Button as={Link} to="/people" size="md">
-						Find People
-					</Button>
-				</Layer>
-			}
+			endMessage={<FindMorePeople />}
 		>
-			<div className="flex flex-col gap-4 pb-4">
+			<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">
 				{posts?.map((post) => (
 					<Post
 						key={post._id}
@@ -190,8 +173,28 @@ function PostCreator() {
 		},
 	});
 	return (
-		<div className="mb-4">
+		<div className="mb-1 sm:mb-4">
 			<PostEditor onSubmit={mutateAsync} />
 		</div>
 	);
 }
+
+const FindMorePeople = () => {
+	return (
+		<Layer
+			responsive
+			level={1}
+			className="mb-1 flex flex-col items-center justify-center gap-5 p-6 sm:mb-4"
+		>
+			<div className="mt-2 flex flex-col items-center">
+				<Text className="text-xl font-bold">No more posts to show</Text>
+				<Text level={2}>
+					Follow more people to see more posts in your Feed.
+				</Text>
+			</div>
+			<Button as={Link} to="/people" size="md">
+				Find People
+			</Button>
+		</Layer>
+	);
+};

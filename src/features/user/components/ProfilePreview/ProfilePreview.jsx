@@ -9,8 +9,8 @@ import { Text } from 'components/Typography';
 import clsx from 'clsx';
 import { getUserPreview } from 'api/userApi';
 import { routePaths } from 'routes/routeConfig';
-import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export const ProfilePreview = ({ user: initial, onUpdateUser }) => {
 	const currentUserId = useSelector((state) => state.auth.user?._id);
@@ -54,7 +54,7 @@ export const ProfilePreview = ({ user: initial, onUpdateUser }) => {
 	return (
 		<Layer
 			className={clsx(
-				'min-h-[184px] w-80 cursor-default !bg-inherit p-4 opacity-0  shadow transition-all',
+				'min-h-[184px] w-[calc(100vw_-_16px)] cursor-default !bg-inherit p-4 opacity-0 shadow  transition-all sm:w-80',
 				isLoading ? 'opacity-0' : 'opacity-100',
 			)}
 		>

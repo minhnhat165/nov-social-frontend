@@ -70,7 +70,7 @@ export const CommentZone = forwardRef(
 
 		return (
 			<div className="border-normal border-t">
-				<div className="px-4 pb-2 pt-4">
+				<div className="p-2 pb-2 sm:p-4 ">
 					<CommentCreator
 						onLocalCommentCreated={addComment}
 						onServerCommentCreated={replaceComment}

@@ -29,10 +29,10 @@ export const PeoplePage = () => {
 	if (!data) return null;
 	const users = data.pages.flatMap((page) => page.data.items);
 	return (
-		<ScrollArea.Root className="h-full w-full overflow-hidden rounded-b">
+		<ScrollArea.Root className="h-full w-full overflow-hidden rounded-b pt-24 sm:pt-0">
 			<ScrollArea.Viewport
 				id="notification-panel"
-				className="h-full w-full p-10"
+				className="flex h-full w-full p-2 sm:p-4 md:p-10"
 			>
 				<InfiniteScroll
 					dataLength={users.length}
@@ -41,7 +41,7 @@ export const PeoplePage = () => {
 					hasMore={hasNextPage}
 					scrollableTarget="notification-panel"
 				>
-					<div className="flex flex-wrap gap-4 ">
+					<div className="flex flex-wrap gap-2 sm:gap-4">
 						{users.map((user) => (
 							<UserProvider key={user._id} user={user}>
 								{({ user, updateUser }) => (

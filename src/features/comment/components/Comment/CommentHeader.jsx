@@ -1,16 +1,16 @@
 import { Avatar, TimeDisplay } from 'components/DataDisplay';
+import { useState } from 'react';
 import { COMMENT_STATUS, useComment } from './Comment';
-import { useMemo, useState } from 'react';
 
+import { deleteComment } from 'api/commentApi';
 import { Button } from 'components/Action';
 import { Menu } from 'components/Navigation';
 import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
-import { deleteComment } from 'api/commentApi';
-import { toast } from 'react-hot-toast';
 import { useComments } from 'features/comment/context';
-import { useMutation } from 'react-query';
 import { usePost } from 'features/post/components/Post/Post';
+import { toast } from 'react-hot-toast';
+import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
 
 export function CommentHeader() {
@@ -34,7 +34,7 @@ export function CommentHeader() {
 						<>
 							<Text
 								level={3}
-								className="pb-2 leading-3"
+								className="pb-2 text-lg leading-3"
 								size="lg"
 								bold
 							>
@@ -50,8 +50,8 @@ export function CommentHeader() {
 						</>
 					) : null}
 				</div>
-				<div className="flex items-center gap-1">
-					<Text level={3} size="sm">
+				<div className="flex flex-wrap items-center gap-1">
+					<Text level={3} className="text-xs sm:text-sm">
 						@{author.username}
 					</Text>
 
@@ -75,8 +75,8 @@ export function CommentHeader() {
 			</div>
 			<Menu>
 				<div
-					className={`ml-auto opacity-0 transition-all 
-            duration-300 ease-in-out group-hover:opacity-100`}
+					className={`ml-auto transition-all duration-300 
+            ease-in-out group-hover:opacity-100 sm:opacity-0`}
 				>
 					<Menu.Trigger size="sm" />
 				</div>

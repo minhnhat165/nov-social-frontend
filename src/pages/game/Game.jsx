@@ -1,14 +1,17 @@
+import { Avatar, IconWrapper } from 'components/DataDisplay';
 import { Button, IconButton } from 'components/Action';
 import { useEffect, useRef, useState } from 'react';
 
 import { ArrowLeftIcon } from 'components/Icon';
-import { Avatar } from 'components/DataDisplay';
 import { Input } from 'components/DataEntry';
 import Layer from 'components/Layout/Layer';
+import OIcon from 'features/game/TicTacToe/O';
+import { SCREEN_MODE } from 'constants/app';
 import { SendIcon } from 'components/Icon/SendIcon';
 import { Text } from 'components/Typography';
 import TicTacToe from 'features/game/TicTacToe';
 import { UserItem } from 'features/user/components';
+import XIcon from 'features/game/TicTacToe/X';
 import clsx from 'clsx';
 import socket from 'configs/socket-config';
 import { useSelector } from 'react-redux';
@@ -16,6 +19,9 @@ import { useSelector } from 'react-redux';
 const Game = () => {
 	const user = useSelector((state) => state.auth.user);
 	const [rooms, setRooms] = useState([]);
+
+	const screenMode = useSelector((state) => state.app.screenMode);
+	const isMobile = screenMode === SCREEN_MODE.MOBILE.name;
 
 	const [joinedRoomId, setJoinedRoomId] = useState(null);
 	const createNewRoom = () => {
@@ -46,51 +52,65 @@ const Game = () => {
 		};
 	}, []);
 
+	const [visibleSidebar, setVisibleSidebar] = useState(true);
+
+	const hideSidebar = () => {
+		setVisibleSidebar(false);
+	};
+
+	const showSidebar = () => {
+		setVisibleSidebar(true);
+	};
+
 	return (
-		<div className="flex h-screen w-screen items-center justify-center">
-			<div className="relative">
-				<Layer
-					level={1}
-					className="absolute -left-0 flex h-full w-[340px] -translate-x-full flex-col rounded-r-none"
-				>
-					{joinedRoomId ? (
-						<Chat
-							room={rooms.find(
-								(room) => room._id === joinedRoomId,
-							)}
-							onLeave={() => {
-								setJoinedRoomId(null);
-							}}
-						/>
-					) : (
-						<RoomFolder
-							rooms={rooms}
-							onSelectRoom={(room) => {
-								setJoinedRoomId(room._id);
-							}}
-						/>
-					)}
-					{!joinedRoomId && (
-						<Layer
-							level={1}
-							className="mt-auto flex w-full flex-col gap-2 p-2"
+		<div className="relative flex h-screen w-screen items-center justify-center pt-24 sm:p-10 sm:pt-10">
+			<Layer
+				level={1}
+				className={clsx(
+					'fixed left-0 top-0 z-[10] flex h-full w-full flex-col rounded-r-none pt-24 sm:relative sm:w-[340px] sm:pt-0',
+					visibleSidebar ? 'flex' : 'hidden',
+				)}
+			>
+				{joinedRoomId ? (
+					<Chat
+						room={rooms.find((room) => room._id === joinedRoomId)}
+						onLeave={() => {
+							setJoinedRoomId(null);
+						}}
+						onBackToGame={hideSidebar}
+						isMobile={isMobile}
+					/>
+				) : (
+					<RoomFolder
+						rooms={rooms}
+						onSelectRoom={(room) => {
+							setJoinedRoomId(room._id);
+							if (isMobile) {
+								hideSidebar();
+							}
+						}}
+					/>
+				)}
+				{!joinedRoomId && (
+					<Layer
+						level={1}
+						className="mt-auto flex w-full flex-col gap-2 p-2"
+					>
+						<Button
+							onClick={createNewRoom}
+							className="!bg-green-500"
 						>
-							<Button
-								onClick={createNewRoom}
-								className="!bg-green-500"
-							>
-								Create
-							</Button>
-						</Layer>
-					)}
-				</Layer>
-				<TicTacToe roomId={joinedRoomId} />
-			</div>
+							Create
+						</Button>
+					</Layer>
+				)}
+			</Layer>
+			<TicTacToe roomId={joinedRoomId} onClickSettings={showSidebar} />
 		</div>
 	);
 };
 
-const Chat = ({ room, onLeave }) => {
+const Chat = ({ room, onLeave, isMobile, onBackToGame }) => {
 	const [messages, setMessages] = useState([]);
 	const chatContainerRef = useRef(null);
 
@@ -130,11 +150,25 @@ const Chat = ({ room, onLeave }) => {
 	return (
 		<div className="flex h-full flex-col">
 			<div className="flex items-center gap-4 p-2 shadow">
-				<IconButton onClick={onLeave} rounded size="md">
-					<ArrowLeftIcon />
-				</IconButton>
-				<Text>Room of {room?.host?.name}</Text>
+				{!isMobile ? (
+					<>
+						<IconButton onClick={onLeave} rounded size="md">
+							<ArrowLeftIcon />
+						</IconButton>
+						<Text>Room of {room?.host?.name}</Text>
+					</>
+				) : (
+					<div className="flex w-full justify-between">
+						<Button onClick={onLeave} rounded>
+							Leave room
+						</Button>
+						<Button onClick={onBackToGame} rounded>
+							Back to game
+						</Button>
+					</div>
+				)}
 			</div>
+
 			<div
 				ref={chatContainerRef}
 				className="flex flex-1 flex-col-reverse overflow-y-scroll"
@@ -172,20 +206,33 @@ const Chat = ({ room, onLeave }) => {
 
 const RoomFolder = ({ rooms, onSelectRoom }) => {
 	return (
-		<div className="p-2">
-			{rooms.map((room) => {
-				return (
-					<div key={room._id} className="flex flex-col gap-2">
-						<UserItem
-							onClick={() => {
-								onSelectRoom(room);
-							}}
-							user={room.host}
-						/>
-					</div>
-				);
-			})}
-		</div>
+		<>
+			<div className="flex w-full items-center justify-center gap-2 p-2 py-4 shadow">
+				<IconWrapper>
+					<XIcon color="#3c89d3" />
+				</IconWrapper>
+				<Text className="text-center text-xl font-bold">
+					Tic Tac Toe
+				</Text>
+				<IconWrapper>
+					<OIcon color="#38bcd3" />
+				</IconWrapper>{' '}
+			</div>
+			<div className="p-2">
+				{rooms.map((room) => {
+					return (
+						<div key={room._id} className="flex flex-col gap-2">
+							<UserItem
+								onClick={() => {
+									onSelectRoom(room);
+								}}
+								user={room.host}
+							/>
+						</div>
+					);
+				})}
+			</div>
+		</>
 	);
 };
 

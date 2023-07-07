@@ -1,10 +1,13 @@
 import './style.css';
 
+import * as ScrollArea from '@radix-ui/react-scroll-area';
+
 import { ArrowPathIcon, Cog6ToothIcon } from 'components/Icon';
 import { Avatar, IconWrapper } from 'components/DataDisplay';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { IconButton } from 'components/Action';
+import Layer from 'components/Layout/Layer';
 import OIcon from './O';
 import XIcon from './X';
 import clsx from 'clsx';
@@ -15,7 +18,7 @@ const defaultGrid = Array(16)
 	.fill(null)
 	.map(() => Array(16).fill(null));
 
-const TicTacToe = ({ roomId }) => {
+const TicTacToe = ({ roomId, onClickSettings }) => {
 	const user = useSelector((state) => state.auth.user);
 	const userId = useSelector((state) => state.auth.user._id);
 	const [room, setRoom] = useState(null);
@@ -143,7 +146,10 @@ const TicTacToe = ({ roomId }) => {
 	}, [grid]);
 
 	useEffect(() => {
-		if (!roomId) return;
+		if (!roomId) {
+			setRoom(null);
+			return;
+		}
 		socket.emit('client.game.room.join', {
 			roomId,
 			user: {
@@ -190,16 +196,25 @@ const TicTacToe = ({ roomId }) => {
 		};
 	}, [roomId, user._id, user.avatar, user.name, user.username]);
 
+	const boardRef = useRef(null);
+
+	useEffect(() => {
+		const boardElement = boardRef?.current;
+		if (!boardElement) return;
+		const scrollLeft = boardElement.scrollWidth - boardElement.clientWidth;
+		const scrollTop = boardElement.scrollHeight - boardElement.clientHeight;
+		boardElement.scrollTo(scrollLeft, scrollTop);
+	}, [boardRef]);
 	return (
-		<div className="relative rounded-r-xl bg-white">
-			<div className="relative">
-				<div className="h-full w-full overflow-hidden rounded-r-xl">
+		<Layer className="relative flex h-full w-screen flex-col  sm:w-fit sm:rounded-r-xl">
+			<ScrollArea.Root className="h-full w-full overflow-hidden bg-white sm:rounded-bl-xl sm:rounded-tr-xl">
+				<ScrollArea.Viewport ref={boardRef} className="h-full w-full ">
 					{grid.map((row, i) => (
 						<div key={i} className={clsx('flex h-9')}>
 							{row.map((col, j) => (
 								<button
 									className={clsx(
-										'h-full w-9 border-collapse border p-2 hover:bg-slate-200',
+										'h-9 w-9 shrink-0 border-collapse border p-2 hover:bg-slate-200',
 										winPosition.some(
 											([x, y]) => x === i && y === j,
 										) && 'border-none bg-green-200',
@@ -216,9 +231,21 @@ const TicTacToe = ({ roomId }) => {
 							))}
 						</div>
 					))}
-				</div>
-			</div>
-			<div className="flex h-14 items-center justify-center gap-10">
+				</ScrollArea.Viewport>
+				<ScrollArea.Scrollbar
+					className="w-[0.7rem] bg-gray-300/50 p-[2px] dark:bg-gray-600/50"
+					orientation="vertical"
+				>
+					<ScrollArea.Thumb className="rounded-md bg-gray-500/50 hover:bg-gray-500 dark:bg-gray-500 hover:dark:bg-gray-400" />
+				</ScrollArea.Scrollbar>
+				<ScrollArea.Scrollbar
+					className="w-[0.7rem] bg-gray-300/50 p-[2px] dark:bg-gray-600/50"
+					orientation="horizontal"
+				>
+					<ScrollArea.Thumb className="rounded-md bg-gray-500/50 hover:bg-gray-500 dark:bg-gray-500 hover:dark:bg-gray-400" />
+				</ScrollArea.Scrollbar>
+			</ScrollArea.Root>
+			<Layer className="flex h-14 items-center justify-around rounded-none sm:justify-center  sm:gap-10  sm:rounded-br-xl">
 				<IconButton
 					disabled={!winner}
 					color="secondary"
@@ -233,7 +260,7 @@ const TicTacToe = ({ roomId }) => {
 					<Avatar src={room?.players[0]?.avatar} />
 				</div>
 
-				<div className="relative flex h-8 w-[4.5rem] items-center justify-between gap-2 rounded-full border px-1">
+				<div className="border-normal relative flex h-8 w-[4.5rem] items-center justify-between gap-2 rounded-full border px-1">
 					<div
 						className={clsx(
 							'position-center absolute  h-9 w-9 rounded-full bg-[#3c89d3]',
@@ -249,7 +276,7 @@ const TicTacToe = ({ roomId }) => {
 					</IconWrapper>
 					<IconWrapper>
 						<OIcon
-							color={turn?.symbol !== 'X' ? 'white' : '#3c89d3'}
+							color={turn?.symbol !== 'X' ? 'white' : '#38bcd3'}
 							className=" relative"
 						/>
 					</IconWrapper>
@@ -257,20 +284,20 @@ const TicTacToe = ({ roomId }) => {
 				<div className="flex items-center">
 					<Avatar src={room?.players[1]?.avatar} />
 				</div>
-				<IconButton rounded color="secondary">
+				<IconButton rounded onClick={onClickSettings} color="secondary">
 					<Cog6ToothIcon />
 				</IconButton>
-			</div>
+			</Layer>
 			{room?.status !== 'playing' && (
 				<div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-r-xl backdrop-blur-sm">
-					<span className="text-3xl">
+					<span className="text-3xl font-bold">
 						{!roomId
 							? 'Create or join a room to play'
 							: 'Waiting for players...'}
 					</span>
 				</div>
 			)}
-		</div>
+		</Layer>
 	);
 };
 

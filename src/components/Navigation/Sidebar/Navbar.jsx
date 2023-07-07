@@ -7,11 +7,12 @@ import {
 import { NavLink, matchPath, useLocation } from 'react-router-dom';
 
 import { Tooltip } from 'components/OverLay';
+import clsx from 'clsx';
 import { useMemo } from 'react';
 
 const TRANSITION_TIME = 500;
 
-const Navbar = () => {
+const Navbar = ({ isHorizontal = false, extraItems = [] }) => {
 	const location = useLocation();
 
 	const items = useMemo(() => {
@@ -36,8 +37,9 @@ const Navbar = () => {
 				icon: <GamePadIcon />,
 				path: '/games',
 			},
+			...extraItems,
 		];
-	}, []);
+	}, [extraItems]);
 
 	const indexActive = useMemo(() => {
 		return items.findIndex((item) => {
@@ -47,8 +49,15 @@ const Navbar = () => {
 	}, [items, location.pathname]);
 
 	return (
-		<div className="relative flex w-fit flex-col rounded-xl px-2">
-			{indexActive >= 0 && (
+		<div
+			className={clsx(
+				'relative flex rounded-xl ',
+				isHorizontal
+					? 'w-full justify-around'
+					: 'w-fit flex-col gap-4 px-2',
+			)}
+		>
+			{indexActive >= 0 && !isHorizontal && (
 				<>
 					<div
 						className="absolute left-0 top-0"
@@ -74,34 +83,51 @@ const Navbar = () => {
 					</div>
 				</>
 			)}
-			{items.map((item, index) => {
+			{items.map((item) => {
 				return (
-					<Tooltip
+					<Item
 						key={item.name}
-						placement="right"
-						content={item.name}
-					>
-						<NavLink
-							key={item.name}
-							to={item.path}
-							className={({ isActive }) =>
-								`relative mb-4 flex h-10 w-10 items-center justify-center rounded-lg transition-all last:mb-0 ${
-									isActive
-										? 'text-dark-800 dark:text-white'
-										: 'text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-dark-400 dark:hover:bg-dark-900 dark:hover:text-dark-50'
-								}`
-							}
-						>
-							<div className="flex h-6 w-6 items-center justify-center">
-								{item.icon}
-							</div>
-						</NavLink>
-					</Tooltip>
+						item={item}
+						isHorizontal={isHorizontal}
+					/>
 				);
 			})}
 		</div>
 	);
 };
+
+const Item = ({ item, isHorizontal }) => {
+	return (
+		<Tooltip
+			disabled={isHorizontal}
+			key={item.name}
+			placement="right"
+			content={item.name}
+		>
+			<NavLink
+				key={item.name}
+				to={item.path}
+				className={({ isActive }) =>
+					`relative flex items-center justify-center rounded-lg transition-all ${
+						isActive
+							? ` ${
+									isHorizontal
+										? 'text-primary-700 dark:text-primary-500'
+										: 'text-dark-800 dark:text-white'
+							  } `
+							: 'text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-dark-400 dark:hover:bg-dark-900 dark:hover:text-dark-50'
+					} ${isHorizontal ? 'h-12 w-12' : 'h-10 w-10'}`
+				}
+			>
+				<div className="flex h-6 w-6 items-center justify-center">
+					{item.icon}
+				</div>
+			</NavLink>
+		</Tooltip>
+	);
+};
+
+Navbar.Item = Item;
 
 Navbar.propTypes = {};
 

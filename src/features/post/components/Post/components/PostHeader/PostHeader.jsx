@@ -35,7 +35,7 @@ export const PostHeader = () => {
 	}, [visibility]);
 
 	return (
-		<div className="flex gap-2 px-2 pl-4">
+		<div className="flex gap-2 px-2 sm:pl-4">
 			<UserProvider user={author}>
 				<ProfilePreviewWrapper>
 					<Avatar src={author.avatar} />

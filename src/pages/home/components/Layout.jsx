@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
 	return (
 		<div
 			id="main-layout"
-			className="flex h-screen w-full items-start overflow-y-scroll"
+			className="flex h-screen w-full items-start overflow-y-scroll pt-20 sm:pt-0"
 		>
 			<Head />
 			<StickyBox offsetTop={8} offsetBottom={8}>

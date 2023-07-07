@@ -13,12 +13,17 @@ const levels = {
 };
 
 export const Card = forwardRef(
-	({ level = 1, className, children, ...props }, ref) => {
+	({ level = 1, className, responsive, children, ...props }, ref) => {
 		return (
 			<div
 				ref={ref}
 				{...props}
-				className={clsx('rounded-xl', levels[level], className)}
+				className={clsx(
+					'',
+					levels[level],
+					className,
+					responsive ? 'rounded-none sm:rounded-xl' : 'rounded-xl',
+				)}
 			>
 				{children}
 			</div>

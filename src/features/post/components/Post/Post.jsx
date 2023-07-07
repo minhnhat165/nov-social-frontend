@@ -135,9 +135,12 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 				decreaseNumComments,
 			}}
 		>
-			<Card className="flex flex-col overflow-hidden pt-4 shadow">
+			<Card
+				responsive
+				className="flex flex-col overflow-hidden pt-2 shadow sm:pt-4"
+			>
 				<PostHeader />
-				<div className="mt-2 flex flex-1 flex-col gap-3 pl-16 pr-4">
+				<div className="mt-2 flex flex-1 flex-col gap-3 pl-[60px] sm:pl-16 pr-2 sm:pr-4">
 					<div>
 						{content && <PostContent />}
 						{poll && <Poll />}
@@ -151,7 +154,10 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 };
 export const PostSkeleton = () => {
 	return (
-		<Card className="flex flex-col overflow-hidden p-4 shadow  ">
+		<Card
+			responsive
+			className="flex flex-col overflow-hidden p-2 shadow sm:p-4 "
+		>
 			<div className="flex gap-2">
 				<div className="h-10 w-10 animate-pulse rounded-full bg-dark-300" />
 				<div>
@@ -164,7 +170,7 @@ export const PostSkeleton = () => {
 				<div className="mt-2 h-4 w-[90%] animate-pulse rounded-full bg-dark-300" />
 				<div className="mt-2 h-4 w-40 animate-pulse rounded-full bg-dark-300" />
 			</div>
-			<div className="ml-auto mt-4 flex gap-4 ">
+			<div className="ml-auto mt-4 flex gap-2 sm:gap-4">
 				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />
 				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />
 				<div className="mt-2 h-8 w-[108px] animate-pulse rounded-full bg-dark-300" />

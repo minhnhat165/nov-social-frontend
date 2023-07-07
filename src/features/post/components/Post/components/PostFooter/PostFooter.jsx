@@ -23,7 +23,7 @@ export const PostFooter = () => {
 
 	return (
 		<div>
-			<footer className="border-normal flex items-center justify-end gap-3 px-4 py-3">
+			<footer className="border-normal flex items-center justify-between px-2 py-2 sm:justify-end sm:gap-3 sm:px-4 sm:py-3">
 				<ActionButton
 					onIconClick={handleLike}
 					onNumberClick={handleLike}
