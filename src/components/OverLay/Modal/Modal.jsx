@@ -14,14 +14,10 @@ export const Modal = ({
 	closeIcon = <XMarkIcon />,
 }) => {
 	if (!open) {
-		// document.body.style.overflow = 'auto';
 		return null;
 	}
-	// document.body.style.overflow = 'hidden';
 
 	const closeModal = () => {
-		// Remove scroll-lock styles from the body element when the modal is closed
-		// document.body.style.overflow = 'auto';
 		onClose();
 	};
 	return createPortal(
