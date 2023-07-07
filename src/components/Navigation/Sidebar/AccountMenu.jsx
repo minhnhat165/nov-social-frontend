@@ -69,7 +69,7 @@ const AccountList = ({ onClickAccount }) => {
 			<UserItem
 				user={user}
 				onClick={() => {
-					onClickAccount();
+					onClickAccount && onClickAccount();
 					goToProfile(user._id);
 				}}
 				end={

@@ -28,7 +28,7 @@ const ModalCrop = ({ children, aspect, cropShape, onSubmit }) => {
 				onClose={handleClose}
 				closeIcon={<ArrowLeftIcon />}
 			>
-				<Modal.Panel className="w-[480px]">
+				<Modal.Panel responsive className="w-[480px]">
 					<Modal.Header>Edit cover photo</Modal.Header>
 					<ImageCropper
 						onApply={handleSubmit}
