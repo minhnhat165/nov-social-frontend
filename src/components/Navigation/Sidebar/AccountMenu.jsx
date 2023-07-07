@@ -17,11 +17,11 @@ import { useModal } from 'hooks/useModal';
 import { useSelector } from 'react-redux';
 import useSwitchAccount from 'features/auth/hooks/useSwitchAccount';
 
-const AccountMenu = () => {
+const AccountMenu = ({ onClickAccount }) => {
 	return (
 		<>
 			<div className="mb-2">
-				<AccountList />
+				<AccountList onClickAccount={onClickAccount} />
 			</div>
 			<div className="border-t pt-2 dark:border-dark-700">
 				<AddExistingAccountTrigger />
@@ -32,7 +32,7 @@ const AccountMenu = () => {
 	);
 };
 
-const AccountList = () => {
+const AccountList = ({ onClickAccount }) => {
 	const user = useSelector((state) => {
 		return {
 			_id: state.auth.user?._id,
@@ -69,6 +69,7 @@ const AccountList = () => {
 			<UserItem
 				user={user}
 				onClick={() => {
+					onClickAccount();
 					goToProfile(user._id);
 				}}
 				end={

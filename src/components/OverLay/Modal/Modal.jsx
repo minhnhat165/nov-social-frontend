@@ -27,7 +27,7 @@ export const Modal = ({
 	};
 	if (isMobile) {
 		return (
-			<div className="absolute left-0 top-0 z-[9999]">
+			<div className="fixed left-0 top-0 z-[9999]">
 				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
 				{children}
 			</div>

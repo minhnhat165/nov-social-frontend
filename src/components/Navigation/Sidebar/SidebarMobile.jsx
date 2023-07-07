@@ -78,7 +78,11 @@ export const SidebarMobile = () => {
 							/>
 						</Card.Header>
 						<Card.Body className="!px-2">
-							<AccountMenu />
+							<AccountMenu
+								onClickAccount={() => {
+									setShowMenu(false);
+								}}
+							/>
 							<SettingMenu />
 						</Card.Body>
 					</Card>
