@@ -3,6 +3,7 @@ import * as ScrollArea from '@radix-ui/react-scroll-area';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Layer from 'components/Layout/Layer';
 import { ProfilePreview } from 'features/user/components';
+import { UserProvider } from 'features/user/context';
 import { getRecommendations } from 'api/userApi';
 import { useInfiniteQuery } from 'react-query';
 
@@ -42,9 +43,16 @@ export const PeoplePage = () => {
 				>
 					<div className="flex flex-wrap gap-4 ">
 						{users.map((user) => (
-							<Layer key={user._id}>
-								<ProfilePreview user={user} />
-							</Layer>
+							<UserProvider key={user._id} user={user}>
+								{({ user, updateUser }) => (
+									<Layer level={1} className="tooltip">
+										<ProfilePreview
+											user={user}
+											onUpdateUser={updateUser}
+										/>
+									</Layer>
+								)}
+							</UserProvider>
 						))}
 					</div>
 				</InfiniteScroll>

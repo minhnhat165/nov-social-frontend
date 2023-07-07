@@ -25,8 +25,8 @@ export const BookmarkPanel = () => {
 		},
 	);
 
-	if (!data) return null;
-	const bookmarks = data.pages[0].data.items[0].posts;
+
+	const bookmarks = data?.pages[0]?.data?.items[0]?.posts ||[];
 
 	return (
 		<Layer className="flex h-full w-96 flex-col rounded shadow-md">
