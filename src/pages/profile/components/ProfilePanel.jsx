@@ -107,7 +107,7 @@ const Edit = ({ profile }) => {
 				Edit Profile
 			</Button>
 			<Modal open={isOpen} onClose={close}>
-				<Modal.Panel>
+				<Modal.Panel responsive className="h-screen w-screen sm:h-fit sm:w-fit">
 					<Modal.Header>Edit Profile</Modal.Header>
 
 					<ProfileEdit

@@ -14,14 +14,24 @@ export const Modal = ({
 	closeIcon = <XMarkIcon />,
 }) => {
 	if (!open) return null;
+	document.body.style.overflow = 'hidden';
+
+	const closeModal = () => {
+		// Remove scroll-lock styles from the body element when the modal is closed
+		document.body.style.overflow = 'auto';
+		onClose();
+	};
 	return createPortal(
 		<div className="fixed z-[9999]">
 			<div
 				className="fixed inset-0 bg-black/50"
-				onClick={onClickBackDrop}
+				onClick={() => {
+					closeModal();
+					onClickBackDrop();
+				}}
 			/>
 			<div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-				{closeIcon && <Close onClick={onClose}>{closeIcon}</Close>}
+				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
 				{children}
 			</div>
 		</div>,
@@ -68,14 +78,16 @@ const RenderProps = ({ children }) => {
 	return <>{children(props)}</>;
 };
 
-const Panel = ({ children, className, ...props }) => {
+const Panel = ({ responsive, children, className, ...props }) => {
 	return (
 		<Layer
 			className={clsx(
 				'overflow-hidden text-left align-middle shadow-xl',
 				className,
+				responsive && 'h-screen w-screen sm:h-fit sm:w-fit',
 			)}
 			{...props}
+			responsive={responsive}
 		>
 			{children}
 		</Layer>

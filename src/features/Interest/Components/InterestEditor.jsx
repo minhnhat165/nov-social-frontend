@@ -52,7 +52,7 @@ const InterestEditor = ({ onCancel, defaultSelected }) => {
 	}, [data, selected]);
 
 	return (
-		<Modal.Panel className="w-[480px]">
+		<Modal.Panel responsive className="sm:w-[480px]">
 			<Modal.Header>Add hobbies</Modal.Header>
 			<div className="flex gap-2 px-4">
 				<Search
@@ -85,7 +85,7 @@ const InterestEditor = ({ onCancel, defaultSelected }) => {
 					</Select.Options>
 				</Select>
 			</div>
-			<div className="flex aspect-square w-full flex-col gap-2 px-4">
+			<div className="flex h-[calc(100vh_-_152px)] w-full flex-col px-2 sm:aspect-square sm:h-fit sm:w-[480px] sm:px-4">
 				{selected.length > 0 && (
 					<SelectBoard
 						interests={selected}

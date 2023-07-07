@@ -91,10 +91,10 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 	};
 
 	return (
-		<Modal.Panel className="w-[480px]">
+		<Modal.Panel responsive className="sm:w-[480px]">
 			<Modal.Header>Details</Modal.Header>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
-				<div className="overflow-y-overlay scrollbar-hoverAble flex aspect-square w-full flex-col gap-10 px-4 py-2">
+				<div className="overflow-y-overlay flex aspect-square h-[calc(100vh_-_112px)] w-full  flex-col gap-10 px-2 py-2 sm:aspect-square sm:h-fit sm:w-[480px] sm:px-4">
 					<Section title="Places Lived">
 						<InputItem
 							isPublic={

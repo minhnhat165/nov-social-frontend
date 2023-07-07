@@ -62,7 +62,7 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 	return (
 		<Form
 			schema={schema}
-			className=""
+			className="flex flex-col"
 			options={{
 				mode: 'onChange',
 			}}
@@ -85,7 +85,7 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 				formState: { errors, isDirty, isValid },
 			}) => (
 				<>
-					<div className="overflow-y-overlay flex aspect-square w-[480px] flex-col px-4">
+					<div className="overflow-y-overlay flex h-[calc(100vh_-_112px)] w-full flex-col px-2 sm:aspect-square sm:h-fit sm:w-[480px] sm:px-4">
 						<Section title="Profile photo">
 							<AvatarUploader
 								onChange={(value) => {
@@ -144,7 +144,7 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 							/>
 						</Section>
 					</div>
-					<Footer className="flex items-center">
+					<Footer className="mt-auto flex items-center">
 						<Link
 							to={`/profile/${profile._id}/about`}
 							className="clickable text-primary-700 hover:underline dark:text-primary-500 dark:hover:text-primary-600"
@@ -154,8 +154,6 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 						</Link>
 						<div className="flex flex-1 justify-end gap-2">
 							<Button
-								// variant="text"
-
 								color="secondary"
 								className="min-w-[96px]"
 								onClick={onCancel}
