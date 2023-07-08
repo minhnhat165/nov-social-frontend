@@ -1,4 +1,5 @@
 import { Avatar, Card, FullViewImage } from 'components/DataDisplay';
+import { Button, IconButton } from 'components/Action';
 import {
 	CalendarDaysIcon,
 	ChatBubbleBottomCenterTextIcon,
@@ -11,8 +12,6 @@ import {
 import { Follow, ProfileEdit } from 'features/user/components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button } from 'components/Action';
-import { IconButton } from 'components/Action';
 import { Modal } from 'components/OverLay';
 import Navbar from './Navbar';
 import { Text } from 'components/Typography';
@@ -107,7 +106,10 @@ const Edit = ({ profile }) => {
 				Edit Profile
 			</Button>
 			<Modal open={isOpen} onClose={close}>
-				<Modal.Panel responsive className="h-screen w-screen sm:h-fit sm:w-fit">
+				<Modal.Panel
+					responsive
+					className="h-screen w-screen sm:h-fit sm:w-fit"
+				>
 					<Modal.Header>Edit Profile</Modal.Header>
 
 					<ProfileEdit

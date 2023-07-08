@@ -17,6 +17,7 @@ export const PostPhotoEditor = forwardRef(({ children }, ref) => {
 		isDragActive,
 		removeByPreview,
 		removeAll,
+		getInputProps,
 	} = useUploadImage({
 		defaultImagesProp: initial.photos,
 		onRemoveDefaultImage: (image) => {
@@ -65,6 +66,7 @@ export const PostPhotoEditor = forwardRef(({ children }, ref) => {
 			}}
 			className="relative w-full rounded-xl"
 		>
+			<input {...getInputProps()} hidden />
 			{children}
 
 			{!!previews.length && (

@@ -7,16 +7,15 @@ import {
 	Input,
 	Textarea,
 } from 'components/DataEntry';
+import { useEffect, useId } from 'react';
 
-import { Button } from 'components/Action';
-import { Footer } from 'components/DataDisplay/Card';
-import { Link } from 'react-router-dom';
+import { CancelOrOk } from 'components/Action';
+import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
 import { checkUsernameAvailability } from 'api/userApi';
 import { getDirtyFields } from 'utils/formFns';
 import getImageFileCompression from 'utils/getImageFileCompression';
 import useDebounce from 'hooks/useDebounce';
-import { useEffect } from 'react';
 import useUpdateProfile from 'features/user/hooks/useUpdateProfile';
 
 let defaultUsername = '';
@@ -59,8 +58,10 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 
 		updateProfile.mutate(dirtyData);
 	};
+	const id = useId();
 	return (
 		<Form
+			id={id}
 			schema={schema}
 			className="flex flex-col"
 			options={{
@@ -144,32 +145,16 @@ export const ProfileEdit = ({ profile, onCancel, onSuccess }) => {
 							/>
 						</Section>
 					</div>
-					<Footer className="mt-auto flex items-center">
-						<Link
-							to={`/profile/${profile._id}/about`}
-							className="clickable text-primary-700 hover:underline dark:text-primary-500 dark:hover:text-primary-600"
-							onClick={onCancel}
-						>
-							Advance profile edit
-						</Link>
-						<div className="flex flex-1 justify-end gap-2">
-							<Button
-								color="secondary"
-								className="min-w-[96px]"
-								onClick={onCancel}
-							>
-								Cancel
-							</Button>
-							<Button
-								className="min-w-[96px]"
-								type="submit"
-								disabled={!isDirty || !isValid}
-								loading={updateProfile.isLoading}
-							>
-								Save
-							</Button>
+					<Modal.Footer>
+						<div className="ml-auto">
+							<CancelOrOk
+								formId={id}
+								onCancel={onCancel}
+								okDisabled={!isDirty || !isValid}
+								okLoading={updateProfile.isLoading}
+							/>
 						</div>
-					</Footer>
+					</Modal.Footer>
 				</>
 			)}
 		</Form>

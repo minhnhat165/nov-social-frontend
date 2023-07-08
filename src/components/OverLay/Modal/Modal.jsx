@@ -134,15 +134,18 @@ const Body = ({ children, className, ...props }) => {
 };
 
 const Footer = ({ children, className, ...props }) => {
+	const { isMobile } = useScreenMode();
 	return (
-		<div
-			className={clsx(
-				'flex h-14 w-full items-center border-t bg-inherit p-4 dark:border-dark-700',
-				className,
-			)}
-			{...props}
-		>
-			{children}
+		<div className={clsx('h-14 w-full')} {...props}>
+			<div
+				className={clsx(
+					'flex h-14 w-full items-center border-t bg-inherit p-4 dark:border-dark-700',
+					isMobile ? 'fixed bottom-0 left-0' : '',
+					className,
+				)}
+			>
+				{children}
+			</div>
 		</div>
 	);
 };
