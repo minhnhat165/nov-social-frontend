@@ -153,9 +153,9 @@ const Footer = ({ children, className, ...props }) => {
 export const BlockScroll = () => {
 	const { isMobile } = useScreenMode();
 	useEffect(() => {
+		const scrollY = window.scrollY;
 		if (isMobile) {
 			const rootEl = document.getElementById('root');
-			const scrollY = window.scrollY;
 
 			rootEl.style.overflow = 'hidden';
 			rootEl.style.height = '100vh';
@@ -169,6 +169,7 @@ export const BlockScroll = () => {
 				const rootEl = document.getElementById('root');
 				rootEl.style.overflow = '';
 				rootEl.style.height = '';
+				window.scrollTo(0, scrollY);
 			} else {
 				document.body.style.overflow = 'auto';
 			}
