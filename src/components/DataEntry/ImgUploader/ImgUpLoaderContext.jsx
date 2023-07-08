@@ -36,7 +36,7 @@ const ImgUploaderProvider = ({ children, multiple, onChange }) => {
 		];
 	};
 
-	const { open, getRootProps, isDragActive } = useDropzone({
+	const { open, getRootProps, isDragActive, getInputProps } = useDropzone({
 		multiple: multiple,
 		accept: {
 			'image/*': [],
@@ -82,6 +82,7 @@ const ImgUploaderProvider = ({ children, multiple, onChange }) => {
 			}}
 		>
 			<div {...getRootProps()} onPaste={handlePaste}>
+				<input {...getInputProps()} hidden/>
 				{children}
 			</div>
 		</ImgUploaderContext.Provider>
