@@ -28,7 +28,7 @@ export const BookmarkPanel = () => {
 	const bookmarks = data?.pages[0]?.data?.items[0]?.posts || [];
 
 	return (
-		<Layer className="flex h-full w-96 flex-col rounded shadow-md">
+		<Layer className="flex h-full w-full flex-col rounded shadow-md sm:w-96">
 			<div className="h-14 w-full">
 				<div className="flex h-full items-center justify-between p-4">
 					<Text className="text-xl font-semibold">Bookmark</Text>
