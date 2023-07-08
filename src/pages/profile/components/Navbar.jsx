@@ -1,44 +1,52 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import { Tab as TabLib } from '@headlessui/react';
 import clsx from 'clsx';
-import { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ items }) => {
 	const { id } = useParams();
 
-	let [items] = useState([
-		{
-			id: 1,
-			title: 'Posts',
-			endPoint: '',
-		},
-		{
-			id: 2,
-			title: 'About',
-			endPoint: '/about',
-		},
+	const [selectedIndex, setSelectedIndex] = useState(0);
+	const { pathname } = useLocation();
+	const endPoint = pathname.split('/').slice(-1)[0];
 
-		{
-			id: 3,
-			title: 'Friends',
-			endPoint: '/friends',
-		},
-		{
-			id: 4,
-			title: 'Photos',
-			endPoint: '/photos',
-		},
-	]);
+	const index = items.findIndex((item) => {
+		let isMatch = item.endPoint === endPoint;
+		if (!isMatch) {
+			return false;
+		}
+		if (item?.params) {
+			const searchParams = new URLSearchParams(window.location.search);
+			const keys = Object.keys(item?.params);
+			keys.forEach((key) => {
+				if (item?.params[key] !== searchParams.get(key)) {
+					isMatch = false;
+				}
+			});
+		}
+		return isMatch;
+	});
+	useEffect(() => {
+		setSelectedIndex(index);
+	}, [index]);
+
 	return (
 		<div className="w-full">
-			<TabLib.Group>
-				<TabLib.List className="m-2 flex rounded-xl bg-white p-2 shadow dark:bg-dark-900">
+			<TabLib.Group
+				selectedIndex={selectedIndex}
+				onChange={setSelectedIndex}
+			>
+				<TabLib.List className="m-2 flex rounded-lg bg-white p-2 shadow dark:bg-dark-900">
 					{items.map((item) => (
 						<TabLib
 							as={Link}
 							key={item.id}
-							to={`/profile/${id}${item.endPoint}`}
+							to={`/profile/${id}/${item.endPoint}${
+								item?.params
+									? `?${new URLSearchParams(item?.params)}`
+									: ''
+							}`}
 							className={({ selected }) =>
 								clsx(
 									'w-full rounded-lg py-2 text-center text-sm leading-5 outline-none',

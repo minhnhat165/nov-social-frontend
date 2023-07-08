@@ -22,12 +22,12 @@ const getUserPreview = ({ id }) => axiosClient.get(URL + `/preview/${id}`);
 
 const followUser = (id) => axiosClient.patch(URL + `/follow/${id}`);
 const unFollowUser = (id) => axiosClient.patch(URL + `/unFollow/${id}`);
-const getPhotos = ({ userId, limit, page }) =>
+const getPhotos = ({ userId, limit, endCursor }) =>
 	axiosClient.get(
 		URL +
 			`/${userId}/photos` +
 			(limit ? `?limit=${limit}` : '') +
-			(page ? `&page=${page}` : ''),
+			(endCursor ? `&endCursor=${endCursor}` : ''),
 	);
 
 const updateProfile = (data) =>
@@ -46,6 +46,16 @@ const getFollowing = ({ userId, limit, page }) =>
 			`/${userId}/following` +
 			(limit ? `?limit=${limit}` : '') +
 			(page ? `&page=${page}` : ''),
+	);
+
+const getFollow = ({ userId, limit, page, type, q }) =>
+	axiosClient.get(
+		URL +
+			`/${userId}/follow` +
+			(limit ? `?limit=${limit}` : '') +
+			(page ? `&page=${page}` : '') +
+			(type ? `&type=${type}` : '') +
+			(q ? `&q=${q}` : ''),
 	);
 
 const readNotify = () => axiosClient.patch(URL + `/read-notify`);
@@ -67,4 +77,5 @@ export {
 	readNotify,
 	checkUsernameAvailability,
 	getFollowing,
+	getFollow,
 };

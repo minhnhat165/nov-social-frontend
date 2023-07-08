@@ -11,7 +11,9 @@ export const FullViewImage = ({ src, children }) => {
 	const { isOpen, close, open } = useModal();
 	return (
 		<>
-			<div onClick={open}>{children}</div>
+			<div className="cursor-pointer" onClick={open}>
+				{children}
+			</div>
 			<Modal closeIcon={null} open={isOpen} onClose={close}>
 				<ImageScreen onClose={close} src={src} />
 			</Modal>

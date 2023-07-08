@@ -12,7 +12,7 @@ import { routePaths } from 'routes/routeConfig';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-export const ProfilePreview = ({ user: initial, onUpdateUser }) => {
+export const ProfilePreview = ({ user: initial, onUpdateUser, className }) => {
 	const currentUserId = useSelector((state) => state.auth.user?._id);
 	const isCurrentUser = currentUserId === initial._id;
 	const cacheKey = ['profile-preview', initial._id];
@@ -56,6 +56,7 @@ export const ProfilePreview = ({ user: initial, onUpdateUser }) => {
 			className={clsx(
 				'min-h-[184px] w-[calc(100vw_-_16px)] cursor-default !bg-inherit p-4 opacity-0 shadow  transition-all sm:w-80',
 				isLoading ? 'opacity-0' : 'opacity-100',
+				className,
 			)}
 		>
 			{!isLoading && (

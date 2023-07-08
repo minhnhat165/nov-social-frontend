@@ -50,6 +50,14 @@ export const getImageWithDimension = ({ publicId, width, height }) => {
 	}c_fill/${publicId}`;
 };
 
+export const getAllImageOfFolder = async (folder) => {
+	// const res = await axios.get(
+	// 	`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_NAME}/resources/image/folder/${folder}`,
+	// );
+	// console.log(res.data.resources);
+	// return res.data.resources;
+};
+
 const cloudinaryUtils = {
 	uploadImage,
 };

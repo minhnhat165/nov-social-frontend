@@ -11,6 +11,7 @@ import {
 } from 'components/Icon';
 import { Follow, ProfileEdit } from 'features/user/components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useState } from 'react';
 
 import { Modal } from 'components/OverLay';
 import Navbar from './Navbar';
@@ -18,13 +19,35 @@ import { Text } from 'components/Typography';
 import { cloneObject } from 'utils';
 import clsx from 'clsx';
 import { updateProfile } from 'store/slices/profileSlice';
-import { useMemo } from 'react';
 import { useModal } from 'hooks/useModal';
 
 const ProfilePanel = ({ profile }) => {
 	const isUser = useSelector(
 		(state) => state.auth?.user?._id === profile?._id,
 	);
+	let [items] = useState([
+		{
+			id: 1,
+			title: 'Posts',
+			endPoint: '',
+		},
+		{
+			id: 2,
+			title: 'About',
+			endPoint: 'about',
+		},
+
+		{
+			id: 3,
+			title: 'Follow',
+			endPoint: 'follow',
+		},
+		{
+			id: 4,
+			title: 'Photos',
+			endPoint: 'photos',
+		},
+	]);
 
 	return (
 		<Card
@@ -52,7 +75,7 @@ const ProfilePanel = ({ profile }) => {
 				<Action isUser={isUser} profile={profile} />
 			</Card>
 			<Card className="mt-auto">
-				<Navbar />
+				<Navbar items={items} />
 			</Card>
 		</Card>
 	);
