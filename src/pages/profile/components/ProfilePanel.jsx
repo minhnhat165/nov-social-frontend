@@ -70,7 +70,7 @@ const ProfilePanel = ({ profile }) => {
 				<Statistical
 					followers={profile?.followersCount}
 					following={profile?.followingCount}
-					posts={profile?.posts?.length}
+					posts={profile?.postsCount}
 				/>
 				<Action isUser={isUser} profile={profile} />
 			</Card>

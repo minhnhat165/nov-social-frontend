@@ -63,7 +63,9 @@ export const ProfilePreview = ({ user: initial, onUpdateUser, className }) => {
 				<>
 					<div className="flex justify-between">
 						<div className="relative">
-							<Avatar src={user?.avatar} size="2xl" />
+							<Link to={`${routePaths.PROFILE}/${user?._id}`}>
+								<Avatar src={user?.avatar} size="2xl" />
+							</Link>
 							<div className="absolute bottom-0 right-0 translate-x-2 translate-y-1 rounded-lg bg-white dark:bg-dark-bold">
 								<Rank rank={user?.rank?.number} size={6} />
 							</div>
@@ -74,8 +76,9 @@ export const ProfilePreview = ({ user: initial, onUpdateUser, className }) => {
 					</div>
 					<div>
 						<Text
-							as="p"
-							className="mt-3 text-lg font-bold leading-5"
+							as={Link}
+							to={`${routePaths.PROFILE}/${user?._id}`}
+							className="mt-3 block text-lg font-bold leading-5"
 						>
 							{user?.name}
 						</Text>
@@ -98,7 +101,7 @@ export const ProfilePreview = ({ user: initial, onUpdateUser, className }) => {
 						</Text>
 						<Text level={4}>
 							<Text bold level={1}>
-								100
+								{user?.postsCount || 0}
 							</Text>{' '}
 							posts
 						</Text>
