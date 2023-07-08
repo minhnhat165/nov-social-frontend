@@ -11,7 +11,7 @@ import { getBookmarks } from 'api/bookmarkApi';
 import { useInfiniteQuery } from 'react-query';
 
 export const BookmarkPanel = () => {
-	const { data } = useInfiniteQuery(
+	const { data, refetch } = useInfiniteQuery(
 		'bookmarks',
 		({ pageParam }) => {
 			return getBookmarks({ cursor: pageParam, limit: 10 });
@@ -25,8 +25,7 @@ export const BookmarkPanel = () => {
 		},
 	);
 
-
-	const bookmarks = data?.pages[0]?.data?.items[0]?.posts ||[];
+	const bookmarks = data?.pages[0]?.data?.items[0]?.posts || [];
 
 	return (
 		<Layer className="flex h-full w-96 flex-col rounded shadow-md">
@@ -38,6 +37,7 @@ export const BookmarkPanel = () => {
 							<div>
 								<IconButton
 									size="sm"
+									onClick={refetch}
 									color="secondary"
 									rounded
 									variant="text"

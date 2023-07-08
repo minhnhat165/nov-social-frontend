@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
+import BookmarkPage from 'features/bookmark/pages';
 import Components from 'pages/Lab';
 import Game from 'pages/game';
 import Home from 'pages/home/pages/Home';
@@ -27,7 +28,7 @@ const AppRoute = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/chat" element={<ComingSoon />} />
 						<Route path="/videos" element={<ComingSoon />} />
-						<Route path="/bookmark" element={<ComingSoon />} />
+						<Route path="/bookmark" element={<BookmarkPage />} />
 						<Route path="/search" element={<ComingSoon />} />
 						<Route
 							path="/notifications"
