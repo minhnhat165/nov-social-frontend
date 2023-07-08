@@ -19,16 +19,14 @@ export const Modal = ({
 	if (!open) {
 		return null;
 	}
-	// document.body.style.overflow = 'hidden';
 
 	const closeModal = () => {
-		// Remove scroll-lock styles from the body element when the modal is closed
-		// document.body.style.overflow = 'auto';
 		onClose();
 	};
 	if (isMobile) {
 		return (
 			<div className="fixed left-0 top-0 z-[9999]">
+				<BlockScroll />
 				{closeIcon && <Close onClick={closeModal}>{closeIcon}</Close>}
 				{children}
 			</div>
@@ -36,6 +34,7 @@ export const Modal = ({
 	}
 	return createPortal(
 		<div className="fixed z-[9999] flex-1">
+			<BlockScroll />
 			<div
 				className="fixed inset-0 sm:bg-black/50"
 				onClick={() => {
@@ -151,13 +150,31 @@ const Footer = ({ children, className, ...props }) => {
 	);
 };
 
-const BlockScroll = () => {
+export const BlockScroll = () => {
+	const { isMobile } = useScreenMode();
 	useEffect(() => {
-		document.body.style.overflow = 'hidden';
+		if (isMobile) {
+			const rootEl = document.getElementById('root');
+			const scrollY = window.scrollY;
+
+			rootEl.style.overflow = 'hidden';
+			rootEl.style.height = '100vh';
+			window.scrollTo(0, scrollY);
+		} else {
+			document.body.style.overflow = 'hidden';
+		}
+
 		return () => {
-			document.body.style.overflow = 'auto';
+			if (isMobile) {
+				const rootEl = document.getElementById('root');
+				rootEl.style.overflow = '';
+				rootEl.style.height = '';
+			} else {
+				document.body.style.overflow = 'auto';
+			}
 		};
-	}, []);
+	}, [isMobile]);
+
 	return null;
 };
 

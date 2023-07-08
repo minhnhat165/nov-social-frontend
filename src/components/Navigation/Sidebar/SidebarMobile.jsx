@@ -3,6 +3,7 @@ import { CloseButton, IconButton } from 'components/Action';
 
 import { APP_NAME } from 'configs';
 import AccountMenu from './AccountMenu';
+import { BlockScroll } from 'components/OverLay';
 import { Card } from 'components/DataDisplay';
 import Layer from 'components/Layout/Layer';
 import { LogoAction } from './TopSidebar';
@@ -50,6 +51,7 @@ export const SidebarMobile = () => {
 				</div>
 				{showSearch && (
 					<Card className="absolute left-0 top-0 z-[10] h-screen w-screen">
+						<BlockScroll />
 						<Card.Header className="flex items-center justify-between">
 							<Card.Title>Search</Card.Title>
 							<CloseButton
@@ -69,6 +71,7 @@ export const SidebarMobile = () => {
 				)}
 				{showMenu && (
 					<Card className="absolute left-0 top-0 z-[10] h-screen w-screen">
+						<BlockScroll />
 						<Card.Header className="flex items-center justify-between">
 							<Card.Title>Menu</Card.Title>
 							<CloseButton
