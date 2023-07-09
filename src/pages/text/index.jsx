@@ -10,6 +10,10 @@ const TextPage = () => {
 			'Welcome to my channel!',
 			'I am a frontend developer',
 			"I'm thrilled to introduce you to my brand new social media platform.",
+			'This is a social media platform that I built from scratch.',
+			'I built it using ReactJS, NodeJS, ExpressJS, MongoDB, Socket.io, and TailwindCSS',
+			'I hope you enjoy it!',
+			"Let's get started!",
 		],
 		loop: true,
 		/* Config */
