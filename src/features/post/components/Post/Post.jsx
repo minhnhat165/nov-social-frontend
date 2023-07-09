@@ -40,7 +40,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 		poll,
 		_id: postId,
 		isLiked,
-		likesCount,
+		likesCount = 0,
 	} = post;
 	const [isEditing, setIsEditing] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
@@ -140,7 +140,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
 				className="flex flex-col overflow-hidden pt-2 shadow sm:pt-4"
 			>
 				<PostHeader />
-				<div className="mt-2 flex flex-1 flex-col gap-3 pl-[60px] sm:pl-16 pr-2 sm:pr-4">
+				<div className="mt-2 flex flex-1 flex-col gap-3 pl-[60px] pr-2 sm:pl-16 sm:pr-4">
 					<div>
 						{content && <PostContent />}
 						{poll && <Poll />}

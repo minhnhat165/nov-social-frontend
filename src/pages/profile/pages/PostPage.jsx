@@ -114,7 +114,7 @@ function Photos() {
 						{photos.map((photo, index) => (
 							<div
 								key={index}
-								className="aspect-square w-full overflow-hidden rounded-xl shadow"
+								className="aspect-square w-full overflow-hidden rounded-lg shadow"
 							>
 								<FullViewImage src={photo}>
 									<Img

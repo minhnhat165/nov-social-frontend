@@ -19,10 +19,10 @@ export const Main = () => {
 	});
 
 	return (
-		<div className="overflow-y-overlay flex h-full justify-center pt-14">
+		<div className="flex h-full sm:justify-center sm:pt-14">
 			<Head />
 			{isSuccess && (
-				<div className="w-[590px]">
+				<div className="w-screen sm:w-[590px]">
 					<Post id={id} post={data.post} />
 				</div>
 			)}
