@@ -13,6 +13,7 @@ import { PostRoute } from 'pages';
 import PrivateRoute from './PrivateRoute';
 import ProfileRoute from 'pages/profile/route';
 import { Text } from 'components/Typography';
+import TextPage from 'pages/text';
 import { useSelector } from 'react-redux';
 
 const AuthRoutes = lazy(() => import('features/auth/routes'));
@@ -40,6 +41,7 @@ const AppRoute = () => {
 					<Route path="/post/*" element={<PostRoute />} />
 					<Route path="/profile/*" element={<ProfileRoute />} />
 					<Route path="/lab" element={<Components />} />
+					<Route path="/text" element={<TextPage />} />
 				</Route>
 				<Route path="*" element={<NotFound />} />
 			</Routes>

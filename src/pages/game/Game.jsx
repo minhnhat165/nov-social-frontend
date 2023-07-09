@@ -42,12 +42,17 @@ const Game = () => {
 	};
 
 	useEffect(() => {
+		socket.emit('client.game.tictactoe.join');
+		socket.on('server.game.tictactoe.join', (rooms) => {
+			setRooms(rooms);
+		});
 		socket.on('server.game.room.create', (room) => {
 			setRooms((prev) => [...prev, room]);
 		});
 
 		return () => {
 			socket.off('server.game.room.create');
+			socket.off('server.game.tictactoe.join');
 		};
 	}, []);
 
