@@ -24,6 +24,7 @@ const AppRoute = () => {
 		<Suspense>
 			<Routes>
 				<Route path="/auth/*" element={<AuthRoutes />} />
+				<Route path="/intro" element={<TextPage />} />
 				<Route path="/" element={<MainLayout />}>
 					<Route element={<PrivateRoute isLogin={isLogin} />}>
 						<Route path="/" element={<Home />} />
@@ -41,7 +42,6 @@ const AppRoute = () => {
 					<Route path="/post/*" element={<PostRoute />} />
 					<Route path="/profile/*" element={<ProfileRoute />} />
 					<Route path="/lab" element={<Components />} />
-					<Route path="/text" element={<TextPage />} />
 				</Route>
 				<Route path="*" element={<NotFound />} />
 			</Routes>

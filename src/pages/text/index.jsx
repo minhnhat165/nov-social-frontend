@@ -1,5 +1,7 @@
 import { Cursor, useTypewriter } from 'react-simple-typewriter';
 
+import { Button } from 'components/Action';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { Text } from 'components/Typography';
 
@@ -15,19 +17,24 @@ const TextPage = () => {
 			'I hope you enjoy it!',
 			"Let's get started!",
 		],
-		loop: true,
-		/* Config */
 	});
-	const { isType, isDelete, isDelay, isDone } = helper;
+	const { isDone } = helper;
 	return (
-		<div className="flex h-screen items-center justify-center">
-			<Text className="text-center text-8xl">{text}</Text>
-			<Cursor
-				cursorColor="#299de1"
-				cursorStyle={
-					<div className="mt-1 h-20 w-4 rounded-full  bg-blue-500"></div>
-				}
-			/>
+		<div className="flex h-screen flex-col items-center justify-center gap-10">
+			<Text className="text-center text-8xl">
+				{text}
+				<Cursor
+					cursorColor="#299de1"
+					cursorStyle={
+						<div className="mt-1 inline-block h-20 w-4 translate-y-2 rounded-full  bg-blue-500"></div>
+					}
+				/>
+			</Text>
+			{isDone && (
+				<Button as={Link} to={'/'} color="primary">
+					Get Started
+				</Button>
+			)}
 		</div>
 	);
 };
