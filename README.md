@@ -3,15 +3,19 @@
 ## Overview
 
 This is a social media platform built using React and Tailwind CSS. It provides a user-friendly interface for users to connect, share posts, and interact with each other.
+
+![Home Feed](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/f4b66d6d-52c9-4d70-bd0e-bb0e2e2a31dd)
+
 ## Features
 
 - User authentication: Users can create accounts, log in, and log out.
 - Login by Google or Facebook: Users can log in to the platform using their Google or Facebook accounts.
 - User profiles: Users can create and customize their profiles, upload profile pictures, and update their information include hobbies.
+- Linking accounts: Users can link multiple social media accounts to their platform account.
 - Post creation and interaction: Users can create posts, like and comment on posts, and view posts from other users.
 - Tic Tac Toe game: Users can play a game of Tic Tac Toe with other users on the platform.
 - Follow system: Users can follow other users and receive updates on their posts.
-- Notifications: Users receive notifications for likes, comments, and new followers.
+- Notifications: Users receive real-time notifications for likes, comments, and new followers.
 - Bookmark feature: Users can save posts as bookmarks for easy access later.
 - Search functionality: Users can search for other users and posts based on keywords.
 - Dark/Light mode: Users can switch between dark and light themes for the platform.
@@ -23,6 +27,7 @@ This is a social media platform built using React and Tailwind CSS. It provides 
 - Backend: Nodejs Express, JavaScript, Passport
 - Authentication: JSON Web Tokens (JWT)
 - Image upload: Cloudinary
+- Real-time: Socket.io
 
 ## Prerequisites
 Make sure you have the following software installed on your machine:
@@ -90,6 +95,45 @@ pnpm start
 
 ## Usage
 Watch in [NovSocial Youtube](https://www.youtube.com)
+
+## Screenshots
+*Login Page*
+![Login Page](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/c1efe0ab-4e97-4a70-8336-9fb0c128a8e8)
+
+*Register Page*
+![Register Page](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/8460471f-fe9b-4bb2-929a-39cdc0cc823e)
+
+*Home Feed*
+![Home Feed](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/f4b66d6d-52c9-4d70-bd0e-bb0e2e2a31dd)
+![Screenshot (42)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/95da89a2-63ef-45cf-acae-e2e7e0d0f364)
+![Screenshot (43)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/7dfc8b32-a5a6-4aa4-b46b-6980f46135c8)
+![Screenshot (44)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/0718bbf1-8d3b-4a95-b1bc-34f367bdfb86)
+![Screenshot (45)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/cff14eae-3fcf-468c-bd13-daffd8e6bc9f)
+![Screenshot (46)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/72b047ab-9aad-407a-a342-a5279d0f1332)
+![Screenshot (47)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/84a20c04-6623-4e9a-b4b5-b83e6e061642)
+![Screenshot (48)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/5617b01c-90b1-4e25-a186-223043368aba)
+![Screenshot (51)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/418e994a-5d9e-4287-bf9a-e5524ba211e5)
+![Screenshot (52)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/60aafc14-f82a-46ef-8858-70f402af8923)
+![Screenshot (53)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/850f7a37-b0f9-4a14-853b-8fb11dd01467)
+
+
+*People Page*
+![People Page](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/5800d4e0-0dd7-4e96-8bd2-8b75c010c7a3)
+
+*Game Page*
+![Game Page](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/e904b0ec-24be-4598-9870-a962e0390626)
+![Game Page 2](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/dcd965ee-006b-4cf5-851e-566e1e5b2ba0)
+
+*Profile Page*
+![Screenshot (54)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/1ce1d282-b6fb-4b7a-b827-57164108672e)
+![Screenshot (55)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/e6121430-5a01-4e73-a968-120c50c604b8)
+![Screenshot (56)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/9d31ab2f-aa2a-4fa4-8bde-75c27122e22a)
+![Screenshot (57)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/ef46b1ca-1e77-4fb9-9e97-d9ec4cb7fcea)
+![Screenshot (58)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/398c4867-33db-4f17-b7eb-d4ee16e63a43)
+![Screenshot (59)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/64d07ce8-9844-4efb-b9b2-5c634eff4b67)
+![Screenshot (62)](https://github.com/minhnhat165/nov-social-frontend/assets/72795828/572938d7-32f4-4d2c-95d9-d0df3f29f8af)
+
+
 
 ## Contributing
 * [Nguyễn Minh Nhật](https://github.com/minhnhat165)
