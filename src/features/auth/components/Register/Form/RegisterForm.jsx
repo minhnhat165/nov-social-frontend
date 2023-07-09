@@ -48,15 +48,6 @@ const schemas = [
 			)
 			.required('Birth date is a required field'),
 	}), // Information
-	// yup validate file type image
-	yup.object().shape({
-		avatar: yup
-			.mixed()
-			.required('Please select an image')
-			.test('type', 'Unsupported Format', (value) => {
-				return value?.length > 0 && value[0].type.includes('image');
-			}),
-	}), // Avatar
 	yup.object().shape({}), // Finish
 ];
 
@@ -221,7 +212,7 @@ const RegisterForm = () => {
 										}
 									>
 										{currentStepId === 2 &&
-										watch('avatar')?.length <= 0
+										!(watch('avatar')?.length > 0)
 											? 'Skip'
 											: currentStepId === steps.length - 1
 											? 'Create account'
