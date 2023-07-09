@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
+import { APP_NAME } from 'configs';
 import { IconButton } from 'components/Action';
 import { IconWrapper } from 'components/DataDisplay';
 import Layer from 'components/Layout/Layer';
@@ -93,7 +94,7 @@ export function Search() {
 							setIsFocused(false);
 						}}
 						ref={searchRef}
-						placeholder="Search for Nov"
+						placeholder={`Search for ${APP_NAME}`}
 						onNavigate={() => {
 							popoverRef.current.hide();
 						}}

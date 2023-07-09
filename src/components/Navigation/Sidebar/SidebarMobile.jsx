@@ -65,7 +65,7 @@ export const SidebarMobile = () => {
 								setShowSearch(false);
 							}}
 							className="!px-2 !shadow-none"
-							placeholder="Search for Nov"
+							placeholder={`Search for ${APP_NAME}`}
 						/>
 					</Card>
 				)}

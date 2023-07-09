@@ -1,3 +1,4 @@
+import { APP_NAME } from 'configs';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
@@ -9,9 +10,9 @@ const Head = ({ title = '', description = '' }) => {
 		<Helmet
 			title={
 				`${numNotifications > 0 ? `(${numNotifications}) ` : ''}` +
-				(title ? `${title} | Nov Social` : 'Nov Social')
+				(title ? `${title} | ${APP_NAME}` : `${APP_NAME}`)
 			}
-			defaultTitle="Nov Social"
+			defaultTitle={APP_NAME}
 		>
 			<meta name="description" content={description} />
 		</Helmet>

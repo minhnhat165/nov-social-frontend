@@ -5,6 +5,7 @@ import {
 	XCircleIcon,
 } from 'components/Icon';
 
+import { APP_NAME } from 'configs';
 import AddExistingAccount from 'features/auth/components/AddExistingAccount';
 import { Button } from 'components/Action';
 import { Modal } from 'components/OverLay';
@@ -77,8 +78,9 @@ const ManageAccounts = () => {
 			</div>
 			<div className="mt-2 p-2">
 				<Text as="p" className="text-[15px]">
-					If you have more than one Nov account, you can add them and
-					easily switch between. You can add up to 5 accounts.
+					If you have more than one {APP_NAME} account, you can add
+					them and easily switch between. You can add up to 5
+					accounts.
 				</Text>
 			</div>
 		</div>
