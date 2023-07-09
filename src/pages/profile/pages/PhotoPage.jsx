@@ -23,7 +23,7 @@ const PhotoPage = () => {
 	} = useGetPhotos(id);
 
 	return (
-		<div className="relative h-screen w-screen sm:w-full sm:p-4">
+		<div className="relative h-screen w-screen sm:w-full sm:p-4 sm:px-2">
 			<Card
 				responsive
 				className=" flex h-full w-full flex-col overflow-hidden rounded-md p-2 pt-0"
