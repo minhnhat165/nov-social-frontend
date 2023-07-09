@@ -21,6 +21,12 @@ This is a social media platform built using React and Tailwind CSS. It provides 
 - Dark/Light mode: Users can switch between dark and light themes for the platform.
 - Responsive design: The platform is optimized for both desktop and mobile devices.
 
+## Backend
+
+The backend source code for the social media platform can be found in the following repository: [https://github.com/minhnhat165/nov-social-backend](https://github.com/minhnhat165/nov-social-backend). The backend is responsible for handling user authentication, managing data storage, and providing APIs for the frontend to communicate with.
+
+Please refer to the backend repository for more information on setting up and running the backend server.
+
 ## Technologies Used
 
 - Frontend: React, JavaScript, Tailwind CSS, Redux toolkit.
@@ -137,9 +143,7 @@ Watch in [NovSocial Youtube](https://www.youtube.com)
 
 ## Contributing
 * [Nguyễn Minh Nhật](https://github.com/minhnhat165)
-
-Please make sure to update tests as appropriate.
-
+  
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
