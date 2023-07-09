@@ -48,6 +48,13 @@ const schemas = [
 			)
 			.required('Birth date is a required field'),
 	}), // Information
+	// yup validate file type image
+	yup.object().shape({
+		avatar: yup.mixed().test('type', 'Unsupported Format', (value) => {
+			if (!value) return true;
+			return value?.length > 0 && value[0].type.includes('image');
+		}),
+	}), // Avatar
 	yup.object().shape({}), // Finish
 ];
 
