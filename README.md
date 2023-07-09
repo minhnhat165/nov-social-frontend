@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# NOV Social
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is a social media platform built using React and Tailwind CSS. It provides a user-friendly interface for users to connect, share posts, and interact with each other.
+## Features
 
-In the project directory, you can run:
+- User authentication: Users can create accounts, log in, and log out.
+- Login by Google or Facebook: Users can log in to the platform using their Google or Facebook accounts.
+- User profiles: Users can create and customize their profiles, upload profile pictures, and update their information include hobbies.
+- Post creation and interaction: Users can create posts, like and comment on posts, and view posts from other users.
+- Tic Tac Toe game: Users can play a game of Tic Tac Toe with other users on the platform.
+- Follow system: Users can follow other users and receive updates on their posts.
+- Notifications: Users receive notifications for likes, comments, and new followers.
+- Bookmark feature: Users can save posts as bookmarks for easy access later.
+- Search functionality: Users can search for other users and posts based on keywords.
+- Dark/Light mode: Users can switch between dark and light themes for the platform.
+- Responsive design: The platform is optimized for both desktop and mobile devices.
 
-### `yarn start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Frontend: React, JavaScript, Tailwind CSS, Redux toolkit.
+- Backend: Nodejs Express, JavaScript, Passport
+- Authentication: JSON Web Tokens (JWT)
+- Image upload: Cloudinary
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Prerequisites
+Make sure you have the following software installed on your machine:
 
-### `yarn test`
+* Node.js 16.8 or later.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+1. Clone the repository:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/minhnhat165/nov-social-frontend.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Navigate to the project directory:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd nov-social-frontend
+```
 
-### `yarn eject`
+3. Install the dependencies:
+```bash
+yarn install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Set up environment variables:
+* Make sure to set the values of these environment variables before running the app.
+* Create a .env file in the root of the project.
+* Define the following variables in the .env file:
+  * `REACT_APP_API_URL`: The URL of the API server.
+  * `REACT_APP_NAME`: The name of the app.
+  * `REACT_APP_SERVER_URL`: The URL of the server.
+  * `REACT_APP_CLOUDINARY_NAME`: The name of the Cloudinary account.
+  * `REACT_APP_CLOUDINARY_UPLOAD_PRESET`: The upload preset for Cloudinary.
+  * `REACT_APP_CLOUDINARY_API_SECRET`: The API secret for Cloudinary.
+  * `REACT_APP_CLOUDINARY_API_KEY`: The API key for Cloudinary.
+  * `REACT_APP_GOOGLE_CLIENT_ID`: The client ID for Google authentication.
+  * `REACT_APP_FACEBOOK_APP_ID`: The app ID for Facebook authentication.
+  * `REACT_APP_GOOGLE_CLIENT_SECRET`: The client secret for Google authentication.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```dotenv
+# Example .env file
+REACT_APP_API_URL=https://api.example.com
+REACT_APP_NAME=Social Media Platform
+REACT_APP_SERVER_URL=https://example.com
+REACT_APP_CLOUDINARY_NAME=cloudname
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=<your-cloundinary-upload-preset>
+REACT_APP_CLOUDINARY_API_SECRET=<your-cloundinary-api-secret>
+REACT_APP_CLOUDINARY_API_KEY=<your-cloundinary-api-key>
+REACT_APP_GOOGLE_CLIENT_ID=<your-google-client-id>
+REACT_APP_FACEBOOK_APP_ID=<your-facebook-app-id>
+REACT_APP_GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+```
+5. Run in development mode
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm run start
+# or
+yarn start
+# or
+pnpm start
+```
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## Usage
+Watch in [NovSocial Youtube](https://www.youtube.com)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contributing
+* [Nguyễn Minh Nhật](https://github.com/minhnhat165)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please make sure to update tests as appropriate.
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[MIT](https://choosealicense.com/licenses/mit/)
