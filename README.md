@@ -30,7 +30,7 @@ Please refer to the backend repository for more information on setting up and ru
 ## Technologies Used
 
 - Frontend: React, JavaScript, Tailwind CSS, Redux toolkit.
-- Backend: Nodejs Express, JavaScript, Passport
+- Backend: Nodejs Express, JavaScript, Passport, Redis, MongoDB
 - Authentication: JSON Web Tokens (JWT)
 - Image upload: Cloudinary
 - Real-time: Socket.io
