@@ -117,6 +117,7 @@ const ContactList = () => {
 
 	if (!data) return null;
 	const { items: users } = data.data;
+	if (!users.length) return null;
 	return (
 		<FocusModePanel title="Contacts">
 			{users.map((user) => (

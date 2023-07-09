@@ -224,7 +224,7 @@ const RegisterForm = () => {
 										watch('avatar')?.length <= 0
 											? 'Skip'
 											: currentStepId === steps.length - 1
-											? 'Create'
+											? 'Create account'
 											: 'Next'}
 									</Button>
 								</>

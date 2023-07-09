@@ -1,6 +1,5 @@
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 
-import { getFollow, getFollowing } from 'api/userApi';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Card } from 'components/DataDisplay';
@@ -10,6 +9,7 @@ import Navbar from '../components/Navbar';
 import { ProfilePreview } from 'features/user/components';
 import { Search } from 'components/DataEntry';
 import { UserProvider } from 'features/user/context';
+import { getFollow } from 'api/userApi';
 import { useInfiniteQuery } from 'react-query';
 import { useState } from 'react';
 

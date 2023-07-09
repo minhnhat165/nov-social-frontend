@@ -18,13 +18,13 @@ import { POST } from 'constants/post';
 import PropTypes from 'prop-types';
 import { usePostEditor } from '../context';
 
+const { VISIBILITY } = POST;
+
 const EditAudience = forwardRef((props, ref) => {
 	const { initial, handleDirty } = usePostEditor();
 	const { visibility: defaultVisibility } = initial;
 
 	const [visibility, setVisibility] = useState(defaultVisibility);
-
-	const { VISIBILITY } = POST;
 
 	const options = useMemo(() => {
 		return [

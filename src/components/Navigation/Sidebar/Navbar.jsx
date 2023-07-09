@@ -9,7 +9,6 @@ import { NavLink, matchPath, useLocation } from 'react-router-dom';
 import { Tooltip } from 'components/OverLay';
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import { IconWrapper } from 'components/DataDisplay';
 
 const TRANSITION_TIME = 500;
 
