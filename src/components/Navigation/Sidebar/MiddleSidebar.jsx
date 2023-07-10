@@ -1,12 +1,12 @@
 import { BookmarkIcon, MessagesIcon } from 'components/Icon';
+import { NotificationBell, NotificationPanel } from 'features/notification';
 import { Popover, Tooltip } from 'components/OverLay';
 import { forwardRef, useState } from 'react';
 
-import clsx from 'clsx';
+import { BookmarkPanel } from 'features/bookmark/components';
 import Layer from 'components/Layout/Layer';
 import { Text } from 'components/Typography';
-import { BookmarkPanel } from 'features/bookmark/components';
-import { NotificationBell, NotificationPanel } from 'features/notification';
+import clsx from 'clsx';
 
 const types = {
 	CHAT: 'CHAT',
@@ -71,12 +71,12 @@ const Notifications = ({ onClick, isActive }) => {
 				onClick(types.NOTIFICATIONS);
 			}}
 			interactive
-			placement="right-start"
+			placement="right"
 			offset={[0, 14]}
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-screen !bg-transparent pb-1.5"
+					className="h-[99.6vh] !bg-transparent"
 				>
 					<NotificationPanel />
 				</Popover.Content>
@@ -106,7 +106,7 @@ const Bookmarks = ({ onClick, isActive }) => {
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-screen !bg-transparent pb-1.5"
+					className="h-[99.6vh] !bg-transparent"
 				>
 					<BookmarkPanel />
 				</Popover.Content>
@@ -136,7 +136,7 @@ const Chat = ({ onClick, isActive }) => {
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-screen !bg-transparent pb-1.5"
+					className="h-[99.6vh] !bg-transparent"
 				>
 					<Layer className="flex h-full w-96 flex-col items-center justify-center rounded shadow-md">
 						<Text primary className="text-4xl font-bold">
