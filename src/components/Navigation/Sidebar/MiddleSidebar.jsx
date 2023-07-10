@@ -76,7 +76,7 @@ const Notifications = ({ onClick, isActive }) => {
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-[99.6vh] !bg-transparent"
+					className="h-[99.2vh] !bg-transparent pb-1"
 				>
 					<NotificationPanel />
 				</Popover.Content>
@@ -106,7 +106,7 @@ const Bookmarks = ({ onClick, isActive }) => {
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-[99.6vh] !bg-transparent"
+					className="h-[99.2vh] !bg-transparent pb-1"
 				>
 					<BookmarkPanel />
 				</Popover.Content>
@@ -136,7 +136,7 @@ const Chat = ({ onClick, isActive }) => {
 			render={(attrs) => (
 				<Popover.Content
 					{...attrs}
-					className="h-[99.6vh] !bg-transparent"
+					className="h-[99.2vh] !bg-transparent pb-1"
 				>
 					<Layer className="flex h-full w-96 flex-col items-center justify-center rounded shadow-md">
 						<Text primary className="text-4xl font-bold">
