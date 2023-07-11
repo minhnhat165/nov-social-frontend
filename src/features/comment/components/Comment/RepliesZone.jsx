@@ -144,7 +144,7 @@ export const RepliesZone = forwardRef((props, ref) => {
 	return (
 		<div
 			className={clsx(
-				'flex px-2',
+				'flex pl-2',
 				currentLevel === 0 && !isShowReplies && 'pb-2',
 			)}
 		>

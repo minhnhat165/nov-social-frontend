@@ -20,7 +20,7 @@ export function ReplyList({
 				>
 					<Comment
 						comment={reply}
-						className="!border-transparent !px-2"
+						className="!border-transparent !pl-2"
 						currentLevel={currentLevel + 1}
 						onUpdate={updateNewReply}
 						onDelete={deleteNewReply}
