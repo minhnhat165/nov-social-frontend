@@ -13,11 +13,11 @@ import { Image } from 'components/DataDisplay';
 import Layer from 'components/Layout/Layer';
 import { RepliesZone } from './RepliesZone';
 import { RichTextEditor } from 'components/DataEntry';
+import { SCREEN_MODE } from 'constants/app';
 import { ToolBar } from './ToolBar';
 import clsx from 'clsx';
 import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { SCREEN_MODE } from 'constants/app';
 
 export const MAX_LEVEL = 2;
 

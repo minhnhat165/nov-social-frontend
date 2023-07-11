@@ -6,6 +6,9 @@ export const createComment = (data) => axiosClient.post(URL, data);
 
 export const getChildComments = (id) => axiosClient.get(`${URL}/${id}/child`);
 
+export const getCommentWithRelatedData = (id) =>
+	axiosClient.get(`${URL}/${id}?relatedData=true`);
+
 export const updateComment = ({ _id, ...data }) =>
 	axiosClient.patch(`${URL}/${_id}`, {
 		...data,

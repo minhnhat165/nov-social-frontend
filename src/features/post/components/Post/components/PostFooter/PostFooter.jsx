@@ -57,7 +57,9 @@ export const PostFooter = () => {
 					ref={commentZoneRef}
 					postId={post._id}
 					fetchOnMount={post?.comments?.comments?.length === 0}
-					showComment={post?.comments?.comments.length > 0}
+					showComment={
+						post?.comments?.comments.length > 0 || post?.showComment
+					}
 				/>
 			</CommentsProvider>
 		</div>

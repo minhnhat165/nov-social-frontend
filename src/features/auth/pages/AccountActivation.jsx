@@ -16,7 +16,7 @@ const activationTypes = {
 		description:
 			'Your account has been activated successfully. You can now login to your account.',
 		button: {
-			title: 'Login',
+			title: 'Login now',
 			redirect: routePaths.LOGIN,
 		},
 	},

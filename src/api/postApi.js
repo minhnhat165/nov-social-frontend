@@ -11,9 +11,8 @@ const getPosts = (limit = 10, lastCreatedAt) =>
 				lastCreatedAt ? `&lastCreatedAt=${lastCreatedAt}` : ''
 			}`,
 	);
-const getPost = ({ id, queryParams }) => {
-	const queryString = genQueryParams(queryParams);
-	return axiosClient.get(`${URL}/${id}?${queryString}`);
+const getPost = (id) => {
+	return axiosClient.get(`${URL}/${id}?`);
 };
 const getPostsByUserId = ({ userId, cursor = null, limit = 10 }) => {
 	const queryString = genQueryParams({ cursor, limit });

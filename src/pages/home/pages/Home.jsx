@@ -137,16 +137,18 @@ const Timeline = () => {
 			}
 			endMessage={<FindMorePeople />}
 		>
-			<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">
-				{posts?.map((post) => (
-					<Post
-						key={post._id}
-						post={post}
-						onDeletePost={handleDeletePost}
-						onUpdatePost={handleUpdatePost}
-					/>
-				))}
-			</div>
+			{posts.length > 0 && (
+				<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">
+					{posts?.map((post) => (
+						<Post
+							key={post._id}
+							post={post}
+							onDeletePost={handleDeletePost}
+							onUpdatePost={handleUpdatePost}
+						/>
+					))}
+				</div>
+			)}
 		</InfiniteScroll>
 	);
 };

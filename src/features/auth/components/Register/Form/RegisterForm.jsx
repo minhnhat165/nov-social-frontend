@@ -127,6 +127,9 @@ const RegisterForm = () => {
 				completedStepIds={completedStepIds}
 			/>
 			<Form
+				defaultValues={{
+					gender: 'male',
+				}}
 				onSubmit={handleSubmit}
 				className="flex w-full flex-col justify-center"
 				id={'2321'}

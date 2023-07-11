@@ -1,7 +1,10 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import { extractPath } from '../utils';
+import { getCommentWithRelatedData } from 'api/commentApi';
+import { useMutation } from 'react-query';
 import { usePost } from 'features/post/components/Post/Post';
+import { useSearchParams } from 'react-router-dom';
 
 const CommentsContext = createContext({
 	rootComments: [],
@@ -18,6 +21,10 @@ const CommentsContext = createContext({
 const useComments = () => useContext(CommentsContext);
 
 const CommentsProvider = ({ children, comments: _comments = [] }) => {
+	const [searchParams] = useSearchParams();
+	const commentId = searchParams.get('commentId');
+	const [isFetchedCommentParams, setIsFetchedCommentParams] = useState(false);
+
 	const [comments, setComments] = useState(_comments);
 	const [commentsCount, setCommentsCount] = useState(0);
 	const { increaseNumComments, decreaseNumComments } = usePost();
@@ -125,14 +132,45 @@ const CommentsProvider = ({ children, comments: _comments = [] }) => {
 		);
 	};
 
+	const { mutate } = useMutation(getCommentWithRelatedData, {
+		onSuccess: (data) => {
+			const { comments: extractComments, comment } = data;
+			const parentIds = extractPath(comment.path).parentIds;
+			setUniqueComments(
+				extractComments.map((comment) => ({
+					...comment,
+					isShowReplies: parentIds.includes(comment._id),
+				})),
+			);
+			setIsFetchedCommentParams(true);
+		},
+	});
+
 	const commentByParentId = useMemo(() => {
 		const group = {};
 		comments.forEach((comment) => {
 			group[comment.parentId] ||= [];
 			group[comment.parentId].push(comment);
 		});
+
 		return group;
 	}, [comments]);
+
+	useEffect(() => {
+		// check list of comments for have commentId
+		if (commentId && !isFetchedCommentParams) {
+			const comment = comments.find(
+				(comment) => comment._id === commentId,
+			);
+			if (!comment) {
+				mutate(commentId);
+			}
+		}
+		return () => {
+			setIsFetchedCommentParams(false);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [commentId]);
 
 	const getCommentsByParentId = (parentId) => {
 		return commentByParentId[parentId] || [];

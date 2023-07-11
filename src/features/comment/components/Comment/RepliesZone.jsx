@@ -3,6 +3,7 @@ import {
 	Fragment,
 	forwardRef,
 	useCallback,
+	useEffect,
 	useImperativeHandle,
 	useMemo,
 	useRef,
@@ -43,7 +44,6 @@ export const RepliesZone = forwardRef((props, ref) => {
 	const replies = useMemo(() => {
 		return getCommentsByParentId(comment._id); // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [AllComments]);
-
 	const [isShowReplies, setIsShowReplies] = useState(_isShowReplies);
 	const [newReplies, setNewReplies] = useState([]); // use for create but not show replies yet
 
@@ -117,7 +117,6 @@ export const RepliesZone = forwardRef((props, ref) => {
 	const commentFormRef = useRef(null);
 	const handleClickReply = useCallback(
 		(comment) => {
-			console.log('click reply');
 			setIsReplying(true);
 			setInitialContent(generateContentWithMentionUser(comment.author));
 			setTimeout(() => {
@@ -135,6 +134,10 @@ export const RepliesZone = forwardRef((props, ref) => {
 		}),
 		[handleClickReply],
 	);
+
+	useEffect(() => {
+		setIsShowReplies(_isShowReplies);
+	}, [_isShowReplies]);
 
 	const numRepliesToShow = numReplies - newReplies.length;
 
