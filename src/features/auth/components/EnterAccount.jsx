@@ -47,7 +47,7 @@ function ForgotPassword() {
 					<Modal.Header />
 
 					<div className="px-4 pb-4">
-						<ResetPassword onSuccess={close} />
+						<ResetPassword onLogin={close} />
 					</div>
 				</Modal.Panel>
 			</Modal>
