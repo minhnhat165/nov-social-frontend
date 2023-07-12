@@ -5,13 +5,14 @@ import {
 	FacebookIcon,
 	ShareIcon,
 	SparklesIcon,
+	TwitterIcon,
 } from 'components/Icon';
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { Modal, Popover } from 'components/OverLay';
 import { useMemo, useRef, useState } from 'react';
 
 import { CommentZone } from './CommentZone';
 import { CommentsProvider } from 'features/comment/context';
-import { FacebookShareButton } from 'react-share';
 import { IconWrapper } from 'components/DataDisplay';
 import { Menu } from 'components/Navigation';
 import { Text } from 'components/Typography';
@@ -34,6 +35,7 @@ export const PostFooter = () => {
 
 	const shareRef = useRef();
 	const [shareOpen, setShareOpen] = useState(false);
+	const postUrl = `${process.env.REACT_APP_BASE_URL}/post/${post._id}`;
 
 	return (
 		<div>
@@ -113,13 +115,16 @@ export const PostFooter = () => {
 					>
 						<Popover.Arrow />
 
-						<FacebookShareButton
-							url={`${process.env.REACT_APP_BASE_URL}/post/${post._id}`}
-						>
+						<FacebookShareButton url={postUrl}>
 							<Menu.Item icon={<FacebookIcon />}>
-								{`Share to Facebook`}
+								Share to Facebook`
 							</Menu.Item>
 						</FacebookShareButton>
+						<TwitterShareButton url={postUrl}>
+							<Menu.Item icon={<TwitterIcon />}>
+								Share to Twitter
+							</Menu.Item>
+						</TwitterShareButton>
 					</Popover.Content>
 				)}
 			></Popover>
