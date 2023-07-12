@@ -36,7 +36,7 @@ export const Modal = ({
 		<div className="fixed z-[9999] flex-1">
 			<BlockScroll />
 			<div
-				className="fixed inset-0 sm:bg-black/50"
+				className="fixed inset-0 overflow-y-scroll sm:bg-black/50"
 				onClick={() => {
 					closeModal();
 					onClickBackDrop();
@@ -162,6 +162,7 @@ export const BlockScroll = () => {
 			window.scrollTo(0, scrollY);
 		} else {
 			document.body.style.overflow = 'hidden';
+			document.body.style.paddingRight = '11px';
 		}
 
 		return () => {
@@ -172,6 +173,7 @@ export const BlockScroll = () => {
 				window.scrollTo(0, scrollY);
 			} else {
 				document.body.style.overflow = 'auto';
+				document.body.style.paddingRight = '';
 			}
 		};
 	}, [isMobile]);
