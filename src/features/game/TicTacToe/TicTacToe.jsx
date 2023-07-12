@@ -28,7 +28,6 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 	const isMyTurn = turn?._id === userId;
 
 	const [grid, setGrid] = useState(defaultGrid);
-	const [currentPlayer, setCurrentPlayer] = useState('X');
 	const [winner, setWinner] = useState(null);
 	const [winPosition, setWinPosition] = useState([]);
 
@@ -37,13 +36,12 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 		if (winner) return;
 		const updatedGrid = [...grid];
 		if (updatedGrid[i][j] !== null) return;
-		updatedGrid[i][j] = currentPlayer;
+		updatedGrid[i][j] = turn?.symbol;
 		socket.emit('client.game.tictactoe.move', {
 			roomId,
-			grid: updatedGrid,
+			position: [i, j],
 		});
 		setGrid(updatedGrid);
-		setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
 	};
 
 	const checkWin = () => {
@@ -140,7 +138,7 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 
 	useEffect(() => {
 		if (checkWin()) {
-			setWinner(currentPlayer === 'X' ? 'O' : 'X');
+			setWinner(turn?.symbol);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [grid]);
@@ -163,7 +161,6 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 			setRoom(room);
 			if (room?.turn) {
 				setTurn(room.turn);
-				setCurrentPlayer(room.turn.symbol);
 			}
 			if (room?.grid) setGrid(room.grid);
 		});
@@ -172,7 +169,6 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 			setRoom((prev) => ({ ...prev, ...room }));
 			setGrid(room.grid);
 			setTurn(room.turn);
-			setCurrentPlayer(room.turn.symbol);
 		});
 
 		socket.on('server.game.room.leave', (room) => {
@@ -185,7 +181,7 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 					.map(() => Array(16).fill(null)),
 			);
 			setTurn(room.turn);
-			setCurrentPlayer(room.turn.symbol);
+			// setCurrentPlayer(room.turn.symbol);
 			setWinner(null);
 			setWinPosition([]);
 		});
@@ -215,6 +211,9 @@ const TicTacToe = ({ roomId, onClickSettings }) => {
 								<button
 									className={clsx(
 										'h-9 w-9 shrink-0 border-collapse border p-2 hover:bg-slate-200',
+										room?.lastMove?.[0] === i &&
+											room?.lastMove?.[1] === j &&
+											'bg-slate-200',
 										winPosition.some(
 											([x, y]) => x === i && y === j,
 										) && 'border-none bg-green-200',
