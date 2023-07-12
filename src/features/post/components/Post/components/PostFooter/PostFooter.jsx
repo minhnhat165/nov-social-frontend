@@ -101,7 +101,7 @@ export const PostFooter = () => {
 			</Modal>
 			<Modal onClose={closeCmt} open={isOpenCmt}>
 				<Modal.Panel responsive className="sm:h-[520px] sm:!w-[400px]">
-					<Modal.Header>Users Liked</Modal.Header>
+					<Modal.Header>Users Comment</Modal.Header>
 					<Modal.Body>
 						<UsersCmt postId={post._id} />
 					</Modal.Body>
