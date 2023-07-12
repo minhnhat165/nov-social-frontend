@@ -28,6 +28,7 @@ const ManageAccounts = () => {
 			avatar: state.auth.user.avatar,
 			email: state.auth.user.email,
 			linkedAccounts: state.auth.user.linkedAccounts,
+			username: state.auth.user.username,
 		};
 	});
 	const removeAccount = useRemoveAccount();
