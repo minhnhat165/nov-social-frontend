@@ -36,7 +36,7 @@ export const Modal = ({
 		<div className="fixed z-[9999] flex-1">
 			<BlockScroll />
 			<div
-				className="fixed inset-0 overflow-y-scroll sm:bg-black/50"
+				className="modal-backdrop fixed inset-0 sm:bg-black/50"
 				onClick={() => {
 					closeModal();
 					onClickBackDrop();
@@ -152,7 +152,10 @@ const Footer = ({ children, className, ...props }) => {
 
 export const BlockScroll = () => {
 	const { isMobile } = useScreenMode();
+	// detect is overflow
+
 	useEffect(() => {
+		const isOverflow = document.body.scrollHeight > window.innerHeight;
 		const scrollY = window.scrollY;
 		if (isMobile) {
 			const rootEl = document.getElementById('root');
@@ -161,6 +164,10 @@ export const BlockScroll = () => {
 			rootEl.style.height = '100vh';
 			window.scrollTo(0, scrollY);
 		} else {
+			if (!isOverflow) return;
+			document.getElementsByClassName(
+				'modal-backdrop',
+			)[0].style.overflowY = 'scroll';
 			document.body.style.overflow = 'hidden';
 			document.body.style.paddingRight = '11px';
 		}
