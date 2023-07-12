@@ -3,26 +3,30 @@ import './styles.css';
 import {
 	ChatBubbleBottomCenterTextIcon,
 	FacebookIcon,
+	LinkIcon,
 	ShareIcon,
 	SparklesIcon,
 	TwitterIcon,
 } from 'components/Icon';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { Modal, Popover } from 'components/OverLay';
+import { getUsersCommentedPost, getUsersLikedPost } from 'api/postApi';
 import { useMemo, useRef, useState } from 'react';
 
 import { CommentZone } from './CommentZone';
 import { CommentsProvider } from 'features/comment/context';
 import { IconWrapper } from 'components/DataDisplay';
+import LogoIcon from 'components/Icon/LogoIcon';
 import { Menu } from 'components/Navigation';
+import { Spinner } from 'components/Loading';
 import { Text } from 'components/Typography';
 import { UserItem } from 'features/user/components';
 import clsx from 'clsx';
 import { formatNumber } from 'utils';
+import { toast } from 'react-hot-toast';
 import { useModal } from 'hooks/useModal';
 import { usePost } from '../../Post';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
 
 export const PostFooter = () => {
 	const { post, handleLike } = usePost();
@@ -85,9 +89,12 @@ export const PostFooter = () => {
 				/>
 			</CommentsProvider>
 			<Modal onClose={closeLike} open={isOpenLike}>
-				<Modal.Panel responsive className="sm:h-[520px] sm:!w-[400px]">
+				<Modal.Panel
+					responsive
+					className="flex flex-col sm:h-[520px] sm:!w-[400px]"
+				>
 					<Modal.Header>Users Liked</Modal.Header>
-					<Modal.Body>
+					<Modal.Body className="flex-1">
 						<UsersLiked postId={post._id} />
 					</Modal.Body>
 				</Modal.Panel>
@@ -96,7 +103,7 @@ export const PostFooter = () => {
 				<Modal.Panel responsive className="sm:h-[520px] sm:!w-[400px]">
 					<Modal.Header>Users Liked</Modal.Header>
 					<Modal.Body>
-						<UsersLiked postId={post._id} />
+						<UsersCmt postId={post._id} />
 					</Modal.Body>
 				</Modal.Panel>
 			</Modal>
@@ -111,13 +118,13 @@ export const PostFooter = () => {
 					<Popover.Content
 						{...attrs}
 						level={0}
-						className="p-2 shadow-4xl"
+						className="flex flex-col p-2 shadow-4xl"
 					>
 						<Popover.Arrow />
 
 						<FacebookShareButton url={postUrl}>
 							<Menu.Item icon={<FacebookIcon />}>
-								Share to Facebook`
+								Share to Facebook
 							</Menu.Item>
 						</FacebookShareButton>
 						<TwitterShareButton url={postUrl}>
@@ -125,6 +132,18 @@ export const PostFooter = () => {
 								Share to Twitter
 							</Menu.Item>
 						</TwitterShareButton>
+						<Menu.Item icon={<LogoIcon />}>
+							Share on your feed
+						</Menu.Item>
+						<Menu.Item
+							onClick={() => {
+								navigator.clipboard.writeText(postUrl);
+								toast.success('Copied link to clipboard');
+							}}
+							icon={<LinkIcon />}
+						>
+							Copy link
+						</Menu.Item>
 					</Popover.Content>
 				)}
 			></Popover>
@@ -169,20 +188,24 @@ const ActionButton = ({
 };
 
 const UsersLiked = ({ postId }) => {
-	const user = useSelector((state) => state.auth.user);
-	const { data } = useQuery(
-		['post-liked', postId],
-		() => {
-			return [user, user, user];
-		},
+	const { data, isLoading } = useQuery(
+		['post-users-liked', postId],
+		() => getUsersLikedPost({ id: postId }),
 		{
 			staleTime: Infinity,
 		},
 	);
-	const users = [user, user, user];
+	const { items } = data || { items: [] };
 	return (
-		<div>
-			{users.map((user) => (
+		<div className="h-full  overflow-y-auto">
+			{isLoading && (
+				<Spinner
+					size="xl"
+					color="primary"
+					className="absolute inset-0 m-auto"
+				/>
+			)}
+			{items.map((user) => (
 				<UserItem key={user._id} user={user} />
 			))}
 		</div>
@@ -190,20 +213,24 @@ const UsersLiked = ({ postId }) => {
 };
 
 const UsersCmt = ({ postId }) => {
-	const user = useSelector((state) => state.auth.user);
-	const { data } = useQuery(
-		['post-liked', postId],
-		() => {
-			return [user, user, user];
-		},
+	const { data, isLoading } = useQuery(
+		['post-users-cmt', postId],
+		() => getUsersCommentedPost({ id: postId }),
 		{
 			staleTime: Infinity,
 		},
 	);
-	const users = [user, user, user];
+	const { items } = data || { items: [] };
 	return (
-		<div>
-			{users.map((user) => (
+		<div className="h-full  overflow-y-auto">
+			{isLoading && (
+				<Spinner
+					size="xl"
+					color="primary"
+					className="absolute inset-0 m-auto"
+				/>
+			)}
+			{items.map((user) => (
 				<UserItem key={user._id} user={user} />
 			))}
 		</div>

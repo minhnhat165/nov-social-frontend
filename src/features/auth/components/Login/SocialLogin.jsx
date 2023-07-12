@@ -3,6 +3,7 @@ import { FacebookIcon, GoogleIcon, TwitterIcon } from 'components/Icon';
 import { FACEBOOK_APP_ID } from 'configs';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { IconButton } from 'components/Action';
+import { getTwitterOAuthUrl } from 'utils/getTwitterOAuthUrl';
 import { useGoogleLogin } from '@react-oauth/google';
 
 const SocialLogin = ({ onLogin }) => {
@@ -52,7 +53,14 @@ const SocialLogin = ({ onLogin }) => {
 					)}
 				/>
 
-				<IconButton color="secondary">
+				<IconButton
+					onClick={() => {
+						window.location.href = getTwitterOAuthUrl(
+							window.location.origin,
+						);
+					}}
+					color="secondary"
+				>
 					<TwitterIcon />
 				</IconButton>
 			</div>

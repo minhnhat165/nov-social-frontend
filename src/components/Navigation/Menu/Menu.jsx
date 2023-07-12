@@ -40,7 +40,7 @@ const Item = ({ icon, children, ...props }) => {
 			className="flex h-10 cursor-pointer items-center gap-2 rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-dark-800"
 		>
 			{icon && (
-				<Text>
+				<Text className="shrink-0">
 					<IconWrapper size={5}>{icon}</IconWrapper>
 				</Text>
 			)}
