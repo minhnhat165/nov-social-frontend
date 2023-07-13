@@ -12,6 +12,14 @@ export const getTimeline = ({ limit = 5, lastIndex = null }) => {
 	return axiosClient.get(`${URL}/timeline?${params}`);
 };
 
+export const getTimelineV2 = ({ limit = 5, cursor }) => {
+	const params = genQueryParams({
+		limit,
+		cursor,
+	});
+	return axiosClient.get(`${URL}/timeline?${params}`);
+};
+
 const feedApi = {
 	getTimeline,
 };

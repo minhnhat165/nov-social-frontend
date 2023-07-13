@@ -5,17 +5,32 @@ import { Input } from 'components/DataEntry';
 import Layer from 'components/Layout/Layer';
 import Option from './Option';
 import { Text } from 'components/Typography';
+import socket from 'configs/socket-config';
+import { useMutation } from 'react-query';
 import { usePost } from '../../Post';
 import { useSelector } from 'react-redux';
+import { vote } from 'api/pollApi';
 
 export const Poll = ({ maxShow = 3 }) => {
-	const { poll } = usePost();
+	const { poll: _poll } = usePost();
+
+	const [poll, setPoll] = useState(_poll);
+
 	const {
 		_id: pollId,
-		allowMultipleVotes,
-		allowAddNewOptions,
-		options: defaultOptions,
+		allowMultipleVotes = false,
+		allowAddNewOptions = false,
+		options: defaultOptions = [],
 	} = poll;
+
+	const { mutate } = useMutation(vote, {
+		onSuccess: (data) => {
+			// console.log(data);
+		},
+		onError: (err) => {
+			console.log(err);
+		},
+	});
 
 	const userId = useSelector((state) => state.auth.user?._id);
 
@@ -32,6 +47,7 @@ export const Poll = ({ maxShow = 3 }) => {
 	const [isShowMore, setIsShowMore] = useState(options.length <= maxShow);
 
 	const handleVote = (e) => {
+		mutate({ pollId, optionId: e.target.value });
 		// get data from form
 		const formData = new FormData(formRef.current);
 		const optionsSelected = formData.getAll(pollId);
@@ -59,6 +75,23 @@ export const Poll = ({ maxShow = 3 }) => {
 	};
 
 	const formRef = useRef(null);
+
+	useEffect(() => {
+		socket.emit('client.poll.join', pollId);
+		socket.on('server.poll.vote', (poll) => {
+			setOptions(poll.options);
+		});
+		socket.on('server.poll.update', (poll) => {
+			console.log(poll);
+			setPoll(poll);
+		});
+		return () => {
+			socket.off('server.poll.vote');
+			socket.emit('client.poll.leave', pollId);
+			socket.off('server.poll.update');
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pollId]);
 
 	return (
 		<Layer>

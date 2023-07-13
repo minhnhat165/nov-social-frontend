@@ -1,6 +1,5 @@
-import { useCallback, useMemo } from 'react';
+import { useCreatePost, usePostList } from 'features/post/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
 
 import { Button } from 'components/Action';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -12,16 +11,14 @@ import PostEditor from 'features/post/components/PostEditor';
 import { PostSkeleton } from 'features/post/components/Post/Post';
 import { Spinner } from 'components/Loading';
 import { Text } from 'components/Typography';
-import { getTimeline } from 'api/feedApi';
+import { getTimelineV2 } from 'api/feedApi';
 import { setReload } from 'store/slices/appSlice';
-import { useCreatePost } from 'features/post/hooks';
 import { useEffect } from 'react';
 
 const Home = () => {
 	return (
 		<Layout>
 			<div className="relative mx-auto flex max-w-[590px] flex-col sm:pt-4">
-				<PostCreator />
 				<Timeline />
 			</div>
 		</Layout>
@@ -33,24 +30,21 @@ export default Home;
 const Timeline = () => {
 	const isReload = useSelector((state) => state.app.isReload);
 	const dispatch = useDispatch();
-	const queryClient = useQueryClient();
 	const {
-		data,
-		hasNextPage,
 		fetchNextPage,
-		isLoading,
+		handleAddPost,
+		handleDeletePost,
+		handleUpdatePost,
+		hasNextPage,
+		posts,
 		refetch,
+		isLoading,
 		isRefetching,
-	} = useInfiniteQuery(
-		'timeline',
-		({ pageParam }) => getTimeline({ lastIndex: pageParam }),
-		{
-			getNextPageParam: (lastPage) => {
-				if (!lastPage.moreAvailable) return undefined;
-				return lastPage.lastIndex;
-			},
-		},
-	);
+	} = usePostList({
+		queryKey: 'timeline',
+		queryFn: getTimelineV2,
+		limit: 5,
+	});
 
 	useEffect(() => {
 		if (!isReload) return;
@@ -61,54 +55,6 @@ const Timeline = () => {
 		if (isRefetching) return;
 		dispatch(setReload(false));
 	}, [isRefetching, dispatch]);
-
-	const posts = useMemo(() => {
-		if (!data) return [];
-		return data?.pages.reduce((acc, page) => {
-			return [...acc, ...page.items];
-		}, []);
-	}, [data]);
-
-	const handleDeletePost = useCallback(
-		(postId) => {
-			queryClient.setQueryData('timeline', (oldData) => {
-				if (!oldData) return;
-				const newData = {
-					...oldData,
-					pages: oldData.pages.map((page) => ({
-						...page,
-						items: page.items.filter((post) => post._id !== postId),
-					})),
-				};
-				return newData;
-			});
-		},
-		[queryClient],
-	);
-
-	const handleUpdatePost = useCallback(
-		(newPost) => {
-			queryClient.setQueryData('timeline', (oldData) => {
-				if (!oldData) return;
-				const newData = {
-					...oldData,
-					pages: oldData.pages.map((page) => ({
-						...page,
-						items: page.items.map((post) =>
-							post._id === newPost._id
-								? {
-										...post,
-										...newPost,
-								  }
-								: post,
-						),
-					})),
-				};
-				return newData;
-			});
-		},
-		[queryClient],
-	);
 
 	if (isLoading) return null;
 
@@ -123,54 +69,44 @@ const Timeline = () => {
 		);
 
 	return (
-		<InfiniteScroll
-			dataLength={posts.length}
-			next={fetchNextPage}
-			scrollThreshold={0.7}
-			hasMore={hasNextPage}
-			loader={
-				<div className="flex flex-col gap-1 sm:gap-4">
-					<PostSkeleton />
-					<PostSkeleton />
-					<PostSkeleton />
-				</div>
-			}
-			endMessage={<FindMorePeople />}
-		>
-			{posts.length > 0 && (
-				<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">
-					{posts?.map((post) => (
-						<Post
-							key={post._id}
-							post={post}
-							onDeletePost={handleDeletePost}
-							onUpdatePost={handleUpdatePost}
-						/>
-					))}
-				</div>
-			)}
-		</InfiniteScroll>
+		<>
+			<PostCreator handleAddPost={handleAddPost} />
+
+			<InfiniteScroll
+				dataLength={posts.length}
+				next={fetchNextPage}
+				scrollThreshold={0.7}
+				hasMore={hasNextPage}
+				loader={
+					<div className="flex flex-col gap-1 sm:gap-4">
+						<PostSkeleton />
+						<PostSkeleton />
+						<PostSkeleton />
+					</div>
+				}
+				endMessage={<FindMorePeople />}
+			>
+				{posts.length > 0 && (
+					<div className="flex flex-col gap-1 pb-1 sm:gap-4 sm:pb-4">
+						{posts?.map((post) => (
+							<Post
+								key={post._id}
+								post={post}
+								onDeletePost={handleDeletePost}
+								onUpdatePost={handleUpdatePost}
+							/>
+						))}
+					</div>
+				)}
+			</InfiniteScroll>
+		</>
 	);
 };
 
-function PostCreator() {
-	const queryClient = useQueryClient();
+function PostCreator({ handleAddPost }) {
 	const { mutateAsync } = useCreatePost({
 		onSuccess: (data) => {
-			queryClient.setQueryData('timeline', (oldData) => {
-				if (!oldData) return;
-				const newData = {
-					...oldData,
-					pages: [
-						{
-							...oldData.pages[0],
-							items: [data, ...oldData.pages[0].items],
-						},
-						...oldData.pages.slice(1),
-					],
-				};
-				return newData;
-			});
+			handleAddPost(data);
 		},
 	});
 	return (

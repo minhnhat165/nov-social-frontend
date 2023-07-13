@@ -1,17 +1,11 @@
 import {
 	ChevronUpDownIcon,
-	Cog6ToothIcon,
 	GlobeAsiaAustraliaIcon,
 	LockClosedIcon,
 	UserIcon,
 } from 'components/Icon';
-import React, {
-	forwardRef,
-	useImperativeHandle,
-	useMemo,
-	useState,
-} from 'react';
 import { Select, SelectTrigger } from 'components/DataEntry';
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 
 import { IconWrapper } from 'components/DataDisplay';
 import { POST } from 'constants/post';
@@ -47,12 +41,12 @@ const EditAudience = forwardRef((props, ref) => {
 				value: VISIBILITY.PRIVATE,
 				defaultSelected: defaultVisibility === VISIBILITY.PRIVATE,
 			},
-			{
-				icon: <Cog6ToothIcon />,
-				label: 'Custom',
-				value: VISIBILITY.CUSTOM,
-				defaultSelected: defaultVisibility === VISIBILITY.CUSTOM,
-			},
+			// {
+			// 	icon: <Cog6ToothIcon />,
+			// 	label: 'Custom',
+			// 	value: VISIBILITY.CUSTOM,
+			// 	defaultSelected: defaultVisibility === VISIBILITY.CUSTOM,
+			// },
 		];
 	}, [defaultVisibility]);
 

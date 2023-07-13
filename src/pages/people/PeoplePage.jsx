@@ -36,7 +36,7 @@ export const PeoplePage = () => {
 					hasMore={hasNextPage}
 					scrollableTarget="notification-panel"
 				>
-					<div className="flex flex-wrap gap-2 sm:gap-4">
+					<div className="flex flex-wrap justify-center gap-2 sm:gap-4">
 						{users.map((user) => (
 							<UserProvider key={user._id} user={user}>
 								{({ user, updateUser }) => (

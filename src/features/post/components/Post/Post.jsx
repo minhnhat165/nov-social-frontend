@@ -30,7 +30,7 @@ const PostContext = createContext({
 
 export const usePost = () => useContext(PostContext);
 
-const Post = ({ post: initial, onDeletePost, onUpdatePost }) => {
+const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
 	const [post, setPost] = useState(initial);
 	const {
 		author,
