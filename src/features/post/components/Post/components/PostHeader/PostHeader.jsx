@@ -38,7 +38,7 @@ export const PostHeader = () => {
 		<div className="flex gap-2 px-2 sm:pl-4">
 			<UserProvider user={author}>
 				<ProfilePreviewWrapper>
-					<Avatar src={author.avatar} />
+					<Avatar src={author?.avatar} />
 				</ProfilePreviewWrapper>
 				<div className="flex flex-1">
 					<div>
