@@ -1,16 +1,15 @@
 import { Avatar, TimeDisplay } from 'components/DataDisplay';
-import { useState } from 'react';
 import { COMMENT_STATUS, useComment } from './Comment';
 
-import { deleteComment } from 'api/commentApi';
-import { Button } from 'components/Action';
+import { AlertDialog } from 'components/OverLay';
 import { Menu } from 'components/Navigation';
-import { Modal } from 'components/OverLay';
 import { Text } from 'components/Typography';
-import { useComments } from 'features/comment/context';
-import { usePost } from 'features/post/components/Post/Post';
+import { deleteComment } from 'api/commentApi';
 import { toast } from 'react-hot-toast';
+import { useComments } from 'features/comment/context';
+import { useModal } from 'hooks/useModal';
 import { useMutation } from 'react-query';
+import { usePost } from 'features/post/components/Post/Post';
 import { useSelector } from 'react-redux';
 
 export function CommentHeader() {
@@ -73,100 +72,67 @@ export function CommentHeader() {
 						)}
 				</div>
 			</div>
-			<Menu>
-				<div
-					className={`ml-auto transition-all duration-300 
-            ease-in-out group-hover:opacity-100 sm:opacity-0`}
-				>
-					<Menu.Trigger size="sm" />
-				</div>
-				<Menu.Content className="min-w-[160px] p-2">
-					<MenuItems />
-				</Menu.Content>
-			</Menu>
+			<CommentMenu />
 		</div>
 	);
 }
 
-const MenuItems = () => {
-	const { comment, setIsEditing } = useComment();
+const CommentMenu = () => {
+	const userId = useSelector((state) => state.auth?.user?._id);
 	const { post } = usePost();
-	const userId = useSelector((state) => state.auth.user._id);
-	const isCommentAuthor = comment.author._id === userId;
-	const isPostAuthor = post.author._id === userId;
-
-	return (
-		<>
-			{(isPostAuthor || isCommentAuthor) && <DeleteComment />}
-			{isCommentAuthor ? (
-				<Menu.Item
-					onClick={() => {
-						setIsEditing(true);
-					}}
-				>
-					Edit
-				</Menu.Item>
-			) : (
-				<>
-					<Menu.Item>Hide comment</Menu.Item>
-					<Menu.Item>Report comment</Menu.Item>
-				</>
-			)}
-		</>
-	);
-};
-
-function DeleteComment() {
-	const [open, setOpen] = useState(false);
-	const { comment, onDelete } = useComment();
+	const { comment, setIsEditing, onDelete } = useComment();
 	const { deleteComment: deleteLocalComment } = useComments();
+	const { close, isOpen, open } = useModal();
 	const { mutate, isLoading } = useMutation(deleteComment, {
 		onSuccess: (data, variables) => {
 			deleteLocalComment(variables);
 			onDelete && onDelete(variables);
-			setOpen(false);
+			close();
 		},
 		onError: (error) => {
 			toast.error(error.message);
 		},
 	});
-
-	const handleConfirmDelete = () => {
-		mutate(comment._id);
-	};
-
-	const handleClose = () => setOpen(false);
-
+	const isCommentAuthor = comment.author._id === userId;
+	const isPostAuthor = post.author._id === userId;
 	return (
 		<>
-			<Menu.Item onClick={() => setOpen(true)}>Delete</Menu.Item>
-			<Modal open={open} onClose={handleClose}>
-				<Modal.Panel>
-					<Modal.Header>Delete comment?</Modal.Header>
-					<Modal.Body className="w-[490px]">
-						<Text>
-							Are you sure you want to delete this comment? This
-							action cannot be undone.
-						</Text>
-					</Modal.Body>
-					<Modal.Footer className="justify-end gap-2">
-						<Button
-							color="secondary"
-							className="w-full sm:w-auto"
-							onClick={handleClose}
+			<Menu>
+				<div
+					className={`ml-auto transition-all duration-300 
+              ease-in-out group-hover:opacity-100 sm:opacity-0`}
+				>
+					<Menu.Trigger size="sm" />
+				</div>
+				<Menu.Content className="min-w-[160px] p-2">
+					{(isPostAuthor || isCommentAuthor) && (
+						<Menu.Item onClick={open}>Delete</Menu.Item>
+					)}
+					{isCommentAuthor ? (
+						<Menu.Item
+							onClick={() => {
+								setIsEditing(true);
+							}}
 						>
-							Cancel
-						</Button>
-						<Button
-							loading={isLoading}
-							className="w-full sm:w-auto"
-							onClick={handleConfirmDelete}
-						>
-							Delete
-						</Button>
-					</Modal.Footer>
-				</Modal.Panel>
-			</Modal>
+							Edit
+						</Menu.Item>
+					) : (
+						<>
+							<Menu.Item>Hide comment</Menu.Item>
+							<Menu.Item>Report comment</Menu.Item>
+						</>
+					)}
+				</Menu.Content>
+			</Menu>
+			<AlertDialog
+				close={close}
+				bodyText="Are you sure you want to delete this post? This action cannot be undone."
+				headerText="Delete this post?"
+				isLoading={isLoading}
+				isOpen={isOpen}
+				onOk={() => mutate(comment._id)}
+				okText="Delete"
+			/>
 		</>
 	);
-}
+};

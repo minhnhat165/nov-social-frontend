@@ -8,6 +8,8 @@ export const CancelOrOk = ({
 	onOk,
 	okDisabled,
 	okLoading,
+	cancelText = 'Cancel',
+	okText = 'Save',
 }) => {
 	return (
 		<div className="flex gap-2">
@@ -17,7 +19,7 @@ export const CancelOrOk = ({
 				className="min-w-[96px]"
 				onClick={onCancel}
 			>
-				Cancel
+				{cancelText}
 			</Button>
 			<Button
 				form={formId}
@@ -27,7 +29,7 @@ export const CancelOrOk = ({
 				disabled={okDisabled}
 				loading={okLoading}
 			>
-				Save
+				{okText}
 			</Button>
 		</div>
 	);
