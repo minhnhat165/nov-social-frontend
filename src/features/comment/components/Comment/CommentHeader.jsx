@@ -126,8 +126,8 @@ const CommentMenu = () => {
 			</Menu>
 			<AlertDialog
 				close={close}
-				bodyText="Are you sure you want to delete this post? This action cannot be undone."
-				headerText="Delete this post?"
+				bodyText="Are you sure you want to delete this comment? This action cannot be undone."
+				headerText="Delete this comment?"
 				isLoading={isLoading}
 				isOpen={isOpen}
 				onOk={() => mutate(comment._id)}
