@@ -179,7 +179,7 @@ export const BlockScroll = () => {
 				rootEl.style.height = '';
 				window.scrollTo(0, scrollY);
 			} else {
-				document.body.style.overflow = 'auto';
+				document.body.style.overflowY = 'scroll';
 				document.body.style.paddingRight = '';
 			}
 		};

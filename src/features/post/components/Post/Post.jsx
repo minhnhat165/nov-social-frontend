@@ -80,7 +80,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
 		savePost.mutate(postId);
 	};
 
-	const { mutate } = useLikePost(isLiked);
+	const { mutate, isLoading } = useLikePost(isLiked);
 
 	const increaseNumComments = () => {
 		setPost((prev) => ({
@@ -97,13 +97,13 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
 	};
 
 	const handleLike = (postId) => {
-		mutate(postId);
+		if (isLoading) return;
 		handleUpDatePost({
 			isLiked: !isLiked,
 			likesCount: isLiked ? likesCount - 1 : likesCount + 1,
 		});
+		mutate(postId);
 	};
-
 	if (isHidden) return <PostHiddenMode onUnHidePost={handleUnHidePost} />;
 
 	if (isEditing)
