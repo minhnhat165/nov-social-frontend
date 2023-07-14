@@ -14,17 +14,17 @@ import { useSelector } from 'react-redux';
 
 export const ProfilePreview = ({ user: initial, onUpdateUser, className }) => {
 	const currentUserId = useSelector((state) => state.auth.user?._id);
-	const isCurrentUser = currentUserId === initial._id;
-	const cacheKey = ['profile-preview', initial._id];
+	const isCurrentUser = currentUserId === initial?._id;
+	const cacheKey = ['profile-preview', initial?._id];
 	const queryClient = useQueryClient();
 	const user = queryClient.getQueryData(cacheKey)?.user;
 	const { isLoading } = useQuery(
 		cacheKey,
-		() => getUserPreview({ id: initial._id }),
+		() => getUserPreview({ id: initial?._id }),
 		{
 			onSuccess: (data) => {
 				queryClient.setQueryData(cacheKey, data);
-				onUpdateUser && onUpdateUser(data.user);
+				onUpdateUser && onUpdateUser(data?.user);
 			},
 			enabled: !user,
 		},
