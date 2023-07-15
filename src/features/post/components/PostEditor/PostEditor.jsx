@@ -32,7 +32,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 
 	const userId = useSelector((state) => state.auth.user?._id);
 	const [placeholder, setPlaceholder] = useState(`What's new, ${lastName}?`);
-	const [isValid, setIsValid] = useState(true);
+	const [isValid, setIsValid] = useState(false);
 	const [isDirty, setIsDirty] = useState(false);
 	const [dirtyFields, setDirtyFields] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +40,13 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 
 	const [hasContent, setHasContent] = useState(false);
 	const [hasPhoto, setHasPhoto] = useState(initial?.photos.length > 0);
-	const [hasPoll, setHasPoll] = useState(initial?.poll ? true : false);
+	const [hasPoll, setHasPoll] = useState(
+		initial?.poll &&
+			typeof initial.poll === 'object' &&
+			initial.poll !== null
+			? true
+			: false,
+	);
 
 	const contentEditorRef = useRef(null);
 	const pollEditorRef = useRef(null);
@@ -100,7 +106,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 
 	useEffect(() => {
 		if (hasPoll) {
-			setPlaceholder('What do you want to ask?');
+			setPlaceholder('What do you want to ask? (require)');
 		} else {
 			setPlaceholder(`What's new, ${lastName}?`);
 		}

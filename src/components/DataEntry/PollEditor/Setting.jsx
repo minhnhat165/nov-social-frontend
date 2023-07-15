@@ -16,6 +16,7 @@ const Setting = () => {
 		allowMultipleVotes,
 		setAllowAddNewOptions,
 		setAllowMultipleVotes,
+		options,
 	} = usePoll();
 
 	return (
@@ -30,6 +31,9 @@ const Setting = () => {
 					<Popover.Arrow />
 					<Item title="Allow multiple choices">
 						<SwitchButton
+							disabled={options.some(
+								(option) => option.votes > 0,
+							)}
 							isOn={allowMultipleVotes}
 							onChange={setAllowMultipleVotes}
 						/>

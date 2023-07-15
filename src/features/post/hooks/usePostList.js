@@ -1,5 +1,5 @@
-const { useMemo, useCallback } = require('react');
-const { useQueryClient, useInfiniteQuery } = require('react-query');
+import { useCallback, useMemo } from 'react';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 
 export const usePostList = ({ queryKey, queryFn, fnParams, limit }) => {
 	const queryClient = useQueryClient();

@@ -62,6 +62,7 @@ const DetailsEditor = ({ details, onCancel, onSubmit }) => {
 	});
 
 	const handleSubmitData = (values) => {
+		console.log(values);
 		const dirtyData = getDirtyFields(values, details);
 
 		mutate(dirtyData);

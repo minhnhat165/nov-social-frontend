@@ -16,3 +16,4 @@ export * from './Search';
 export * from './Slider';
 export * from './Textarea';
 export * from './RichTextEditor';
+export * from './PollEditor';

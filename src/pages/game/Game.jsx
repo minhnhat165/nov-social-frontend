@@ -123,6 +123,7 @@ const Chat = ({ room, onLeave, isMobile, onBackToGame }) => {
 	const createMessage = (e) => {
 		e.preventDefault();
 		const content = e.target[0].value;
+		if (!content.trim()) return;
 		const message = {
 			_id: crypto.randomUUID(),
 			content,

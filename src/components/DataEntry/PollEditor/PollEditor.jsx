@@ -138,7 +138,18 @@ const PollEditor = forwardRef(
 		};
 
 		useEffect(() => {
-			const valid = options.filter((option) => option.value).length >= 2;
+			// validate options must have at least 2 options and all options must have value
+			let valid = true;
+			if (options.length < 2) {
+				valid = false;
+			}
+			if (valid) {
+				options.forEach((option) => {
+					if (!option.value) {
+						valid = false;
+					}
+				});
+			}
 			setIsValid(valid);
 		}, [options]);
 

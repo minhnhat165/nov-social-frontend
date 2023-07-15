@@ -18,7 +18,7 @@ const animationX = {
 	xl: 16,
 };
 
-export function SwitchButton({ isOn: defaultValue, onChange, size }) {
+export function SwitchButton({ isOn: defaultValue, onChange, size, disabled }) {
 	const [isOn, setIsOn] = useState(defaultValue);
 
 	return (
@@ -30,10 +30,13 @@ export function SwitchButton({ isOn: defaultValue, onChange, size }) {
 					isOn
 						? '  bg-primary-700 dark:bg-primary-500'
 						: 'bg-gray-300 dark:bg-gray-800',
+					disabled &&
+						'pointer-events-none !bg-gray-300 opacity-50 dark:!bg-gray-500',
 				)}
 				exit={{ opacity: 0 }}
 			>
 				<input
+					disabled={disabled}
 					type="checkbox"
 					className="absolute hidden"
 					checked={isOn}

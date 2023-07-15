@@ -143,7 +143,9 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
 				<div className="mt-2 flex flex-1 flex-col gap-3 pl-[60px] pr-2 sm:pl-16 sm:pr-4">
 					<div>
 						{content && <PostContent />}
-						{poll && <Poll />}
+						{poll && typeof poll === 'object' && poll !== null && (
+							<Poll />
+						)}
 						<PostPhoto photos={photos} />
 					</div>
 				</div>

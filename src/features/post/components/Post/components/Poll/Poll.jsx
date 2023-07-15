@@ -20,7 +20,7 @@ export const Poll = ({ maxShow = 3 }) => {
 		_id: pollId,
 		allowMultipleVotes = false,
 		allowAddNewOptions = false,
-		options: defaultOptions = [],
+		options: defaultOptions,
 	} = poll;
 
 	const { mutate } = useMutation(vote, {
@@ -79,10 +79,10 @@ export const Poll = ({ maxShow = 3 }) => {
 	useEffect(() => {
 		socket.emit('client.poll.join', pollId);
 		socket.on('server.poll.vote', (poll) => {
+			if (poll._id !== pollId) return;
 			setOptions(poll.options);
 		});
 		socket.on('server.poll.update', (poll) => {
-			console.log(poll);
 			setPoll(poll);
 		});
 		return () => {

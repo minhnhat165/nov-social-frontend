@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { CloseButton } from 'components/Action';
-import { PollEditor } from '.';
+import { PollEditor } from 'components/DataEntry';
 import { usePostEditor } from '../context';
 
 export function PostPollEditor({ pollEditorRef }) {
@@ -35,7 +35,7 @@ export function PostPollEditor({ pollEditorRef }) {
 			/>
 			<CloseButton
 				onClick={handleClose}
-				className="absolute top-2 right-5"
+				className="absolute right-5 top-2"
 			/>
 		</div>
 	);

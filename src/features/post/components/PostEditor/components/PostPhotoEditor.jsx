@@ -5,8 +5,14 @@ import { usePostEditor } from '../context';
 import useUploadImage from 'hooks/useUploadImage';
 
 export const PostPhotoEditor = forwardRef(({ children }, ref) => {
-	const { initial, handleDirty, setIsValid, hasContent, setIsFocused } =
-		usePostEditor();
+	const {
+		initial,
+		handleDirty,
+		setIsValid,
+		hasContent,
+		setIsFocused,
+		hasPoll,
+	} = usePostEditor();
 	const [photos, setPhotos] = useState(initial.photos || []);
 	const {
 		open,
@@ -27,10 +33,11 @@ export const PostPhotoEditor = forwardRef(({ children }, ref) => {
 	});
 
 	useEffect(() => {
+		if (hasContent && hasPoll) return;
 		if (hasContent || photoFiles.length > 0 || photos.length > 0)
 			setIsValid(true);
 		else setIsValid(false);
-	}, [hasContent, photoFiles, photos, setIsValid]);
+	}, [hasContent, hasPoll, photoFiles, photos, setIsValid]);
 
 	useEffect(() => {
 		handleDirty('photos', photoFiles.length > 0);
