@@ -11,6 +11,7 @@ import { PostPhoto } from './components/PostPhoto/PostPhoto';
 import PropTypes from 'prop-types';
 
 const PostContext = createContext({
+	isDetail: false,
 	post: {},
 	postId: '',
 	author: {},
@@ -30,7 +31,12 @@ const PostContext = createContext({
 
 export const usePost = () => useContext(PostContext);
 
-const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
+const Post = ({
+	post: initial,
+	isDetail = false,
+	onDeletePost,
+	onUpdatePost = () => {},
+}) => {
 	const [post, setPost] = useState(initial);
 	const {
 		author,
@@ -133,6 +139,7 @@ const Post = ({ post: initial, onDeletePost, onUpdatePost = () => {} }) => {
 				handleLike: () => handleLike(postId),
 				increaseNumComments,
 				decreaseNumComments,
+				isDetail,
 			}}
 		>
 			<Card

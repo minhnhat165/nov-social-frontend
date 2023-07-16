@@ -37,7 +37,7 @@ export const Main = () => {
 			/>
 			{isSuccess && (
 				<div className="w-screen sm:w-[590px]">
-					<Post id={id} post={post} />
+					<Post id={id} post={post} isDetail />
 				</div>
 			)}
 		</div>

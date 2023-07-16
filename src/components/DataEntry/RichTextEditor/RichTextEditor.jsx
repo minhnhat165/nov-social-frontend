@@ -1,4 +1,5 @@
 import '@draft-js-plugins/linkify/lib/plugin.css';
+import '@draft-js-plugins/emoji/lib/plugin.css';
 import './styles/editorStyle.css';
 
 import { EditorState, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
@@ -17,6 +18,7 @@ import Editor from '@draft-js-plugins/editor';
 import { MentionItem } from './components';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import createEmojiPlugin from '@draft-js-plugins/emoji';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
 import createMentionPlugin from '@draft-js-plugins/mention';
@@ -55,24 +57,50 @@ const RichTextEditor = forwardRef(
 		const editorRef = useRef(null);
 		const [open, setOpen] = useState(false);
 		const { mentions, setQuery } = useGetMentions();
-		const { MentionSuggestions, plugins } = useMemo(() => {
-			const linkifyPlugin = createLinkifyPlugin({});
+		const { MentionSuggestions, plugins, EmojiSuggestions } =
+			useMemo(() => {
+				const emojiPlugin = createEmojiPlugin({
+					priorityList: {
+						':smile:': ['1f642'],
+						':slight_smile:': ['1f642'],
+						':rage:': ['1f648'],
+						':angry:': ['1f620'],
+						':flushed:': ['1f633'],
+						':cold_sweat:': ['1f630'],
+						':cry:': ['1f622'],
+						':sob:': ['1f62d'],
+						':rofl:': ['1f923'],
+					},
+				});
 
-			const hashtagPlugin = createHashtagPlugin({
-				theme: hashtagStyles,
-			});
-			const mentionPlugin = createMentionPlugin({
-				entityMutability: 'IMMUTABLE',
-				supportWhitespace: true,
-				theme: mentionStyles,
+				const linkifyPlugin = createLinkifyPlugin({});
 
-				mentionPrefix: '@',
-				mentionTrigger: '@',
-			});
-			const { MentionSuggestions } = mentionPlugin;
-			const plugins = [mentionPlugin, hashtagPlugin, linkifyPlugin];
-			return { plugins, MentionSuggestions };
-		}, []);
+				const hashtagPlugin = createHashtagPlugin({
+					theme: hashtagStyles,
+				});
+				const mentionPlugin = createMentionPlugin({
+					entityMutability: 'IMMUTABLE',
+					supportWhitespace: true,
+					theme: mentionStyles,
+
+					mentionPrefix: '@',
+					mentionTrigger: '@',
+				});
+				const { MentionSuggestions } = mentionPlugin;
+				const { EmojiSuggestions } = emojiPlugin;
+				const plugins = [
+					mentionPlugin,
+					hashtagPlugin,
+					linkifyPlugin,
+					emojiPlugin,
+				];
+
+				return {
+					plugins,
+					MentionSuggestions,
+					EmojiSuggestions,
+				};
+			}, []);
 
 		const onOpenChange = useCallback((_open) => {
 			setOpen(_open);
@@ -192,6 +220,7 @@ const RichTextEditor = forwardRef(
 					onSearchChange={onSearchChange}
 					entryComponent={MentionItem}
 				/>
+				<EmojiSuggestions />
 			</div>
 		);
 	},

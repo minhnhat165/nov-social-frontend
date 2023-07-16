@@ -45,7 +45,6 @@ export const CommentZone = forwardRef(
 					setUniqueComments(comments);
 				},
 				enabled: fetchEnabled,
-				staleTime: 1000 * 60 * 5, // 5 minutes
 			},
 		);
 

@@ -8,13 +8,13 @@ import {
 	SparklesIcon,
 	TwitterIcon,
 } from 'components/Icon';
+import { CommentsProvider, ParamComments } from 'features/comment/context';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { Modal, Popover } from 'components/OverLay';
 import { getUsersCommentedPost, getUsersLikedPost } from 'api/postApi';
 import { useMemo, useRef, useState } from 'react';
 
 import { CommentZone } from './CommentZone';
-import { CommentsProvider } from 'features/comment/context';
 import { IconWrapper } from 'components/DataDisplay';
 import LogoIcon from 'components/Icon/LogoIcon';
 import { Menu } from 'components/Navigation';
@@ -29,7 +29,7 @@ import { usePost } from '../../Post';
 import { useQuery } from 'react-query';
 
 export const PostFooter = () => {
-	const { post, handleLike } = usePost();
+	const { post, handleLike, isDetail } = usePost();
 	const { likesCount, isLiked, numComments = 0 } = post;
 
 	const { close: closeLike, isOpen: isOpenLike, open: openLike } = useModal();
@@ -87,6 +87,8 @@ export const PostFooter = () => {
 						post?.comments?.comments.length > 0 || post?.showComment
 					}
 				/>
+
+				{isDetail && <ParamComments />}
 			</CommentsProvider>
 			<Modal onClose={closeLike} open={isOpenLike}>
 				<Modal.Panel
