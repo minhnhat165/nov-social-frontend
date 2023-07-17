@@ -202,6 +202,7 @@ export const CommentEditor = forwardRef(
 						</div>
 					</div>
 					<CommentToolBar
+						onAddEmoji={contentEditorRef?.current?.addEmoji}
 						onUploadImage={photoEditorRef?.current?.triggerUpload}
 						onSubmit={handleSubmit}
 						onCanceled={onCanceled}

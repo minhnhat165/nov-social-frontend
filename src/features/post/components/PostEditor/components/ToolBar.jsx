@@ -8,11 +8,21 @@ import {
 	PollIcon,
 } from 'components/Icon';
 
+import Picker from '@emoji-mart/react';
+import { Popover } from 'components/OverLay';
+import data from '@emoji-mart/data';
 import { editorModes } from '../PostEditor';
+import useDarkMode from 'hooks/useDarkMode';
 import { usePostEditor } from '../context';
 import { useScreenMode } from 'hooks/useScreenMode';
 
-export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
+export const ToolBar = ({
+	onSubmit,
+	onUploadImage,
+	onCanceled,
+	onAddEmoji,
+}) => {
+	const [isDarkMode] = useDarkMode();
 	const {
 		isLoading,
 		setIsFocused,
@@ -61,8 +71,21 @@ export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 				<IconButton variant="text" color="secondary" size="sm" rounded>
 					<ColorPaletteIcon />
 				</IconButton>
-				{!isMobile && (
-					<>
+				<Popover
+					render={(attrs) => (
+						<Popover.Content {...attrs}>
+							<Picker
+								theme={isDarkMode ? 'dark' : 'light'}
+								previewPosition="none"
+								data={data}
+								onEmojiSelect={({ native: emoji }) => {
+									onAddEmoji(emoji);
+								}}
+							/>
+						</Popover.Content>
+					)}
+				>
+					<div>
 						<IconButton
 							variant="text"
 							color="secondary"
@@ -71,6 +94,10 @@ export const ToolBar = ({ onSubmit, onUploadImage, onCanceled }) => {
 						>
 							<FaceSmileIcon />
 						</IconButton>
+					</div>
+				</Popover>
+				{!isMobile && (
+					<>
 						<IconButton
 							variant="text"
 							color="secondary"

@@ -241,9 +241,9 @@
 	@apply !rounded-l-lg !border-b-0 !border-l-0 !border-r !border-t-0 !bg-slate-200 hover:!rounded-l-lg dark:border-r-dark-500 dark:!bg-dark-600;
 }
 
-.editor [role='option'] span {
+/* .editor [role='option'] span {
 	@apply !hidden;
-}
+} */
 
 .react-tel-input .flag-dropdown .selected-flag {
 	@apply !w-16 !rounded-l-lg !bg-transparent !px-4 hover:!rounded-l-lg;

@@ -1,8 +1,9 @@
-import '@draft-js-plugins/linkify/lib/plugin.css';
 import '@draft-js-plugins/emoji/lib/plugin.css';
+import '@draft-js-plugins/linkify/lib/plugin.css';
 import './styles/editorStyle.css';
 
 import { EditorState, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
+import addEmoji, { Mode } from './utils/addEmoji';
 import {
 	forwardRef,
 	memo,
@@ -15,6 +16,8 @@ import {
 } from 'react';
 
 import Editor from '@draft-js-plugins/editor';
+import { FaceSmileIcon } from 'components/Icon';
+import { IconWrapper } from 'components/DataDisplay';
 import { MentionItem } from './components';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -22,6 +25,7 @@ import createEmojiPlugin from '@draft-js-plugins/emoji';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
 import createMentionPlugin from '@draft-js-plugins/mention';
+import { emojiKey } from './utils/getEmoji';
 import hashtagStyles from './styles/hashtagStyles.module.css';
 import mentionStyles from './styles/mentionStyles.module.css';
 import useGetMentions from 'features/user/hooks/useGetMentions';
@@ -57,50 +61,44 @@ const RichTextEditor = forwardRef(
 		const editorRef = useRef(null);
 		const [open, setOpen] = useState(false);
 		const { mentions, setQuery } = useGetMentions();
-		const { MentionSuggestions, plugins, EmojiSuggestions } =
-			useMemo(() => {
-				const emojiPlugin = createEmojiPlugin({
-					priorityList: {
-						':smile:': ['1f642'],
-						':slight_smile:': ['1f642'],
-						':rage:': ['1f648'],
-						':angry:': ['1f620'],
-						':flushed:': ['1f633'],
-						':cold_sweat:': ['1f630'],
-						':cry:': ['1f622'],
-						':sob:': ['1f62d'],
-						':rofl:': ['1f923'],
-					},
-				});
+		const { MentionSuggestions, plugins } = useMemo(() => {
+			const emojiPlugin = createEmojiPlugin({
+				selectButtonContent: (
+					<IconWrapper>
+						<FaceSmileIcon />
+					</IconWrapper>
+				),
+			});
 
-				const linkifyPlugin = createLinkifyPlugin({});
+			const linkifyPlugin = createLinkifyPlugin({});
 
-				const hashtagPlugin = createHashtagPlugin({
-					theme: hashtagStyles,
-				});
-				const mentionPlugin = createMentionPlugin({
-					entityMutability: 'IMMUTABLE',
-					supportWhitespace: true,
-					theme: mentionStyles,
+			const hashtagPlugin = createHashtagPlugin({
+				theme: hashtagStyles,
+			});
+			const mentionPlugin = createMentionPlugin({
+				entityMutability: 'IMMUTABLE',
+				supportWhitespace: true,
+				theme: mentionStyles,
 
-					mentionPrefix: '@',
-					mentionTrigger: '@',
-				});
-				const { MentionSuggestions } = mentionPlugin;
-				const { EmojiSuggestions } = emojiPlugin;
-				const plugins = [
-					mentionPlugin,
-					hashtagPlugin,
-					linkifyPlugin,
-					emojiPlugin,
-				];
+				mentionPrefix: '@',
+				mentionTrigger: '@',
+			});
+			const { MentionSuggestions } = mentionPlugin;
+			const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+			const plugins = [
+				mentionPlugin,
+				hashtagPlugin,
+				linkifyPlugin,
+				emojiPlugin,
+			];
 
-				return {
-					plugins,
-					MentionSuggestions,
-					EmojiSuggestions,
-				};
-			}, []);
+			return {
+				plugins,
+				MentionSuggestions,
+				EmojiSuggestions,
+				EmojiSelect,
+			};
+		}, []);
 
 		const onOpenChange = useCallback((_open) => {
 			setOpen(_open);
@@ -134,10 +132,18 @@ const RichTextEditor = forwardRef(
 
 		const editorWrapperRef = useRef(null);
 
+		const handleInsertEmoji = useCallback((emoji) => {
+			setEditorState((prevState) => {
+				const newEditorState = addEmoji(prevState, emoji);
+				return newEditorState;
+			});
+		}, []);
+
 		useImperativeHandle(
 			ref,
 			() => ({
 				editorState,
+				addEmoji: handleInsertEmoji,
 				reset,
 				isEmpty:
 					editorState.getCurrentContent().getPlainText().trim()
@@ -160,7 +166,7 @@ const RichTextEditor = forwardRef(
 					);
 				},
 			}),
-			[editorState, editorRef, editorWrapperRef],
+			[editorState, handleInsertEmoji],
 		);
 
 		// scroll into view when editor is focused
@@ -174,19 +180,47 @@ const RichTextEditor = forwardRef(
 			}
 		}, [autoFocus]);
 
-		function handleKeyCommand(command) {
-			if (command === 'submit') {
-				// Your code here
-				return 'handled';
+		function handleKeyCommand(command, editorState) {
+			switch (command) {
+				case command.startsWith('emoji') ? command : null:
+					const emoji = command.split('emoji-')[1];
+					const newEditorState = addEmoji(
+						editorState,
+						emoji,
+						Mode.REPLACE,
+					);
+					setEditorState(newEditorState);
+
+					return 'handled';
+				case 'submit':
+					return 'handled';
+				default:
 			}
 			return 'not-handled';
 		}
 
 		function keyBindingFn(event) {
-			if (event.keyCode === 13 && enterToSubmit) {
+			const key = event.key.toLowerCase();
+			if (key === 'enter' && enterToSubmit) {
 				editorRef.current.blur();
 				return 'submit';
 			}
+			// get all key of emojiKey to array
+
+			if (key === ' ') {
+				const selection = editorState.getSelection();
+				const currentContent = editorState.getCurrentContent();
+				const currentBlock = currentContent.getBlockForKey(
+					selection.getStartKey(),
+				);
+				const blockText = currentBlock.getText();
+				const lastWord = blockText.split(' ').pop();
+				const emoji = emojiKey[lastWord]?.emoji;
+				if (emoji) {
+					return 'emoji-' + emoji;
+				}
+			}
+
 			return getDefaultKeyBinding(event);
 		}
 
@@ -220,7 +254,6 @@ const RichTextEditor = forwardRef(
 					onSearchChange={onSearchChange}
 					entryComponent={MentionItem}
 				/>
-				<EmojiSuggestions />
 			</div>
 		);
 	},

@@ -16,3 +16,7 @@
 .editor-readonly .DraftEditor-editorContainer {
 	@apply !static;
 }
+
+.emoji-select button {
+	@apply flex h-9 w-9 items-center justify-center border-none bg-transparent text-slate-800 hover:bg-gray-100 hover:text-slate-700 dark:bg-transparent dark:text-dark-100 dark:hover:!bg-gray-800/50 dark:hover:text-dark-50;
+}

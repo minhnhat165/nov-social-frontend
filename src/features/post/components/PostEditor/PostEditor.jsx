@@ -161,6 +161,7 @@ const PostEditor = ({ initial, onSubmit, autoFocus, mode, onCanceled }) => {
 					onUploadImage={photoEditorRef?.current?.triggerUpload}
 					onSubmit={handleSubmit}
 					onCanceled={onCanceled}
+					onAddEmoji={contentEditorRef?.current?.addEmoji}
 				/>
 			</Layer>
 		</PostEditorContext.Provider>

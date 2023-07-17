@@ -25,6 +25,26 @@ axiosClient.interceptors.response.use(
 			toast.error('expire login');
 			return Promise.reject(error.response.data);
 		}
+		switch (error.response.status) {
+			case 401:
+				if (error.response.data.message === 'Invalid token specified') {
+					store.dispatch(logout());
+					toast.error('expire login');
+				}
+
+				break;
+			case 403:
+				toast.error(
+					'You do not have permission to access this resource',
+				);
+				break;
+			case 404:
+				window.location.href = '/404';
+				break;
+			default:
+				break;
+		}
+
 		return Promise.reject(error.response.data);
 	},
 );
