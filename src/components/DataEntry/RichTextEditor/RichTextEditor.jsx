@@ -214,7 +214,7 @@ const RichTextEditor = forwardRef(
 					selection.getStartKey(),
 				);
 				const blockText = currentBlock.getText();
-				const lastWord = blockText.split(' ').pop();
+				const lastWord = blockText.split(' ').pop().toLowerCase();
 				const emoji = emojiKey[lastWord]?.emoji;
 				if (emoji) {
 					return 'emoji-' + emoji;
