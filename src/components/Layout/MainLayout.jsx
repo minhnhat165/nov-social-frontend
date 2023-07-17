@@ -3,6 +3,7 @@ import { Sidebar, SidebarMobile } from 'components/Navigation';
 import { Suspense, lazy } from 'react';
 
 import { ComingSoon } from 'routes/AppRoute';
+import NotFoundPage from 'pages/not-found/NotFound';
 import PrivateRoute from 'routes/PrivateRoute';
 import StickyBox from 'react-sticky-box';
 import clsx from 'clsx';
@@ -53,6 +54,7 @@ const MainLayout = () => {
 						</Route>
 						<Route path="/post/*" element={<PostRoute />} />
 						<Route path="/profile/*" element={<ProfileRoute />} />
+						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</Suspense>
 			</div>

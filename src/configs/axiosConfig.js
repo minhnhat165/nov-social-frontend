@@ -38,9 +38,6 @@ axiosClient.interceptors.response.use(
 					'You do not have permission to access this resource',
 				);
 				break;
-			case 404:
-				window.location.href = '/404';
-				break;
 			default:
 				break;
 		}

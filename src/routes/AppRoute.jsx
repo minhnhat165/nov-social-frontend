@@ -15,6 +15,7 @@ const AppRoute = () => {
 			<Route path="/intro" element={<TextPage />} />
 			<Route path="/*" element={<MainLayout />} />
 			<Route path="/lab" element={<ComponentsPage />} />
+			<Route path="/404" element={<NotFoundPage />} />
 			<Route path="*" element={<NotFoundPage />} />
 		</Routes>
 	);

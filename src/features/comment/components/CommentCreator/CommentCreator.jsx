@@ -4,6 +4,7 @@ import {
 	useCreateComment,
 } from 'features/comment';
 
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export function CommentCreator({
@@ -13,6 +14,7 @@ export function CommentCreator({
 	editorRef,
 	...props
 }) {
+	const navigate = useNavigate();
 	const { mutate } = useCreateComment({
 		onSuccess: ({ comment: newComment }, variables) => {
 			// update the local comment with the server comment
@@ -23,6 +25,9 @@ export function CommentCreator({
 		},
 		onError: (error, variables) => {
 			// update the local comment with the server comment
+			if (error?.status === 404) {
+				navigate('/404');
+			}
 			onServerCommentCreated?.(
 				{ ...variables, status: COMMENT_STATUS.REJECTED },
 				variables._id,
