@@ -108,11 +108,11 @@ export const Button = ({
 	);
 };
 
-const Group = ({ children, ...props }) => {
+const Group = ({ children, fullWidth, ...props }) => {
 	const numChildren = Children.count(children);
 	if (numChildren === 1) return children;
 	return (
-		<div className="flex">
+		<div className="flex w-full">
 			{Children.map(children, (child, index) => {
 				const position =
 					index === 0
@@ -121,13 +121,21 @@ const Group = ({ children, ...props }) => {
 						? 'last'
 						: 'middle';
 				return (
-					<div className="flex flex-col sm:flex-row sm:space-x-2">
+					<div
+						className={clsx(
+							'flex flex-col sm:flex-row sm:space-x-2',
+							fullWidth ? 'flex-1' : '',
+						)}
+					>
 						{cloneElement(child, {
 							...props,
+							fullWidth: fullWidth,
 							className: clsx(
 								child.props.className,
 								position === 'first' && 'rounded-r-none',
 								position === 'last' && 'rounded-l-none',
+								position === 'middle' &&
+									'rounded-l-none rounded-r-none',
 								position !== 'first' &&
 									'border-l border-normal',
 							),

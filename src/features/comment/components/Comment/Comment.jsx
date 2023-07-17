@@ -9,7 +9,7 @@ import {
 
 import { CommentEditMode } from './CommentEditMode';
 import { CommentHeader } from './CommentHeader';
-import { Image } from 'components/DataDisplay';
+import { CommentPhoto } from './CommentPhoto';
 import Layer from 'components/Layout/Layer';
 import { RepliesZone } from './RepliesZone';
 import { RichTextEditor } from 'components/DataEntry';
@@ -152,9 +152,7 @@ const Comment = ({
 									/>
 								)}
 								{!!comment?.photos?.length && (
-									<div className="mt-2 max-w-[120px] overflow-hidden rounded">
-										<Image src={comment.photos[0].url} />
-									</div>
+									<CommentPhoto photos={comment.photos} />
 								)}
 								<ToolBar />
 							</div>

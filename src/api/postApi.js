@@ -4,13 +4,11 @@ export const { axiosClient } = require('configs/axiosConfig');
 
 export const URL = '/posts';
 
-export const getPosts = (limit = 10, lastCreatedAt) =>
-	axiosClient.get(
-		URL +
-			`?limit=${limit}${
-				lastCreatedAt ? `&lastCreatedAt=${lastCreatedAt}` : ''
-			}`,
-	);
+export const getPosts = ({ q = '', cursor = null, limit = 10 }) => {
+	const queryString = genQueryParams({ q, cursor, limit });
+	return axiosClient.get(`${URL}?${queryString}`);
+};
+
 export const getPost = (id) => {
 	return axiosClient.get(`${URL}/${id}?`);
 };

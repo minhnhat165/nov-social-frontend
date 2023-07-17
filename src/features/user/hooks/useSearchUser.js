@@ -2,10 +2,10 @@ const { searchUser } = require('api/userApi');
 const { useState } = require('react');
 const { useQuery } = require('react-query');
 
-const useSearchUser = ({ limit }) => {
-	const [query, setQuery] = useState('');
+const useSearchUser = ({ limit, query: _query = ' ' }) => {
+	const [query, setQuery] = useState(_query);
 	const { data, isLoading, isFetching } = useQuery(
-		['searchUser', query],
+		['search-user-main', query],
 		() =>
 			searchUser({
 				query,
@@ -17,7 +17,7 @@ const useSearchUser = ({ limit }) => {
 		},
 	);
 
-	return { data: data.data || [], isLoading, isFetching, setQuery };
+	return { data: data?.data, isLoading, isFetching, setQuery };
 };
 
 export default useSearchUser;

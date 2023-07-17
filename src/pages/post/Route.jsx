@@ -2,10 +2,12 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Main } from './pages';
 
-export const PostRoute = () => {
+const PostRoute = () => {
 	return (
 		<Routes>
 			<Route path="/:id" element={<Main />}></Route>
 		</Routes>
 	);
 };
+
+export default PostRoute;

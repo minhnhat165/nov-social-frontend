@@ -5,7 +5,7 @@ import { UserProvider } from 'features/user/context';
 import { getRecommendations } from 'api/userApi';
 import { useInfiniteQuery } from 'react-query';
 
-export const PeoplePage = () => {
+const PeoplePage = () => {
 	const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
 		'people',
 		({ pageParam }) => {
@@ -55,3 +55,5 @@ export const PeoplePage = () => {
 		</div>
 	);
 };
+
+export default PeoplePage;

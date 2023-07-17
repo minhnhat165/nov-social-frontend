@@ -9,11 +9,20 @@ const sizes = {
 	lg: 'h-12 px-4 text-base rounded-xl',
 	xl: 'h-14 px-4 text-base rounded-xl',
 };
-export const RadioGroup = ({ options, size, label, error, registration }) => {
+export const RadioGroup = ({
+	options,
+	size,
+	label,
+	error,
+	registration,
+	className,
+}) => {
 	const id = useId();
 	return (
 		<WrapperField label={label} error={error} className="w-full">
-			<div className="flex w-full justify-between gap-2">
+			<div
+				className={clsx('flex w-full justify-between gap-2', className)}
+			>
 				{options.map((option) => (
 					<label
 						key={option.name}

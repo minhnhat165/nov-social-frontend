@@ -25,13 +25,14 @@ export const Search = forwardRef(
 			debounce,
 			onChange,
 			placeholder = 'Search',
+			defaultValue = '',
 			autoFocus = false,
 			onSearch = () => {},
 			...props
 		},
 		ref,
 	) => {
-		const [inputValue, setInputValue] = useState('');
+		const [inputValue, setInputValue] = useState(defaultValue);
 		const debouncedValue = useDebounce(inputValue, debounce ? 500 : 0);
 		const firstRender = useRef(true); // to prevent first render
 		useEffect(() => {
