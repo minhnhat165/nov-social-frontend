@@ -100,7 +100,7 @@ pnpm start
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Usage
-Watch in [NovSocial Youtube](https://www.youtube.com)
+Watch in [NovSocial Youtube](https://www.youtube.com/watch?v=HayMug1-N6A&t=22s)
 
 ## Screenshots
 *Login Page*
