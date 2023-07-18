@@ -209,7 +209,9 @@ const RegisterForm = () => {
 									<Button
 										loading={registerMutation.isLoading}
 										disabled={
-											!isDirty || !isValid || errors.email
+											!isDirty ||
+											!isValid ||
+											!!errors.email
 										}
 										type="submit"
 										size="lg"
