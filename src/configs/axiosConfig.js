@@ -2,6 +2,7 @@ import { logout, setAccessToken } from 'store/slices/authSlice';
 
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { setIsStarted } from 'store/slices/serverSlice';
 import store from 'store';
 import { toast } from 'react-hot-toast';
 
@@ -17,6 +18,10 @@ export const axiosClient = axios.create({
 // add a response interceptor
 axiosClient.interceptors.response.use(
 	(response) => {
+		const isServerStarted = store.getState().server.isStarted;
+		if (!isServerStarted) {
+			store.dispatch(setIsStarted(true));
+		}
 		return response.data;
 	},
 	(error) => {
@@ -64,7 +69,7 @@ axiosClient.interceptors.request.use(
 					accessToken = res.data.access_token;
 					store.dispatch(setAccessToken(accessToken));
 				} catch (error) {
-					if (error.status === 401) {
+					if (error.response.data.status === 401) {
 						store.dispatch(logout());
 						toast.error('expire login');
 					}

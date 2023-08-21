@@ -7,6 +7,7 @@ import notificationReducer from './slices/notificationSlice';
 import { persistReducer } from 'redux-persist';
 import profileReducer from './slices/profileSlice';
 import searchHistoryReducer from './slices/searchHistorySlice';
+import serverReducer from './slices/serverSlice';
 import settingReducer from './slices/settingSlice';
 import socketReducer from './slices/socketSlice';
 import storage from 'redux-persist/lib/storage';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	notification: notificationReducer,
 	setting: settingReducer,
 	searchHistory: searchHistoryReducer,
+	server: serverReducer,
 });
 
 const persistConfig = {

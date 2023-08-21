@@ -36,7 +36,6 @@ export const {
 	setRankingBoardMinimized,
 } = settingSlice.actions;
 
-// export const selectTheme = (state) => state.setting.theme;
 const settingReducer = settingSlice.reducer;
 
 export default settingReducer;
