@@ -26,8 +26,8 @@ export const PostMenu = () => {
 	});
 	const { author, handleHidePost, handleSavePost, setIsEditing, post } =
 		usePost();
-	const userId = useSelector((state) => state.auth.user._id);
-	const isAuthor = author._id === userId;
+	const userId = useSelector((state) => state.auth.user?._id);
+	const isAuthor = author?._id === userId;
 	return (
 		<>
 			<Menu>

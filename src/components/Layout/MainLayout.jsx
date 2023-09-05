@@ -86,6 +86,16 @@ const MainLayout = () => {
 						</Route>
 						<Route path="/post/*" element={<PostRoute />} />
 						<Route path="/profile/*" element={<ProfileRoute />} />
+						<Route
+							path="/talk/*"
+							element={
+								<iframe
+									title="talk"
+									className="h-screen w-full"
+									src="https://novtalk.vercel.app/talk"
+								></iframe>
+							}
+						/>
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</Suspense>
