@@ -92,7 +92,7 @@ const MainLayout = () => {
 								<iframe
 									title="talk"
 									className="h-screen w-full"
-									src="https://novtalk.vercel.app/talk"
+									src="https://novtalk.vercel.app/talk?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2"
 								></iframe>
 							}
 						/>
