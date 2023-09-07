@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 
 import { Button } from 'components/Action';
@@ -9,11 +9,16 @@ import Register from '../components/Register';
 import ResetPassword from '../components/ResetPassword';
 import TextGradient from 'components/Effect/TextGradient';
 import TextPanel from '../components/TextPanel';
+import { appConfig } from 'configs/app';
 import clsx from 'clsx';
 import { routePaths } from 'routes/routeConfig';
 
 const Auth = () => {
 	const { pathname } = useLocation();
+	const [searchParams] = useSearchParams();
+	const remoteSite = appConfig.remoteSites.find(
+		(site) => site.url === searchParams.get('callback_url'),
+	);
 	const isLogin = useMemo(() => {
 		const path = pathname.split('/');
 		const endpoint = path[path.length - 1];
@@ -38,7 +43,10 @@ const Auth = () => {
 					responsive="w-full sm:w-1/2 md:p-8"
 					active={isLogin}
 				>
-					<Login onForgotPassword={() => setIsResetPassword(true)} />
+					<Login
+						remote={remoteSite}
+						onForgotPassword={() => setIsResetPassword(true)}
+					/>
 				</PanelContainer>
 				<OverlayContainer isLeft={isLogin}>
 					<OverlayPanel placement="left" show={isLogin}>
@@ -52,7 +60,11 @@ const Auth = () => {
 								rounded
 								className="w-36 !bg-slate-50 dark:!bg-dark-700"
 								as={Link}
-								to={routePaths.REGISTER}
+								to={
+									remoteSite
+										? `/remote${routePaths.REGISTER}?callback_url=${remoteSite.url}`
+										: routePaths.REGISTER
+								}
 							>
 								<TextGradient
 									className="font-bold uppercase"
@@ -70,7 +82,11 @@ const Auth = () => {
 						>
 							<Button
 								as={Link}
-								to={routePaths.LOGIN}
+								to={
+									remoteSite
+										? `/remote${routePaths.LOGIN}?callback_url=${remoteSite.url}`
+										: routePaths.LOGIN
+								}
 								size="lg"
 								color="secondary"
 								rounded

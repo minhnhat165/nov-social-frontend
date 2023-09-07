@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import Auth from 'features/auth/pages/Auth';
 import MainLayout from 'components/Layout/MainLayout';
 import { Text } from 'components/Typography';
 import { lazy } from 'react';
@@ -13,6 +14,10 @@ const AppRoute = () => {
 		<Routes>
 			<Route path="/auth/*" element={<AuthRoutes />} />
 			<Route path="/intro" element={<TextPage />} />
+			<Route path="/remote/auth/" element={<Auth />}>
+				<Route path="login" element={<></>} />
+				<Route path="register" element={<></>} />
+			</Route>
 			<Route path="/*" element={<MainLayout />} />
 			<Route path="/lab" element={<ComponentsPage />} />
 			<Route path="/404" element={<NotFoundPage />} />

@@ -5,19 +5,19 @@ import { routePaths } from 'routes/routeConfig';
 import { useLogin } from 'features/auth/hooks/useLogin';
 import { useSocialLogin } from 'features/auth/hooks/useSocialLogin';
 
-const Login = () => {
-	const login = useLogin();
+const Login = ({ remote }) => {
+	const login = useLogin(remote);
 	const handleSubmit = (values) => {
 		login.mutate(values);
 	};
-	const socialLogin = useSocialLogin();
+	const socialLogin = useSocialLogin(remote);
 	return (
 		<EnterAccount
 			title={
 				<>
 					Login to{' '}
 					<span className="text-primary-700 dark:text-primary-500">
-						{APP_NAME}
+						{remote?.name || APP_NAME}
 					</span>
 				</>
 			}
